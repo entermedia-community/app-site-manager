@@ -45,7 +45,7 @@ var files = new FileUtils();
 
 
 files.deleteMatch( web + "/WEB-INF/base/sitemanager/")
-files.copyFileByMatch( tmp + "/base/saml/", root + "/WEB-INF/base/sitemanager/");
+files.copyFileByMatch( tmp + "/base/sitemanager/", root + "/WEB-INF/base/sitemanager/");
 
 
 
