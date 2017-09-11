@@ -1,0 +1,7 @@
+
+<properties beanname="dataSearcher" lazy-init="true">
+  <property id="id" index="true" stored="true" editable="true" internalfield="true" searchtype="backuphistory">Id</property>
+  <property id="name" index="true" stored="true" editable="true" searchtype="backuphistory">Name</property>
+  <property id="backuphistorytime" index="true" stored="true" editable="true" legacy="time" searchtype="backuphistory">time</property>
+  <property id="status" index="true" stored="true" editable="true" type="list" internalfield="false" datatype="list" searchtype="backuphistory">statis</property>
+</properties>

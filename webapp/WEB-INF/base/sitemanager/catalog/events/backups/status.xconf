@@ -1,0 +1,7 @@
+<page>
+<path-action name="Script.run">
+	<script>/${catalogid}/events/scripts/backup/checkstatus.groovy</script>
+</path-action>
+  <property name="eventname">System Monitoring</property>
+<property name="virtual">true</property>
+</page>
