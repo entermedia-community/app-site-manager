@@ -29,7 +29,7 @@ unziper.unzip(  tmp + "/app-site-manager.zip",  tmp );
 
 
 //log.info("3. Copy Over Site " + tmp + "/unzip/" + " " + "to " + root);
-//var files = new FileUtils();
+var files = new FileUtils();
 //files.deleteMatch( web + "/lib/@BRANCH@extension-saml*.jar");
 //files.deleteMatch( web + "/lib/extension-saml*.jar");
 //files.deleteMatch( web + "/lib/java-saml*.jar");
