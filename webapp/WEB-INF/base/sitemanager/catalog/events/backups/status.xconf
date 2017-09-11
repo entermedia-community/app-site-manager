@@ -1,7 +1,12 @@
 <page>
+<property name="eventname">Monitor sites for outages</property>	
+	<property name="eventdescription">Check for problems on sites</property>	
+
+
 <path-action name="Script.run">
 	<script>/${catalogid}/events/scripts/backup/checkstatus.groovy</script>
 </path-action>
-  <property name="eventname">System Monitoring</property>
+  	<property name="period">1m</property>
+  
 <property name="virtual">true</property>
 </page>

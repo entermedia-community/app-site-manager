@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="catalogid">sitemanager/catalog</property>
+  <property name="themeid">emsharedefault</property>
+  <property name="fallbackdirectory">/WEB-INF/base/emshare</property>
+  <property name="appmodule">asset</property>
+  <property name="applicationid">sitemanager/emshare</property>
+  <property name="title">Site Manager</property>
+</page>
