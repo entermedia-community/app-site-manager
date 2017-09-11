@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project basedir="." default="default" name="app-site-manager">
 
-  <target name="default" depends="clean,  update-dependencies, compile,  jar, javadoc, zip, publish"/>
+  <target name="default" depends="clean,  update-dependencies, compile,  jar, zip, publish"/>
   <target name="dependency" depends="default"/>
    
     <property name="appname" value="${ant.project.name}"/>
@@ -146,29 +146,7 @@
   	</junit>
   </target>
   
-    <target name="javadoc">
-    	<delete dir="${deployDir}/javadoc"/>
-    	<mkdir dir="${deployDir}/javadoc" />
-    	<javadoc destdir="${deployDir}/javadoc"
-            access="public" notree="false" nonavbar="false"
-            noindex="false" splitindex="false" author="true" use="false" verbose="false"
-            version="true" nodeprecatedlist="false" nodeprecated="false"
-            doctitle="OpenEdit">
-          
-              <packageset dir="${src}" defaultexcludes="yes">
-			      <exclude name="com/**/*Test*"/>
-			      <exclude name="org/**/*Test*"/>
-			 </packageset>
-			<classpath>
-		      <fileset dir="${lib}">
-		        <include name="**/*.jar"/>
-		      </fileset>
-		    </classpath>
-
-		</javadoc>
-    </target>
-	
-	<target name="publish" depends="javadoc, zip">
+	<target name="publish" depends=" zip">
 		  
 			<!-- publish results to anthill -->
 		 	<copy file="${deployDir}/builds/app-site-manager.zip" overwrite="true"
