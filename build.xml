@@ -103,7 +103,7 @@
 			<zipfileset dir="${lib}" prefix="lib" excludes="compile/**"/>
 			
 			<zipfileset dir="${deployDir}/builds/" includes="${branch}${appname}-${version}.jar" prefix="lib"/>
-			<zipfileset dir="${webapp}/WEB-INF/base/saml" prefix="base/saml" />
+			<zipfileset dir="${webapp}/WEB-INF/base/sitemanager" prefix="base/sitemanager" />
 
 		</zip>
   </target>
@@ -157,7 +157,7 @@
 				 		      <filter token="BRANCH" value="${branch}"/>
 				 		    </filterset>
 		 	</copy>	
-		 	<copy file="${etc}/samlextension.xml" overwrite="true"
+		 	<copy file="${etc}/sitemanager.xml" overwrite="true"
 					        tofile="${deployDir}/sitemanager.xml">
 					 <filterset>
 					      <filter token="BRANCH" value="${branch}"/>
