@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitoringstatuss>
+  <monitoringstatus id="ok" name="Ok">Ok</monitoringstatus>
+  <monitoringstatus id="error" name="Error">Error</monitoringstatus>
+</monitoringstatuss>

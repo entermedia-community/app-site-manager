@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties>
+  <property id="monitoredsitesadvancedsearch" moduleid="monitoredsites" systemdefined="true" byassettype="false">Advanced Search</property>
+  <property id="monitoredsitesresultstable" moduleid="monitoredsites" systemdefined="true" byassettype="false">Results Table</property>
+  <property id="monitoredsitesbatchedit" moduleid="monitoredsites" systemdefined="true" byassettype="false">Batch Edit</property>
+  <property id="monitoredsitespopupdetail" moduleid="monitoredsites" systemdefined="true" byassettype="false">Popup Details</property>
+  <property id="monitoredsitesheaderdetail" moduleid="monitoredsites" systemdefined="true" byassettype="false">Header Details</property>
+</properties>
