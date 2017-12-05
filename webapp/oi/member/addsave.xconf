@@ -1,0 +1,10 @@
+<page>
+	
+	<path-action name="DataEditModule.saveData"/>
+	<path-action name="Script.run" >
+		<script>./saveproject.groovy</script>
+	</path-action>
+		
+	<property name="virtual">true</property>
+	
+</page>

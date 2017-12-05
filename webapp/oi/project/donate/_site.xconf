@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+    	
+<property name="virtual">true</property>
+	
+	<style id="uploadstyle" href="${themeprefix}/styles/pages/upload.css" />
+	<property name="uploadtab">single</property>
+	 <path-action name="DataEditModule.loadData" >
+			<pageval>librarycol</pageval>
+			<idname>collectionid</idname>
+			<searchtype>librarycollection</searchtype>
+    </path-action>
+    
+	<permission name="editdata">
+		<or>
+			<group name="administrators" />
+			<action name="ProjectModule.canEditCollection" />
+		</or>
+	</permission>
+<inner-layout>${applicationid}/project/donate/donatelayout.html</inner-layout>
+
+</page>

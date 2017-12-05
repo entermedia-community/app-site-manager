@@ -1,0 +1,10 @@
+    	<p>$librarycol</p>
+    	<p>$!librarycol.projectdescription</p>
+    	#set( $country = $mediaarchive.getData("country",$librarycol.country))
+    	<p>Country: $country</p>
+    	#if( $hits.size() > 0)
+		<p><a href="$apphome/collections/media/${librarycol.id}.html">$hits.size()  Uploads</a></p>  	
+$pages.include("$apphome/components/dontshow/index.html")
+		#end
+
+ <a class="btn green" style="padding:14px 60px 14px 60px; margin:18px 0 0 18px" href="$apphome/project/donate/${librarycol.id}.html">Donate</a>

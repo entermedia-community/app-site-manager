@@ -1,0 +1,41 @@
+$context.putPageValue("showhover", "false")
+$context.putPageValue("showcaption", "true")
+$context.putPageValue("hideheader", "true")
+#set( $downloadsearcher = $mediaarchive.getSearcher("librarycollectiondownloads") )
+#set( $downloads = $downloadsearcher.query().match("librarycollection",$librarycol.getId()).sort("date").search() )
+
+#if(!$category)
+	#set($categoryid = $context.getRequestParameter("categoryid"))
+	#if($categoryid)
+		#set($category = $mediaarchive.getData("category",$categoryid))
+		#if($category)
+			$context.putPageValue("category",$category)
+		#end
+	#end
+#end
+
+###always go to index - don't care about resultview
+<div class="Xcontainer">
+  <div class="row justify-content-md-center">
+    <div class="col col-lg-2" >
+		$pages.include("$apphome/components/librarycollection/sidebar.html",$context)
+
+    </div>
+    <div class="col">
+	<div class="btn-group ">
+		 #if($canviewupload || $canimportworkspace || $cancopycategory)
+		  <a class="ajax btn btn-primary" targetdiv="viewassets"  data-allwaysloadpage="true"
+		    href="$home$apphome/components/createmedia/start.html?collectionid=${librarycol.getId()}" >[[Add Media]]</a>
+		  #end
+		 #set( $editlink = "$home$apphome/views/modules/librarycollection/edit/settings.html?collectionid=${librarycol.getId()}")
+		  <a  class="ajax btn btn-primary" targetdiv="viewassets" href="$editlink" >[[Details]]</a>
+    </div>
+<div id="viewassets">		
+		$pages.include("$apphome/components/results/index.html",$context)
+</div>
+
+</div>   
+</div>
+</div>
+
+

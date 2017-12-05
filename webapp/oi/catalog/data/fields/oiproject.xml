@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page> 
+
+  <property id="name" index="true" stored="true" editable="true"> 
+    <name> 
+      <language id="en"><![CDATA[Name]]></language>  
+    </name> 
+  </property> 
+  <!-- Approvals -->  
+  <!--property id="assetclients.clientid" datatype="textjoin" index="true" stored="true" listid="clients" query="assetclients.assetid = asset.id">Asset Clients</property -->  
+  <!-- Geo Location -->  
+  <property id="geo_point" internalfield="false" type="geo_point" datatype="geo_point" viewtype="map" index="true" stored="true" externalid="GPS Latitude,GPS Longitude" searchcomponent="locationsearch"   editable="true" >Position 
+    <name> 
+      <language id="de"><![CDATA[Position]]></language>  
+      <language id="en"><![CDATA[Position]]></language>  
+      <language id="es"><![CDATA[Posición]]></language>  
+      <language id="fr"><![CDATA[Position]]></language> 
+    </name> 
+  </property>  
+  <property id="usertags" datatype="kwmap" editable="true" index="true" stored="true"   type="kwmap">User Tags 
+    <name>
+      <language id="de"><![CDATA[Nutzer-Tags]]></language>
+      <language id="en"><![CDATA[User Tags]]></language>
+      <language id="es"><![CDATA[Etiquetas de usuarios]]></language>
+      <language id="fr"><![CDATA[Mots-clés de l&#39;utilisateur]]></language>
+    </name>
+  </property> 
+  <property id="city" index="true" stored="true" editable="true"> 
+    <name> 
+      <language id="en"><![CDATA[City]]></language>  
+    </name> 
+  </property>  
+  <property id="country" index="true" stored="true" editable="true" viewtype="list"   type="list"> 
+    <name> 
+      <language id="de"><![CDATA[Land]]></language>  
+      <language id="en"><![CDATA[Country]]></language>  
+      <language id="es"><![CDATA[País]]></language>  
+      <language id="fr"><![CDATA[Pays]]></language> 
+    </name> 
+  </property>  
+  <property id="street" index="true" stored="true" editable="true"> 
+    <name> 
+      <language id="en"><![CDATA[Street]]></language>  
+    </name> 
+  </property>  
+
+  <property id="projectdescription" index="true" stored="true" editable="true"> 
+    <name> 
+      <language id="en"><![CDATA[Description]]></language>  
+    </name> 
+  </property>  
+
+  
+  
+  
+</page>

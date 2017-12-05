@@ -1,0 +1,17 @@
+#set( $collection = $mediaarchive.getData("librarycollection",$context.getRequestParameter("id")) )    
+<div style="height: 200px; width:400px">
+
+<div class="logo" style="float:left;display:block;position:relative;padding:0px;margin:0px;width:145px;height:94px;top:0;left:0" >
+</div>
+<p style="float:left;max-height:150px;max-width:230px;overflow:hidden;" >$collection.getValue("projectdescription")</p>
+<div style=" clear: left;">
+</div>
+<h3>$collection.getName()</h3>
+
+
+Near: $collection.getValue("geo_point_formatedaddress")
+##logo?
+	<a class="btn" style="display:block;float:right;color: white;
+    border-color: #fed136;
+    background-color: #fed136;font-size:18px" href="$apphome/project/feed/${collection.getId()}.html">View</a>
+</div>

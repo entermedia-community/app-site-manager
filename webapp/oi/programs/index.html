@@ -1,0 +1,98 @@
+<div style="background:#cec5b3; padding:1px; color:#3e4553;text-align:center; border-top:solid 10px #3e4553;">
+    <h1>Search</h1>
+</div>
+<div class="card" style="margin:20px">
+  <div class="card-header">
+  Non-Profits worldwide
+  </div>
+  <div class="card-block" style="padding:20px;">
+  
+
+<ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Map</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#">List</a>
+  </li>
+</ul>
+
+  #set( $searcher = $mediaarchive.getSearcher("librarycollection") )
+
+  #set( $hits = $searcher.query().all().enduser(true).search($context) )
+  
+<div id="resultsdiv" data-hitssessionid="$hits.getSessionId()" data-pagenum="$hits.getPage()"  data-totalpages="$hits.getTotalPages()">
+
+#set( $showtoolbar = $page.isPropertyTrue("showtoolbar"))
+$context.putPageValue("showtoolbar",  $showtoolbar)
+
+Search by: <input name="formatted_address" />
+
+#set( $n = $hits.setHitsPerPage(1000))
+
+#set( $geofilter = $hits.getSearchQuery().getTermByDetailId("geo_point"))
+#if( $geofilter)
+<div style="padding:10px;background:#eee;">
+#set( $found = $geofilter.getParameter("formatted_address") )
+Found $hits.size() results searching within $geofilter.getDistance() [[meters]] of $!found  
+</div>
+#end
+
+<script type="text/javascript">
+#set( $counted = 0)
+jQuery(document).ready(function(){ 
+
+// var map = new google.maps.Map(document.getElementById('map'), {
+ //         zoom: 3
+ //       });
+ var uluru = {lat: 14.7260212, lng: -91.2577558};
+   var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 3,
+          center: uluru
+        });
+
+ var markers = [
+	#foreach($location in $hits.getPageOfHits())
+	 #if($location.geo_point) #set( $counted = $counted + 1)
+	      #if($velocitycount > 1),#end
+        ['$location.id',  $location.getValue("geo_point") ],
+     #end   
+     #end
+    ];
+
+ for( i = 0; i < markers.length; i++ ) {
+	 	marker = new google.maps.Marker({
+            position: markers[i][1],
+            map: map,
+            title: markers[i][0]
+        });
+         // Allow each marker to have an info window    
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() 
+            {
+				jQuery.get("$apphome/programs/mapbubble.html?id=" + markers[i][0], function (contentString)
+	 			{
+		 			 var infowindow = new google.maps.InfoWindow({
+    	      			content: contentString
+				 	});
+	 			 	infowindow.open(map, marker);
+		 		});                
+            }
+        })(marker, i));
+   } 
+
+});
+    </script>
+    
+
+    
+$counted of $hits.size() Projects have locations   
+    
+    
+<div id="map" style="width: 100%; height: 600px;"></div>
+  <p class="card-text">[[Sign Up to create our own program or donate to existing ones, or both!]]</p>
+
+</div>
+
+</div>
+</div>
