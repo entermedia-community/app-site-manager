@@ -44,6 +44,24 @@ public void init(){
 			}
 			real.setProperty("mailsent", "false");
 			real.setProperty("monitoringstatus", "ok");
+			
+			
+//			<heapused>$stats.getJvm().getMem().getHeapUsed()</heapused>
+//			<heapusedpercent> $stats.getJvm().getMem().getHeapUsedPercent()</heapusedpercent>
+//			<loadaverage>$stats.getOs().getLoadAverage()</loadaverage>
+//			<servermemory>$stats.getOs().getMem().getFree()</servermemory>
+		
+		
+			real.setValue("heapused",  sp.headused);
+			real.setValue("heapusedpercent",  sp.heapusedpercent);
+			real.setValue("loadaverage",  sp.loadaverage);
+			real.setValue("servermemory",  sp.servermemory);
+			
+			
+			
+			
+			
+			
 		} catch (Exception e){
 			real.setProperty("monitoringstatus", "error");
 			if(!Boolean.parseBoolean(real.get("mailsent"))){
