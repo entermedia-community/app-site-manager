@@ -52,10 +52,10 @@ public void init(){
 //			<servermemory>$stats.getOs().getMem().getFree()</servermemory>
 		
 		
-			real.setValue("heapused",  sp.headused);
-			real.setValue("heapusedpercent",  sp.heapusedpercent);
-			real.setValue("loadaverage",  sp.loadaverage);
-			real.setValue("servermemory",  sp.servermemory);
+			real.setProperty("heapused",  sp.headused.text());
+			real.setProperty("heapusedpercent",  sp.heapusedpercent.text());
+			real.setProperty("loadaverage",  sp.loadaverage.text());
+			real.setProperty("servermemory",  sp.servermemory.text());
 			
 			
 			
