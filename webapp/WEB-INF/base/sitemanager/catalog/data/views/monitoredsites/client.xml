@@ -11,6 +11,10 @@
   <property id="heapusedpercent"  />
  
   <property id="heapused"  />
+   <property id="disktotal" />
+    <property id="diskfree" />
+    <property id="diskavailable"/>
+  
   
   
 </root>

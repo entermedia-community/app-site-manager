@@ -16,5 +16,13 @@
   
   <property id="heapused" index="true" editable="true" keyword="true">Heap Used
   </property>
+  
+  
+  
+  
+    <property id="disktotal" index="true" editable="true" keyword="true">Disk Space Total</property>
+    <property id="diskfree" index="true" editable="true" keyword="true">Disk Space Free</property>
+    <property id="diskavailable" index="true" editable="true" keyword="true">Disk Space Available</property>
+  
 
 </properties>

@@ -57,6 +57,9 @@ public void init(){
 			real.setProperty("loadaverage",  sp.loadaverage.text());
 			real.setProperty("servermemory",  sp.servermemory.text());
 			
+			real.setProperty("diskfree",  sp.diskfree.text());
+			real.setProperty("disktotal",  sp.disktotal.text());
+			real.setProperty("diskavailable",  sp.diskavailable.text());
 			
 			
 			

@@ -3,6 +3,8 @@
 
 <h1>$data status</h1>
 
+<img src="$apphome/theme/images/${data.monitoringstatus}.png"/>
+
 #set ( $searcher = $mediaarchive.getSearcher("monitoredsites") )
 $context.putPageValue("searcher", $searcher)
 $context.putPageValue("view","monitoredsites/client")	
