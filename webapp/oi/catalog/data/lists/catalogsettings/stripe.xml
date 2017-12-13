@@ -1,0 +1,13 @@
+<properties>
+	<property id="productionmode" value="test">Stripe Publishable Key</property>
+	
+	<property id="stripe_publishable_key" value="">Stripe Publishable Key</property>
+	<property id="stripe_test_publishable_key" value="">Stripe Publishable Test Key</property>
+
+	<property id="stripe_access_token" value="">Stripe Access Token</property>
+	<property id="stripe_test_access_token" value="">Stripe Test Access Token</property>
+
+
+
+
+</properties>

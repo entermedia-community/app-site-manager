@@ -1,0 +1,13 @@
+<beans projectname="sitemanager" depends="entermedia">
+
+
+<bean id="PaymentModule" class="org.entermedia.sitemanager.PaymentModule">
+</bean>
+ 	
+
+
+
+
+</beans>
+
+ 
