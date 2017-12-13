@@ -38,10 +38,13 @@ var files = new FileUtils();
 //files.deleteMatch( web + "/lib/stax*.jar");
 //files.deleteMatch( web + "/lib/woodstock*.jar");
 //files.deleteMatch( web + "/lib/xmlsec*.jar");
+files.deleteMatch( web + "/lib/app-site-manager*.jar");
+files.deleteMatch( web + "/lib/stripe*.jar");
+
 //
 //
 //
-//files.copyFileByMatch( tmp + "/lib/*.jar", web + "/lib/");
+files.copyFileByMatch( tmp + "/lib/*.jar", web + "/lib/");
 
 
 files.deleteMatch( web + "/WEB-INF/base/sitemanager/")
