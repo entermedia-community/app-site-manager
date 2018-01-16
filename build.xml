@@ -106,6 +106,12 @@
 			<zipfileset dir="${deployDir}/builds/" includes="${branch}${appname}-${version}.jar" prefix="lib"/>
 			<zipfileset dir="${webapp}/WEB-INF/base/sitemanager" prefix="base/sitemanager" />
 
+			<zipfileset dir="${deployDir}/builds/" includes="${branch}${appname}-${version}.jar" prefix="lib"/>
+			<zipfileset dir="${webapp}/oi" prefix="base/oi" />
+			<zipfileset dir="${webapp}/oi-admin" prefix="base/oi-admin" />
+			
+			
+			
 		</zip>
   </target>
 	    

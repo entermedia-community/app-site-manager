@@ -53,7 +53,9 @@ files.copyFileByMatch( tmp + "/base/sitemanager/", root + "/WEB-INF/base/siteman
 
 
 files.deleteMatch( web + "/WEB-INF/base/oi/")
+files.deleteMatch( web + "/WEB-INF/base/oi-admin/")
 files.copyFileByMatch( tmp + "/base/oi/", root + "/WEB-INF/base/oi/");
+files.copyFileByMatch( tmp + "/base/oi-admin/", root + "/WEB-INF/base/oi-admin/");
 
 
 log.info("5. CLEAN UP");
