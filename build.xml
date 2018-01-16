@@ -54,28 +54,29 @@
 
 	</target>
   
-  <target name="compile" depends="clean">
-    <mkdir dir="${compiled}"/>
-  
- 	<copy todir="${compiled}">
-		<fileset dir="${src}">
-		  <include name="*.xml"/>
-		</fileset>
-	</copy>
-  
-    <javac debug="true" destdir="${compiled}" srcdir="${src}" source="1.7" target="1.7">
-      <classpath>
-        <fileset dir="${lib}">
-          <include name="*.jar"/>
-          <include name="compile/*.jar"/>
-        </fileset>
-        <fileset dir="${wardir}/WEB-INF/lib/">
-            <include name="*.jar"/>
-         </fileset>
-      </classpath>
-      <include name="**"/>
-    </javac>
-  </target>
+	  <target name="compile" depends="clean">
+	    <mkdir dir="${compiled}"/>
+	    <mkdir dir="${wardir}/WEB-INF/lib/"/>
+	    
+		<copy todir="${compiled}">
+			<fileset dir="${src}">
+			  <include name="*.xml"/>
+			</fileset>
+		</copy>
+
+	    <javac debug="true" destdir="${compiled}" srcdir="${src}" source="1.8" target="1.8">
+	      <classpath>
+	        <fileset dir="${lib}">
+	          <include name="*.jar"/>
+	          <include name="compile/*.jar"/>
+	        </fileset>
+	        <fileset dir="${wardir}/WEB-INF/lib/">
+	            <include name="*.jar"/>
+	         </fileset>
+	      </classpath>
+	      <include name="**"/>
+	    </javac>
+	  </target>
   
   	<!-- 
 		========================================================================
