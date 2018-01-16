@@ -1,12 +1,19 @@
 <properties>
-	<property id="productionmode" value="test">Stripe Publishable Key</property>
-	
-	<property id="stripe_publishable_key" value="">Stripe Publishable Key</property>
-	<property id="stripe_test_publishable_key" value="">Stripe Publishable Test Key</property>
-
-	<property id="stripe_access_token" value="">Stripe Access Token</property>
-	<property id="stripe_test_access_token" value="">Stripe Test Access Token</property>
-
+ <data id="stripe_test_access_token" value="sk_test_K3zY6b6XmlgMmlnGxu4kI3oc"> 
+    <name><![CDATA[Stripe Test Access Token]]></name> 
+  </data>  
+  <data id="stripe_test_publishable_key" value="pk_test_GpsVQwEDnxZ7GSpDdmJSddkM"> 
+    <name><![CDATA[Stripe Publishable Test Key]]></name> 
+  </data>  
+  <data id="productionmode" value="test"> 
+    <name><![CDATA[Stripe Mode (test/production)]]></name> 
+  </data>  
+  <data id="stripe_access_token" value=""> 
+    <name><![CDATA[Strip Access Token]]></name> 
+  </data>  
+  <data id="stripe_publishable_key" value=" ">
+    <name><![CDATA[Stripe Live Publishable Key]]></name>
+  </data>
 
 
 
