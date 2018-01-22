@@ -25,6 +25,7 @@
   <script id="select2" src="/${applicationid}/components/javascript/select2/js/select2.full.js"/>
   <style id="select2-css" href="/${applicationid}/components/javascript/select2/css/select2.css"/>
  
+   <script id="openedit" src="/openedit/components/javascript/openedit.js"/>
  
    <script id="stripe" src="https://js.stripe.com/v3/"/>
  
