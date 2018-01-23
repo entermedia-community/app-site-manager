@@ -135,6 +135,10 @@ body {
 #services {
 	margin-top: 20px;
 }
+#services .text-muted {
+	font-size: 20px;
+	line-height: 1.5;
+}
 
 .card {
         margin: 0 auto; /* Added */
@@ -164,6 +168,11 @@ background-size: 100%;
 #mainNav
 {
 	float: right;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link
+{
+	color:#fff;
 }
 
 .collfeedtools
