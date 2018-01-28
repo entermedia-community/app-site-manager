@@ -4,7 +4,7 @@
   <head>
 
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -30,15 +30,16 @@ $pages.include("$apphome/components/map/includes.html")
   <!-- Navigation -->
   #if( $content.bannerpage )
   	<div>
-    <a class="navbar-brand" href="$apphome" style="float:left;padding-left: 100px;">  <img hspace="50" src="/oi/theme/images/Homepage-Layer-Files_0001s_0000s_0000_Logo-Biege.png" alt=""></a>
-    <nav class="navbar navbar-expand-lg" style="float:right;padding-right: 100px;" id="mainNav">
+    <a class="navbar-brand" href="$apphome">
+      <img class="img-fluid" src="/oi/theme/images/Homepage-Layer-Files_0001s_0000s_0000_Logo-Biege.png" alt=""></a>
+      <nav class="navbar navbar-expand-lg"  id="mainNav">
   #else
   	<div style="background-color: #f4f5ee;height:100px;">
     <a class="navbar-brand" href="$apphome" style="float:right;">  
-    	<img hspace="50" style="height: 80px;" src="$apphome/theme/images/Homepage-Layer-Files_0000s_0000_Logo-Black.png" alt=""></a>
+    	<img style="height: 80px;" src="$apphome/theme/images/Homepage-Layer-Files_0000s_0000_Logo-Black.png" alt=""></a>
     <nav class="navbar navbar-expand-lg" id="mainNav">    
   #end
-      <div class="container">
+      <div class="">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
           <i class="fa fa-bars"></i>

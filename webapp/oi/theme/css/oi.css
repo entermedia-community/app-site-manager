@@ -38,8 +38,8 @@ h3 {
   -o-background-size: cover;
   background-size: cover; }
   header.masthead .intro-text {
-    padding-top: 150px;
-    padding-bottom: 100px; }
+    padding-top: 180px;
+    padding-bottom: 80px; }
     header.masthead .intro-text .intro-lead-in {
       font-size: 22px;
       font-style: italic;
@@ -68,8 +68,31 @@ h3 {
       font-weight: 700;
       line-height: 75px;
       margin-bottom: 50px;
-      font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif; } }
+      font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+ 
+   .navbar-brand  
+   { 
+		padding-left: 100px;
+		
+   }
+   .navbar-brand  img
+   { 
+		margin: 0px; 
+		
+   }
+     
+     
+}
   
+ .navbar-brand  
+   { 
+		position:absolute;
+   }
+ .navbar-toggler {
+ 	color:#fff;
+ }
+ .nav-item {text-align:right;}
+ 
   .btn {
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 700; }
@@ -168,6 +191,18 @@ background-size: 100%;
 #mainNav
 {
 	float: right;
+	background-color:#000;
+	filter: alpha(opacity=60);
+  /* IE */
+  -moz-opacity: 0.6;
+  /* Mozilla */
+  opacity: 0.6;
+}
+
+@media (min-width: 992px) {
+#mainNav {
+background:none;
+}
 }
 
 #mainNav .navbar-nav .nav-item .nav-link
