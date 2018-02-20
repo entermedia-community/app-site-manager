@@ -5,6 +5,9 @@
   <script src="/${applicationid}/components/javascript/jquery-1.12.3.min.js" id="jquery"/>
   <script src="/${applicationid}/components/javascript/jquery-ui-1.11.4.min.js" id="jquery-ui"/>
   <!-- Bootstrap Core CSS -->
+  
+  
+  
   <style id="bootstap" href="/${applicationid}/components/javascript/bootstrap/4/css/bootstrap.min.css" />
  <style id="mediaplayer" href="${themeprefix}/styles/pages/mediaplayer.css"/>
   <script id="entermedia" src="/${applicationid}/components/javascript/entermedia.js"/>
@@ -22,8 +25,11 @@
 
   <style id="custom-css" href="${themeprefix}/css/oi.css"/>
   
-  <script id="select2" src="/${applicationid}/components/javascript/select2/js/select2.full.js"/>
-  <style id="select2-css" href="/${applicationid}/components/javascript/select2/css/select2.css"/>
+  
+  <script id="select2" src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"/>
+  <style id="select2-css" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css"/>
+ 
+ 
  
    <script id="openedit" src="/openedit/components/javascript/openedit.js"/>
  

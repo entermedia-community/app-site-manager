@@ -2,6 +2,7 @@
     	<p>$!librarycol.projectdescription</p>
     	#set( $country = $mediaarchive.getData("country",$librarycol.country))
     	<p>Country: $country</p>
+    	<a href="../edit.html?collectionid=$librarycol.getId()">edit</a>
     	#if( $hits.size() > 0)
 		<p><a href="$apphome/collections/media/${librarycol.id}.html">$hits.size()  Uploads</a></p>  	
 $pages.include("$apphome/components/dontshow/index.html")

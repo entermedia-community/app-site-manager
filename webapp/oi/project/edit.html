@@ -1,7 +1,7 @@
 <div style="background:#cec5b3; padding:1px; color:#3e4553;text-align:center; border-top:solid 10px #3e4553;">
     <h1>Your Programs</h1>
 </div>
-
+$context.putPageValue("data",$librarycol)
 ##Exising ones 
 ##No existing programs found.
 
@@ -14,6 +14,8 @@
 #set( $searcher = $mediaarchive.getSearcher("librarycollection") )
 #set( $xmledithome  = "$apphome/components/xml")
 $context.putPageValue("searcher",$searcher)
+$context.putPageValue("view", "librarycollection/edit")
+
 <form action="addsave.html">
 
 <input type="hidden" name="save" value="true" />

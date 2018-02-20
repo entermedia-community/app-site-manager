@@ -205,10 +205,16 @@ background:none;
 }
 }
 
+#mainNav.nav-project-page .navbar-nav .nav-item .nav-link
+{
+	color:#3e4553;
+}
+
 #mainNav .navbar-nav .nav-item .nav-link
 {
-	color:#fff;
+	color:#FFF;
 }
+
 
 .collfeedtools
 {

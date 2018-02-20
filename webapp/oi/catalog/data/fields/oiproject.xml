@@ -31,10 +31,10 @@
       <language id="en"><![CDATA[City]]></language>  
     </name> 
   </property>  
-  <property id="country" index="true" stored="true" editable="true" viewtype="list"   type="list"> 
+  <property id="country" index="true" stored="true" editable="true"  rendertype="autocomplete"   type="list"> 
     <name> 
       <language id="de"><![CDATA[Land]]></language>  
-      <language id="en"><![CDATA[Country]]></language>  
+      <language id="en"><![CDATA[CountryX]]></language>  
       <language id="es"><![CDATA[País]]></language>  
       <language id="fr"><![CDATA[Pays]]></language> 
     </name> 

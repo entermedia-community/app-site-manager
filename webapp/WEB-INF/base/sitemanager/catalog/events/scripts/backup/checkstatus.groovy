@@ -66,6 +66,7 @@ public void init(){
 			
 			
 		} catch (Exception e){
+			log.error("Error checking ${real.name} ", e)
 			real.setProperty("monitoringstatus", "error");
 			if(!Boolean.parseBoolean(real.get("mailsent"))){
 				if(real.notifyemail){
