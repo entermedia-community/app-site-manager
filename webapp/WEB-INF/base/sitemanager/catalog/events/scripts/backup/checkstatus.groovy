@@ -29,7 +29,7 @@ public void init(){
 
 			String status = sp.@stat;
 			if(status != "ok"){
-				throw new OpenEditException("Error!");
+				throw new OpenEditException("Error! not ok");
 			}
 			if(real.monitoringstatus == "error"){
 				if(real.notifyemail){
@@ -57,7 +57,12 @@ public void init(){
 			real.setProperty("loadaverage",  sp.loadaverage.text());
 			real.setProperty("servermemory",  sp.servermemory.text());
 			
-			real.setProperty("diskfree",  sp.diskfree.text());
+			String free = sp.diskfree.text();
+			real.setProperty("diskfree",  free);
+			//if( free )
+			//{
+				
+			//}
 			real.setProperty("disktotal",  sp.disktotal.text());
 			real.setProperty("diskavailable",  sp.diskavailable.text());
 			
