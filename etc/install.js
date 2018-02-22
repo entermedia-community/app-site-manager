@@ -38,7 +38,7 @@ var files = new FileUtils();
 //files.deleteMatch( web + "/lib/stax*.jar");
 //files.deleteMatch( web + "/lib/woodstock*.jar");
 //files.deleteMatch( web + "/lib/xmlsec*.jar");
-files.deleteMatch( web + "/lib/app-site-manager*.jar");
+files.deleteMatch( web + "/lib/@BRANCH@app-site-manager*.jar");
 files.deleteMatch( web + "/lib/stripe*.jar");
 
 //
