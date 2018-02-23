@@ -1,70 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<properties> 
-  <property id="errortype" index="true" editable="true" stored="true">New 
-    <name> 
-      <language id="en"><![CDATA[errortype]]></language> 
-    </name> 
-  </property>  
-  <property id="diskmaxusage" index="true" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="number" rendertype="number" required="false" filter="false" multilanguage="false" datatype="number" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
-    <name> 
-      <language id="en"><![CDATA[Disk max usage]]></language> 
-    </name> 
-  </property>  
-  <property id="memmaxusage" index="true" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="number" rendertype="number" required="false" filter="false" multilanguage="false" datatype="number" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
-    <name> 
-      <language id="en"><![CDATA[Memory Max Usage]]></language> 
-    </name> 
-  </property>  
-  <property id="servermemorytotal" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" autocreatefromexif="false" keyword="true" writenametoexif="false">New 
-    <name> 
-      <language id="en"><![CDATA[Server Memory Total]]></language> 
-    </name> 
-  </property>  
-  <property id="lastchecked" index="true" internalfield="false" editable="true" isbadge="false" viewtype="datetime" sortable="true" rendertype="datetime" required="false" filter="false" multilanguage="false" datatype="date" stored="true" searchtype="monitoredsites" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
-    <name> 
-      <language id="en"><![CDATA[Last Checked]]></language> 
-    </name> 
-  </property>  
-  <property id="iscpu" index="true" editable="true" stored="true">New 
-    <name> 
-      <language id="en"><![CDATA[iscpu]]></language> 
-    </name> 
-  </property>  
-  <property id="ismemory" index="true" editable="true" stored="true">New 
-    <name> 
-      <language id="en"><![CDATA[ismemory]]></language> 
-    </name> 
-  </property>  
-  <property id="isheap" index="true" editable="true" stored="true">New 
-    <name> 
-      <language id="en"><![CDATA[isheap]]></language> 
-    </name> 
-  </property>  
-  <property id="isdisk" index="true" editable="true" stored="true">New 
-    <name> 
-      <language id="en"><![CDATA[isdisk]]></language> 
-    </name> 
-  </property>  
-  <property id="servermemoryfree" index="true" editable="true" stored="true">New 
-    <name> 
-      <language id="en"><![CDATA[servermemoryfree]]></language> 
-    </name> 
-  </property>  
-  <property id="isreachable" index="true" editable="true" stored="true">New 
-    <name> 
-      <language id="en"><![CDATA[isreachable]]></language> 
-    </name> 
-  </property>  
-  <property id="mailsent" index="true" internalfield="false" editable="true" isbadge="false" viewtype="boolean" rendertype="boolean" required="false" filter="false" multilanguage="false" datatype="boolean" stored="true" searchtype="monitoredsites" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
-    <name> 
-      <language id="en"><![CDATA[Emails Sent]]></language> 
-    </name> 
-  </property>  
-  <property id="loadaverage" index="true" internalfield="false" editable="true" isbadge="false" viewtype="list" rendertype="list" required="false" multilanguage="false" datatype="multi" autocreatefromexif="false" keyword="true" writenametoexif="false" filter="false">New 
-    <name>
-      <language id="en"><![CDATA[Load Average]]></language>
-    </name>
-  </property> 
+<properties prefix="monitoredsites" beanname="dataSearcher">
+  <property id="id" index="true" stored="true" editable="true" searchtype="monitoredsites" internalfield="true">Id</property>
+  <property id="name" index="true" stored="true" editable="true" searchtype="monitoredsites">Name</property>
+  <property id="sourcepath" searchtype="monitoredsites">SourcePath</property>
+  <property id="url" index="true" stored="true" editable="true" searchtype="monitoredsites">URL</property>
+  <property id="lastchecked" index="true" stored="true" editable="true" sortable="true" type="date" searchtype="monitoredsites" internalfield="false" datatype="date">Last Checked</property>
+  <property id="monitoringstatus" index="true" stored="true" editable="true" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">Monitoring Status</property>
+  <property id="notifyemail" index="true" stored="true" editable="true" searchtype="monitoredsites" internalfield="false">Emails to Notify on Error</property>
+  <property id="mailsent" index="true" type="boolean" stored="true" editable="true" searchtype="monitoredsites" internalfield="false">Emails Sent</property>
+  <property id="servermemoryfree" index="true" editable="true" keyword="true">Server Memory Free</property> 
+  <property id="servermemorytotal" index="true" editable="true" keyword="true">Server Memory Total</property> 
+  <property id="loadaverage" index="true" editable="true" keyword="true" datatype="multi">Load Average</property>
+  <property id="heapusedpercent" index="true" editable="true" keyword="true">Heap Used Percentage</property>
+  <property id="heapused" index="true" editable="true" keyword="true">Heap Used</property>
+  <property id="disktotal" index="true" editable="true" keyword="true">Disk Space Total</property>
+  <property id="diskfree" index="true" editable="true" keyword="true">Disk Space Free</property>
+  <property id="diskavailable" index="true" editable="true" keyword="true">Disk Space Available</property>
+  <property id="diskmaxusage" index="true" editable="true" keyword="true">Maximum Disk Usage</property>
+  <property id="memmaxusage" index="true" editable="true" keyword="true">Maximum Memory Usage</property>
 </properties>
-
