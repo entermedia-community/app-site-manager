@@ -3,9 +3,11 @@
 
 <bean id="PaymentModule" class="org.entermedia.sitemanager.PaymentModule">
 </bean>
+<bean id="SiteModule" class="org.entermedia.sitemanager.SiteModule">
+</bean>
+<bean id="siteManager" class="org.entermedia.sitemanager.SiteManager" scope="prototype">
+</bean>
  	
-
-
 
 
 </beans>
