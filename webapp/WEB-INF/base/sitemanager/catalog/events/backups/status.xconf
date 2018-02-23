@@ -3,8 +3,7 @@
 	<property name="eventdescription">Check for problems on sites</property>	
 
 
-<path-action name="Script.run">
-	<script>/${catalogid}/events/scripts/backup/checkstatus.groovy</script>
+<path-action name="SiteModule.checkSites">
 </path-action>
   	<property name="period">1m</property>
   
