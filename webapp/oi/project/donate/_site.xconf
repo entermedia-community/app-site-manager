@@ -18,6 +18,7 @@
 			<action name="ProjectModule.canEditCollection" />
 		</or>
 	</permission>
-<inner-layout>${applicationid}/project/donate/donatelayout.html</inner-layout>
+	<inner-layout>${applicationid}/project/donate/donatelayout.html</inner-layout>
+
 
 </page>
