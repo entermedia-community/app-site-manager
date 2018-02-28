@@ -271,3 +271,7 @@ span.select2-container {
 {
 	display:block;
 }
+
+
+#card-element { border:1px solid #ced4da; border-radius:.25rem; padding:.375rem .75rem;  }
+#card-errors { color:#e5424d; font-size:80%;}
