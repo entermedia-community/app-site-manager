@@ -24,7 +24,7 @@
 			<action name="ProjectModule.canEditCollection" />
 		</or>
 	</permission>
-<inner-layout>${applicationid}/project/feed/feedlayout.html</inner-layout>
+<inner-layout>/${applicationid}/project/feed/feedlayout.html</inner-layout>
 
 </page>
 

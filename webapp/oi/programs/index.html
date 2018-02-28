@@ -1,21 +1,6 @@
 <div style="background:#cec5b3; padding:1px; color:#3e4553;text-align:center; border-top:solid 10px #3e4553;">
-    <h1>Search</h1>
+    <h1>Projects World Wide</h1>
 </div>
-<div class="card" style="margin:20px">
-  <div class="card-header">
-  Non-Profits worldwide
-  </div>
-  <div class="card-block" style="padding:20px;">
-  
-
-<ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link active" href="#">Map</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="#">List</a>
-  </li>
-</ul>
 
   #set( $searcher = $mediaarchive.getSearcher("librarycollection") )
 
@@ -26,7 +11,7 @@
 #set( $showtoolbar = $page.isPropertyTrue("showtoolbar"))
 $context.putPageValue("showtoolbar",  $showtoolbar)
 
-Search by: <input name="formatted_address" />
+##Search by: <input name="formatted_address" />
 
 #set( $n = $hits.setHitsPerPage(1000))
 
@@ -84,15 +69,20 @@ jQuery(document).ready(function(){
 });
     </script>
     
-
     
-$counted of $hits.size() Projects have locations   
-    
-    
-<div id="map" style="width: 100%; height: 600px;"></div>
+<div id="map" style="width: 100%; height: 600px;">
   <p class="card-text">[[Sign Up to create our own program or donate to existing ones, or both!]]</p>
 
 </div>
 
 </div>
+
+<div>
+<ul class="list-group" style="margin:10px 0 0 50px;width:300px">
+#foreach($collection in $hits.getPageOfHits())
+#if(!$collection.geo_point)
+<li class="list-group-item"><a href="$apphome/project/feed/${collection.id}.html">$collection</a>
+#end
+#end
+</ul>
 </div>
