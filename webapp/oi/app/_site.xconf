@@ -42,7 +42,7 @@
   <property name="fallbackdirectory">/WEB-INF/base/emfrontend</property>
   <property name="themeprefix">/${applicationid}/theme</property>
   <property name="title">OpenInstitute</property>
-  <property name="applicationid">oi</property>
+  <property name="applicationid">oi/app</property>
   <inner-layout>${themeprefix}/layouts/application.html</inner-layout>
   <permission name="openeditdirectedit">
     <group id="administrators"/>

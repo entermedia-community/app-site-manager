@@ -1,5 +1,5 @@
 <div style="background:#cec5b3; padding:1px; color:#3e4553;text-align:center; border-top:solid 10px #3e4553;">
-    <h1>Projects World Wide</h1>
+    <h1>World Wide Projects</h1>
 </div>
 
   #set( $searcher = $mediaarchive.getSearcher("librarycollection") )
@@ -55,7 +55,7 @@ jQuery(document).ready(function(){
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() 
             {
-				jQuery.get("$apphome/programs/mapbubble.html?id=" + markers[i][0], function (contentString)
+				jQuery.get("$apphome/browse/mapbubble.html?id=" + markers[i][0], function (contentString)
 	 			{
 		 			 var infowindow = new google.maps.InfoWindow({
     	      			content: contentString

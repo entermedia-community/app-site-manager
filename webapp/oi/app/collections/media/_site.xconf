@@ -1,0 +1,30 @@
+<page>
+
+	<inner-layout>${applicationid}/collections/media/viewassets.html</inner-layout>
+	
+	<property name="hitsname">hits</property>
+	<property name="virtual">true</property>
+	
+    <path-action name="DataEditModule.loadData" >
+			<pageval>librarycol</pageval>
+			<idname>collectionid</idname>
+			<searchtype>librarycollection</searchtype>
+    </path-action>
+
+	<path-action name="ProjectModule.searchForAssetsOnCollection">
+		<searchtype>librarycollection</searchtype>
+	</path-action>
+	<property name="alwaysresetpage">true</property>
+	  <script id="emtree" src="/${applicationid}/components/javascript/emtree/emtree.js"/>
+	  <style id="app-css" href="${themeprefix}/styles/theme.css"/>
+	
+	
+	 <permission name="view">
+	 	<and>
+	 	   	<pagevalue name="canviewopencollections" equals="true" />
+    		<action name="ProjectModule.checkViewCollection" />
+    	</and>	
+    </permission>
+	 <page-action name="DataEditModule.loadPageOfSearch"/>
+	 
+</page>

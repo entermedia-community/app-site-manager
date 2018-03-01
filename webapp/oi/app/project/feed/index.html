@@ -1,12 +1,12 @@
 <div style="background:#cec5b3; padding:1px; color:#3e4553;text-align:center; border-top:solid 10px #3e4553;">
-    <h1>Account Details</h1>
+    <h1>Your Programs</h1>
 </div>
 
 ##Exising ones 
 ##No existing programs found.
 <div class="card mx-auto" style="margin:40px;max-width:500px;text-align:left;">
   <div class="card-header">
-    Your Programs
+   Your Projects or Programs
   </div>
   <div class="card-block" style="padding:20px;text-align:center">
   
@@ -15,8 +15,7 @@
    <ul class="list-group list-group-flush w-100 align-items-stretch">
 
   #foreach( $hit in $searcher.query().all().enduser(true).search($context) )
-        <li class="list-group-item text-center d-inline-block">
-        <a href="$home$apphome/project/feed/${hit.id}.html"> $hit.name </a></li>
+        <li class="list-group-item text-center d-inline-block"><a href="$home$apphome/collections/media/${hit.id}.html"> $hit.name </a></li>
   #end
         </ul>
         <div class="card-block">

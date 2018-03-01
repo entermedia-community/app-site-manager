@@ -1,8 +1,17 @@
-<div class="oifeedlayout">
+#set( $banner = $mediaarchive.getAsset($librarycol.assetbanner))
+<div class="oifeedlayout" #if( $banner)
+style='background: url("/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${banner.sourcepath}/image1024x768.jpg") no-repeat top right fixed;' 
+#end
+>
 <div style="position: relative">
-	<div class="logo"></div>
+#set( $logo = $mediaarchive.getAsset($librarycol.assetportrait))
+	<div class="logo"
+#if( $logo)
+style='background: url("/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${logo.sourcepath}/image200x200.jpg") no-repeat center;'
+#end
+ />
+	</div>
 </div>
-
 $pages.include("$apphome/project/menu.html")
 <div class="row content">
     <div class="col col-lg-2 collfeedtools" >
