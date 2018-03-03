@@ -83,7 +83,7 @@ public class SiteManager implements CatalogEnabled
 		return false;
 	}
 
-	private Map<String, Integer> getUsageMaxByClient(Data inReal)
+	private Map<String, Integer> getUsageMaxByClient(final Data inReal)
 	{
 		HashMap<String, Integer> map = new HashMap<String, Integer>()
 		{
