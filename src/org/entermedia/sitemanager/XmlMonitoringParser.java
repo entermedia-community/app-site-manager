@@ -24,6 +24,8 @@ public class XmlMonitoringParser
 	private String disktotal;
 	private String diskavailable;
 	private String stat;
+	private String dockerversion;
+	private String imversion;
 	private URL url;
 	
 	
@@ -43,8 +45,6 @@ public class XmlMonitoringParser
 			InputSource is = new InputSource(new InputStreamReader(inputStream, "UTF-8"));
 			is.setEncoding("UTF-8");
 			
-			
-			
 			Document doc = dBuilder.parse(is);
 			if (doc.hasChildNodes()){
 				NodeList nl = doc.getChildNodes();
@@ -62,23 +62,27 @@ public class XmlMonitoringParser
 			if (node.getNodeType() != Node.ELEMENT_NODE || node.getNodeName()==null)
 				continue;
 			if (node.getNodeName().equalsIgnoreCase("heapused")){
-				this.heap = node.getFirstChild().getTextContent();
+				setHeap(node.getFirstChild().getTextContent());
 			} else if (node.getNodeName().equalsIgnoreCase("heapusedpercent")){
-				this.heappercent = node.getFirstChild().getTextContent();
+				setHeappercent(node.getFirstChild().getTextContent());
 			} else if (node.getNodeName().equalsIgnoreCase("loadaverage")){
-				this.cpu = node.getFirstChild().getTextContent();
+				setCpu(node.getFirstChild().getTextContent());
 			} else if (node.getNodeName().equalsIgnoreCase("servermemoryfree")){
-				this.memoryfree = node.getFirstChild().getTextContent();
+				setMemoryfree(node.getFirstChild().getTextContent());
 			} else if (node.getNodeName().equalsIgnoreCase("servermemorytotal")){
-				this.memorytotal = node.getFirstChild().getTextContent();
+				setMemorytotal(node.getFirstChild().getTextContent());
 			} else if (node.getNodeName().equalsIgnoreCase("diskfree")){
-				this.diskfree = node.getFirstChild().getTextContent();
+				setDiskfree(node.getFirstChild().getTextContent());
 			} else if (node.getNodeName().equalsIgnoreCase("disktotal")){
-				this.disktotal = node.getFirstChild().getTextContent();
+				setDisktotal(node.getFirstChild().getTextContent());
 			} else if (node.getAttributes().getNamedItem("stat") != null ){
-				this.stat = node.getAttributes().getNamedItem("stat").getNodeValue();
+				setStat(node.getAttributes().getNamedItem("stat").getNodeValue());
 			} else if (node.getNodeName().equalsIgnoreCase("diskavailable")){
-				this.diskavailable = node.getFirstChild().getTextContent();
+				setDiskavailable(node.getFirstChild().getTextContent());
+			} else if (node.getNodeName().equalsIgnoreCase("version_docker")){
+				setDockerversion(node.getFirstChild().getTextContent());
+			} else if (node.getNodeName().equalsIgnoreCase("version_im")){
+				setImversion(node.getFirstChild().getTextContent());
 			} 
 			if (node.hasChildNodes()){
 				processNodes(node.getChildNodes());
@@ -184,6 +188,26 @@ public class XmlMonitoringParser
 	public void setDiskavailable(String diskavailable)
 	{
 		this.diskavailable = diskavailable;
+	}
+
+	public String getDockerversion()
+	{
+		return dockerversion;
+	}
+
+	public void setDockerversion(String inDockerversion)
+	{
+		dockerversion = inDockerversion;
+	}
+
+	public String getImversion()
+	{
+		return imversion;
+	}
+
+	public void setImversion(String inImversion)
+	{
+		imversion = inImversion;
 	}
 	
 }

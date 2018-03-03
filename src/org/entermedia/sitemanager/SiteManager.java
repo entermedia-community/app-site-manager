@@ -4,6 +4,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.entermediadb.asset.MediaArchive;
 import org.entermediadb.email.WebEmail;
+import org.entermediadb.modules.update.Downloader;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.openedit.CatalogEnabled;
 import org.openedit.Data;
 import org.openedit.MultiValued;
@@ -11,12 +15,14 @@ import org.openedit.OpenEditException;
 import org.openedit.data.Searcher;
 import org.openedit.util.DateStorageUtil;
 
-import java.io.File;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -26,6 +32,7 @@ public class SiteManager implements CatalogEnabled
 	private static final Log log = LogFactory.getLog(SiteManager.class);
 
 	private String catalogId;
+	private JSONObject fieldJson;
 
 	private void sendResolved(Data inReal, MediaArchive inArchive, String inDates)
 	{
@@ -96,7 +103,7 @@ public class SiteManager implements CatalogEnabled
 	}
 
 
-	private MultiValued buildData(MultiValued inReal, XmlMonitoringParser inParser, boolean inMemory, boolean inCpu, boolean inHeap, Boolean inDisk)
+	private MultiValued buildData(MultiValued inReal, XmlMonitoringParser inParser, boolean inMemory, boolean inCpu, boolean inHeap, boolean inDisk)
 	{
 		inReal.setProperty("heapused", inParser.getHeap());
 		inReal.setProperty("heapusedpercent", inParser.getHeappercent());
@@ -117,6 +124,7 @@ public class SiteManager implements CatalogEnabled
 		{
 			avg = avg.subList(avg.size() - 10,  avg.size() - 1);
 		}
+		
 		inReal.setValue("loadaverage", avg);
 		inReal.setValue("isreachable", true);
 
@@ -126,51 +134,60 @@ public class SiteManager implements CatalogEnabled
 		inReal.setProperty("ismemory", String.valueOf(inMemory));
 		inReal.setProperty("iscpu", String.valueOf(inCpu));
 		inReal.setProperty("isheap", String.valueOf(inHeap));
-		if (inDisk != null)
-		{
-			inReal.setProperty("isdisk", String.valueOf(inDisk));
-		}
+		
+		inReal.setProperty("isdisk", String.valueOf(inDisk));
 		return inReal;
 	}
 	
-	private String buildURL(Data inReal)
+	private String buildURL(Data inReal, String fileURL)
 	{
 		String dns = inReal.get("url"); 
 		if (dns.endsWith("/"))
 		{
 			inReal.setProperty("url", dns.substring(0, (dns.length() - 1)));
 		}
-		return inReal.get("url") + "/entermedia/services/rest/systemstatus.xml";
+		return inReal.get("url") + fileURL;
 	}
 	
-	private Boolean checkDisksOverload(MultiValued inReal, int inPercent, ArrayList<DiskPartition> inPartitions)
+	private DiskSpace checkDisksOverload(MultiValued inReal, int inPercent)
 	{
-		boolean isOnePartitionOverloaded = false;
+		DiskSpace diskSpace = new DiskSpace(new ArrayList<DiskPartition>());
+		ArrayList<DiskPartition> partitions = new ArrayList<DiskPartition>();
 
-		if (inReal.get("diskpartitions") == null)
+		try
 		{
-			return null;
-		}
-		
-		String[] fileNames = inReal.get("diskpartitions").split(",");
+			if (inReal.get("diskpartitions") == null)
+			{
+				return null;
+			}
+			
+			ObjectMapper mapper = new ObjectMapper();
+			Downloader downloader = new Downloader();
+			
+			String jsonString = downloader.downloadToString(buildURL(inReal, "/assets/mediadb/services/system/diskmonitor.json"));
+			JSONObject json = (JSONObject)new JSONParser().parse(jsonString);
+			
+	        JSONArray results = (JSONArray) json.get("results");
+	        for(Object partitionObj: results.toArray()){
 
-		for (String it : fileNames)
-		{
-			File partition = new File(it);
-			
-	        Long totalCapacity = (long)(partition.getTotalSpace() / 10000000.00);
-	        Long freePartitionSpace = (long)(partition.getFreeSpace() / 10000000.00);
-	        Long usablePartitionSpace = (long)(partition.getUsableSpace() / 10000000.00);
-			
-	        boolean isOverloaded = isOverloaded(freePartitionSpace.toString(), totalCapacity.toString(), inPercent, true);
-	        inPartitions.add(new DiskPartition(it, totalCapacity, freePartitionSpace, usablePartitionSpace, isOverloaded));
-	        if (!isOnePartitionOverloaded && isOverloaded == true)
-	        {
-	        	isOnePartitionOverloaded = true;
+	            JSONObject partition = (JSONObject)partitionObj;
+				DiskPartition diskPartiton = mapper.readValue(partition.toJSONString(), DiskPartition.class);
+
+				boolean isOverloaded = isOverloaded(diskPartiton.getFreePartitionSpace().toString(), diskPartiton.getTotalCapacity().toString(), inPercent, true);
+				diskPartiton.setIsOverloaded(isOverloaded);
+
+				partitions.add(diskPartiton);
+
 	        }
 		}
-		return isOnePartitionOverloaded;
+		catch (Exception e)
+		{
+			throw new OpenEditException(e);
+		}
+		diskSpace.setPartitions(partitions);
+		return diskSpace;
 	}
+
 	
 	public void scan(MediaArchive inArchive)
 	{
@@ -182,14 +199,13 @@ public class SiteManager implements CatalogEnabled
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
 			String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
-			String url = buildURL(real);
+			String url = buildURL(real, "/entermedia/services/rest/systemstatus.xml");
 			XmlMonitoringParser parser = null;
 
 			Map<String, Integer> map = getUsageMaxByClient(real);
-			ArrayList<DiskPartition> partitions = new ArrayList<DiskPartition>();
 			try
 			{
-				Boolean disk = false;
+				boolean disk = false;
 				boolean memory = false;
 				boolean heap = false;
 				boolean cpu = false;
@@ -224,17 +240,19 @@ public class SiteManager implements CatalogEnabled
 				//TODO Calculate mem usage average over the past X Hour/minutes
 				memory = isOverloaded(parser.getMemoryfree(), parser.getMemorytotal(), map.get("MEMORY"), false);
 				
-				
-				disk = checkDisksOverload(real, map.get("DISK"), partitions);
-				
-				if (disk == null)
+				DiskSpace diskSpace = checkDisksOverload(real, map.get("DISK"));
+				disk = diskSpace.isOnePartitionOverloaded();
+
+				if (disk == false)
 				{
 					real.setValue("nodisk", true);
+					disk = true;
+					//set disk to tru to get exception no disk in email?
 				}
 				else
 				{
 					real.setValue("nodisk", false);
-					real.setValue("partitions", partitions);
+					real.setValue("partitions", diskSpace.getPartitions());
 				}
 				
 				if (parser.getHeappercent() != null)
@@ -249,7 +267,7 @@ public class SiteManager implements CatalogEnabled
 
 				real = buildData(real, parser, memory, cpu, heap, disk);
 				
-				if (memory || heap || cpu || (disk == null || disk))
+				if (memory || heap || cpu || disk)
 				{
 					throw new OpenEditException("Hardware overload");
 				}
@@ -292,5 +310,15 @@ public class SiteManager implements CatalogEnabled
 	public String getCatalogId()
 	{
 		return catalogId;
+	}
+
+	public JSONObject getJson()
+	{
+		return fieldJson;
+	}
+
+	public void setJson(JSONObject inJson)
+	{
+		fieldJson = inJson;
 	}
 }

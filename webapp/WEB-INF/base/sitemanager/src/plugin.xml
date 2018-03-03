@@ -7,7 +7,6 @@
 </bean>
 <bean id="siteManager" class="org.entermedia.sitemanager.SiteManager" scope="prototype">
 </bean>
- 	
 
 
 </beans>
