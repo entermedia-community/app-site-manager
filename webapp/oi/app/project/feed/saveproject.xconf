@@ -8,6 +8,9 @@
 			<idname>collectionid</idname>
 			<searchtype>librarycollection</searchtype>
     </path-action>
+ <path-action name="Admin.redirectInternal" 
+	redirectpath="/${applicationid}/member/index.html" />
+	   
 	<property name="virtual">true</property>
 	
 </page>

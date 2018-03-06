@@ -37,12 +37,12 @@
  
  
   
-  <property name="catalogid">oi/catalog</property>
+  <property name="catalogid">site/catalog</property>
   <property name="editable">true</property>
   <property name="fallbackdirectory">/WEB-INF/base/emfrontend</property>
   <property name="themeprefix">/${applicationid}/theme</property>
   <property name="title">OpenInstitute</property>
-  <property name="applicationid">oi/app</property>
+  <property name="applicationid">site/app</property>
   <inner-layout>${themeprefix}/layouts/application.html</inner-layout>
   <permission name="openeditdirectedit">
     <group id="administrators"/>
