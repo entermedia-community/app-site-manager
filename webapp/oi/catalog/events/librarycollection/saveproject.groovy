@@ -39,7 +39,6 @@ public void init()
 	
 	collectionsearcher.saveData(data);
 	
-	context.redirect("./index.html")
 }
 
 init();
