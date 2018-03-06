@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -40,7 +39,7 @@ public class SiteManager implements CatalogEnabled
 		WebEmail templatemail = inArchive.createSystemEmail(inReal.get("notifyemail"), templatePage);
 
 		templatemail.setSubject("[EM][" + inReal.get("name") + "] error resolved");
-		Map objects = new HashMap();
+		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
 		objects.put("dates", inDates);
 		templatemail.send(objects);
@@ -53,7 +52,7 @@ public class SiteManager implements CatalogEnabled
 		WebEmail templatemail = inArchive.createSystemEmail(inReal.get("notifyemail"), templatePage);
 		
 		templatemail.setSubject("[EM][" + inReal.get("name") + "] error detected");
-		Map objects = new HashMap();
+		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
 		templatemail.send(objects);
 		inReal.setProperty("mailsent", "true");
@@ -156,11 +155,6 @@ public class SiteManager implements CatalogEnabled
 
 		try
 		{
-			if (inReal.get("diskpartitions") == null)
-			{
-				return null;
-			}
-			
 			ObjectMapper mapper = new ObjectMapper();
 			Downloader downloader = new Downloader();
 			
@@ -247,7 +241,6 @@ public class SiteManager implements CatalogEnabled
 				{
 					real.setValue("nodisk", true);
 					disk = true;
-					//set disk to tru to get exception no disk in email?
 				}
 				else
 				{
