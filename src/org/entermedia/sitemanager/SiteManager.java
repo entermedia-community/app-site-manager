@@ -240,7 +240,6 @@ public class SiteManager implements CatalogEnabled
 				if (disk == false)
 				{
 					real.setValue("nodisk", true);
-					disk = true;
 				}
 				else
 				{
