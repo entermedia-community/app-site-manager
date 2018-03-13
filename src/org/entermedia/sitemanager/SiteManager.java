@@ -2,6 +2,9 @@ package org.entermedia.sitemanager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.entermedia.diskpartitions.DiskPartition;
+import org.entermedia.diskpartitions.DiskSpace;
+import org.entermedia.softwareversions.SoftwareVersion;
 import org.entermediadb.asset.MediaArchive;
 import org.entermediadb.email.WebEmail;
 import org.entermediadb.modules.update.Downloader;
@@ -33,7 +36,7 @@ public class SiteManager implements CatalogEnabled
 	private String catalogId;
 	private JSONObject fieldJson;
 
-	private void sendResolved(Data inReal, MediaArchive inArchive, String inDates)
+	private void sendResolved(MultiValued inReal, MediaArchive inArchive, String inDates)
 	{
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-resolve.html";
 		WebEmail templatemail = inArchive.createSystemEmail(inReal.get("notifyemail"), templatePage);
@@ -46,11 +49,11 @@ public class SiteManager implements CatalogEnabled
 		inReal.setProperty("mailsent", "false");
 	}
 
-	private void buildEmail(Data inReal, MediaArchive inArchive)
+	private void buildEmail(MultiValued inReal, MediaArchive inArchive)
 	{
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-error.html";
 		WebEmail templatemail = inArchive.createSystemEmail(inReal.get("notifyemail"), templatePage);
-		
+
 		templatemail.setSubject("[EM][" + inReal.get("name") + "] error detected");
 		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
@@ -68,7 +71,7 @@ public class SiteManager implements CatalogEnabled
 		if (inIsDisk)
 		{
 			Double dfree = new Double(inUsed);
-			dused = dtotal - dfree; 
+			dused = dtotal - dfree;
 		}
 		else
 		{
@@ -91,16 +94,15 @@ public class SiteManager implements CatalogEnabled
 				Integer maxmemkusage = (Integer) inReal.getValue("memmaxusage");
 				//CPU
 				//HEAP
-				
+
 				put("MEMORY", maxmemkusage);
 				put("DISK", maxdiskusage);
-//				put("CPU", maxcpukusage);
-//				put("HEAP", maxheapusage);
+				//				put("CPU", maxcpukusage);
+				//				put("HEAP", maxheapusage);
 			}
 		};
 		return map;
 	}
-
 
 	private MultiValued buildData(MultiValued inReal, XmlMonitoringParser inParser, boolean inMemory, boolean inCpu, boolean inHeap, boolean inDisk)
 	{
@@ -108,9 +110,9 @@ public class SiteManager implements CatalogEnabled
 		inReal.setProperty("heapusedpercent", inParser.getHeappercent());
 
 		List<String> avg = null;
-		
+
 		Collection<String> average = inReal.getValues("loadaverage");
-		if ( average != null)
+		if (average != null)
 		{
 			avg = new ArrayList<>(average);
 		}
@@ -121,9 +123,9 @@ public class SiteManager implements CatalogEnabled
 		avg.add(inParser.getCpu());
 		if (avg.size() > 10)
 		{
-			avg = avg.subList(avg.size() - 10,  avg.size() - 1);
+			avg = avg.subList(avg.size() - 10, avg.size() - 1);
 		}
-		
+
 		inReal.setValue("loadaverage", avg);
 		inReal.setValue("isreachable", true);
 
@@ -133,38 +135,39 @@ public class SiteManager implements CatalogEnabled
 		inReal.setProperty("ismemory", String.valueOf(inMemory));
 		inReal.setProperty("iscpu", String.valueOf(inCpu));
 		inReal.setProperty("isheap", String.valueOf(inHeap));
-		
+
 		inReal.setProperty("isdisk", String.valueOf(inDisk));
 		return inReal;
 	}
 	
 	private String buildURL(Data inReal, String fileURL)
 	{
-		String dns = inReal.get("url"); 
+		String dns = inReal.get("url");
 		if (dns.endsWith("/"))
 		{
 			inReal.setProperty("url", dns.substring(0, (dns.length() - 1)));
 		}
 		return inReal.get("url") + fileURL;
 	}
-	
+
 	private DiskSpace checkDisksOverload(MultiValued inReal, int inPercent)
 	{
-		DiskSpace diskSpace = new DiskSpace(new ArrayList<DiskPartition>());
 		ArrayList<DiskPartition> partitions = new ArrayList<DiskPartition>();
+		DiskSpace diskSpace = new DiskSpace(partitions);
 
 		try
 		{
 			ObjectMapper mapper = new ObjectMapper();
 			Downloader downloader = new Downloader();
-			
-			String jsonString = downloader.downloadToString(buildURL(inReal, "/assets/mediadb/services/system/diskmonitor.json"));
-			JSONObject json = (JSONObject)new JSONParser().parse(jsonString);
-			
-	        JSONArray results = (JSONArray) json.get("results");
-	        for(Object partitionObj: results.toArray()){
 
-	            JSONObject partition = (JSONObject)partitionObj;
+			String jsonString = downloader.downloadToString(buildURL(inReal, "/assets/mediadb/services/system/diskmonitor.json"));
+			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
+
+			JSONArray results = (JSONArray) json.get("results");
+			for (Object partitionObj : results.toArray())
+			{
+
+				JSONObject partition = (JSONObject) partitionObj;
 				DiskPartition diskPartiton = mapper.readValue(partition.toJSONString(), DiskPartition.class);
 
 				boolean isOverloaded = isOverloaded(diskPartiton.getFreePartitionSpace().toString(), diskPartiton.getTotalCapacity().toString(), inPercent, true);
@@ -172,7 +175,7 @@ public class SiteManager implements CatalogEnabled
 
 				partitions.add(diskPartiton);
 
-	        }
+			}
 		}
 		catch (Exception e)
 		{
@@ -180,6 +183,49 @@ public class SiteManager implements CatalogEnabled
 		}
 		diskSpace.setPartitions(partitions);
 		return diskSpace;
+	}
+	
+	public void scanSoftwareVersions(MediaArchive inArchive)
+	{
+		Collection<Data> sitestomonitor = inArchive.getList("monitoredsites");
+		Searcher sites = inArchive.getSearcher("monitoredsites");
+
+		for (Data it : sitestomonitor)
+		{
+			MultiValued real = (MultiValued) sites.loadData(it);
+		
+			if (real.get("monitoringstatus").compareTo("ok") == 0)
+			{
+				try
+				{
+					ObjectMapper mapper = new ObjectMapper();
+					Downloader downloader = new Downloader();
+		
+					String jsonString = downloader.downloadToString(buildURL(real, "/assets/mediadb/services/system/softwareversions.json"));
+					JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
+		
+					JSONArray results = (JSONArray) json.get("results");
+					for (Object versionObj : results.toArray())
+					{
+		
+						JSONObject partition = (JSONObject) versionObj;
+						SoftwareVersion version = mapper.readValue(partition.toJSONString(), SoftwareVersion.class);
+		
+						
+						if (version.getName() != null)
+						{
+							real.setValue("version_" + version.getName(), version.getVersion()!=null?version.getVersion():"");
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+					log.error(e);
+				}
+			}
+			sites.saveData(real, null);
+		}
 	}
 
 	
@@ -219,7 +265,7 @@ public class SiteManager implements CatalogEnabled
 					{
 					}
 					TimeUnit.SECONDS.sleep(5);
-				}				
+				}
 				if (!reachable)
 				{
 					real.setValue("isreachable", false);
@@ -229,11 +275,11 @@ public class SiteManager implements CatalogEnabled
 				if (parser.getStat() != null && parser.getStat().compareToIgnoreCase("ok") > 0)
 				{
 					throw new OpenEditException("Server returns invalid status");
-				}				
+				}
 
 				//TODO Calculate mem usage average over the past X Hour/minutes
 				memory = isOverloaded(parser.getMemoryfree(), parser.getMemorytotal(), map.get("MEMORY"), false);
-				
+
 				DiskSpace diskSpace = checkDisksOverload(real, map.get("DISK"));
 				disk = diskSpace.isOnePartitionOverloaded();
 
@@ -246,7 +292,7 @@ public class SiteManager implements CatalogEnabled
 					real.setValue("nodisk", false);
 					real.setValue("partitions", diskSpace.getPartitions());
 				}
-				
+
 				if (parser.getHeappercent() != null)
 				{
 					heap = new Double(parser.getHeappercent()) >= 90 ? true : false;
@@ -258,7 +304,7 @@ public class SiteManager implements CatalogEnabled
 				}
 
 				real = buildData(real, parser, memory, cpu, heap, disk);
-				
+
 				if (memory || heap || cpu || disk)
 				{
 					throw new OpenEditException("Hardware overload");

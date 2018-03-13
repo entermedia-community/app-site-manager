@@ -8,11 +8,20 @@ public class SiteModule extends BaseMediaModule
 {
 	public void checkSites(WebPageRequest inReq)
 	{
-			String catalogid = inReq.findValue("catalogid");
-			SiteManager manager = (SiteManager)getModuleManager().getBean(catalogid,"siteManager");
-			MediaArchive archive = getMediaArchive(inReq);
+		String catalogid = inReq.findValue("catalogid");
+		SiteManager manager = (SiteManager) getModuleManager().getBean(catalogid, "siteManager");
+		MediaArchive archive = getMediaArchive(inReq);
 
-			manager.scan(archive);
+		manager.scan(archive);
 	}
-}
 
+	public void checkVersions(WebPageRequest inReq)
+	{
+		String catalogid = inReq.findValue("catalogid");
+		SiteManager manager = (SiteManager) getModuleManager().getBean(catalogid, "siteManager");
+		MediaArchive archive = getMediaArchive(inReq);
+
+		manager.scanSoftwareVersions(archive);
+	}
+
+}

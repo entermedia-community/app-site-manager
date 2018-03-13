@@ -1,4 +1,4 @@
-package org.entermedia.sitemanager;
+package org.entermedia.diskpartitions;
 
 import java.util.ArrayList;
 

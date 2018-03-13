@@ -17,4 +17,9 @@
   <property id="diskavailable" index="true" editable="true" keyword="true">Disk Space Available</property>
   <property id="diskmaxusage" index="true" editable="true" keyword="true">Maximum Disk Usage</property>
   <property id="memmaxusage" index="true" editable="true" keyword="true">Maximum Memory Usage</property>
+  <property id="version_docker" index="true" editable="true" keyword="true">Docker's version</property>
+  <property id="version_imagemagick" index="true" editable="true" keyword="true">ImageMagick's version</property>
+  <property id="version_ffmpeg" index="true" editable="true" keyword="true">FFMPEG's version</property>
+  <property id="version_ghostscript" index="true" editable="true" keyword="true">Ghost Script's version</property>
+  <property id="version_soffice" index="true" editable="true" keyword="true">SOffice's version</property>
 </properties>

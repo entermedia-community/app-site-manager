@@ -1,4 +1,4 @@
-package org.entermedia.sitemanager;
+package org.entermedia.diskpartitions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,0 +1,11 @@
+<page>
+<property name="eventname">Monitor sites for software versions</property>	
+	<property name="eventdescription">Check IM, GS, SOffice, FFMPEG and Docker version</property>	
+
+
+<path-action name="SiteModule.checkVersions">
+</path-action>
+  	<property name="period">30d</property>
+  
+<property name="virtual">true</property>
+</page>
