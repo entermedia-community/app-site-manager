@@ -264,7 +264,7 @@ public class SiteManager implements CatalogEnabled
 					catch (Exception e)
 					{
 					}
-					TimeUnit.SECONDS.sleep(5);
+					TimeUnit.SECONDS.sleep(8);
 				}
 				if (!reachable)
 				{
