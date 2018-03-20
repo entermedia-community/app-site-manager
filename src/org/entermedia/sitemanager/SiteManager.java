@@ -4,6 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.entermedia.diskpartitions.DiskPartition;
 import org.entermedia.diskpartitions.DiskSpace;
+import org.entermedia.serverstats.ServerStat;
+import org.entermedia.serverstats.ServerStats;
 import org.entermedia.softwareversions.SoftwareVersion;
 import org.entermediadb.asset.MediaArchive;
 import org.entermediadb.email.WebEmail;
@@ -20,7 +22,6 @@ import org.openedit.util.DateStorageUtil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -35,7 +36,8 @@ public class SiteManager implements CatalogEnabled
 
 	private String catalogId;
 	private JSONObject fieldJson;
-
+	private int MAX_ERROR = 10;
+	
 	private void sendResolved(MultiValued inReal, MediaArchive inArchive, String inDates)
 	{
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-resolve.html";
@@ -47,6 +49,7 @@ public class SiteManager implements CatalogEnabled
 		objects.put("dates", inDates);
 		templatemail.send(objects);
 		inReal.setProperty("mailsent", "false");
+		inReal.setValue("alertcount", 0);
 	}
 
 	private void buildEmail(MultiValued inReal, MediaArchive inArchive)
@@ -62,23 +65,16 @@ public class SiteManager implements CatalogEnabled
 
 	}
 
-	private boolean isOverloaded(String inUsed, String inTotal, int inPercent, boolean inIsDisk)
+	private boolean isOverloaded(Long inUsed, Long inTotal, int inPercent, boolean inIsDisk)
 	{
 		if (inUsed == null || inTotal == null)
 			throw new OpenEditException("Can't retrieve instance's server hardware usage");
-		Double dused = null;
-		Double dtotal = new Double(inTotal);
 		if (inIsDisk)
 		{
-			Double dfree = new Double(inUsed);
-			dused = dtotal - dfree;
+			inUsed = inTotal - inUsed;
 		}
-		else
-		{
-			dused = new Double(inUsed);
-		}
-
-		if (((dused / dtotal) * 100) >= inPercent)
+		double percentageUsed = 100.0 * inUsed / inTotal;
+		if (percentageUsed >= inPercent)
 		{
 			return true;
 		}
@@ -104,12 +100,12 @@ public class SiteManager implements CatalogEnabled
 		return map;
 	}
 
-	private MultiValued buildData(MultiValued inReal, XmlMonitoringParser inParser, boolean inMemory, boolean inCpu, boolean inHeap, boolean inDisk)
+	private MultiValued buildData(MultiValued inReal, ServerStats inStats, boolean inMemory, boolean inCpu, boolean inHeap, boolean inDisk)
 	{
-		inReal.setProperty("heapused", inParser.getHeap());
-		inReal.setProperty("heapusedpercent", inParser.getHeappercent());
+		//		inReal.setProperty("heapused", inParser.getHeap());
+		//		inReal.setProperty("heapusedpercent", inParser.getHeappercent());
 
-		List<String> avg = null;
+		List<Object> avg = null;
 
 		Collection<String> average = inReal.getValues("loadaverage");
 		if (average != null)
@@ -120,7 +116,7 @@ public class SiteManager implements CatalogEnabled
 		{
 			avg = new ArrayList<>();
 		}
-		avg.add(inParser.getCpu());
+		avg.add(inStats.getCpu());
 		if (avg.size() > 10)
 		{
 			avg = avg.subList(avg.size() - 10, avg.size() - 1);
@@ -129,8 +125,12 @@ public class SiteManager implements CatalogEnabled
 		inReal.setValue("loadaverage", avg);
 		inReal.setValue("isreachable", true);
 
-		inReal.setProperty("servermemoryfree", inParser.getMemoryfree());
-		inReal.setProperty("servermemorytotal", inParser.getMemorytotal());
+		inReal.setValue("servermemoryfree", inStats.getMemoryfree());
+		inReal.setValue("servermemorytotal", inStats.getMemorytotal());
+		inReal.setValue("serverprocesscpu", inStats.getProcessCPU());
+		inReal.setValue("serversystemcpu", inStats.getCpu());
+		inReal.setValue("serverswaptotal", inStats.getSwapSize());
+		inReal.setValue("serverswapfree", inStats.getSwapFree());
 
 		inReal.setProperty("ismemory", String.valueOf(inMemory));
 		inReal.setProperty("iscpu", String.valueOf(inCpu));
@@ -139,7 +139,7 @@ public class SiteManager implements CatalogEnabled
 		inReal.setProperty("isdisk", String.valueOf(inDisk));
 		return inReal;
 	}
-	
+
 	private String buildURL(Data inReal, String fileURL)
 	{
 		String dns = inReal.get("url");
@@ -150,7 +150,7 @@ public class SiteManager implements CatalogEnabled
 		return inReal.get("url") + fileURL;
 	}
 
-	private DiskSpace checkDisksOverload(MultiValued inReal, int inPercent)
+	private DiskSpace scanDisks(MultiValued inReal, int inPercent)
 	{
 		ArrayList<DiskPartition> partitions = new ArrayList<DiskPartition>();
 		DiskSpace diskSpace = new DiskSpace(partitions);
@@ -160,17 +160,17 @@ public class SiteManager implements CatalogEnabled
 			ObjectMapper mapper = new ObjectMapper();
 			Downloader downloader = new Downloader();
 
-			String jsonString = downloader.downloadToString(buildURL(inReal, "/assets/mediadb/services/system/diskmonitor.json"));
+			String jsonString = downloader.downloadToString(buildURL(inReal, "/assets/mediadb/services/system/systemstatus.json"));
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
-			JSONArray results = (JSONArray) json.get("results");
+			JSONArray results = (JSONArray) json.get("partitions");
 			for (Object partitionObj : results.toArray())
 			{
 
 				JSONObject partition = (JSONObject) partitionObj;
 				DiskPartition diskPartiton = mapper.readValue(partition.toJSONString(), DiskPartition.class);
 
-				boolean isOverloaded = isOverloaded(diskPartiton.getFreePartitionSpace().toString(), diskPartiton.getTotalCapacity().toString(), inPercent, true);
+				boolean isOverloaded = isOverloaded(diskPartiton.getFreePartitionSpace(), diskPartiton.getTotalCapacity(), inPercent, true);
 				diskPartiton.setIsOverloaded(isOverloaded);
 
 				partitions.add(diskPartiton);
@@ -184,7 +184,7 @@ public class SiteManager implements CatalogEnabled
 		diskSpace.setPartitions(partitions);
 		return diskSpace;
 	}
-	
+
 	public void scanSoftwareVersions(MediaArchive inArchive)
 	{
 		Collection<Data> sitestomonitor = inArchive.getList("monitoredsites");
@@ -193,28 +193,27 @@ public class SiteManager implements CatalogEnabled
 		for (Data it : sitestomonitor)
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
-		
+
 			if (real.get("monitoringstatus").compareTo("ok") == 0)
 			{
 				try
 				{
 					ObjectMapper mapper = new ObjectMapper();
 					Downloader downloader = new Downloader();
-		
+
 					String jsonString = downloader.downloadToString(buildURL(real, "/assets/mediadb/services/system/softwareversions.json"));
 					JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
-		
+
 					JSONArray results = (JSONArray) json.get("results");
 					for (Object versionObj : results.toArray())
 					{
-		
+
 						JSONObject partition = (JSONObject) versionObj;
 						SoftwareVersion version = mapper.readValue(partition.toJSONString(), SoftwareVersion.class);
-		
-						
+
 						if (version.getName() != null)
 						{
-							real.setValue("version_" + version.getName(), version.getVersion()!=null?version.getVersion():"");
+							real.setValue("version_" + version.getName(), version.getVersion() != null ? version.getVersion() : "");
 						}
 					}
 				}
@@ -228,7 +227,58 @@ public class SiteManager implements CatalogEnabled
 		}
 	}
 
-	
+	private ServerStats scanStats(ServerStats stats, MultiValued inReal)
+	{
+		ArrayList<ServerStat> statList = new ArrayList<ServerStat>();
+
+		try
+		{
+			ObjectMapper mapper = new ObjectMapper();
+			Downloader downloader = new Downloader();
+
+			String jsonString = downloader.downloadToString(buildURL(inReal, "/assets/mediadb/services/system/systemstatus.json"));
+			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
+
+			JSONArray results = (JSONArray) json.get("stats");
+			for (Object statObj : results.toArray())
+			{
+				JSONObject statJSON = (JSONObject) statObj;
+
+				ServerStat stat = mapper.readValue(statJSON.toJSONString(), ServerStat.class);
+				statList.add(stat);
+			}
+			stats.build(statList);
+		}
+		catch (Exception e)
+		{
+			throw new OpenEditException(e);
+		}
+		return stats;
+	}
+
+	private boolean checkServerStatus(MultiValued inReal)
+	{
+		try
+		{
+			Downloader downloader = new Downloader();
+
+			String jsonString = downloader.downloadToString(buildURL(inReal, "/assets/mediadb/services/system/systemstatus.json"));
+			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
+
+			JSONObject results = (JSONObject) json.get("response");
+
+			if (results.get("status").equals("ok"))
+			{
+				return true;
+			}
+		}
+		catch (Exception e)
+		{
+			throw new OpenEditException(e);
+		}
+		return false;
+	}
+
 	public void scan(MediaArchive inArchive)
 	{
 		log.info("starting scan");
@@ -239,8 +289,7 @@ public class SiteManager implements CatalogEnabled
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
 			String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
-			String url = buildURL(real, "/entermedia/services/rest/systemstatus.xml");
-			XmlMonitoringParser parser = null;
+			ServerStats stats = new ServerStats();
 
 			Map<String, Integer> map = getUsageMaxByClient(real);
 			try
@@ -251,20 +300,21 @@ public class SiteManager implements CatalogEnabled
 				boolean cpu = false;
 				boolean reachable = false;
 
-				URL baseurl = new URL(url);
-
 				for (int i = 0; i < 3; i++)
 				{
 					try
 					{
-						parser = new XmlMonitoringParser(baseurl);
+						stats = scanStats(stats, real);
 						reachable = true;
 						break;
 					}
 					catch (Exception e)
 					{
 					}
-					TimeUnit.SECONDS.sleep(8);
+					if (i < 3)
+					{
+						TimeUnit.SECONDS.sleep(5);
+					}
 				}
 				if (!reachable)
 				{
@@ -272,15 +322,15 @@ public class SiteManager implements CatalogEnabled
 					throw new OpenEditException("Server unreachable");
 				}
 
-				if (parser.getStat() != null && parser.getStat().compareToIgnoreCase("ok") > 0)
+				if (!checkServerStatus(real))
 				{
 					throw new OpenEditException("Server returns invalid status");
 				}
 
 				//TODO Calculate mem usage average over the past X Hour/minutes
-				memory = isOverloaded(parser.getMemoryfree(), parser.getMemorytotal(), map.get("MEMORY"), false);
+				//memory = isOverloaded((Long)stats.getMemoryfree(), (Long)stats.getMemorytotal(), map.get("MEMORY"), false);
 
-				DiskSpace diskSpace = checkDisksOverload(real, map.get("DISK"));
+				DiskSpace diskSpace = scanDisks(real, map.get("DISK"));
 				disk = diskSpace.isOnePartitionOverloaded();
 
 				if (disk == false)
@@ -293,17 +343,17 @@ public class SiteManager implements CatalogEnabled
 					real.setValue("partitions", diskSpace.getPartitions());
 				}
 
-				if (parser.getHeappercent() != null)
-				{
-					heap = new Double(parser.getHeappercent()) >= 90 ? true : false;
-				}
-				if (parser.getCpu() != null)
-				{
-					cpu = new Double(parser.getCpu()) >= 90 ? true : false;
+				//				if (parser.getHeappercent() != null)
+				//				{
+				//					heap = new Double(stats.getHeappercent()) >= 90 ? true : false;
+				//				}
+				//				if (stats.getCpu() != null)
+				//				{
+				//					cpu = new Double(stats.getCpu()) >= 90 ? true : false;
+				//
+				//				}
 
-				}
-
-				real = buildData(real, parser, memory, cpu, heap, disk);
+				real = buildData(real, stats, memory, cpu, heap, disk);
 
 				if (memory || heap || cpu || disk)
 				{
@@ -325,12 +375,22 @@ public class SiteManager implements CatalogEnabled
 				log.error("Error checking " + real.get("name"), e);
 				e.printStackTrace();
 				real.setProperty("monitoringstatus", "error");
-
-				if (!Boolean.parseBoolean(real.get("mailsent")))
+				Integer alertcount = new Integer(0);
+				if (real.get("alertcount") != null) 
 				{
-					if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
+					alertcount = new Integer(real.get("alertcount"));
+				}
+				
+				if ( alertcount <= MAX_ERROR)
+				{
+					alertcount += 1;
+					real.setValue("alertcount", alertcount);
+					if (!Boolean.parseBoolean(real.get("mailsent")))
 					{
-						buildEmail(real, inArchive);
+						if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
+						{
+							buildEmail(real, inArchive);
+						}
 					}
 				}
 			}
