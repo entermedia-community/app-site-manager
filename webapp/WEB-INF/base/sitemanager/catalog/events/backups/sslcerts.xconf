@@ -1,0 +1,9 @@
+<page>
+<property name="eventname">Monitor sites for SSL certificates</property>	
+	<property name="eventdescription">Check SSL certs expiration date</property>	
+<path-action name="SSLModule.checkSSL">
+</path-action>
+  	<property name="period">1d</property>
+  
+<property name="virtual">true</property>
+</page>

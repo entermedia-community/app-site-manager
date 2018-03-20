@@ -7,6 +7,10 @@
 </bean>
 <bean id="siteManager" class="org.entermedia.sitemanager.SiteManager" scope="prototype">
 </bean>
+<bean id="SSLModule" class="org.entermedia.sslcertificates.SSLModule">
+</bean>
+<bean id="sslManager" class="org.entermedia.sslcertificates.SSLManager" scope="prototype">
+</bean>
 
 
 </beans>
