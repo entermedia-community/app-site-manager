@@ -20,6 +20,7 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.codehaus.groovy.runtime.callsite.CallSiteClassLoader;
 import org.entermediadb.asset.MediaArchive;
 import org.entermediadb.email.WebEmail;
 import org.openedit.Data;
@@ -32,19 +33,6 @@ public class SSLManager
 {
 	private static final Log log = LogFactory.getLog(SSLManager.class);
 	private int DAYS_BEFORE_EXPIRATION = 10;
-
-	private void sendResolved(Data inReal, MediaArchive inArchive, String inDates)
-	{
-		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-resolve.html"; // change to SSL template or modify template
-		WebEmail templatemail = inArchive.createSystemEmail(inReal.get("notifyemail"), templatePage);
-
-		templatemail.setSubject("[EM][" + inReal.get("name") + "][SSL] error resolved");
-		Map<String, Object> objects = new HashMap<String, Object>();
-		objects.put("monitored", inReal);
-		objects.put("dates", inDates);
-		templatemail.send(objects);
-		inReal.setProperty("mailsent", "false");
-	}
 
 	private void buildEmail(Data inReal, MediaArchive inArchive)
 	{
@@ -73,11 +61,11 @@ public class SSLManager
 	{
 		Collection<Data> sitestomonitor = inArchive.getList("monitoredsites");
 		Searcher sites = inArchive.getSearcher("monitoredsites");
+		Date today = DateStorageUtil.getStorageUtil().getToday(); 
 
 		for (Data it : sitestomonitor)
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
-			String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
 			URL url = null;
 
 			try
@@ -89,44 +77,53 @@ public class SSLManager
 				SSLContext.setDefault(ctx);
 
 				url = new URL(buildURL(real));
-				HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-				conn.setHostnameVerifier(new HostnameVerifier()
+				HttpsURLConnection conn = null;
+				try 
 				{
-					@Override
-					public boolean verify(String arg0, SSLSession arg1)
+					conn = (HttpsURLConnection) url.openConnection();
+					conn.setHostnameVerifier(new HostnameVerifier()
 					{
-						return true;
-					}
-				});
-				conn.connect();
+						@Override
+						public boolean verify(String arg0, SSLSession arg1)
+						{
+							return true;
+						}
+					});
+					conn.connect();
+				}
+				catch (Exception e) {
+					real.setValue("sslstatus", "error");
+					throw new OpenEditException("Can't get SSL certificate from " + url);
+				}
 				Certificate[] certs = conn.getServerCertificates();
+				
 				if (certs[0] != null)
 				{
 					X509Certificate ssl = (X509Certificate) certs[0];
-
-					if (isAboutToExpire(ssl.getNotAfter()))
+					Date expirationDate = ssl.getNotAfter();
+					
+					if (today.equals(expirationDate) || today.after(expirationDate))
 					{
-						real.setValue("issslexpiring", true);
+//						real.setValue("issslexpiring", true);
+						real.setValue("sslstatus", "expired");
+						throw new OpenEditException("SSL certificate has expired");
+						
+					}
+					else if (today.after(DateStorageUtil.getStorageUtil().substractDaysToDate(expirationDate, DAYS_BEFORE_EXPIRATION)))
+					{
+//						real.setValue("issslexpiring", true);
+						real.setValue("sslstatus", "torenew");
+						real.setValue("expirationdate", expirationDate);
 						throw new OpenEditException("SSL certificate is about to expire");
 					}
-					else if (real.get("monitoringstatus") != null && real.get("monitoringstatus").compareToIgnoreCase("error") == 0)
-					{
-						log.info("SSL certificate for " + url + " is expiring in on " + ssl.getNotAfter());
-						sendResolved(real, inArchive, dates);
-						real.setValue("monitoringstatus", "ok");
-					}
-				}
-				else
-				{
-					real.setValue("issslreachable", false);
-					throw new OpenEditException("Can't get SSL certificate from " + url);
+					log.info("SSL certificate for " + url + " is expiring in on " + ssl.getNotAfter());
+					real.setValue("sslstatus", "ok");
 				}
 				conn.disconnect();
 			}
 			catch (Exception e)
 			{
 				e.printStackTrace();
-				real.setValue("monitoringstatus", "error");
 				real.setValue("isssl", true);
 				if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
 				{
@@ -135,16 +132,6 @@ public class SSLManager
 			}
 			sites.saveData(real, null);
 		}
-	}
-
-	private boolean isAboutToExpire(Date cert)
-	{
-		Date today = DateStorageUtil.getStorageUtil().getToday(); 
-		if (today.after(DateStorageUtil.getStorageUtil().substractDaysToDate(cert, DAYS_BEFORE_EXPIRATION)))
-		{
-			return true;
-		}
-		return false;
 	}
 
 	private static class DefaultTrustManager implements X509TrustManager

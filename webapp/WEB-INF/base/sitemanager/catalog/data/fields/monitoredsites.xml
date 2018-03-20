@@ -23,4 +23,5 @@
   <property id="version_ghostscript" index="true" editable="true" keyword="true">Ghost Script's version</property>
   <property id="version_soffice" index="true" editable="true" keyword="true">SOffice's version</property>
   <property id="alertcount" index="true" editable="true" keyword="true" type="number">Error count</property>
+  <property id="sslstatus" index="true" stored="true" editable="true" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">SSL Status</property>
 </properties>
