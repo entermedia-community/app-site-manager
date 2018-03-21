@@ -20,7 +20,6 @@ import javax.net.ssl.X509TrustManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.codehaus.groovy.runtime.callsite.CallSiteClassLoader;
 import org.entermediadb.asset.MediaArchive;
 import org.entermediadb.email.WebEmail;
 import org.openedit.Data;
@@ -104,14 +103,12 @@ public class SSLManager
 					
 					if (today.equals(expirationDate) || today.after(expirationDate))
 					{
-//						real.setValue("issslexpiring", true);
 						real.setValue("sslstatus", "expired");
 						throw new OpenEditException("SSL certificate has expired");
 						
 					}
 					else if (today.after(DateStorageUtil.getStorageUtil().substractDaysToDate(expirationDate, DAYS_BEFORE_EXPIRATION)))
 					{
-//						real.setValue("issslexpiring", true);
 						real.setValue("sslstatus", "torenew");
 						real.setValue("expirationdate", expirationDate);
 						throw new OpenEditException("SSL certificate is about to expire");

@@ -194,7 +194,7 @@ public class SiteManager implements CatalogEnabled
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
 
-			if (real.get("monitoringstatus").compareTo("ok") == 0)
+			if (real.get("monitoringstatus") != null && real.get("monitoringstatus").compareTo("ok") == 0)
 			{
 				try
 				{
@@ -267,7 +267,7 @@ public class SiteManager implements CatalogEnabled
 
 			JSONObject results = (JSONObject) json.get("response");
 
-			if (results.get("status").equals("ok"))
+			if (results.get("status") != null && results.get("status").equals("ok"))
 			{
 				return true;
 			}
