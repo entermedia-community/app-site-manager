@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sslstatuss> 
+  <sslstatus id="error" name="error">error</sslstatus>
+  <sslstatus id="expired" name="expired">expired</sslstatus>
+  <sslstatus id="ok" name="ok">ok</sslstatus>
+  <sslstatus id="torenew" name="torenew">torenew</sslstatus>
+</sslstatuss>
