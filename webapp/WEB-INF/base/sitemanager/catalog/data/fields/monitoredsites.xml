@@ -9,7 +9,7 @@
   <property id="mailsent" index="true" type="boolean" stored="true" editable="true" searchtype="monitoredsites" internalfield="false">Emails Sent</property>
   <property id="servermemoryfree" index="true" editable="true" keyword="true">Server Memory Free</property> 
   <property id="servermemorytotal" index="true" editable="true" keyword="true">Server Memory Total</property> 
-  <property id="loadaverage" index="true" editable="true" keyword="true" datatype="multi">Load Average</property>
+  <property id="cpuload" index="true" editable="true" keyword="true" type="number" datatype="multi">CPU Load</property>
   <property id="heapusedpercent" index="true" editable="true" keyword="true">Heap Used Percentage</property>
   <property id="heapused" index="true" editable="true" keyword="true">Heap Used</property>
   <property id="disktotal" index="true" editable="true" keyword="true">Disk Space Total</property>
@@ -26,4 +26,5 @@
   <property id="sslstatus" index="true" stored="true" editable="true" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">SSL Status</property>
   <property id="alerttype" index="true" stored="true" editable="true" viewtype="tageditor" rendertype="tageditor" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">Error type</property>
   <property id="executiontime" index="true" editable="true" keyword="true">Instance response time</property>
+  <property id="loadaverage" index="true" editable="true" keyword="true">CPU Load Average</property>
  </properties>

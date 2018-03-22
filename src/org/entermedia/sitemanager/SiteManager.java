@@ -22,6 +22,7 @@ import org.openedit.util.DateStorageUtil;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -37,6 +38,7 @@ public class SiteManager implements CatalogEnabled
 	private String catalogId;
 	private JSONObject fieldJson;
 	private int MAX_ERROR = 10;
+	int CPU_TIME_AVG = 10;
 
 	private void sendResolved(MultiValued inReal, MediaArchive inArchive, String inDates)
 	{
@@ -95,6 +97,7 @@ public class SiteManager implements CatalogEnabled
 				put("DISK", maxdiskusage);
 				//				put("CPU", maxcpukusage);
 				//				put("HEAP", maxheapusage);
+				//				put("SWAP", maxheapusage);
 			}
 		};
 		return map;
@@ -104,10 +107,9 @@ public class SiteManager implements CatalogEnabled
 	{
 		//		inReal.setProperty("heapused", inParser.getHeap());
 		//		inReal.setProperty("heapusedpercent", inParser.getHeappercent());
-
 		List<Object> avg = null;
 
-		Collection<String> average = inReal.getValues("loadaverage");
+		Collection<String> average = inReal.getValues("cpuload");
 		if (average != null)
 		{
 			avg = new ArrayList<>(average);
@@ -116,13 +118,13 @@ public class SiteManager implements CatalogEnabled
 		{
 			avg = new ArrayList<>();
 		}
-		avg.add(inStats.getCpu());
-		if (avg.size() > 10)
+		avg.add((Double)inStats.getCpu());
+		if (avg.size() > CPU_TIME_AVG)
 		{
 			avg = avg.subList(avg.size() - 10, avg.size() - 1);
 		}
 
-		inReal.setValue("loadaverage", avg);
+		inReal.setValue("loadaverage", new DecimalFormat("##.###").format(calculateAverage(avg)).toString() + "%");
 		inReal.setValue("isreachable", true);
 
 		inReal.setValue("servermemoryfree", inStats.getMemoryfree());
@@ -236,10 +238,10 @@ public class SiteManager implements CatalogEnabled
 			ObjectMapper mapper = new ObjectMapper();
 			Downloader downloader = new Downloader();
 
-			Long startTime = System.currentTimeMillis();			
+			Long startTime = System.currentTimeMillis();
 			String jsonString = downloader.downloadToString(buildURL(inReal, "/assets/mediadb/services/system/systemstatus.json"));
 			Long elapsedTime = System.currentTimeMillis() - startTime;
-	        inReal.setValue("executiontime", elapsedTime.toString() + "ms");
+			inReal.setValue("executiontime", elapsedTime.toString() + "ms");
 
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
@@ -318,6 +320,20 @@ public class SiteManager implements CatalogEnabled
 		inReal.setValue("alerttype", list);
 	}
 
+	private Double calculateAverage(List<Object> inList)
+	{
+		Double sum = 0.0;
+		if (!inList.isEmpty())
+		{
+			for (Object load : inList)
+			{
+				sum += (Double)load;
+			}
+			return sum / inList.size();
+		}
+		return sum;
+	}
+
 	public void scan(MediaArchive inArchive)
 	{
 		log.info("starting scan");
@@ -358,13 +374,17 @@ public class SiteManager implements CatalogEnabled
 				if (!reachable)
 				{
 					real.setValue("isreachable", false);
-					setErrorType(disk, memory, heap, cpu, reachable, false/*swap*/, real);
+					setErrorType(disk, memory, heap, cpu, reachable, false/*
+																			 * swap
+																			 */, real);
 					throw new OpenEditException("Server unreachable");
 				}
 
 				if (!checkServerStatus(real))
 				{
-					setErrorType(disk, memory, heap, cpu, reachable, false/*swap*/, real);
+					setErrorType(disk, memory, heap, cpu, reachable, false/*
+																			 * swap
+																			 */, real);
 					throw new OpenEditException("Server returns invalid status");
 				}
 
@@ -398,7 +418,9 @@ public class SiteManager implements CatalogEnabled
 
 				if (memory || heap || cpu || disk)
 				{
-					setErrorType(disk, memory, heap, cpu, reachable, false/*swap*/, real);
+					setErrorType(disk, memory, heap, cpu, reachable, false/*
+																			 * swap
+																			 */, real);
 					throw new OpenEditException("Hardware overload");
 				}
 
