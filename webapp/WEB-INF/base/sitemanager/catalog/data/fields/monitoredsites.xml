@@ -15,8 +15,8 @@
   <property id="disktotal" index="true" editable="true" keyword="true">Disk Space Total</property>
   <property id="diskfree" index="true" editable="true" keyword="true">Disk Space Free</property>
   <property id="diskavailable" index="true" editable="true" keyword="true">Disk Space Available</property>
-  <property id="diskmaxusage" index="true" editable="true" keyword="true">Maximum Disk Usage</property>
-  <property id="memmaxusage" index="true" editable="true" keyword="true">Maximum Memory Usage</property>
+  <property id="diskmaxusage" index="true" editable="true" keyword="true" type="number">Maximum Disk Usage</property>
+  <property id="memmaxusage" index="true" editable="true" keyword="true" type="number">Maximum Memory Usage</property>
   <property id="version_docker" index="true" editable="true" keyword="true">Docker's version</property>
   <property id="version_imagemagick" index="true" editable="true" keyword="true">ImageMagick's version</property>
   <property id="version_ffmpeg" index="true" editable="true" keyword="true">FFMPEG's version</property>
