@@ -1,0 +1,5 @@
+<properties beanname="listSearcher">
+  <property id="id" index="true" stored="true" editable="true" searchtype="monitoringerror" internalfield="true">Id</property>
+  <property id="name" index="true" stored="true" editable="true" searchtype="monitoringerror">Name</property>
+  <property id="sourcepath" searchtype="monitoringerror">SourcePath</property>
+</properties>

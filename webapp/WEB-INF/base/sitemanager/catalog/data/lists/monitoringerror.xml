@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<monitoringerrors> 
+  <monitoringerror id="disk" name="disk">Disk space overload</monitoringerror>
+  <monitoringerror id="memory" name="memory">Memory overload</monitoringerror>
+  <monitoringerror id="cpu" name="cpu">CPU overload</monitoringerror>
+  <monitoringerror id="swap" name="swap">Swap overload</monitoringerror>
+  <monitoringerror id="heap" name="heap">Heap overload</monitoringerror>
+  <monitoringerror id="reachable" name="reachable">Instance not reachable</monitoringerror>
+</monitoringerrors>

@@ -37,7 +37,7 @@ public class SiteManager implements CatalogEnabled
 	private String catalogId;
 	private JSONObject fieldJson;
 	private int MAX_ERROR = 10;
-	
+
 	private void sendResolved(MultiValued inReal, MediaArchive inArchive, String inDates)
 	{
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-resolve.html";
@@ -279,6 +279,41 @@ public class SiteManager implements CatalogEnabled
 		return false;
 	}
 
+	private void setErrorType(boolean disk, boolean memory, boolean heap, boolean cpu, boolean reachable, boolean swap, MultiValued inReal)
+	{
+		if (inReal == null)
+		{
+			throw new OpenEditException("Can't get monitored site data");
+		}
+
+		ArrayList<String> list = new ArrayList<String>();
+		if (disk)
+		{
+			list.add("disk");
+		}
+		if (memory)
+		{
+			list.add("memory");
+		}
+		if (heap)
+		{
+			list.add("heap");
+		}
+		if (cpu)
+		{
+			list.add("cpu");
+		}
+		if (!reachable)
+		{
+			list.add("reachable");
+		}
+		if (swap)
+		{
+			list.add("swap");
+		}
+		inReal.setValue("alerttype", list);
+	}
+
 	public void scan(MediaArchive inArchive)
 	{
 		log.info("starting scan");
@@ -319,11 +354,13 @@ public class SiteManager implements CatalogEnabled
 				if (!reachable)
 				{
 					real.setValue("isreachable", false);
+					setErrorType(disk, memory, heap, cpu, reachable, false/*swap*/, real);
 					throw new OpenEditException("Server unreachable");
 				}
 
 				if (!checkServerStatus(real))
 				{
+					setErrorType(disk, memory, heap, cpu, reachable, false/*swap*/, real);
 					throw new OpenEditException("Server returns invalid status");
 				}
 
@@ -357,6 +394,7 @@ public class SiteManager implements CatalogEnabled
 
 				if (memory || heap || cpu || disk)
 				{
+					setErrorType(disk, memory, heap, cpu, reachable, false/*swap*/, real);
 					throw new OpenEditException("Hardware overload");
 				}
 
@@ -376,12 +414,12 @@ public class SiteManager implements CatalogEnabled
 				e.printStackTrace();
 				real.setProperty("monitoringstatus", "error");
 				Integer alertcount = new Integer(0);
-				if (real.get("alertcount") != null) 
+				if (real.get("alertcount") != null)
 				{
 					alertcount = new Integer(real.get("alertcount"));
 				}
-				
-				if ( alertcount <= MAX_ERROR)
+
+				if (alertcount <= MAX_ERROR)
 				{
 					alertcount += 1;
 					real.setValue("alertcount", alertcount);

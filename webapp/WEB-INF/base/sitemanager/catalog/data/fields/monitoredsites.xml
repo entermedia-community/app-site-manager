@@ -24,4 +24,5 @@
   <property id="version_soffice" index="true" editable="true" keyword="true">SOffice's version</property>
   <property id="alertcount" index="true" editable="true" keyword="true" type="number">Error count</property>
   <property id="sslstatus" index="true" stored="true" editable="true" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">SSL Status</property>
+  <property id="alerttype" index="true" stored="true" editable="true" viewtype="tageditor" rendertype="tageditor" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">Error type</property>
 </properties>
