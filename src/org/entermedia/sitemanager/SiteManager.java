@@ -236,7 +236,11 @@ public class SiteManager implements CatalogEnabled
 			ObjectMapper mapper = new ObjectMapper();
 			Downloader downloader = new Downloader();
 
+			Long startTime = System.currentTimeMillis();			
 			String jsonString = downloader.downloadToString(buildURL(inReal, "/assets/mediadb/services/system/systemstatus.json"));
+			Long elapsedTime = System.currentTimeMillis() - startTime;
+	        inReal.setValue("executiontime", elapsedTime.toString() + "ms");
+
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
 			JSONArray results = (JSONArray) json.get("stats");
