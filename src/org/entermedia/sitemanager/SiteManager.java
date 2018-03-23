@@ -394,13 +394,8 @@ public class SiteManager implements CatalogEnabled
 				DiskSpace diskSpace = scanDisks(real, map.get("DISK"));
 				disk = diskSpace.isOnePartitionOverloaded();
 
-				if (disk == false)
+				if (disk == true)
 				{
-					real.setValue("nodisk", true);
-				}
-				else
-				{
-					real.setValue("nodisk", false);
 					real.setValue("partitions", diskSpace.getPartitions());
 				}
 
