@@ -426,8 +426,8 @@ public class SiteManager implements CatalogEnabled
 						sendResolved(real, inArchive, dates);
 					}
 				}
-				real.setProperty("monitoringstatus", "ok");
-
+				real.setValue("monitoringstatus", "ok");
+				real.setValue("alerttype",new ArrayList<String>());
 			}
 			catch (Exception e)
 			{
