@@ -11,6 +11,10 @@
 </bean>
 <bean id="sslManager" class="org.entermedia.sslcertificates.SSLManager" scope="prototype">
 </bean>
+<bean id="SpeedTestModule" class="org.entermedia.speedtest.SpeedTestModule">
+</bean>
+<bean id="speedTestManager" class="org.entermedia.speedtest.SpeedTestManager" scope="prototype">
+</bean>
 
 
 </beans>
