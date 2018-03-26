@@ -144,12 +144,16 @@ public class SiteManager implements CatalogEnabled
 
 	private String buildURL(Data inReal, String fileURL)
 	{
+		if (inReal.get("url") == null || inReal.get("catalog") == null)
+		{
+			throw new OpenEditException("Instance's URL or catalog missing");
+		}
 		String dns = inReal.get("url");
 		if (dns.endsWith("/"))
-		{
+		{ 
 			inReal.setProperty("url", dns.substring(0, (dns.length() - 1)));
 		}
-		return inReal.get("url") + fileURL;
+		return inReal.get("url") + "/" + inReal.get("catalog") + fileURL;
 	}
 
 	private DiskSpace scanDisks(MultiValued inReal, int inPercent)
@@ -162,7 +166,7 @@ public class SiteManager implements CatalogEnabled
 			ObjectMapper mapper = new ObjectMapper();
 			Downloader downloader = new Downloader();
 
-			String jsonString = downloader.downloadToString(buildURL(inReal, "/assets/mediadb/services/system/systemstatus.json"));
+			String jsonString = downloader.downloadToString(buildURL(inReal, "/mediadb/services/system/systemstatus.json"));
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
 			JSONArray results = (JSONArray) json.get("partitions");
@@ -203,7 +207,7 @@ public class SiteManager implements CatalogEnabled
 					ObjectMapper mapper = new ObjectMapper();
 					Downloader downloader = new Downloader();
 
-					String jsonString = downloader.downloadToString(buildURL(real, "/assets/mediadb/services/system/softwareversions.json"));
+					String jsonString = downloader.downloadToString(buildURL(real, "/mediadb/services/system/softwareversions.json"));
 					JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
 					JSONArray results = (JSONArray) json.get("results");
@@ -228,7 +232,9 @@ public class SiteManager implements CatalogEnabled
 			sites.saveData(real, null);
 		}
 	}
+	
 
+	
 	private ServerStats scanStats(ServerStats stats, MultiValued inReal)
 	{
 		ArrayList<ServerStat> statList = new ArrayList<ServerStat>();
@@ -239,9 +245,9 @@ public class SiteManager implements CatalogEnabled
 			Downloader downloader = new Downloader();
 
 			Long startTime = System.currentTimeMillis();
-			String jsonString = downloader.downloadToString(buildURL(inReal, "/assets/mediadb/services/system/systemstatus.json"));
+			String jsonString = downloader.downloadToString(buildURL(inReal, "/mediadb/services/system/systemstatus.json"));
 			Long elapsedTime = System.currentTimeMillis() - startTime;
-			inReal.setValue("executiontime", elapsedTime.toString() + "ms");
+//			inReal.setValue("executiontime", elapsedTime.toString() + "ms");
 
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
@@ -268,7 +274,7 @@ public class SiteManager implements CatalogEnabled
 		{
 			Downloader downloader = new Downloader();
 
-			String jsonString = downloader.downloadToString(buildURL(inReal, "/assets/mediadb/services/system/systemstatus.json"));
+			String jsonString = downloader.downloadToString(buildURL(inReal, "/mediadb/services/system/systemstatus.json"));
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
 			JSONObject results = (JSONObject) json.get("response");
@@ -394,6 +400,7 @@ public class SiteManager implements CatalogEnabled
 				DiskSpace diskSpace = scanDisks(real, map.get("DISK"));
 				disk = diskSpace.isOnePartitionOverloaded();
 
+				
 				if (disk == true)
 				{
 					real.setValue("partitions", diskSpace.getPartitions());
