@@ -25,7 +25,7 @@
   <property id="alertcount" index="true" editable="true" keyword="true" type="number">Error count</property>
   <property id="sslstatus" index="true" stored="true" editable="true" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">SSL Status</property>
   <property id="alerttype" index="true" stored="true" editable="true" viewtype="tageditor" rendertype="tageditor" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">Error type</property>
-  <property id="executiontime" index="true" editable="true" keyword="true">Homepage speed test</property>
+  <property id="executiontime" index="true" editable="true" keyword="true" type="number">Homepage speed test</property>
   <property id="loadaverage" index="true" editable="true" keyword="true">CPU Load Average</property>
   <property id="entermediadbkey" index="true" editable="true" keyword="true">Entermedia.key</property>
   <property id="catalog" index="true" editable="true" keyword="true">Catalog</property>

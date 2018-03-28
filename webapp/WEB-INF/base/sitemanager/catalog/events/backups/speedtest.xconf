@@ -3,7 +3,7 @@
 	<property name="eventdescription">Send random queries to search engine</property>	
 <path-action name="SpeedTestModule.checkSpeeds">
 </path-action>
-  	<property name="period">2h</property>
+  	<property name="period">5m</property>
   
 <property name="virtual">true</property>
 </page>

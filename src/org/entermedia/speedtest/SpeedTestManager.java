@@ -49,7 +49,6 @@ public class SpeedTestManager
 	private Long getHomepageSpeed(MultiValued inReal)
 	{
 		HttpRequestBuilder builder = new HttpRequestBuilder();
-		Collection<Long> speeds = new ArrayList<Long>();
 
 		HttpPost postMethod = null;
 		try
@@ -78,10 +77,6 @@ public class SpeedTestManager
 			{
 				return elapsedTime;
 			}
-			//				else
-			//				{
-			//					throw new OpenEditException("Can't retrieve " + inReal.get("name") + "homepage");
-			//				}
 		}
 		catch (Exception e)
 		{
@@ -106,7 +101,7 @@ public class SpeedTestManager
 
 				if (elapsedTime != null)
 				{
-					real.setValue("executiontime", elapsedTime.toString() + "ms");
+					real.setValue("executiontime", elapsedTime);
 				}
 				else
 				{
@@ -119,6 +114,7 @@ public class SpeedTestManager
 
 			}
 			sites.saveData(real, null);
+			inArchive.fireMediaEvent("monitoredsites", "speedcheck", real.getProperties(), null);
 		}
 	}
 
