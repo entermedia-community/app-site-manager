@@ -144,7 +144,7 @@ public class SiteManager implements CatalogEnabled
 
 	private String buildURL(Data inReal, String fileURL)
 	{
-		if (inReal.get("url") == null || inReal.get("catalog") == null)
+		if (inReal.get("url") == null)
 		{
 			throw new OpenEditException("Instance's URL or catalog missing");
 		}
@@ -244,10 +244,7 @@ public class SiteManager implements CatalogEnabled
 			ObjectMapper mapper = new ObjectMapper();
 			Downloader downloader = new Downloader();
 
-			Long startTime = System.currentTimeMillis();
 			String jsonString = downloader.downloadToString(buildURL(inReal, "/mediadb/services/system/systemstatus.json"));
-			Long elapsedTime = System.currentTimeMillis() - startTime;
-//			inReal.setValue("executiontime", elapsedTime.toString() + "ms");
 
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
@@ -361,6 +358,10 @@ public class SiteManager implements CatalogEnabled
 				boolean cpu = false;
 				boolean reachable = false;
 
+				if (real.get("catalog") == null)
+				{
+					real.setValue("catalog", "assets");
+				}
 				for (int i = 0; i < 3; i++)
 				{
 					try
@@ -371,6 +372,7 @@ public class SiteManager implements CatalogEnabled
 					}
 					catch (Exception e)
 					{
+						log.error("Can failed", e);
 					}
 					if (i < 3)
 					{
