@@ -372,7 +372,7 @@ public class SiteManager implements CatalogEnabled
 					}
 					catch (Exception e)
 					{
-						log.error("Can failed", e);
+						log.error("Connection failed", e);
 					}
 					if (i < 3)
 					{

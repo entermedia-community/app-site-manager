@@ -1,5 +1,7 @@
 package org.entermedia.speedtest;
 
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -95,26 +97,28 @@ public class SpeedTestManager
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
 
-			try
+			if (real.get("monitoringstatus") != null && real.get("monitoringstatus").compareTo("ok") == 0)
 			{
-				Long elapsedTime = getHomepageSpeed(real);
-
-				if (elapsedTime != null)
+				try
 				{
-					real.setValue("executiontime", elapsedTime);
-				}
-				else
-				{
-					real.setValue("executiontime", "Can't retrieve stat");
-				}
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
+					Long elapsedTime = getHomepageSpeed(real);
 
+					if (elapsedTime != null)
+					{
+						real.setValue("executiontime", elapsedTime);
+					}
+					else
+					{
+						real.setValue("executiontime", "Can't retrieve stat");
+					}
+				}
+				catch (Exception e)
+				{
+					log.error("Speedtest failed", e);
+				}
+				sites.saveData(real, null);
+				inArchive.fireMediaEvent("monitoredsites", "speedcheck", real.getProperties(), null);
 			}
-			sites.saveData(real, null);
-			inArchive.fireMediaEvent("monitoredsites", "speedcheck", real.getProperties(), null);
 		}
 	}
 
