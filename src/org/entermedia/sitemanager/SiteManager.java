@@ -2,11 +2,19 @@ package org.entermedia.sitemanager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.config.CookieSpecs;
+import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.entermedia.diskpartitions.DiskPartition;
 import org.entermedia.diskpartitions.DiskSpace;
 import org.entermedia.serverstats.ServerStat;
 import org.entermedia.serverstats.ServerStats;
 import org.entermedia.softwareversions.SoftwareVersion;
+import org.entermedia.speedtest.SpeedTestManager;
 import org.entermediadb.asset.MediaArchive;
 import org.entermediadb.email.WebEmail;
 import org.entermediadb.modules.update.Downloader;
@@ -19,6 +27,7 @@ import org.openedit.MultiValued;
 import org.openedit.OpenEditException;
 import org.openedit.data.Searcher;
 import org.openedit.util.DateStorageUtil;
+import org.openedit.util.HttpRequestBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -336,7 +345,54 @@ public class SiteManager implements CatalogEnabled
 		}
 		return sum;
 	}
+	
+	public HttpClient getClient()
+	{
+		RequestConfig globalConfig = RequestConfig.custom().setCookieSpec(CookieSpecs.DEFAULT).build();
+		CloseableHttpClient httpClient = HttpClients.custom().setDefaultRequestConfig(globalConfig).build();
 
+		return httpClient;
+	}
+	
+	private Long scanOldSite(MultiValued inReal)
+	{
+		HttpRequestBuilder builder = new HttpRequestBuilder();
+
+		HttpPost postMethod = null;
+		try
+		{
+			String fullpath = buildURL(inReal, "/emshare/index.html");
+			postMethod = new HttpPost(fullpath);
+
+			HashMap<String, String> props = new HashMap<String, String>();
+
+			String emkey = inReal.get("entermediadbkey");
+			if (emkey == null || (emkey != null && emkey.isEmpty()))
+			{
+				throw new OpenEditException("Missing entermedia.key on " + inReal.get("name"));
+			}
+			props.put("entermedia.key", emkey);
+
+			HttpClient client = getClient();
+			postMethod.setEntity(builder.build(props));
+
+			Long startTime = System.currentTimeMillis();
+			HttpResponse response = client.execute(postMethod);
+			Long elapsedTime = System.currentTimeMillis() - startTime;
+
+			int statuscode = response.getStatusLine().getStatusCode();
+			if (statuscode == 200)
+			{
+				return elapsedTime;
+			}
+		}
+		catch (Exception e)
+		{
+			throw new OpenEditException(e.getMessage(), e);
+		}
+		return null;
+	}
+	
 	public void scan(MediaArchive inArchive)
 	{
 		log.info("starting scan");
@@ -357,18 +413,31 @@ public class SiteManager implements CatalogEnabled
 				boolean heap = false;
 				boolean cpu = false;
 				boolean reachable = false;
+				boolean isold;
 
 				if (real.get("catalog") == null)
 				{
 					real.setValue("catalog", "assets");
 				}
+				isold = real.getBoolean("isold");
 				for (int i = 0; i < 3; i++)
 				{
 					try
 					{
-						stats = scanStats(stats, real);
-						reachable = true;
-						break;
+						if (isold == true)
+						{
+							if (scanOldSite(real) != null)
+							{
+								reachable = true;
+								break;
+							}
+						}
+						else 
+						{
+							stats = scanStats(stats, real);
+							reachable = true;
+							break;
+						}
 					}
 					catch (Exception e)
 					{
@@ -399,33 +468,36 @@ public class SiteManager implements CatalogEnabled
 				//TODO Calculate mem usage average over the past X Hour/minutes
 				//memory = isOverloaded((Long)stats.getMemoryfree(), (Long)stats.getMemorytotal(), map.get("MEMORY"), false);
 
-				DiskSpace diskSpace = scanDisks(real, map.get("DISK"));
-				disk = diskSpace.isOnePartitionOverloaded();
-
-				
-				if (disk == true)
+				if (!isold)
 				{
-					real.setValue("partitions", diskSpace.getPartitions());
-				}
-
-				//				if (parser.getHeappercent() != null)
-				//				{
-				//					heap = new Double(stats.getHeappercent()) >= 90 ? true : false;
-				//				}
-				//				if (stats.getCpu() != null)
-				//				{
-				//					cpu = new Double(stats.getCpu()) >= 90 ? true : false;
-				//
-				//				}
-
-				real = buildData(real, stats, memory, cpu, heap, disk);
-
-				if (memory || heap || cpu || disk)
-				{
-					setErrorType(disk, memory, heap, cpu, reachable, false/*
-																			 * swap
-																			 */, real);
-					throw new OpenEditException("Hardware overload");
+					DiskSpace diskSpace = scanDisks(real, map.get("DISK"));
+					disk = diskSpace.isOnePartitionOverloaded();
+	
+					
+					if (disk == true)
+					{
+						real.setValue("partitions", diskSpace.getPartitions());
+					}
+	
+					//				if (parser.getHeappercent() != null)
+					//				{
+					//					heap = new Double(stats.getHeappercent()) >= 90 ? true : false;
+					//				}
+					//				if (stats.getCpu() != null)
+					//				{
+					//					cpu = new Double(stats.getCpu()) >= 90 ? true : false;
+					//
+					//				}
+	
+					real = buildData(real, stats, memory, cpu, heap, disk);
+	
+					if (memory || heap || cpu || disk)
+					{
+						setErrorType(disk, memory, heap, cpu, reachable, false/*
+																				 * swap
+																				 */, real);
+						throw new OpenEditException("Hardware overload");
+					}
 				}
 
 				if (real.get("monitoringstatus") != null && real.get("monitoringstatus").compareToIgnoreCase("error") == 0)
