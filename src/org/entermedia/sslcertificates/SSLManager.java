@@ -58,8 +58,8 @@ public class SSLManager
 
 	public void checkExpirationDate(MediaArchive inArchive)
 	{
-		Collection<Data> sitestomonitor = inArchive.getList("monitoredsites");
 		Searcher sites = inArchive.getSearcher("monitoredsites");
+		Collection<Data> sitestomonitor = sites.query().all().search();
 		Date today = DateStorageUtil.getStorageUtil().getToday(); 
 
 		for (Data it : sitestomonitor)

@@ -86,9 +86,8 @@ public class SpeedTestManager
 
 	public void checkSpeed(MediaArchive inArchive)
 	{
-
-		Collection<Data> sitestomonitor = inArchive.getList("monitoredsites");
 		Searcher sites = inArchive.getSearcher("monitoredsites");
+		Collection<Data> sitestomonitor = sites.query().all().search();
 
 		for (Data it : sitestomonitor)
 		{

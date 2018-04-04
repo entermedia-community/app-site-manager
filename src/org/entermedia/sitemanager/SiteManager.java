@@ -396,8 +396,8 @@ public class SiteManager implements CatalogEnabled
 	public void scan(MediaArchive inArchive)
 	{
 		log.info("starting scan");
-		Collection<Data> sitestomonitor = inArchive.getList("monitoredsites");
 		Searcher sites = inArchive.getSearcher("monitoredsites");
+		Collection<Data> sitestomonitor = sites.query().all().search();
 
 		for (Data it : sitestomonitor)
 		{
