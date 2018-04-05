@@ -10,6 +10,7 @@ public class ServerStats
 	private Object memorytotal;
 	private Object cpu;
 	private Object processCPU;
+	private Object totalassets;
 
 	public ServerStats()
 	{
@@ -98,6 +99,17 @@ public class ServerStats
 					setProcessCPU(stat.getValue());
 				}
 			}
+			else if (stat.getName().equals("totalassets"))
+			{
+				if (stat.getErrorMsg() != null && !stat.getErrorMsg().isEmpty())
+				{
+					setTotalassets(stat.getErrorMsg());
+				}
+				else
+				{
+					setTotalassets(stat.getValue());
+				}
+			}
 		}
 
 	}
@@ -160,6 +172,16 @@ public class ServerStats
 	public void setProcessCPU(Object inProcessCPU)
 	{
 		processCPU = inProcessCPU;
+	}
+
+	public Object getTotalassets()
+	{
+		return totalassets;
+	}
+
+	public void setTotalassets(Object inTotalassets)
+	{
+		totalassets = inTotalassets;
 	}
 
 }

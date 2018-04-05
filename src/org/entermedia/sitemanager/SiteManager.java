@@ -14,7 +14,6 @@ import org.entermedia.diskpartitions.DiskSpace;
 import org.entermedia.serverstats.ServerStat;
 import org.entermedia.serverstats.ServerStats;
 import org.entermedia.softwareversions.SoftwareVersion;
-import org.entermedia.speedtest.SpeedTestManager;
 import org.entermediadb.asset.MediaArchive;
 import org.entermediadb.email.WebEmail;
 import org.entermediadb.modules.update.Downloader;
@@ -142,6 +141,7 @@ public class SiteManager implements CatalogEnabled
 		inReal.setValue("serversystemcpu", inStats.getCpu());
 		inReal.setValue("serverswaptotal", inStats.getSwapSize());
 		inReal.setValue("serverswapfree", inStats.getSwapFree());
+		inReal.setValue("totalassets", inStats.getTotalassets());
 
 		inReal.setProperty("ismemory", String.valueOf(inMemory));
 		inReal.setProperty("iscpu", String.valueOf(inCpu));
@@ -202,8 +202,8 @@ public class SiteManager implements CatalogEnabled
 
 	public void scanSoftwareVersions(MediaArchive inArchive)
 	{
-		Collection<Data> sitestomonitor = inArchive.getList("monitoredsites");
 		Searcher sites = inArchive.getSearcher("monitoredsites");
+		Collection<Data> sitestomonitor = sites.query().all().search();
 
 		for (Data it : sitestomonitor)
 		{
@@ -339,7 +339,10 @@ public class SiteManager implements CatalogEnabled
 		{
 			for (Object load : inList)
 			{
-				sum += (Double)load;
+				if (load != null)
+				{
+					sum += (Double)load;
+				}
 			}
 			return sum / inList.size();
 		}

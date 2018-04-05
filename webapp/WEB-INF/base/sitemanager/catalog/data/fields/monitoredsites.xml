@@ -30,4 +30,5 @@
   <property id="entermediadbkey" index="true" editable="true" keyword="true">Entermedia.key</property>
   <property id="catalog" index="true" editable="true" keyword="true">Catalog</property>
   <property id="isold" index="true" editable="true" keyword="true" type="boolean">Old monitoring tool</property>
+  <property id="totalassets" index="true" editable="true" keyword="true" type="number">Total catalog's assets count</property>
  </properties>
