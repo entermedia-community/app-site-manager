@@ -8,14 +8,11 @@ public class ServerStat
 	private String fieldName;
 	@JsonProperty("value")
 	private Object fieldValue;
-	@JsonProperty("error")
-	private String errorMsg;
 	
-	public ServerStat(String inName, Object inValue, String inErrorMsg)
+	public ServerStat(String inName, Object inValue)
 	{
 		fieldName = inName;
 		fieldValue = inValue;
-		errorMsg = inErrorMsg;
 	}
 	
 	public ServerStat()
@@ -42,16 +39,5 @@ public class ServerStat
 	{
 		fieldValue = inValue;
 	}
-
-	public String getErrorMsg()
-	{
-		return errorMsg;
-	}
-
-	public void setErrorMsg(String inErrorMsg)
-	{
-		errorMsg = inErrorMsg;
-	}
-
 
 }

@@ -11,6 +11,7 @@ public class ServerStats
 	private Object cpu;
 	private Object processCPU;
 	private Object totalassets;
+	private Object clusterhealth;
 
 	public ServerStats()
 	{
@@ -23,25 +24,11 @@ public class ServerStats
 		{
 			if (stat.getName().equals("getTotalSwapSpaceSize"))
 			{
-				if (stat.getErrorMsg() != null && !stat.getErrorMsg().isEmpty())
-				{
-					setSwapSize(stat.getErrorMsg());
-				}
-				else
-				{
-					setSwapSize(stat.getValue());
-				}
+				setSwapSize(stat.getValue());
 			}
 			else if (stat.getName().equals("getFreeSwapSpaceSize"))
 			{
-				if (stat.getErrorMsg() != null && !stat.getErrorMsg().isEmpty())
-				{
-					setSwapFree(stat.getErrorMsg());
-				}
-				else
-				{
-					setSwapFree(stat.getValue());
-				}
+				setSwapFree(stat.getValue());
 			}
 			//			else if (stat.getName().equals("getProcessCpuTime"))
 			//			{
@@ -49,25 +36,11 @@ public class ServerStats
 			//			}
 			else if (stat.getName().equals("getFreePhysicalMemorySize"))
 			{
-				if (stat.getErrorMsg() != null && !stat.getErrorMsg().isEmpty())
-				{
-					setMemoryfree(stat.getErrorMsg());
-				}
-				else
-				{
-					setMemoryfree(stat.getValue());
-				}
+				setMemoryfree(stat.getValue());
 			}
 			else if (stat.getName().equals("getTotalPhysicalMemorySize"))
 			{
-				if (stat.getErrorMsg() != null && !stat.getErrorMsg().isEmpty())
-				{
-					setMemorytotal(stat.getErrorMsg());
-				}
-				else
-				{
-					setMemorytotal(stat.getValue());
-				}
+				setMemorytotal(stat.getValue());
 			}
 			//			else if (stat.getName().equals("getOpenFileDescriptorCount"))
 			//			{
@@ -79,36 +52,19 @@ public class ServerStats
 			//			}
 			else if (stat.getName().equals("getSystemCpuLoad"))
 			{
-				if (stat.getErrorMsg() != null && !stat.getErrorMsg().isEmpty())
-				{
-					setCpu(stat.getErrorMsg());
-				}
-				else
-				{
-					setCpu(stat.getValue());
-				}
+				setCpu(stat.getValue());
 			}
 			else if (stat.getName().equals("getProcessCpuLoad"))
 			{
-				if (stat.getErrorMsg() != null && !stat.getErrorMsg().isEmpty())
-				{
-					setProcessCPU(stat.getErrorMsg());
-				}
-				else
-				{
-					setProcessCPU(stat.getValue());
-				}
+				setProcessCPU(stat.getValue());
 			}
 			else if (stat.getName().equals("totalassets"))
 			{
-				if (stat.getErrorMsg() != null && !stat.getErrorMsg().isEmpty())
-				{
-					setTotalassets(stat.getErrorMsg());
-				}
-				else
-				{
-					setTotalassets(stat.getValue());
-				}
+				setTotalassets(stat.getValue());
+			}
+			else if (stat.getName().equals("clusterhealth"))
+			{
+				setClusterhealth(stat.getValue());
 			}
 		}
 
@@ -182,6 +138,16 @@ public class ServerStats
 	public void setTotalassets(Object inTotalassets)
 	{
 		totalassets = inTotalassets;
+	}
+
+	public Object getClusterhealth()
+	{
+		return clusterhealth;
+	}
+
+	public void setClusterhealth(Object inClusterhealth)
+	{
+		clusterhealth = inClusterhealth;
 	}
 
 }

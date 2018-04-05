@@ -142,6 +142,7 @@ public class SiteManager implements CatalogEnabled
 		inReal.setValue("serverswaptotal", inStats.getSwapSize());
 		inReal.setValue("serverswapfree", inStats.getSwapFree());
 		inReal.setValue("totalassets", inStats.getTotalassets());
+		inReal.setValue("clusterhealth", inStats.getClusterhealth());
 
 		inReal.setProperty("ismemory", String.valueOf(inMemory));
 		inReal.setProperty("iscpu", String.valueOf(inCpu));
@@ -241,8 +242,6 @@ public class SiteManager implements CatalogEnabled
 			sites.saveData(real, null);
 		}
 	}
-	
-
 	
 	private ServerStats scanStats(ServerStats stats, MultiValued inReal)
 	{
