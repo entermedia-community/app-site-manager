@@ -104,14 +104,15 @@ public class SSLManager
 					if (today.equals(expirationDate) || today.after(expirationDate))
 					{
 						real.setValue("sslstatus", "expired");
-						throw new OpenEditException("SSL certificate has expired");
+						throw new OpenEditException(real.get("name") + " SSL certificate has expired");
 						
 					}
 					else if (today.after(DateStorageUtil.getStorageUtil().substractDaysToDate(expirationDate, DAYS_BEFORE_EXPIRATION)))
 					{
 						real.setValue("sslstatus", "torenew");
 						real.setValue("expirationdate", expirationDate);
-						throw new OpenEditException("SSL certificate is about to expire");
+						real.setValue("daystoexpiration", DateStorageUtil.getStorageUtil().daysBetweenDates(today, expirationDate)==null?"null":DateStorageUtil.getStorageUtil().daysBetweenDates(today, expirationDate));
+						throw new OpenEditException(real.get("name") + " SSL certificate is about to expire");
 					}
 					log.info("SSL certificate for " + url + " is expiring in on " + ssl.getNotAfter());
 					real.setValue("sslstatus", "ok");
