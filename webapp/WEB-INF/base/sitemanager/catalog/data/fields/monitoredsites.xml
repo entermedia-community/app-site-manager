@@ -31,5 +31,5 @@
   <property id="catalog" index="true" editable="true" keyword="true">Catalog</property>
   <property id="isold" index="true" editable="true" keyword="true" type="boolean">Old monitoring tool</property>
   <property id="totalassets" index="true" editable="false" keyword="true" type="number">Total catalog's assets count</property>
-  <property id="clusterhealth" index="true" editable="false" keyword="true">Cluster health status</property>
+  <property id="clusterhealth" index="true" editable="false" keyword="true" viewtype="tageditor" rendertype="tageditor">Cluster health status</property>
  </properties>
