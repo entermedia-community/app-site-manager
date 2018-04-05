@@ -4,7 +4,7 @@
   <property id="sourcepath" searchtype="monitoredsites">SourcePath</property>
   <property id="url" index="true" stored="true" editable="true" searchtype="monitoredsites">URL</property>
   <property id="lastchecked" index="true" stored="true" editable="true" sortable="true" type="date" searchtype="monitoredsites" internalfield="false" datatype="date">Last Checked</property>
-  <property id="monitoringstatus" index="true" stored="true" editable="true" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">Monitoring Status</property>
+  <property id="monitoringstatus" index="true" stored="true" editable="true" viewtype="tageditor" rendertype="tageditor" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">Monitoring Status</property>
   <property id="notifyemail" index="true" stored="true" editable="true" searchtype="monitoredsites" internalfield="false">Emails to Notify on Error</property>
   <property id="mailsent" index="true" type="boolean" stored="true" editable="true" searchtype="monitoredsites" internalfield="false">Emails Sent</property>
   <property id="servermemoryfree" index="true" editable="false" keyword="true">Server Memory Free</property> 
@@ -23,7 +23,7 @@
   <property id="version_ghostscript" index="true" editable="false" keyword="true">Ghost Script's version</property>
   <property id="version_soffice" index="true" editable="false" keyword="true">SOffice's version</property>
   <property id="alertcount" index="true" editable="false" keyword="true" type="number">Error count</property>
-  <property id="sslstatus" index="true" stored="true" editable="false" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">SSL Status</property>
+  <property id="sslstatus" index="true" stored="true" editable="false" viewtype="tageditor" rendertype="tageditor" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">SSL Status</property>
   <property id="alerttype" index="true" stored="true" editable="false" viewtype="tageditor" rendertype="tageditor" type="list" searchtype="monitoredsites" internalfield="false" datatype="list">Error type</property>
   <property id="executiontime" index="true" editable="false" keyword="true" type="number">Homepage speed test</property>
   <property id="loadaverage" index="true" editable="false" keyword="true">CPU Load Average</property>

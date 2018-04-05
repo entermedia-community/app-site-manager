@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <sslstatuss> 
-  <sslstatus id="error" name="error">Error</sslstatus>
-  <sslstatus id="expired" name="expired">Expired</sslstatus>
-  <sslstatus id="ok" name="ok">Ok</sslstatus>
-  <sslstatus id="torenew" name="torenew">To renew</sslstatus>
+  <sslstatus id="error" name="Error">Error</sslstatus>
+  <sslstatus id="expired" name="Expired">Expired</sslstatus>
+  <sslstatus id="ok" name="Ok">Ok</sslstatus>
+  <sslstatus id="torenew" name="To Renew">To renew</sslstatus>
 </sslstatuss>
