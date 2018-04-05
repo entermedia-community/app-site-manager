@@ -48,10 +48,10 @@ public class SSLManager
 			{
 				templatemail.setSubject("[EM][" + inReal.get("name") + "][SSL][EXPIRED] error detected");
 			}
-		}
-		else
-		{
-			templatemail.setSubject("[EM][" + inReal.get("name") + "][SSL] error detected");
+			else
+			{
+				templatemail.setSubject("[EM][" + inReal.get("name") + "][SSL] error detected");
+			}
 		}
 
 		Map<String, Object> objects = new HashMap<String, Object>();
