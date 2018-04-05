@@ -38,7 +38,22 @@ public class SSLManager
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-error.html";
 		WebEmail templatemail = inArchive.createSystemEmail(inReal.get("notifyemail"), templatePage);
 
-		templatemail.setSubject("[EM][" + inReal.get("name") + "][SSL] error detected");
+		if (inReal.get("sslstatus") != null)
+		{
+			if (inReal.get("sslstatus").compareTo("torenew") == 0)
+			{
+				templatemail.setSubject("[EM][" + inReal.get("name") + "][SSL][EXPIRATION] error detected");
+			}
+			else if (inReal.get("sslstatus").compareTo("expired") == 0)
+			{
+				templatemail.setSubject("[EM][" + inReal.get("name") + "][SSL][EXPIRED] error detected");
+			}
+		}
+		else
+		{
+			templatemail.setSubject("[EM][" + inReal.get("name") + "][SSL] error detected");
+		}
+
 		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
 		templatemail.send(objects);
