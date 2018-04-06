@@ -32,4 +32,8 @@
   <property id="isold" index="true" editable="true" keyword="true" type="boolean">Old monitoring tool</property>
   <property id="totalassets" index="true" editable="false" keyword="true" type="number">Total catalog's assets count</property>
   <property id="clusterhealth" index="true" editable="false" keyword="true" viewtype="tageditor" rendertype="tageditor">Cluster health status</property>
+  <property id="diskpartitionsusage" index="true" editable="true" keyword="false" viewtype="tageditor" rendertype="tageditor" type="list" datatype="multi">Disk partitions usage</property>
  </properties>
+
+ 
+ 

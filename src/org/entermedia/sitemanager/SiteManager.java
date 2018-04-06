@@ -37,7 +37,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class SiteManager implements CatalogEnabled
 {
@@ -75,22 +74,6 @@ public class SiteManager implements CatalogEnabled
 
 	}
 
-	private boolean isOverloaded(Long inUsed, Long inTotal, int inPercent, boolean inIsDisk)
-	{
-		if (inUsed == null || inTotal == null)
-			throw new OpenEditException("Can't retrieve instance's server hardware usage");
-		if (inIsDisk)
-		{
-			inUsed = inTotal - inUsed;
-		}
-		double percentageUsed = 100.0 * inUsed / inTotal;
-		if (percentageUsed >= inPercent)
-		{
-			return true;
-		}
-		return false;
-	}
-
 	private Map<String, Integer> getUsageMaxByClient(final Data inReal)
 	{
 		HashMap<String, Integer> map = new HashMap<String, Integer>()
@@ -111,7 +94,7 @@ public class SiteManager implements CatalogEnabled
 		return map;
 	}
 
-	private MultiValued buildData(MultiValued inReal, ServerStats inStats, boolean inMemory, boolean inCpu, boolean inHeap, boolean inDisk)
+	private MultiValued buildData(MultiValued inReal, DiskSpace diskSpace, ServerStats inStats, boolean inMemory, boolean inCpu, boolean inHeap, boolean inDisk)
 	{
 		//		inReal.setProperty("heapused", inParser.getHeap());
 		//		inReal.setProperty("heapusedpercent", inParser.getHeappercent());
@@ -132,9 +115,18 @@ public class SiteManager implements CatalogEnabled
 			avg = avg.subList(avg.size() - 10, avg.size() - 1);
 		}
 
-		inReal.setValue("loadaverage", new DecimalFormat("##.###").format(calculateAverage(avg)).toString() + "%");
+		DecimalFormat decimalFormat = new DecimalFormat("##.###");
+		inReal.setValue("loadaverage", decimalFormat.format(calculateAverage(avg)).toString() + "%");
 		inReal.setValue("isreachable", true);
 
+		
+		Collection<String> partitionsUsage = new ArrayList<String>(); 
+		for (DiskPartition partition : diskSpace.getPartitions())
+		{
+			partitionsUsage.add(partition.getName() + ": " + decimalFormat.format(partition.getUsagePercent()) + "%");
+		}
+		inReal.setValue("diskpartitionsusage", partitionsUsage);
+		
 		inReal.setValue("servermemoryfree", inStats.getMemoryfree());
 		inReal.setValue("servermemorytotal", inStats.getMemorytotal());
 		inReal.setValue("serverprocesscpu", inStats.getProcessCPU());
@@ -186,8 +178,7 @@ public class SiteManager implements CatalogEnabled
 				JSONObject partition = (JSONObject) partitionObj;
 				DiskPartition diskPartiton = mapper.readValue(partition.toJSONString(), DiskPartition.class);
 
-				boolean isOverloaded = isOverloaded(diskPartiton.getFreePartitionSpace(), diskPartiton.getTotalCapacity(), inPercent, true);
-				diskPartiton.setIsOverloaded(isOverloaded);
+				diskPartiton.isOverloaded(inPercent);
 
 				partitions.add(diskPartiton);
 
@@ -482,7 +473,7 @@ public class SiteManager implements CatalogEnabled
 					//
 					//				}
 	
-					real = buildData(real, stats, memory, cpu, heap, disk);
+					real = buildData(real, diskSpace, stats, memory, cpu, heap, disk);
 	
 					if (memory || heap || cpu || disk)
 					{
