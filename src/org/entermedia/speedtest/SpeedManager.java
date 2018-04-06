@@ -18,9 +18,9 @@ import org.openedit.OpenEditException;
 import org.openedit.data.Searcher;
 import org.openedit.util.HttpRequestBuilder;
 
-public class SpeedTestManager
+public class SpeedManager
 {
-	private static final Log log = LogFactory.getLog(SpeedTestManager.class);
+	private static final Log log = LogFactory.getLog(SpeedManager.class);
 
 	private String buildURL(Data inReal, String fileURL)
 	{

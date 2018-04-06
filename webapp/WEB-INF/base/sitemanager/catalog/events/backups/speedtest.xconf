@@ -1,7 +1,7 @@
 <page>
 <property name="eventname">Monitor sites for Speed Tests</property>	
 	<property name="eventdescription">Send random queries to search engine</property>	
-<path-action name="SpeedTestModule.checkSpeeds">
+<path-action name="SpeedModule.checkSpeeds">
 </path-action>
   	<property name="period">5m</property>
   
