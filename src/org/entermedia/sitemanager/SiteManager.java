@@ -429,14 +429,12 @@ public class SiteManager implements CatalogEnabled
 						if (scanOldSite(real) != null)
 						{
 							reachable = true;
-							break;
 						}
 					}
 					else 
 					{
 						stats = scanStats(stats, real);
 						reachable = true;
-						break;
 					}
 				}
 				catch (Exception e)
@@ -532,6 +530,7 @@ public class SiteManager implements CatalogEnabled
 			real.setProperty("lastchecked", dates);
 			sites.saveData(real, null);
 		}
+		log.info("scan complete");
 	}
 
 	@Override
