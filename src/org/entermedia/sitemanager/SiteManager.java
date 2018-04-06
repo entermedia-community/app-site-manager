@@ -422,33 +422,26 @@ public class SiteManager implements CatalogEnabled
 					real.setValue("catalog", "assets");
 				}
 				isold = real.getBoolean("isold");
-				for (int i = 0; i < 3; i++)
+				try
 				{
-					try
+					if (isold == true)
 					{
-						if (isold == true)
+						if (scanOldSite(real) != null)
 						{
-							if (scanOldSite(real) != null)
-							{
-								reachable = true;
-								break;
-							}
-						}
-						else 
-						{
-							stats = scanStats(stats, real);
 							reachable = true;
 							break;
 						}
 					}
-					catch (Exception e)
+					else 
 					{
-						log.error("Connection failed on " + real.get("name"), e);
+						stats = scanStats(stats, real);
+						reachable = true;
+						break;
 					}
-					if (i < 3)
-					{
-						TimeUnit.SECONDS.sleep(5);
-					}
+				}
+				catch (Exception e)
+				{
+					log.error("Connection failed on " + real.get("name"), e);
 				}
 				if (!reachable)
 				{
