@@ -14,10 +14,13 @@
 #set( $searcher = $mediaarchive.getSearcher("librarycollection") )
 #set( $xmledithome  = "$apphome/components/xml")
 $context.putPageValue("searcher",$searcher)
-<form action="addsave.html">
+<form action="addsave.html" method="post">
 
 <input type="hidden" name="save" value="true" />
 <input type="hidden" name="searchtype" value="librarycollection" />
+
+<input type="hidden" name="field" value="owner" />
+<input type="hidden" name="owner.value" value="$user.getId()" />
 
    <div class="form-group">
 	#set( $detail = $searcher.getDetail("name") )

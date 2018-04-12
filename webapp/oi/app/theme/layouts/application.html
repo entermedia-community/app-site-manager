@@ -29,16 +29,11 @@ $pages.include("$apphome/components/map/includes.html")
 
   <!-- Navigation -->
   #if( $content.bannerpage )
-  	<div>
-    <a class="navbar-brand" href="$apphome">
-      <img class="img-fluid" src="$apphome/theme/images/Homepage-Layer-Files_0001s_0000s_0000_Logo-Biege.png" alt=""></a>
-      <nav class="navbar navbar-expand-lg"  id="mainNav">
   #else
   	<div style="background-color: #f4f5ee;height:100px;">
     <a class="navbar-brand" href="$apphome" style="float:right;">  
     	<img style="height: 80px;" src="$apphome/theme/images/Homepage-Layer-Files_0000s_0000_Logo-Black.png" alt=""></a>
     <nav class="navbar navbar-expand-lg nav-project-page" id="mainNav">    
-  #end
       <div class="">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           Menu
@@ -71,7 +66,7 @@ $pages.include("$apphome/components/map/includes.html")
       </div>
     </nav>
     </div>
-	</div>
+    #end
     
 $pages.includeContent()
 
