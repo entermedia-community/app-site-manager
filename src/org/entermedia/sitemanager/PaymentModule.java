@@ -1,5 +1,8 @@
 package org.entermedia.sitemanager;
 
+
+import java.util.Date;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.client.HttpClient;
@@ -70,16 +73,29 @@ public class PaymentModule extends BaseMediaModule {
 	public void processPayment(WebPageRequest inReq){
 		String token = inReq.getRequestParameter("stripeToken");
 		MediaArchive archive = getMediaArchive(inReq);
-		Searcher payments = archive.getSearcher("donation");
+		Searcher payments = archive.getSearcher("transaction");
 		Data payment = payments.createNewData();
 		payments.updateData(inReq, inReq.getRequestParameters("field"), payment);
 		
 		getOrderProcessor().process(archive, inReq.getUser(), payment,  token);
+		
+		String frequency = inReq.findValue("frequency");
+		if(frequency != null && frequency != "") {
+			Searcher plans = archive.getSearcher("paymentplan");
+			Data plan = plans.createNewData();
+			plan.setValue("userid", inReq.getUserName());
+			plan.setValue("frequency", frequency);
+			plan.setValue("amount", payment.getValue("totalamount"));
+			plan.setValue("lastprocessed", new Date());
+			plans.saveData(plan);
+			payment.setValue("paymentplan", plan.getId());
+		}
 		payments.saveData(payment);
-		
-		
+
 		
 	}
+	
+	
 	
 	
 	
