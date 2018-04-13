@@ -1,13 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <page>
-   	<path-action name="DataEditModule.loadData" >
-			<pageval>librarycol</pageval>
-			<idname>collectionid</idname>
-			<searchtype>librarycollection</searchtype>
-    </path-action>
-	<property name="virtual">true</property>
-	<inner-layout>/${applicationid}/project/projectlayout.html</inner-layout>
-
+	<path-action name="Email.sendEmail" />
+	<property name="emaillayout">/${applicationid}/project/contact/contacttemplate.html</property>
+	<property name="subjectprefix">OI Contact</property>
+	<property name="to">cristobal@entermediadb.org</property>
 </page>
-

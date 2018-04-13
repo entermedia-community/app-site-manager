@@ -1,7 +1,9 @@
 <h5>$librarycol</h5>
 <p>$!librarycol.projectdescription</p>
-   	#set( $country = $mediaarchive.getData("country",$librarycol.country))
+#set( $country = $mediaarchive.getData("country",$librarycol.country))
+#if ($country)
 <p style="font-size:80%">[[Country]]: $country</p>
+#end
 #if( $librarycol.owner == $user.getId() || $canviewsettings )
  <a class="btn btn-secondary btn-sm emdialog" title="[[Project Details]]" data-width="500" 
  	href="$apphome/project/edit.html?collectionid=$librarycol.getId()">[[Edit]]</a>
@@ -11,5 +13,7 @@
 	$pages.include("$apphome/components/dontshow/index.html")
 #end
 <hr>
- <a  title="[[Donate to]] $librarycol" data-width="500" class="btn green emdialog" style="padding:14px 60px 14px 60px; margin:18px 0 0 18px" 
+<div class="text-center">
+ <a  title="[[Donate to]] $librarycol" data-width="500" class="btn btn-primary emdialog" 
  href="$apphome/project/donate.html?collectionid=${librarycol.id}">[[Donate]]</a>
+</div>

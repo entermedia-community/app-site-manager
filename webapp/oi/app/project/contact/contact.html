@@ -8,13 +8,19 @@
     
 	
 	<div class="row">
-	<div class="col-md-7  col-xl-5">
+	<div class="col-md-7 col-xl-6">
 		<p class="section-description">Do you have any questions? Please do not hesitate to contact us.</p>
 	</div>
-	        <div class="col-md-5">
+	        <div class="col-md-5 col-xl-6">
             <ul class="contact-icons">
                 <li>
-                    <p><i class="fa fa-map-marker"></i> Adress</p>
+                    <p><i class="fa fa-map-marker"></i> 
+					#if ($librarycol.street)
+						$!{librarycol.street},
+					#end
+					${librarycol.city}. 
+					#set( $country = $mediaarchive.getData("country",$librarycol.country))
+					$!{country}</p>
                 </li>
 
                 <li>
@@ -29,7 +35,7 @@
 	</div>
 
     <div class="row">
-        <div class="col-md-11 col-xl-9">
+        <div class="col-md-12 col-lg-11 col-xl-9">
 		<div class="card">
 		<div class="card-header">Complete the form below</div>
 		<div class="card-block" style="padding:25px">

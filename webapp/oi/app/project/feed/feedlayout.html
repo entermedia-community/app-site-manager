@@ -1,24 +1,4 @@
-#set( $banner = $mediaarchive.getAsset($librarycol.assetbanner))
-<div class="oifeedlayout" #if( $banner)
-style='background: url("/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${banner.sourcepath}/image1024x768.jpg") no-repeat top right fixed;' 
-#end
->
-<div style="position: relative">
-#set( $logo = $mediaarchive.getAsset($librarycol.assetportrait))
-	<div class="logo"
-#if( $logo)
-style='background: url("/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${logo.sourcepath}/image200x200.jpg") no-repeat center;'
-#end
- />
-	</div>
-</div>
-$pages.include("$apphome/project/menu.html")
-<div class="row content">
-    <div class="col col-lg-2 collfeedtools" >
-    $pages.include("$apphome/project/sidebar.html")
-    </div>
-<div class="col">
-$pages.include("addnewupload.html")
+
 	<div class="card "
 		style="margin: 40px; max-width: 800px; text-align: left;">
 		<div class="card-header"><input value="Upload your files" /></div>
@@ -57,11 +37,3 @@ $topuploads.setHitsPerPage(20)
 		</div>
 	</div>
 #end
-
-</div>
-<div class="col col-lg-2" >
-    	##Roberty sdfff
-</div>
-</div>
-
-</div>
