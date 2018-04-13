@@ -1,7 +1,9 @@
 package org.entermedia.sitemanager;
 
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +17,8 @@ import org.openedit.Data;
 import org.openedit.WebPageRequest;
 import org.openedit.data.Searcher;
 import org.openedit.data.SearcherManager;
+import org.openedit.hittracker.HitTracker;
+import org.openedit.users.User;
 
 public class PaymentModule extends BaseMediaModule {
 	
@@ -85,8 +89,10 @@ public class PaymentModule extends BaseMediaModule {
 			Data plan = plans.createNewData();
 			plan.setValue("userid", inReq.getUserName());
 			plan.setValue("frequency", frequency);
-			plan.setValue("amount", payment.getValue("totalamount"));
+			plan.setValue("amount", payment.getValue("totalprice"));
 			plan.setValue("lastprocessed", new Date());
+			plan.setValue("planstatus", "active");
+
 			plans.saveData(plan);
 			payment.setValue("paymentplan", plan.getId());
 		}
@@ -95,6 +101,74 @@ public class PaymentModule extends BaseMediaModule {
 		
 	}
 	
+	
+	
+	
+	public void processRecurringPayments(WebPageRequest inReq) {
+		
+		MediaArchive archive = getMediaArchive(inReq);
+		
+		Searcher payments = archive.getSearcher("transaction");
+		Searcher plans = archive.getSearcher("paymentplan");
+
+		Calendar now = Calendar.getInstance();
+		now.add(now.DAY_OF_YEAR, -7);
+
+		HitTracker toprocess = plans.query().before("lastprocessed", now.getTime()).exact("frequency", "weekly").exact("planstatus", "active").search();
+		
+		processTransactions(inReq, toprocess);		
+		
+		now = Calendar.getInstance();
+		now.add(now.MONTH, -1);
+		HitTracker monthly = plans.query().before("lastprocessed", now.getTime()).exact("frequency", "monthly").exact("planstatus", "active").search();
+		
+		processTransactions(inReq,monthly);
+
+		
+		now = Calendar.getInstance();
+		now.add(now.YEAR, -1);
+		HitTracker yearly = plans.query().before("lastprocessed", now.getTime()).exact("frequency", "yearly").exact("planstatus", "active").search();
+		
+		processTransactions(inReq,yearly);
+
+//		
+//		  <option value="">Once</option>
+//		  <option value="weekly">Weekly</option>
+//		  <option value="monthly">Monthly</option>
+//		  <option value="yearly">Yearly</option>
+//		
+		
+		
+		
+	}
+
+
+
+	public void processTransactions(WebPageRequest inReq, HitTracker inYearly) {
+		MediaArchive archive = getMediaArchive(inReq);
+		Searcher payments = archive.getSearcher("transaction");
+		
+		Searcher paymentplans = archive.getSearcher("paymentplan");
+
+		
+		for (Iterator iterator = inYearly.iterator(); iterator.hasNext();) {
+			Data paymentplan = (Data) iterator.next();
+			String userid = paymentplan.get("userid");
+			User user = archive.getUserManager().getUser(userid);
+			Data payment = payments.createNewData();
+			String amount = paymentplan.get("amount");
+			if(amount == null) {
+				continue;
+			}
+			payment.setValue("totalprice", amount);
+			
+			getOrderProcessor().process(archive, user, payment,  null);
+			payments.saveData(payment);
+			paymentplan.setValue("lastprocessed", new Date());
+			paymentplans.saveData(paymentplan);
+		}
+		
+	}
 	
 	
 	
