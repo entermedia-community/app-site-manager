@@ -82,7 +82,7 @@ public class PaymentModule extends BaseMediaModule {
 		payments.updateData(inReq, inReq.getRequestParameters("field"), payment);
 		
 		getOrderProcessor().process(archive, inReq.getUser(), payment,  token);
-		
+		payment.setValue("paymentdate", new Date());
 		String frequency = inReq.findValue("frequency");
 		if(frequency != null && frequency != "") {
 			Searcher plans = archive.getSearcher("paymentplan");
@@ -92,7 +92,6 @@ public class PaymentModule extends BaseMediaModule {
 			plan.setValue("amount", payment.getValue("totalprice"));
 			plan.setValue("lastprocessed", new Date());
 			plan.setValue("planstatus", "active");
-
 			plans.saveData(plan);
 			payment.setValue("paymentplan", plan.getId());
 		}
