@@ -5,4 +5,5 @@
   <sslstatus id="expired" name="Expired">Expired</sslstatus>
   <sslstatus id="ok" name="Ok">Ok</sslstatus>
   <sslstatus id="torenew" name="To Renew">To renew</sslstatus>
+  <sslstatus id="nossl" name="No SSL certificate set up">No SSL certificate set up</sslstatus>
 </sslstatuss>

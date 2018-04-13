@@ -90,49 +90,56 @@ public class SSLManager
 
 				SSLContext.setDefault(ctx);
 
-				url = new URL(buildURL(real));
-				HttpsURLConnection conn = null;
-				try 
+				if (real.get("url") != null && real.get("url").startsWith("https"))
 				{
-					conn = (HttpsURLConnection) url.openConnection();
-					conn.setHostnameVerifier(new HostnameVerifier()
+					url = new URL(buildURL(real));
+					HttpsURLConnection conn = null;
+					try 
 					{
-						@Override
-						public boolean verify(String arg0, SSLSession arg1)
+						conn = (HttpsURLConnection) url.openConnection();
+						conn.setHostnameVerifier(new HostnameVerifier()
 						{
-							return true;
-						}
-					});
-					conn.connect();
-				}
-				catch (Exception e) {
-					real.setValue("sslstatus", "error");
-					throw new OpenEditException("Can't get SSL certificate from " + url);
-				}
-				Certificate[] certs = conn.getServerCertificates();
-				
-				if (certs[0] != null)
-				{
-					X509Certificate ssl = (X509Certificate) certs[0];
-					Date expirationDate = ssl.getNotAfter();
+							@Override
+							public boolean verify(String arg0, SSLSession arg1)
+							{
+								return true;
+							}
+						});
+						conn.connect();
+					}
+					catch (Exception e) {
+						real.setValue("sslstatus", "error");
+						throw new OpenEditException("Can't get SSL certificate from " + url);
+					}
+					Certificate[] certs = conn.getServerCertificates();
 					
-					if (today.equals(expirationDate) || today.after(expirationDate))
+					if (certs[0] != null)
 					{
-						real.setValue("sslstatus", "expired");
-						throw new OpenEditException(real.get("name") + " SSL certificate has expired");
+						X509Certificate ssl = (X509Certificate) certs[0];
+						Date expirationDate = ssl.getNotAfter();
 						
+						if (today.equals(expirationDate) || today.after(expirationDate))
+						{
+							real.setValue("sslstatus", "expired");
+							throw new OpenEditException(real.get("name") + " SSL certificate has expired");
+							
+						}
+						else if (today.after(DateStorageUtil.getStorageUtil().substractDaysToDate(expirationDate, DAYS_BEFORE_EXPIRATION)))
+						{
+							real.setValue("sslstatus", "torenew");
+							real.setValue("expirationdate", expirationDate);
+							real.setValue("daystoexpiration", DateStorageUtil.getStorageUtil().daysBetweenDates(today, expirationDate)==null?"null":DateStorageUtil.getStorageUtil().daysBetweenDates(today, expirationDate));
+							throw new OpenEditException(real.get("name") + " SSL certificate is about to expire");
+						}
+						log.info("SSL certificate for " + url + " is expiring in on " + ssl.getNotAfter());
+						real.setValue("sslstatus", "ok");
 					}
-					else if (today.after(DateStorageUtil.getStorageUtil().substractDaysToDate(expirationDate, DAYS_BEFORE_EXPIRATION)))
-					{
-						real.setValue("sslstatus", "torenew");
-						real.setValue("expirationdate", expirationDate);
-						real.setValue("daystoexpiration", DateStorageUtil.getStorageUtil().daysBetweenDates(today, expirationDate)==null?"null":DateStorageUtil.getStorageUtil().daysBetweenDates(today, expirationDate));
-						throw new OpenEditException(real.get("name") + " SSL certificate is about to expire");
-					}
-					log.info("SSL certificate for " + url + " is expiring in on " + ssl.getNotAfter());
-					real.setValue("sslstatus", "ok");
+					conn.disconnect();
 				}
-				conn.disconnect();
+				else
+				{
+					real.setValue("sslstatus", "nossl");
+				}
 			}
 			catch (Exception e)
 			{

@@ -197,4 +197,16 @@
       <language id="en"><![CDATA[geo_point_formatedaddress]]></language>
     </name>
   </property>
+  
+   <property id="assetportrait" index="true" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="asset" rendertype="asset" required="false" filter="false" multilanguage="false" datatype="list" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name> 
+      <language id="en"><![CDATA[Portrait Photo]]></language> 
+    </name> 
+  </property>  
+  <property id="assetbanner" index="true" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="asset" rendertype="asset" required="false" filter="false" multilanguage="false" datatype="list" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name>
+      <language id="en"><![CDATA[Banner Photo]]></language>
+    </name>
+  </property> 
+  
 </properties>

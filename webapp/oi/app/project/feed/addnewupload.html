@@ -1,0 +1,61 @@
+##if( $caneditcollection )
+#set( $searcher = $mediaarchive.getSearcher("userupload") )
+$context.putPageValue("searcher",$searcher)
+#set( $xmledithome  = "$apphome/components/xml")
+
+
+<div class="card "
+		style="margin: 0 40px 0 40px; max-width: 800px; text-align: left;">
+		<form name="saveupload">
+		<div class="card-header container">
+		 	<div class="row">
+			    <div class="col-7">
+					<input placeholder="[[Enter Description]]" style="width:400px; height:70px" />
+			    </div>
+			    <div class="col">
+					<input id="upload_field" type="file" style="position:absolute; top:-1000px;" multiple="multiple">
+					<a class="btn btn-primary" href="#" id="filePicker" style="margin-top: 0;">[[Choose Files]]</a>
+			    </div>
+			</div>
+		</div>	
+		<div class="card-block container" style="padding: 20px; text-align: center">
+		 	<div class="row">
+			    <div class="col">
+					<ul id="up-files-list" class="up-files-list">				
+					</ul>	
+					<div class="uploadinstructions">	  
+		             <div id="drop-area">
+						<div class="drop-over"></div>
+						<div class="hints">Drop files here!</div>
+					</div>
+					</div>	
+					<!-- This is never shown -->
+			        <div id="progress_report_template" style="display:none;">
+				        <li class="uploadprogressrow">
+							<span id="progress_report_barcurrentupload" style="width: 0px;" class="uploadprogress"></span>
+							<a href="#">
+								<span id="progress_report_namecurrentupload" class="name"></span>
+								<span id="progress_report_sizecurrentupload" class="size"></span>
+								<span id="progress_report_statuscurrentupload" class="uploadstatus"></span>
+							</a>	
+						</li>
+					</div>				
+			    </div>
+			    <div class="col-7">
+			    </div>
+			</div>
+		</div>
+		 <div class="card-footer container" style="padding: 20px;">
+			<div class="row">
+			    <div class="col-7">
+				#set( $detail = $searcher.getDetail("usertags") )
+    <label for="exampleTextarea">$detail.getText($context)</label>
+	$context.putPageValue("detail",$detail)
+   	$pages.include("$xmledithome/detailedit.html", $context)
+				</div>	
+			    <div class="col" style="text-align: right">
+					<input class="btn" type="submit" />
+				</div>
+		</div>
+		</form>
+	</div>

@@ -2,7 +2,10 @@
 <p>$!librarycol.projectdescription</p>
    	#set( $country = $mediaarchive.getData("country",$librarycol.country))
 <p style="font-size:80%">[[Country]]: $country</p>
- <a class="btn btn-secondary btn-sm emdialog" title="[[Project Details]]" data-width="500" href="$apphome/project/edit.html?collectionid=$librarycol.getId()">[[Edit]]</a>
+#if( $librarycol.owner == $user.getId() || $canviewsettings )
+ <a class="btn btn-secondary btn-sm emdialog" title="[[Project Details]]" data-width="500" 
+ 	href="$apphome/project/edit.html?collectionid=$librarycol.getId()">[[Edit]]</a>
+ #end	
    	#if( $hits.size() > 0)
 <p><a href="$apphome/collections/media/${librarycol.id}.html">$hits.size()  Uploads</a></p>  	
 	$pages.include("$apphome/components/dontshow/index.html")

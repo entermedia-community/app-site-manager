@@ -1,0 +1,28 @@
+#set( $banner = $mediaarchive.getAsset($librarycol.assetbanner))
+<div class="oifeedlayout" #if( $banner)
+style='background: url("/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${banner.sourcepath}/image1024x768.jpg") no-repeat top right fixed;' 
+#end
+>
+<div style="position: relative">
+	#set( $logo = $mediaarchive.getAsset($librarycol.assetportrait))
+	<div class="logocontainer">
+		<div class="logo"
+	#if( $logo)
+		style='background: url("/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${logo.sourcepath}/image200x200.jpg") no-repeat center;'
+	#end
+	 />
+		</div>
+	</div>
+</div>
+
+<div class="row content">
+    <div class="col col-sm-4 col-md-4 col-lg-4 col-xl-3 collfeedtools" >
+    $pages.include("$apphome/project/sidebar.html")
+    </div>
+	<div class="col col-md-8 col-lg-8">
+		$pages.include("$apphome/project/menu.html")
+		$pages.includeContent()
+		
+	</div>
+</div>
+
