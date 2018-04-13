@@ -160,7 +160,7 @@ public class PaymentModule extends BaseMediaModule {
 				continue;
 			}
 			payment.setValue("totalprice", amount);
-			
+			payment.setValue("paymentplan", paymentplan.getId());
 			getOrderProcessor().process(archive, user, payment,  null);
 			payments.saveData(payment);
 			paymentplan.setValue("lastprocessed", new Date());
