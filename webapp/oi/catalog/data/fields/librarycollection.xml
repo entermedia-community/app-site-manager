@@ -208,5 +208,6 @@
       <language id="en"><![CDATA[Banner Photo]]></language>
     </name>
   </property> 
+  	<property id="contactemail" index="true" stored="true" keyword="true" editable="true"  indextype="not_analyzed">Email</property>
   
 </properties>
