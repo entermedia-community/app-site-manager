@@ -1,13 +1,5 @@
 <div class="row content" style="margin:0px">
   <div class="col-sm-4 col-md-3 col-lg-2 col-xl-2 collfeedtools" >
-	#set( $logo = $mediaarchive.getAsset($librarycol.assetportrait))
-	<div class="logocontainer">
-		<div class="logo"
-			#if( $logo)
-				style='background: url("/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${logo.sourcepath}/image200x200.jpg") no-repeat center;'
-			#end
-			 > </div>
-	</div>
     $pages.include("$apphome/project/sidebar.html")
   </div>
 #set( $banner = $mediaarchive.getAsset($librarycol.assetbanner))

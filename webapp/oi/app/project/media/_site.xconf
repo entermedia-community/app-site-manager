@@ -1,6 +1,7 @@
 <page>
 
-	<inner-layout>${applicationid}/collections/media/viewassets.html</inner-layout>
+	<inner-layout>${applicationid}/project/media/medialayout.html</inner-layout>
+	<property name="showmedia">true</property>
 	
 	<property name="hitsname">hits</property>
 	<property name="virtual">true</property>
@@ -15,9 +16,6 @@
 		<searchtype>librarycollection</searchtype>
 	</path-action>
 	<property name="alwaysresetpage">true</property>
-	  <script id="emtree" src="/${applicationid}/components/javascript/emtree/emtree.js"/>
-	  <style id="app-css" href="${themeprefix}/styles/theme.css"/>
-	
 	
 	 <permission name="view">
 	 	<and>
