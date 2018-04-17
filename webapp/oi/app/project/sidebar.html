@@ -12,6 +12,7 @@ $pages.include("$apphome/project/logo.html")
 #if( $content.showmedia )
 
 #else
+<<<<<<< HEAD
 	#if ($!librarycol.projectdescription)
 		<p>$!librarycol.projectdescription</p>
 	#end
@@ -22,6 +23,18 @@ $pages.include("$apphome/project/logo.html")
 	#end
 	#if( $librarycol.owner == $user.getId() || $canviewsettings )
  	<a class="btn btn-secondary btn-sm emdialog" title="[[Project Details]]" data-width="500" 
+=======
+#if ($!librarycol.projectdescription)
+	<p>$!librarycol.projectdescription</p>
+#end
+
+#set( $country = $mediaarchive.getData("country",$librarycol.country))
+#if ($country)
+	<p style="font-size:80%">[[Country]]: $country</p>
+#end
+#if( $librarycol.owner == $user.getId() || $canviewsettings )
+ <a class="btn btn-secondary btn-sm emdialog" title="[[Project Details]]" data-width="500" 
+>>>>>>> master
  	href="$apphome/project/edit.html?collectionid=$librarycol.getId()">[[Edit]]</a>
  	#end	
    	#if( $hits.size() > 0)
