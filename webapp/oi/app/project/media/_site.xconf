@@ -1,6 +1,10 @@
 <page>
 
 	<inner-layout>${applicationid}/project/media/medialayout.html</inner-layout>
+	
+	<style id="results" href="${themeprefix}/styles/pages/results.css"/>
+	<script id="results" src="/${applicationid}/components/javascript/results.js"/> 
+	
 	<property name="showmedia">true</property>
 	
 	<property name="hitsname">hits</property>

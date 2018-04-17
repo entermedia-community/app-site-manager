@@ -1,0 +1,35 @@
+<p>#set( $hostingdomain = $context.findValue("hostingdomain") ) Hello $newuser.getScreenName(),</p>
+
+<p><strong>Welcome to EnterMediaDB Open Source Hosting!</strong></p>
+
+<p>Your site is now live! You can now upload your own assets and experiment with features and customization.</p>
+
+<p><span style="line-height: 1.42857143;">This is a 30 day free trial. Additional testing time is available by special request. Let us know what we can do to help with your evaluation.&nbsp;</span></p>
+
+<p>At the end of the first 30 days there is a sugged donation of 1$ per user and 1&cent; per asset. (e.g. - 4 users and 2,000 assets = $24 /month)</p>
+
+<p>The EnterMediaDB open source hosting community is made possible by the support and&nbsp;generosity&nbsp;of it's members. We look forward to collaborating with you on our hosted DAM solution.</p>
+
+<p><strong style="line-height: 1.42857143;"><span style="line-height: 1.42857143;">Login Information:</span></strong></p>
+
+<p>To get you started, here is a link to your unique hosting site with instructions:</p>
+
+<p>#set( $link = "http://${usercatalog.clientsubdomain}.${hostingdomain}$usercatalog.rootpath/") <a href="$link">$link</a></p>
+
+<p>Here are your initial credentials for the EMShare application:</p>
+
+<p>Username - admin Password - $userManager.decryptPassword( $searcherManager.getData($usercatalog.id,"user","admin") )</p>
+
+<p>If you have an existing DropBox account, and would like to set it up as a monitored HotFolder, please email us at: hosting@entermediasoftware.com. We will help you connect it to your existing EnterMedia application.</p>
+
+<p><strong>Next Steps:</strong></p>
+
+<p>Check out product documentation in our Learning Center:&nbsp;http://entermediasoftware.com/learning-center/docs/</p>
+
+<p>For community support and general ideas, join our open source Google Group at: https://groups.google.com/forum/?hl=en#!forum/entermedia</p>
+
+<p>If you require professional support, we offer professional hosting plans with additional options, depending on your needs and budgets.&nbsp;You can upgrade to a new hosting package at any time.&nbsp;</p>
+
+<p>Thanks,</p>
+
+<p><strong>The EnterMediaDB Team</strong></p>

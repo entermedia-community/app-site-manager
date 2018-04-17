@@ -6,25 +6,29 @@ $pages.include("$apphome/project/logo.html")
 
 <a href="$apphome/project/contact/contact.html?collectionid=${librarycol.id}" class="btn btn-primary">[[Contact]]</a>
 	</div>
-
-<h5>$librarycol</h5>
+<div class="projectname">
+<h4>$librarycol</h4>
+</div>
 #if( $content.showmedia )
+
 #else
+	#if ($!librarycol.projectdescription)
+		<p>$!librarycol.projectdescription</p>
+	#end
 
-<p>$!librarycol.projectdescription</p>
-#set( $country = $mediaarchive.getData("country",$librarycol.country))
-#if ($country)
-<p style="font-size:80%">[[Country]]: $country</p>
-#end
-#if( $librarycol.owner == $user.getId() || $canviewsettings )
- <a class="btn btn-secondary btn-sm emdialog" title="[[Project Details]]" data-width="500" 
+	#set( $country = $mediaarchive.getData("country",$librarycol.country))
+	#if ($country)
+		<p style="font-size:80%">[[Country]]: $country</p>
+	#end
+	#if( $librarycol.owner == $user.getId() || $canviewsettings )
+ 	<a class="btn btn-secondary btn-sm emdialog" title="[[Project Details]]" data-width="500" 
  	href="$apphome/project/edit.html?collectionid=$librarycol.getId()">[[Edit]]</a>
- #end	
+ 	#end	
    	#if( $hits.size() > 0)
-<p><a href="$apphome/project/media/${librarycol.id}.html">$hits.size()  Uploads</a></p>  	
-	$pages.include("$apphome/components/dontshow/index.html")
-#end
-
+		<p><a href="$apphome/project/media/${librarycol.id}.html">$hits.size()  Uploads</a></p>  	
+		$pages.include("$apphome/components/dontshow/index.html")
+	#end
+<hr>
 #end
 
 #if( $content.showmedia )

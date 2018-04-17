@@ -13,16 +13,21 @@
 	</div>
 	        <div class="col-md-5 col-xl-6">
             <ul class="contact-icons">
+            	#set( $country = $mediaarchive.getData("country",$librarycol.country))
+                #if ($librarycol.street || $librarycol.city || $country)
                 <li>
-                    <p><i class="fa fa-map-marker"></i> 
+                    <p>
+                    
+                    <i class="fa fa-map-marker"></i> 
 					#if ($librarycol.street)
 						$!{librarycol.street},
 					#end
-					${librarycol.city}. 
-					#set( $country = $mediaarchive.getData("country",$librarycol.country))
+					#if ($librarycol.city)
+						$!{librarycol.city}.
+					#end
 					$!{country}</p>
                 </li>
-
+				#end
                 <li>
                     <p><i class="fa fa-phone"></i> Phone</p>
                 </li>

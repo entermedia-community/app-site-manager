@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-  <style id="jqueryui" href="${themeprefix}/styles/jquery-ui.css"/>
+  <!-- <style id="jqueryui" href="${themeprefix}/styles/jquery-ui.css"/> -->
   <script src="/${applicationid}/components/javascript/jquery-1.12.3.min.js" id="jquery"/>
-  <script src="/${applicationid}/components/javascript/jquery-ui-1.11.4.min.js" id="jquery-ui"/>
+  <!--  <script src="/${applicationid}/components/javascript/jquery-ui-1.11.4.min.js" id="jquery-ui"/> -->
   <!-- Bootstrap Core CSS -->
   
   
   
   <style id="bootstap" href="/${applicationid}/components/javascript/bootstrap/4/css/bootstrap.min.css" />
- <style id="mediaplayer" href="${themeprefix}/styles/pages/mediaplayer.css"/>
+  <style id="mediaplayer" href="${themeprefix}/styles/pages/mediaplayer.css"/>
   <script id="entermedia" src="/${applicationid}/components/javascript/entermedia.js"/>
   <script id="validateandedit" src="/${applicationid}/components/javascript/validateandedit.js">     </script>
   <script id="theme-js" src="/${applicationid}/components/javascript/ui-components.js"/>
   <script id="emtree" src="/${applicationid}/components/javascript/emtree/emtree.js"/>
   <script id="theme-js" src="/${applicationid}/components/javascript/ui-components.js"/>
   <script id="jquery-form" src="/${applicationid}/components/javascript/jquery.form.js"/>
-   <script id="jquery-liveajax" src="/${applicationid}/components/javascript/liveajax/liveajax.js"/>
+  <script id="jquery-liveajax" src="/${applicationid}/components/javascript/liveajax/liveajax.js"/>
   
   <script id="jquery-validate" src="/${applicationid}/components/javascript/jquery.validation/jquery.validate.js"/>
 
