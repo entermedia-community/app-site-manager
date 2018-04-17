@@ -77,12 +77,20 @@ jQuery(document).ready(function(){
 
 </div>
 
-<div>
-<ul class="list-group" style="margin:10px 0 0 50px;width:300px">
+<div style="margin-top:10px;">
 #foreach($collection in $hits.getPageOfHits())
-#if(!$collection.geo_point)
-<li class="list-group-item"><a href="$apphome/project/feed/${collection.id}.html">$collection</a>
+<div class="card" style="width: 150px;">
+<a href="$apphome/project/feed/${collection.id}.html">
+#set( $logo = $mediaarchive.getAsset($librarycol.assetportrait))
+		<div class="logo"
+			#if( $logo)
+				style='background: url("/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${logo.sourcepath}/image200x200.jpg") no-repeat center;'
+			#end
+			 > </div>
+  <div class="card-body">
+    <p class="card-text"><b>$collection</b> $collection.projectdescription</p>
+  </div>
+</a>  
+</div>
 #end
-#end
-</ul>
 </div>

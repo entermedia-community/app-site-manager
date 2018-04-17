@@ -190,7 +190,7 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
  background-size: contain;
- 	min-height:800px;
+ 	min-height:990px;
 }
 .oifeedlayout { 
   -webkit-background-size: cover;
@@ -252,13 +252,13 @@ background:none;
 	
 @media (min-width: 992px) {
 	.collfeedtools {
-		margin-left:80px;
+		margin-left:60px;
 	}
 }
 
 @media (min-width: 1480px) {
 	.collfeedtools {
-		margin-left:120px;
+		margin-left:100px;
 	}
 }
 
@@ -318,4 +318,115 @@ div#drop-area .drop-over {
     width: 190px;
     height: 251px;
     background: url(../images/dragdropbox.jpg) no-repeat top left;
+}
+
+input.uploaddescription
+{
+	
+}
+
+#upload {
+    width: 250px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 14px !important;
+    margin-top: 20px;
+    float: right;
+}
+.up-files-list {
+    padding: 0;
+    margin: 15px 0;
+ }
+ 
+.up-files-list li:first-child
+{
+     border-top: 1px solid #ddd;
+}
+.up-files-list li {
+    padding:0px;
+    margin: 0;
+    height:45px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    list-style: none;
+    position: relative;
+}
+.up-files-list li a {
+    padding: 10px;
+    display: block;
+    margin: 0;
+    color: #444;
+}
+.up-files-list li:hover {
+    background: #f3f3f3;
+}
+.up-files-list li .name {
+    width: 350px;
+    overflow: hidden;
+    display: block;
+     
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.uploadprogressrow {
+	line-height: 17px;
+}
+
+.uploadprogressrow .filename {
+	line-height: 43px;
+}
+
+.metadatainput
+{
+	padding: 10px 40px 0px 10px;
+	
+}
+.up-files-list li .size {
+    color: #3DAACD;
+    font-size: 10px;
+    width: 100px;
+    text-align: right;
+    margin: 0; 
+}
+.up-files-list li .uploadstatus {
+    font-style: italic;
+    color: #3DAACD;
+    font-size: 10px;
+    text-align: right;
+    margin: 0; 
+}
+.up-files-list li .delete-row, .up-files-list li:hover .delete-row {
+    background: url('../images/iconset-10x10.png') 20px 10px;
+    opacity: 0.7;
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    display: block;
+    margin-top: 5px;
+    float: left;
+    margin: 8px 0 0 6px;
+}
+.up-files-list li:hover .delete-row:hover {
+    background: url('../images/iconset-10x10.png') 20px 10px;
+    opacity: 1;
+}
+.up-files-list li .uploadprogress {
+    background: rgba(113, 206, 113, 0.2);
+    display: block;
+    height: 45px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.inputformrow
+{
+	padding-bottom: 6px;
+}
+
+.listdropdown
+{
+	max-width: 250px;
 }

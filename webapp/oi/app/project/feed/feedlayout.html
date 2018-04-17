@@ -1,39 +1,28 @@
+$pages.include("$apphome/project/upload/addnewupload.html")
 
-	<div class="card "
-		style="margin: 40px; max-width: 800px; text-align: left;">
-		<div class="card-header"><input value="Upload your files" /></div>
-		<div class="card-block" style="padding: 20px; text-align: center">
-			<ul class="gallery">
-			<li><img src="$apphome/tmp/image1.jpg"/></li>
-			<li><img src="$apphome/tmp/image2.jpg"/></li>
-			<li><img src="$apphome/tmp/image3.jpg"/></li>
-			</ul>
-		</div>
-		 <div class="card-footer" style="padding: 20px; text-align: right">
-		 <div style="float:left">Uploaded: November 7 2017 12:12pm by Christopher Burkey</div>
-			 <a href="addnew.html" class="card-link">View</a>
-			 <a href="addnew.html" class="card-link">Share</a>
-		</div>
-	</div>
-
-
-#set($topuploads = $mediaarchive.getSearcher("uploads").query().all().sort("date").search() )
+<div style="margin-top: 10px">
+#set($topuploads = $mediaarchive.getSearcher("userupload").query().exact("librarycollection",$librarycol.getId()).sort("uploaddateDown").search() )
 $topuploads.setHitsPerPage(20)
-#foreach( $cat in $topuploads)
+#foreach( $upload in $topuploads)
 	<div class="card "
 		style="margin: 40px; max-width: 800px; text-align: left;">
-		<div class="card-header">New Photos from San Marcos!</div>
+		<div class="card-header">$upload.longdescription</div>
 		<div class="card-block" style="padding: 20px; text-align: center">
+			<a href="">
 			<ul class="gallery">
-			<li><img src="$apphome/tmp/image1.jpg"/></li>
-			<li><img src="$apphome/tmp/image2.jpg"/></li>
-			<li><img src="$apphome/tmp/image3.jpg"/></li>
+			#set( $assets = $mediaarchive.getAssetSearcher().query().exact("category-exact",$upload.uploadcategory).hitsPerPage(3).search() )
+			#foreach($asset in $assets.getPageOfHits())
+				#set( $img = $mediaarchive.asLinkToPreview($asset,"image200x200.jpg"))  
+				<li><img src="$img"/></li>
+			#end
 			</ul>
+			</a>
 		</div>
 		 <div class="card-footer" style="padding: 20px; text-align: right">
-		 <div style="float:left">Uploaded: November 7 2017 12:12pm by Christopher Burkey</div>
+		 <div style="float:left">Uploaded: $context.getDateTime( $upload.uploaddate ) by $userManager.getScreenName($upload.owner)</div>
 			 <a href="addnew.html" class="card-link">View</a>
 			 <a href="addnew.html" class="card-link">Share</a>
 		</div>
 	</div>
 #end
+</div>
