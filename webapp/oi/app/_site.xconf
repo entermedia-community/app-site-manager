@@ -34,6 +34,8 @@
  
    <script id="openedit" src="/openedit/components/javascript/openedit.js"/>
  
+   	<property name="assetviewerlink">/${applicationid}/views/modules/asset/editor/viewer/index.html</property>
+  	<property name="asseteditlink">/${applicationid}/views/modules/asset/editor/generalinformation/index.html</property>
   
   <property name="catalogid">site/catalog</property>
   <property name="editable">true</property>
