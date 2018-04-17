@@ -6,15 +6,18 @@ $pages.include("$apphome/project/logo.html")
 
 <a href="$apphome/project/contact/contact.html?collectionid=${librarycol.id}" class="btn btn-primary">[[Contact]]</a>
 	</div>
-
-<h5>$librarycol</h5>
+<div class="projectname">
+<h4>$librarycol</h4>
+</div>
 #if( $content.showmedia )
 #else
+#if ($!librarycol.projectdescription)
+	<p>$!librarycol.projectdescription</p>
+#end
 
-<p>$!librarycol.projectdescription</p>
 #set( $country = $mediaarchive.getData("country",$librarycol.country))
 #if ($country)
-<p style="font-size:80%">[[Country]]: $country</p>
+	<p style="font-size:80%">[[Country]]: $country</p>
 #end
 #if( $librarycol.owner == $user.getId() || $canviewsettings )
  <a class="btn btn-secondary btn-sm emdialog" title="[[Project Details]]" data-width="500" 

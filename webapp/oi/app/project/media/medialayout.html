@@ -15,16 +15,15 @@ $context.putPageValue("hideheader", "true")
 #end
 	
 	<div id="viewassets">		
-		
 		$context.putPageValue("showcaption", false)
-	$context.putPageValue("showhover", "false")
-	$context.putPageValue("thumbsize", "medium")
-	$context.putPageValue("showcaption", "false")
-	$context.putPageValue("hideheader", "false")
-	$context.putPageValue("pickable", false )
-	<div id="emresultscontent">
-	$pages.include("$apphome/components/results/stackedgallery.html", $context)
-	</div>	
+		$context.putPageValue("showhover", "false")
+		$context.putPageValue("thumbsize", "medium")
+		$context.putPageValue("showcaption", "false")
+		$context.putPageValue("hideheader", "false")
+		$context.putPageValue("pickable", false )
+		<div id="emresultscontent">
+		$pages.include("$apphome/components/results/stackedgallery.html", $context)
+		</div>	
 	</div>
 
 
