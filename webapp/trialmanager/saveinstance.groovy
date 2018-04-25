@@ -66,6 +66,12 @@ public void init()
 		newclient.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
 		clientsearcher.saveData(newclient,null);
 
+		//Create Valid URL
+        String selected_url = instanceurl.toLowerCase();
+
+		context.putPageValue("selected_url", selected_url);
+                context.putPageValue("organization", organization);
+
 		//Search Next Available Seat
 		Searcher seatssearcher = searcherManager.getSearcher(catalogid, "trial_seats");
 		SearchQuery scquery = seatssearcher.createSearchQuery();
@@ -81,8 +87,6 @@ public void init()
 			seat.setValue("seatstatus","true");
 			seatssearcher.saveData(seat, null);
 			
-			//Create Valid URL
-			String selected_url = instanceurl.toLowerCase();
 			
 			//Get Server Info
 			Searcher servers = searcherManager.getSearcher(catalogid, "trial_servers");
@@ -108,13 +112,19 @@ public void init()
 				clientsearcher.saveData(client, null);
 				
 				
-				context.putPageValue("userurl",selected_url+"."+server.serverurl);
+				context.putPageValue("userurl",selected_url + "." + server.serverurl);
+				context.putPageValue("client_name", name);
 				context.putPageValue("newuser", "admin");
 				context.putPageValue("newpassword", "admin");
 				
 				context.putPageValue("from", email);
-				context.putPageValue("subject", "New Activation - http://".selected_url+"."+server.serverurl);
-				sendEmail(context.getPageMap(),"sales@entermediasoftware.com","/trial_manager/email/salesnotify.html");
+				context.putPageValue("subject", "New Activation - http://" + selected_url + "." +server.serverurl);
+				sendEmail(context.getPageMap(),"help@entermediadb.org","/trialmanager/email/salesnotify.html");
+				
+				//Email Client
+				context.putPageValue("from", 'help@entermediadb.org');
+				context.putPageValue("subject", "Welcome to EnterMediaDB " + name);
+				sendEmail(context.getPageMap(),email,"/trialmanager/email/businesswelcome.html");
 			}
 			catch(Exception e){
 				 e.printStackTrace();
@@ -124,6 +134,12 @@ public void init()
 		else {
 			log.info("No seats available");
 			context.putPageValue("errormsg","No Demo sites available for now. Please contact EnterMedia support team.");
+            //Send Email Notify No Seats
+            context.putPageValue("from", email);
+            context.putPageValue("subject", "No Seats Available for Trial Sites");
+            sendEmail(context.getPageMap(),"help@entermediadb.org","/trialmanager/email/noseats.html");
+
+
 		}
 		
 		

@@ -1,14 +1,9 @@
-#set( $hostingdomain = $context.findValue("hostingdomain") )
-#set( $pass = $userManager.decryptPassword( $newuser ) )
 #set( $link = "http://${userurl}/assets/emshare/")
 
 
-
+Trial Server Activated:
 <pre>
-
-
-Email: $newuser.getEmail()
+Email: ${from}
+Oranization: ${organization}
 Link: <a href="$link">$link</a>
-
-
 </pre>

@@ -1,35 +1,50 @@
-<p>#set( $hostingdomain = $context.findValue("hostingdomain") ) Hello $newuser.getScreenName(),</p>
+#set( $link = "http://${userurl}/assets/emshare/")
+#if(!$client_name) 
+	#set($client_name="")
+#end
+<div style="background-color:#efefef">
+<div style="background-color:#fff; padding:0 20px 20px 20px; margin:0 auto; width:600px;">
+<div style="background-color:#000; padding: 1px 0 5px 0; margin-bottom:20px;">
+<a href="https://entermediadb.com"><img src="https://entermediadb.com/trialmanager/theme/images/entermedia_database.png"></a>
+</div>
+<p><strong>Hello $client_name</strong>,</p> 
 
-<p><strong>Welcome to EnterMediaDB Business Hosting!</strong></p>
+<p>It’s live! Your site is ready to be utilized to its maximum potential. Now upload, view, and share your own media whilst exploring an array of key features created for you.</p> 
 
-<p>Your site is now live! You can now upload your own assets and experiment with features and customization.</p>
+<p>This is a 30 day free trial. We are happy to answer any questions free of charge during this time and additional testing time is available by special request.</p>
 
-<p><span style="line-height: 1.42857;">This is a 30 day free trial. Additional testing time is available by special request. Let us know what we can do to help with your evaluation.&nbsp;</span></p>
 
-<p>At the end of the trial, business hosting service is available for $899 per month. Business hosting includes a 99.9% uptime SLA, daily offsite backups, product support, and hands on assistance each month.</p>
+<p>Login Information:<br><br>
 
-<p><strong style="line-height: 1.42857;"><span style="line-height: 1.42857;">Login Information:</span></strong></p>
+Your unique application address (URL):<br> 
+<a href="$link">$link</a><br><br>
 
-<p>To get you started, here is a link to your unique hosting site with instructions:</p>
+<strong>Username:</strong> admin<br>
+<strong>Password:</strong> admin<br>
+</p>
 
-<p>#set( $link = "http://${usercatalog.clientsubdomain}.${hostingdomain}$usercatalog.rootpath/")&nbsp;<a href="$link">$link</a></p>
+<hr>
 
-<p>Here are your initial credentials for the EMShare application:</p>
 
-<p>Username - admin Password - $userManager.decryptPassword( $searcherManager.getData($usercatalog.id,"user","admin") )</p>
+<h3>Additional information</h3>
+<p>
+Check out product documentation in our Learning Center:<br> 
+<a href="https://entermediadb.org/docs/">https://entermediadb.org/docs/</a>
+</p>
 
-<p>If you have an existing DropBox account, and would like to set it up as a monitored HotFolder, please email us at: hosting@entermediasoftware.com. We will help you connect it to your existing EnterMedia application.</p>
-
-<p><strong>Next Steps:</strong></p>
-
-<p>Check out product documentation in our Learning Center:&nbsp;http://entermediasoftware.com/learning-center/docs/</p>
-
-<p>For community support and general ideas, join our open source Google Group at: https://groups.google.com/forum/?hl=en#!forum/entermedia</p>
-
-<p>Out support team will offer limited support during your trial period. If you would like a product demo or a complimentary training session, just email us at help@entermediasoftware.com to schedule a meeting.&nbsp;</p>
-
-<p>Full product support is available with each professional hosting plan. &nbsp;</p>
-
-<p>Thanks,</p>
-
-<p><strong>The EnterMediaDB Team</strong></p>
+<p>
+For community support and general ideas, join our open source Google Group at: <a href="https://groups.google.com/forum/?hl=en#!forum/entermedia">https://groups.google.com/forum/?hl=en#!forum/entermedia</a></p>
+ 
+<p> 
+If you require professional support, we offer professional hosting plans with additional options, depending on your needs and budgets. 
+You can upgrade to a new hosting package at any time.</p> 
+ 
+<p> 
+We’re glad you considered EnterMedia to solve your business needs.</p>
+ 
+<p><strong>The EnterMediaDB Team</strong><br>
+<em><a href="mailto:help@entermediadb.org">help@entermediadb.org</a></em><br>
+<a href="https://entermediadb.org/customization-and-client-services/">Request Session</a> | <a href="https://entermediadb.org/docs/">Documentation</a> | <a href="https://entermediadb.org/contact/">Contact</a>
+</p>
+</div>
+</div>

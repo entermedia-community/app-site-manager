@@ -19,7 +19,7 @@ $errormsg
 	<h2 style="color:#5BA14F; margin-bottom:30px;">Your Media Database is ready!</h2>
 	<p>Your instance URL: <strong>http://${userurl}/</strong><br>
 	Username: <strong>admin</strong><br>
-`	Password: <strong>admin</strong></p>
+	Password: <strong>admin</strong></p>
 	<form action="http://${userurl}/assets/emshare/authentication/login.html" method="post">
 		<input type="hidden" name="accountname" value="admin" />
 		<input type="hidden" name="password" value="admin" />
@@ -38,13 +38,13 @@ jQuery(document).ready(function()
 { 
 	function magic() {
 		$('#loading').delay(5000).fadeOut('slow').promise().done(function(){
-			$('#loaded').delay(1000).fadeIn('slow');
+			$('#loaded').delay(2000).fadeIn('slow');
 		});
 		
 	}
 	setTimeout(function(){
 	  magic();
-	}, 15000);
+	}, 19000);
 
 });
 </script>
