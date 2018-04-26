@@ -143,7 +143,7 @@ public class SSLManager
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace();
+				log.error("Cant' check SSL certificate", e);
 				real.setValue("isssl", true);
 				if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
 				{

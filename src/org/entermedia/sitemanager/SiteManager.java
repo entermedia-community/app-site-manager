@@ -226,8 +226,7 @@ public class SiteManager implements CatalogEnabled
 				}
 				catch (Exception e)
 				{
-					e.printStackTrace();
-					log.error(e);
+					log.error("Cant' get software versions", e);
 				}
 			}
 			sites.saveData(real, null);
@@ -497,7 +496,6 @@ public class SiteManager implements CatalogEnabled
 			catch (Exception e)
 			{
 				log.error("Error checking " + real.get("name"), e);
-				e.printStackTrace();
 				real.setProperty("monitoringstatus", "error");
 				Integer alertcount = new Integer(0);
 				if (real.get("alertcount") != null)
