@@ -20,7 +20,7 @@ $topuploads.setHitsPerPage(20)
 		</div>
 		 <div class="card-footer" style="text-align: right">
 		 <div style="float:left">Uploaded: $context.getDateTime( $upload.uploaddate ) by $userManager.getScreenName($upload.owner)</div>
-			 <a href="addnew.html" class="card-link">View</a>
+			 <a href="$apphome/project/media/category/${librarycol.getId()}/${upload.uploadcategory}.html" class="card-link">View</a>
 			 <a href="addnew.html" class="card-link">Share</a>
 		</div>
 	</div>

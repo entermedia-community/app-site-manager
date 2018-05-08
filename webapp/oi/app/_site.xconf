@@ -6,8 +6,7 @@
   <!--  <script src="/${applicationid}/components/javascript/jquery-ui-1.11.4.min.js" id="jquery-ui"/> -->
   <!-- Bootstrap Core CSS -->
   
-  
-  
+    
   <style id="bootstap" href="/${applicationid}/components/javascript/bootstrap/4/css/bootstrap.min.css" />
   <style id="mediaplayer" href="${themeprefix}/styles/pages/mediaplayer.css"/>
   <script id="entermedia" src="/${applicationid}/components/javascript/entermedia.js"/>

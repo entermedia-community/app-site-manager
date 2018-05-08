@@ -9,8 +9,6 @@ $pages.include("$apphome/project/logo.html")
 <div class="projectname">
 <h4>$librarycol</h4>
 </div>
-#if( $content.showmedia )
-#else
 #if ($!librarycol.projectdescription)
 	<p>$!librarycol.projectdescription</p>
 #end
@@ -22,15 +20,16 @@ $pages.include("$apphome/project/logo.html")
 #if( $librarycol.owner == $user.getId() || $canviewsettings )
  <a class="btn btn-secondary btn-sm emdialog" title="[[Project Details]]" data-width="500" 
  	href="$apphome/project/edit.html?collectionid=$librarycol.getId()">[[Edit]]</a>
- #end	
-   	#if( $hits.size() > 0)
+#end	
+
+#if( $hits.size() > 0)
+
+#if( $content.showmedia )
+	$pages.include("$apphome/components/advancedsearch/sidebar.html")
+	$pages.include("$apphome/components/categories/sidebar.html")
+#end
+
 <p><a href="$apphome/project/media/${librarycol.id}.html">$hits.size()  Uploads</a></p>  	
 	$pages.include("$apphome/components/dontshow/index.html")
 #end
 
-#end
-
-#if( $content.showmedia )
-	$pages.include("$apphome/components/advancedsearch/sidebar.html")
-#end
-$pages.include("$apphome/components/dontshow/index.html")
