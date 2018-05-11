@@ -17,20 +17,22 @@
     <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
 
-$pages.include("${themeprefix}/layouts/includes.html")
-#if($content.usemap == "true")
-$pages.include("$apphome/components/map/includes.html")
-#end
+	$pages.include("$apphome/theme/layouts/includes.html")
+	
+	#if($content.usemap == "true")
+		$pages.include("$apphome/components/map/includes.html")
+	#end
 
-  </head>
+	</head>
 
-  <body id="page-top">
+<body id="page-top">
 <div id="application" data-home="$home" data-apphome="$apphome" data-themeprefix="${themeprefix}" data-browserlanguage="$!{browserlanguage}" data-mediadbappid="$!mediaarchive.getMediaDbId()">
 
   <!-- Navigation -->
   #if( $content.bannerpage )
   #else
   	<div style="background-color: #f4f5ee;height:115px;">
+  	<div class="oicontainer">
     <a class="navbar-brand" href="$apphome" style="float:right;">  
     	<img style="height: 80px;" src="$apphome/theme/images/Homepage-Layer-Files_0000s_0000_Logo-Black.png" alt=""></a>
     <nav class="navbar navbar-expand-lg nav-project-page" id="mainNav">    
@@ -66,11 +68,14 @@ $pages.include("$apphome/components/map/includes.html")
       </div>
     </nav>
     </div>
+    </div>
     #end
     
-$pages.includeContent()
-
+    <div id="emcontent">
+		$pages.includeContent()
+	</div>
+	
 </div>
-  </body>
+</body>
 
 </html>

@@ -1,7 +1,4 @@
 <page>
-
-<property name="virtual">true</property>
-<path-action name="Admin.redirectInternal" 
-	redirectpath="/site/app/index.html" />
-
+	<property name="virtual">true</property>
+	<path-action name="Admin.redirectInternal" redirectpath="/site/app/index.html" />
 </page>
