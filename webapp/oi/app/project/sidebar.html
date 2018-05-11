@@ -7,29 +7,33 @@ $pages.include("$apphome/project/logo.html")
 <a href="$apphome/project/contact/contact.html?collectionid=${librarycol.id}" class="btn btn-primary">[[Contact]]</a>
 	</div>
 <div class="projectname">
-<h4>$librarycol</h4>
+	<h4>$librarycol</h4>
 </div>
-#if ($!librarycol.projectdescription)
-	<p>$!librarycol.projectdescription</p>
-#end
+<div class="projectdetails">
+	#if ($!librarycol.projectdescription)
+		<p>$!librarycol.projectdescription</p>
+	#end
+	
+	#set( $country = $mediaarchive.getData("country",$librarycol.country))
+	#if ($country)
+		<p>[[Country]]: $country</p>
+	#end
+	#if( $librarycol.owner == $user.getId() || $canviewsettings )
+	 <a class="btn btn-light btn-sm emdialog" title="[[Project Details]]" data-width="500" 
+	 	href="$apphome/project/edit.html?collectionid=$librarycol.getId()"><i class="fas fa-edit"></i> [[Edit]]</a>
+	#end	
+</div>	
 
-#set( $country = $mediaarchive.getData("country",$librarycol.country))
-#if ($country)
-	<p style="font-size:80%">[[Country]]: $country</p>
-#end
-#if( $librarycol.owner == $user.getId() || $canviewsettings )
- <a class="btn btn-secondary btn-sm emdialog" title="[[Project Details]]" data-width="500" 
- 	href="$apphome/project/edit.html?collectionid=$librarycol.getId()">[[Edit]]</a>
-#end	
+<p><a href="$apphome/project/media/${librarycol.id}.html">$hits.size()  [[Uploads]]</a></p>
 
-#if( $hits.size() > 0)
+	#if( $hits.size() > 0)
+		#if( $content.showmedia )
+			$pages.include("$apphome/components/advancedsearch/sidebar.html")
+			$pages.include("$apphome/components/categories/sidebar.html")
+		#end
+	
+		  	
+		
+	#end
 
-#if( $content.showmedia )
-	$pages.include("$apphome/components/advancedsearch/sidebar.html")
-	$pages.include("$apphome/components/categories/sidebar.html")
-#end
-
-<p><a href="$apphome/project/media/${librarycol.id}.html">$hits.size()  Uploads</a></p>  	
-	$pages.include("$apphome/components/dontshow/index.html")
-#end
-
+$pages.include("$apphome/components/dontshow/index.html")

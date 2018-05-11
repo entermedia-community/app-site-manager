@@ -1,13 +1,11 @@
 $pages.include("$apphome/project/upload/addnewupload.html")
-
-<div style="margin-top: 10px">
 #set($topuploads = $mediaarchive.getSearcher("userupload").query().exact("librarycollection",$librarycol.getId()).sort("uploaddateDown").search() )
 $topuploads.setHitsPerPage(20)
+
 #foreach( $upload in $topuploads)
-	<div class="card "
-		style="margin: 40px; max-width: 800px; text-align: left;">
+	<div class="card oi-feedcard">
 		<div class="card-header">$upload.longdescription</div>
-		<div class="card-block" style="padding: 20px; text-align: center">
+		<div class="card-block oi-feedgallery">
 			<a href="">
 			<ul class="gallery">
 			#set( $assets = $mediaarchive.getAssetSearcher().query().exact("category-exact",$upload.uploadcategory).hitsPerPage(3).search() )
@@ -18,11 +16,12 @@ $topuploads.setHitsPerPage(20)
 			</ul>
 			</a>
 		</div>
-		 <div class="card-footer" style="text-align: right">
-		 <div style="float:left">Uploaded: $context.getDateTime( $upload.uploaddate ) by $userManager.getScreenName($upload.owner)</div>
-			 <a href="$apphome/project/media/category/${librarycol.getId()}/${upload.uploadcategory}.html" class="card-link">View</a>
-			 <a href="addnew.html" class="card-link">Share</a>
+		 <div class="card-footer">
+		 <div class="float-left">[[Uploaded]]: $context.getDateTime( $upload.uploaddate ) [[by]] $userManager.getScreenName($upload.owner)</div>
+		 <div class="float-right">
+			 <a href="addnew.html" class="btn btn-sm btn-primary">[[Share]]</a>
+			 <a href="$apphome/project/media/category/${librarycol.getId()}/${upload.uploadcategory}.html" class="btn btn-sm btn-primary">[[View]]</a>
+			 </div>
 		</div>
 	</div>
 #end
-</div>

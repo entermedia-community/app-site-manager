@@ -1,12 +1,12 @@
-<div class="row content" style="margin:0px">
-  <div id="oisidebar" class="col-sm-4 col-md-3 col-lg-2 col-xl-2 collfeedtools">
-    $pages.include("$apphome/project/sidebar.html")
-  </div>
-#set( $banner = $mediaarchive.getAsset($librarycol.assetbanner))
-  <div class="col oifeedlayout" #if( $banner)
-style='background-image: url("/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${banner.sourcepath}/image1024x768.jpg");' 
-#end
->
-	$pages.includeContent()
-  </div>
+<div  class="oicontainer">
+	<div id="oisidebar" class="col-sidebar">
+	    $pages.include("$apphome/project/sidebar.html")
+	</div>
+	#set( $banner = $mediaarchive.getAsset($librarycol.assetbanner))
+	<div class="col-content" #if( $banner)
+	style='background-image: url("/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${banner.sourcepath}/image1024x768.jpg");' 
+	#end
+	>
+		$pages.includeContent()
+	</div>
 </div>
