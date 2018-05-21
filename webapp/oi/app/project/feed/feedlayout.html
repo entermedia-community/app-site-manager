@@ -4,22 +4,17 @@ $pages.include("$apphome/project/upload/addnewupload.html")
 #set($topuploads = $mediaarchive.getSearcher("userupload").query().exact("librarycollection",$librarycol.getId()).sort("uploaddateDown").search() )
 $topuploads.setHitsPerPage(20)
 
-#foreach( $upload in $topuploads)
+#foreach( $upload in $topuploads.getPageOfHits())
 	<div class="card oi-feedcard">
 		<div class="card-header">$upload.longdescription</div>
 		<div class="card-block oi-feedgallery">
 			<a href="">
-			<ul class="gallery">
-			#set( $assets = $mediaarchive.getAssetSearcher().query().exact("category-exact",$upload.uploadcategory).hitsPerPage(3).search() )
-			#foreach($asset in $assets.getPageOfHits())
-				#set( $img = $mediaarchive.asLinkToPreview($asset,"image200x200.jpg"))  
-				<li><img src="$img"/></li>
-			#end
-			</ul>
+			$context.putPageValue("upload",$upload)
+			$pages.include("./images.html",$context)
 			</a>
 		</div>
 		 <div class="card-footer">
-		 <div class="float-left">[[Uploaded]]: $context.getDateTime( $upload.uploaddate ) [[by]] $userManager.getScreenName($upload.owner)</div>
+		 <div class="float-left">[[Uploads]]: $context.getDateTime( $upload.uploaddate ) [[by]] $userManager.getScreenName($upload.owner)</div>
 		 <div class="float-right">
 			 <a href="addnew.html" class="btn btn-sm btn-primary">[[Share]]</a>
 			 <a href="$apphome/project/media/category/${librarycol.getId()}/${upload.uploadcategory}.html" class="btn btn-sm btn-primary">[[View]]</a>

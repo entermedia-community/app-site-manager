@@ -24,7 +24,7 @@ public void init()
 	upload.setValue("usertags",context.getRequestParameters("usertags.value"));
 	upload.setValue("longdescription",context.getRequestParameters("uploaddescription"));
 	searcher.saveData(upload);
-	
+		
 }
 
 init();
