@@ -96,7 +96,8 @@ public void init()
 			// deploy_trial_client.sh SERVER SUBNET URL NODE
 			try {
 				List<String> command = new ArrayList<String>();
-				command.add(server.name); //server name
+				//command.add(server.name); //server name
+				command.add(server.sshname); //server name
 				command.add(server.dockersubnet);  //server subnet
 				command.add(selected_url);  //client url
 				command.add(String.valueOf(seat.nodeid));  //client nodeid
