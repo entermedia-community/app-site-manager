@@ -37,14 +37,14 @@ $errormsg
 jQuery(document).ready(function() 
 { 
 	function magic() {
-		$('#loading').delay(5000).fadeOut('slow').promise().done(function(){
+		$('#loading').delay(6000).fadeOut('slow').promise().done(function(){
 			$('#loaded').delay(2000).fadeIn('slow');
 		});
 		
 	}
 	setTimeout(function(){
 	  magic();
-	}, 19000);
+	}, 25000);
 
 });
 </script>
