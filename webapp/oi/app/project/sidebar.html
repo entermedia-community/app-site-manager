@@ -18,9 +18,21 @@ $pages.include("$apphome/project/logo.html")
 	#if ($country)
 		<p>[[Country]]: $country</p>
 	#end
+	#if ($!librarycol.facebooklink)
+<p>
+		<a href="$!librarycol.facebooklink"><i class="fab fa-facebook-square"></i> Facebook</a>
+</p>
+	#end
+	
+	#if ($!librarycol.websitelink)
+		<a href="$!librarycol.websitelink"><i class="fas fa-link"></i> Web Site</a>
+	#end
+	
 	#if( $librarycol.owner == $user.getId() || $canviewsettings )
+</p>
 	 <a class="btn btn-light btn-sm emdialog" title="[[Project Details]]" data-width="500" 
 	 	href="$apphome/project/edit.html?collectionid=$librarycol.getId()"><i class="fas fa-edit"></i> [[Edit]]</a>
+</p>
 	#end	
 </div>	
 

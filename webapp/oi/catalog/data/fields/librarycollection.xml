@@ -169,7 +169,7 @@
   </property> 
   <property id="city" index="true" stored="true" editable="true" > 
     <name> 
-      <language id="en"><![CDATA[City]]></language>  
+      <language id="en"><![CDATA[City / State]]></language>  
     </name> 
   </property>  
   <property id="country" index="true" stored="true" editable="true" viewtype="list"   type="list"> 
@@ -183,6 +183,16 @@
   <property id="street" index="true" stored="true" editable="true"> 
     <name> 
       <language id="en"><![CDATA[Street]]></language>  
+    </name> 
+  </property>  
+  <property id="facebooklink" index="true" stored="true" editable="true"> 
+    <name> 
+      <language id="en"><![CDATA[Facebook]]></language>  
+    </name> 
+  </property>  
+  <property id="websitelink" index="true" stored="true" editable="true"> 
+    <name> 
+      <language id="en"><![CDATA[Web Site]]></language>  
     </name> 
   </property>  
 
