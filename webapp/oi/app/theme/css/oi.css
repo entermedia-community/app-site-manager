@@ -313,12 +313,9 @@ background:none;
    padding-top: 10px;
 }
 
-.select2 {
-    min-width: 220px !important;
-}
 
 span.select2-container {
-    z-index:10050;
+    z-index:900;
 }
 
 .modal-header
@@ -367,11 +364,12 @@ span.select2-container {
     padding:0px;
     margin: 0;
     height:45px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px dotted #ddd;
     border-right: 1px solid #ddd;
     border-left: 1px solid #ddd;
     list-style: none;
     position: relative;
+    color:#666;
 }
 .up-files-list li a {
     padding: 10px;
@@ -395,24 +393,26 @@ span.select2-container {
 	line-height: 17px;
 }
 
-.uploadprogressrow .filename {
+.uploadprogressrow-filename {
 	line-height: 43px;
+	margin-right:100px;
+	padding-left:5px;
+	overflow: hidden;
 }
-
-.up-files-list li .size {
-    color: #3DAACD;
-    font-size: 10px;
-    width: 100px;
-    text-align: right;
-    margin: 0; 
+.uploadprogressrow-size {
+	width:100px;
+	margin: 0;
+	position:absolute;
+	top:10px;
+	right:5px;
+	text-align:right;
+	color: #3DAACD;
+	font-size:80%;
 }
 .up-files-list li .uploadstatus {
     font-style: italic;
-    color: #3DAACD;
-    font-size: 10px;
-    text-align: right;
-    margin: 0; 
 }
+
 .up-files-list li .delete-row, .up-files-list li:hover .delete-row {
     background: url('../images/iconset-10x10.png') 20px 10px;
     opacity: 0.7;

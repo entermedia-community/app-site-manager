@@ -28,19 +28,19 @@ $context.putPageValue("searcher",$searcher)
 					</div>
 					
 			        <div id="progress_report_template" style="display:none;">
-				        <li class="uploadprogressrow row">
+				        <li class="uploadprogressrow">
 							<span id="progress_report_barcurrentupload" style="width: 0px;" class="uploadprogress"></span>
-				        	<div class="col-9 filename">
+				        	<div class="uploadprogressrow-filename">
 								<span id="progress_report_namecurrentupload" class="name"></span>
 							</div>
-				        	<div class="col-3">
+				        	<div class="uploadprogressrow-size">
 								<span id="progress_report_sizecurrentupload" class="size"></span>
 								<span id="progress_report_statuscurrentupload" class="uploadstatus"></span>
 							</div>	
 						</li>
 					</div>				
 			    </div>
-			    <div class="col-sm-8 metadatainput">
+			    <div class="col-sm-7 metadatainput">
 			    
 			   		<input id="upload_field" type="file" style="position:absolute; top:-1000px;" multiple="multiple">
 			    
@@ -55,35 +55,31 @@ $context.putPageValue("searcher",$searcher)
 						$context.putPageValue("view","asset/multipleupload")	
 					#end
 					
-					<input type="hidden" name="sourcepath" id="customsourcepath" 
-						value="${librarycol.getCategory().getCategoryPath()}/${formatteddate}/" />
-					
+					<input type="hidden" name="sourcepath" id="customsourcepath" value="${librarycol.getCategory().getCategoryPath()}/${formatteddate}/" />
 					
 					$pages.include("/$applicationid/components/xml/detaileditorcss.html", $context)
 				
-				<ul id="up-files-list" class="up-files-list">				
-					</ul>	
-					<ul id="up-files-list-completed" class="up-files-list" >
-					</ul>	
+				<ul id="up-files-list" class="up-files-list"></ul>	
+				<ul id="up-files-list-completed" class="up-files-list" ></ul>	
 				
 			</div>
 	    </div> <!-- row -->
 	    </div> <!-- container -->
 		</div> <!-- Card block -->
-		 <div class="card-footer showonfocus" style="padding: 20px;display:none;">
+		 <div class="card-footer showonfocus" style="display:none;">
 		 	
 		 	<div class="float-right">
-			<div id="uploadinstructionsafter">
-			           <a class="btn btn-primary btn-sm" id="startbutton" data-complete="[[Upload Complete]]" href="$apphome/project/upload/upload.html">[[Upload]]</a>
-				       <a class="btn btn-primary" 
-				       	id="autofinishbutton" 
-				       	data-complete="[[Upload Complete]]"
-				       	data-okpage="$apphome/project/feed/${librarycol.getId()}.html"
-				       	href="$apphome/project/upload/uploadsave.html" style="display:none">[[Finish]]</a>
-		    </div>
+				<div id="uploadinstructionsafter">
+		           <a class="btn btn-primary btn-sm" id="startbutton" data-complete="[[Upload Complete]]" href="$apphome/project/upload/upload.html">[[Upload]]</a>
+			       <a class="btn btn-primary" 
+			       	id="autofinishbutton" 
+			       	data-complete="[[Upload Complete]]"
+			       	data-okpage="$apphome/project/feed/${librarycol.getId()}.html"
+			       	href="$apphome/project/upload/uploadsave.html" style="display:none">[[Finish]]</a>
+			    </div>
 		    </div>
 		    <div class="float-right" style="padding-right:20px">
-		 		<a class="btn btn-secondary btn-sm cancel" href="">Cancel</a>
+		 		<a class="btn btn-secondary btn-sm cancel" href="">[[Cancel]]</a>
 		 	</div>
 	</div>
 </div>	
