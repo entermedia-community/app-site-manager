@@ -39,7 +39,7 @@ jQuery(document).ready(function(){
  var markers = [
 	#foreach($location in $hits.getPageOfHits())
 	 #if($location.geo_point) #set( $counted = $counted + 1)
-	      #if($velocitycount > 1),#end
+	      #if(${foreach.count} > 1),#end
         ['$location.id',  $location.getValue("geo_point") ],
      #end   
      #end
@@ -77,9 +77,9 @@ jQuery(document).ready(function(){
 
 </div>
 
-<div style="margin-top:10px;">
+<div style="margin:10px 0px 0px 20px;">
 #foreach($collection in $hits.getPageOfHits())
-<div class="card" style="width: 150px;">
+<div class="card" style="width: 170px;height:260px;margin-left: 10px; float:left">
 <a href="$apphome/project/feed/${collection.id}.html">
 #set( $logo = $mediaarchive.getAsset($librarycol.assetportrait))
 		<div class="logo"
@@ -88,7 +88,11 @@ jQuery(document).ready(function(){
 			#end
 			 > </div>
   <div class="card-body">
-    <p class="card-text"><b>$collection</b> $collection.projectdescription</p>
+    <p class="card-text"><b>$collection</b> <br>
+    #set( $foundrow = $searcherManager.getData($catalogid,"country",$collection.country) )  
+	#set($label = $foundrow.getName($context.getLanguage()))
+	#esc($!label)
+    </p>
   </div>
 </a>  
 </div>

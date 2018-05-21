@@ -1,6 +1,5 @@
 <page>
 	
 	<path-action name="DataEditModule.saveData"/>
-	<property name="virtual">true</property>
 	
 </page>
