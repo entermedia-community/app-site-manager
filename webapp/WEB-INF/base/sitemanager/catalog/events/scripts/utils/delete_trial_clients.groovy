@@ -1,5 +1,8 @@
+package utils;
+
 import org.entermediadb.email.PostMail
 import org.entermediadb.email.TemplateWebEmail
+import org.entermediadb.asset.MediaArchive
 import org.openedit.*
 import org.openedit.data.Searcher
 import org.openedit.users.*
@@ -14,10 +17,10 @@ import org.openedit.util.RequestUtils
 
 public void init()
 {
-        String catalogid = "assets/catalog";
+         MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 
         //Search Clients with End Date = Today
-        Searcher clientsearcher = searcherManager.getSearcher(catalogid, "trial_clients");
+        Searcher clientsearcher = mediaArchive .getSearcher("trial_clients");
 
         Calendar now = Calendar.getInstance();
         now.add(Calendar.DAY_OF_YEAR, -15);
@@ -31,7 +34,7 @@ public void init()
                 Data client = clientsearcher.searchById(it.id);
 
                 //Get Server Info
-                Searcher servers = searcherManager.getSearcher(catalogid, "trial_servers");
+                Searcher servers = mediaArchive .getSearcher("trial_servers");
                 Data server = servers.query().exact("id", client.server).searchOne()
                 if (server) {
                         log.info("Deleting client: "+client.name+", instance: "+client.instanceurl+" on server "+server.name);
