@@ -1,5 +1,8 @@
+package utils;
+
 import org.entermediadb.email.PostMail
 import org.entermediadb.email.TemplateWebEmail
+import org.entermediadb.asset.MediaArchive
 import org.openedit.*
 import org.openedit.data.Searcher
 import org.openedit.users.*
@@ -14,13 +17,15 @@ import org.openedit.util.RequestUtils
 
 public void init()
 {
-        String catalogid = "assets/catalog";
+        //String catalogid = "sitemanager/catalog";
+
+        MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 
         //Search Clients with End Date = Today
-        Searcher clientsearcher = searcherManager.getSearcher(catalogid, "trial_clients");
+        Searcher clientsearcher = mediaArchive.getSearcher("trial_clients");
 
         Date today = new Date();
-        Collection expiredClients = clientsearcher.query().before("dateend", today).search();
+        Collection expiredClients = clientsearcher.query().exact("trialstatus","active").and().before("dateend", today).search();
         log.info("Found "+expiredClients.size()+" sites expired.");
         expiredClients.each{
                 //Get The Client
@@ -29,13 +34,13 @@ public void init()
                 log.info("Disabling: "+client.name+" -> "+client.dateend);
 
                 //Search Seat Info
-                Searcher seatssearcher = searcherManager.getSearcher(catalogid, "trial_seats");
+                Searcher seatssearcher = mediaArchive.getSearcher("trial_seats");
                 SearchQuery scquery = seatssearcher.createSearchQuery();
                 HitTracker seats = seatssearcher.search(scquery);
                 Data seat = seatssearcher.query().match("clientid", client.id).searchOne();
                 if (seat) {
                                 //Get Server Info
-                                Searcher servers = searcherManager.getSearcher(catalogid, "trial_servers");
+                                Searcher servers = mediaArchive.getSearcher("trial_servers");
                                 Data server = servers.query().exact("id", seat.trial_servers).searchOne()
                                 if (server) {
                                         List<String> command = new ArrayList<String>();
@@ -45,7 +50,7 @@ public void init()
 
                                         Exec exec = moduleManager.getBean("exec");
                                         ExecResult done = exec.runExec("disableclient", command);
-                                        log.info("Exec: " + done.getStandardOut());
+                                        //log.info("Exec: " + done.getStandardOut());
 
                                         seat.setValue("clientid","");
                                         seat.setValue("seatstatus","false");
@@ -56,6 +61,12 @@ public void init()
                                         client.setProperty("trialstatus","expired");
                                         client.setProperty("server", seat.trial_servers);
                                         clientsearcher.saveData(client, null);
+
+                                        //Email Client
+                                        context.putPageValue("client_name", client.name);
+                                				context.putPageValue("from", 'help@entermediadb.org');
+                                				context.putPageValue("subject", "EnterMediaDB Instance Expired");
+                                        sendEmail(context.getPageMap(),email,"/trialmanager/email/expired.html");
                                 }
                 }
 
