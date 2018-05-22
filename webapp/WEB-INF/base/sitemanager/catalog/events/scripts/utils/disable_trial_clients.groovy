@@ -62,16 +62,35 @@ public void init()
                                         client.setProperty("server", seat.trial_servers);
                                         clientsearcher.saveData(client, null);
 
-                                        //Email Client
-                                        context.putPageValue("client_name", client.name);
-                                				context.putPageValue("from", 'help@entermediadb.org');
-                                				context.putPageValue("subject", "EnterMediaDB Instance Expired");
-                                        sendEmail(context.getPageMap(),email,"/trialmanager/email/expired.html");
+
                                 }
                 }
-
+                //Email Client
+                context.putPageValue("client_name", client.name);
+                context.putPageValue("from", 'help@entermediadb.org');
+                context.putPageValue("subject", "EnterMediaDB Instance Expired");
+                sendEmail(context.getPageMap(),client.clientemail,"/trialmanager/email/expired.html");
 
         }
+}
+
+protected void sendEmail(Map pageValues, String email, String templatePage){
+	//send e-mail
+	//Page template = getPageManager().getPage(templatePage);
+	RequestUtils rutil = moduleManager.getBean("requestUtils");
+	BaseWebPageRequest newcontext = rutil.createVirtualPageRequest(templatePage,null, null);
+
+	newcontext.putPageValues(pageValues);
+
+	PostMail mail = (PostMail)moduleManager.getBean( "postMail");
+	TemplateWebEmail mailer = mail.getTemplateWebEmail();
+	mailer.loadSettings(newcontext);
+	mailer.setMailTemplatePath(templatePage);
+	mailer.setRecipientsFromCommas(email);
+	//mailer.setMessage(inOrder.get("sharenote"));
+	//mailer.setWebPageContext(context);
+	mailer.send();
+	log.info("email sent to ${email}");
 }
 
 init();
