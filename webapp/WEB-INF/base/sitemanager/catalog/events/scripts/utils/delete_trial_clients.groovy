@@ -40,7 +40,7 @@ public void init()
                         log.info("Deleting client: "+client.name+", instance: "+client.instanceurl+" on server "+server.name);
 
                         List<String> command = new ArrayList<String>();
-                        command.add(server.name); //server name
+                        command.add(server.sshname); //server name
                         command.add(client.instanceurl);  //client url
 
                         Exec exec = moduleManager.getBean("exec");
@@ -49,7 +49,7 @@ public void init()
 
                         //Set Status Deleted to Client
                         client.setProperty("trialstatus","deleted");
-                        client.setProperty("server","");
+                        //client.setProperty("server","");
                         clientsearcher.saveData(client, null);
                 }
         }

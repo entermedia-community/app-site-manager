@@ -56,15 +56,16 @@ public void init()
                                         seat.setValue("seatstatus","false");
                                         seatssearcher.saveData(seat, null);
 
-
-                                        //Set Status Expired to Client
-                                        client.setProperty("trialstatus","expired");
+                                        //Keep the server it was installed for the record
                                         client.setProperty("server", seat.trial_servers);
-                                        clientsearcher.saveData(client, null);
+
 
 
                                 }
                 }
+                //Set Status Expired to Client
+                client.setProperty("trialstatus","expired");
+                clientsearcher.saveData(client, null);
                 //Email Client
                 context.putPageValue("client_name", client.name);
                 context.putPageValue("from", 'help@entermediadb.org');
