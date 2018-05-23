@@ -10,6 +10,8 @@ public void init()
 	BaseSearcher collectionsearcher = mediaArchive.getSearcher("librarycollection");
 	Searcher librarysearcher = mediaArchive.getSearcher("library");
 
+	log.info("User is" + user.getId() );
+
 	String  id = context.getRequestParameter("dataid");
 	
 	Data data = collectionsearcher.searchById(id);
