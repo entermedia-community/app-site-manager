@@ -12,18 +12,19 @@
 <meta property="og:description" content="$!userupload.longdescription" />
 #if($hits)
 #set( $asset = $hits.first())
-<meta property="og:image" content="${context.siteRoot}/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${asset.sourcepath}/image200x200.jpg" />
+<meta property="og:image" content="${context.siteRoot}/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${asset.sourcepath}/image1024x768.jpg" />
 #end
-<meta name="description" content="">
 #else
 <meta property="og:url" content="${context.siteRoot}$apphome/project/media/category/${librarycol.getId()}/${userupload.uploadcategory}.html" />
 <meta property="og:title" content="$librarycol Upload By $userManager.getScreenName($upload.owner)" />
 <meta property="og:description" content="$!userupload.longdescription" />
 #set( $logo = $mediaarchive.getAsset($librarycol.assetportrait))
 <meta property="og:image" content="${context.siteRoot}/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${logo.sourcepath}/image200x200.jpg" />
+#end
+#end
 <meta name="description" content="">
-#end
-#end
+<meta property="og:type"               content="article" />
+
     <title>#if( $librarycol ) $librarycol - #end OpenInstitute</title>
     <!-- Custom fonts for this template -->
     <link href="$themeprefix/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
