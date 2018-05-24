@@ -19,6 +19,8 @@
 	<path-action name="ProjectModule.searchForAssetsOnCollection">
 		<searchtype>librarycollection</searchtype>
 	</path-action>
+	<path-action name="ProjectModule.loadUserUpload" />
+
 	<property name="alwaysresetpage">true</property>
 	
 	 <permission name="view">

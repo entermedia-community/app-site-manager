@@ -5,11 +5,26 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>The Open Institute</title>
-
+#if( $librarycol )
+#if( $userupload)
+<meta property="og:url" content="${context.siteRoot}$apphome/project/media/category/${librarycol.getId()}/${userupload.uploadcategory}.html" />
+<meta property="og:title" content="$librarycol Upload By $!mediaarchive.getUserManager().getScreenName($userupload.owner)" />
+<meta property="og:description" content="$!userupload.longdescription" />
+#if($hits)
+#set( $asset = $hits.first())
+<meta property="og:image" content="${context.siteRoot}/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${asset.sourcepath}/image200x200.jpg" />
+#end
+<meta name="description" content="">
+#else
+<meta property="og:url" content="${context.siteRoot}$apphome/project/media/category/${librarycol.getId()}/${userupload.uploadcategory}.html" />
+<meta property="og:title" content="$librarycol Upload By $userManager.getScreenName($upload.owner)" />
+<meta property="og:description" content="$!userupload.longdescription" />
+#set( $logo = $mediaarchive.getAsset($librarycol.assetportrait))
+<meta property="og:image" content="${context.siteRoot}/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${logo.sourcepath}/image200x200.jpg" />
+<meta name="description" content="">
+#end
+#end
+    <title>#if( $librarycol ) $librarycol - #end OpenInstitute</title>
     <!-- Custom fonts for this template -->
     <link href="$themeprefix/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
