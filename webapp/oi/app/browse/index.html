@@ -79,9 +79,9 @@ jQuery(document).ready(function(){
 
 <div style="margin:10px 0px 0px 20px;">
 #foreach($collection in $hits.getPageOfHits())
-<div class="card" style="width: 170px;height:260px;margin-left: 10px; float:left">
+<div class="card" style="background-color: #DDD;padding:10px; width: 170px;height:260px;margin-left: 10px; float:left">
 <a href="$apphome/project/feed/${collection.id}.html">
-#set( $logo = $mediaarchive.getAsset($librarycol.assetportrait))
+#set( $logo = $mediaarchive.getAsset($collection.assetportrait))
 		<div class="logo"
 			#if( $logo)
 				style='background: url("/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${logo.sourcepath}/image200x200.jpg") no-repeat center;'
