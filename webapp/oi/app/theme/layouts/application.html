@@ -17,11 +17,13 @@
 <meta property="og:image:height" content="768" />
 #end
 #else
-<meta property="og:url" content="${context.siteRoot}$apphome/project/media/category/${librarycol.getId()}/${userupload.uploadcategory}.html" />
-<meta property="og:title" content="$librarycol Upload By $userManager.getScreenName($upload.owner)" />
-<meta property="og:description" content="$!userupload.longdescription" />
+<meta property="og:url" content="${context.siteRoot}$apphome/project/feed/${librarycol.getId()}.html" />
+<meta property="og:title" content="$librarycol" />
+<meta property="og:description" content="Open Institute" />
 #set( $logo = $mediaarchive.getAsset($librarycol.assetportrait))
-<meta property="og:image" content="${context.siteRoot}/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${logo.sourcepath}/image200x200.jpg" />
+<meta property="og:image" content="${context.siteRoot}/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${logo.sourcepath}/image1024x768.jpg" />
+<meta property="og:image:width" content="1024" />
+<meta property="og:image:height" content="768" />
 #end
 #end
 <meta name="description" content="">
