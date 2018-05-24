@@ -21,10 +21,12 @@ $sharelink
 
 </p>
 
-
 		<div id="share">
 			<!-- AddThis Button BEGIN -->
 			<div class="addthis_toolbox addthis_default_style"
+			data-url="$sharelink"
+			data-title="$!upload.longdescription"
+			data-description="$librarycol $context.getDateTime( $upload.uploaddate ) [[by]] $mediaarchive.getUserManager().getScreenName($upload.owner)">
 				<a class="addthis_button_facebook"></a>
 				<a class="addthis_button_twitter"></a>
 				<a class="addthis_button_google"></a>
