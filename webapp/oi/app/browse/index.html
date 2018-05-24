@@ -41,7 +41,7 @@ jQuery(document).ready(function(){
 	#foreach($location in $hits.getPageOfHits())
 	#set( $geopoint = $location.geo_point )
 	#if($geopoint)
-		 markers.push(['$location.id',  $geopoint]);
+		 markers.push(['$location.name',  $geopoint]);
      #end   
      #end
  
