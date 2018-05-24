@@ -14,66 +14,18 @@
 <p> 
 <textarea class="embedlinktextarea" type=text onclick="this.select();" readonly="readonly" rows="1" cols="45">
 $sharelink
-</iframe> 
 </textarea>
-<a href="$sharelink">Preview</a>
-
-
+<a href="$sharelink" target="_blank">[[Preview]]</a>
 </p>
 
-		<div id="share">
-			<!-- AddThis Button BEGIN -->
-			<div class="addthis_toolbox addthis_default_style"
-			data-url="$sharelink"
-			data-title="$!upload.longdescription"
-			data-description="$librarycol $context.getDateTime( $upload.uploaddate ) [[by]] $mediaarchive.getUserManager().getScreenName($upload.owner)">
-				<a class="addthis_button_facebook"></a>
-				<a class="addthis_button_twitter"></a>
-				<a class="addthis_button_google"></a>
-                <a class="addthis_button_evernote"></a>
-                <a class="addthis_button_reddit"></a>
-                <a class="addthis_button_pinterest_share"></a>
-                <a class="addthis_button_skype"></a>
-                <a class="addthis_button_tumblr"></a>
-                <a class="addthis_button_whatsapp"></a>
-                <a class="addthis_button_hootsuite"></a>
-                <a class="addthis_button_delicious"></a>
-                <a class="addthis_button_flipboard"></a>
-                <a class="addthis_button_gmail"></a>
-				<!-- <a class="addthis_button_compact"></a> -->
-				<a class="addthis_counter addthis_bubble_style"></a>
-			</div>
-
-<script type="text/javascript">
-	var addthis_config = {
-    	ui_click: true
-    };
-</script>
-
-
-<script type="text/javascript">
-    // Call this function once the rest of the document is loaded
-    jQuery(document).ready(function() 
-	{ 
-		var script = document.createElement('script');
-		script.src = "https://s7.addthis.com/js/300/addthis_widget.js#async=1";
-		script.onload = function () {
-		    //do stuff with the script
-			addthis.toolbox('.addthis_toolbox');    
-		};
-		
-		document.head.appendChild(script); 
-    	
-    });
-</script>			<!-- AddThis Button END -->
-		</div>
+<div id="share">
+<div class="addthis_inline_share_toolbox"></div>
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5b06fc4d3e3ca9e8"></script>
+</div>
 <strong>[[Select code then right click to copy]]</strong>
-
 <textarea class="embedlinktextarea" type=text onclick="this.select();" readonly="readonly" rows="7" cols="45">
-<iframe src="$sharelink" width="100%" height="100%" style="border:none" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true">
-</iframe>
+	<iframe src="$sharelink" width="100%" height="100%" style="border:none" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true">
+	</iframe>
 </textarea>
-
-
 </div>
 </div>
