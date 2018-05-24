@@ -36,16 +36,16 @@ $pages.include("$apphome/project/logo.html")
 	#end	
 </div>	
 
-<p><a href="$apphome/project/media/${librarycol.id}.html">$hits.size()  [[Uploads]]</a></p>
-
 	#if( $hits.size() > 0)
+		<p><a href="$apphome/project/media/${librarycol.id}.html">$hits.size()  [[Uploads]]</a></p>
 		#if( $content.showmedia )
 			$pages.include("$apphome/components/advancedsearch/sidebar.html")
 			$pages.include("$apphome/components/categories/sidebar.html")
+			
 		#end
-	
+		$pages.include("$apphome/components/dontshow/index.html")
 		  	
 		
 	#end
 
-$pages.include("$apphome/components/dontshow/index.html")
+
