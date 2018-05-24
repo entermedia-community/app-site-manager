@@ -41,16 +41,16 @@ jQuery(document).ready(function(){
 	#foreach($location in $hits.getPageOfHits())
 	#set( $geopoint = $location.geo_point )
 	#if($geopoint)
-		 markers.push(['$location.id',  $geopoint]);
+		 markers.push(['$location.id','$location.name',  $geopoint]);
      #end   
      #end
  
 
  for( i = 0; i < markers.length; i++ ) {
 	 	marker = new google.maps.Marker({
-            position: markers[i][1],
+            position: markers[i][2],
             map: map,
-            title: markers[i][0]
+            title: markers[i][1]
         });
          // Allow each marker to have an info window    
         google.maps.event.addListener(marker, 'click', (function(marker, i) {
