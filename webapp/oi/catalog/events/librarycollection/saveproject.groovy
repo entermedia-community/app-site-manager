@@ -10,7 +10,7 @@ public void init()
 	BaseSearcher collectionsearcher = mediaArchive.getSearcher("librarycollection");
 	Searcher librarysearcher = mediaArchive.getSearcher("library");
 
-	log.info("User is" + user.getId() );
+	log.info("User is: " + user.getId() );
 
 	String  id = context.getRequestParameter("dataid");
 	
@@ -28,17 +28,28 @@ public void init()
 	data.setValue("owner",user.getId());
 	
 	//Search Google and put point on map
-	Data country = mediaArchive.getData("country",data.get("country"));
+	String location = ""
+	if (data.get("street")) {
+		location = data.get("street");
+	}
+	if (data.get("city")) {
+		location += " " + data.get("city");
+	}
+	Data country = mediaArchive.getData("country", data.get("country"));
+	if (country) {
+		location += " " + country;
+	} 
 	
-	String location = data.get("street")  + " " + data.get("city") + " " + country;
-	location = location.replaceAll("null","");
-	Position p = (Position)collectionsearcher.getGeoCoder().findFirstPosition(location);
-	if( p != null)
+	if (location != "")
 	{
-		data.setValue("geo_point",p);
-		data.setValue("geo_point_formatedaddress",p.getFormatedAddress());
-	}	
-	
+		//location = location.replaceAll("null","");
+		Position p = (Position)collectionsearcher.getGeoCoder().findFirstPosition(location);
+		if( p != null)
+		{
+			data.setValue("geo_point",p);
+			data.setValue("geo_point_formatedaddress",p.getFormatedAddress());
+		}	
+	}
 	collectionsearcher.saveData(data);
 	
 }

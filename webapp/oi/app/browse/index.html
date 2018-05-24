@@ -30,20 +30,21 @@ jQuery(document).ready(function(){
 // var map = new google.maps.Map(document.getElementById('map'), {
  //         zoom: 3
  //       });
- var uluru = {lat: 14.7260212, lng: -91.2577558};
+   var uluru = {lat: 14.7260212, lng: -91.2577558};
    var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 3,
           center: uluru
         });
 
- var markers = [
+ var markers = [];
+ 
 	#foreach($location in $hits.getPageOfHits())
-	 #if($location.geo_point) #set( $counted = $counted + 1)
-	      #if(${foreach.count} > 1),#end
-        ['$location.id',  $location.getValue("geo_point") ],
+	#set( $geopoint = $location.geo_point )
+	#if($geopoint)
+		 markers.push(['$location.id',  $geopoint]);
      #end   
      #end
-    ];
+ 
 
  for( i = 0; i < markers.length; i++ ) {
 	 	marker = new google.maps.Marker({
