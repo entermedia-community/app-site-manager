@@ -12,7 +12,7 @@
     
     <permission name="editdata">
 		<or>
-			<group name="administratorsXX" />
+			<group name="administrators" />
 			<action name="ProjectModule.canEditCollection" />
 		</or>
 	</permission>
