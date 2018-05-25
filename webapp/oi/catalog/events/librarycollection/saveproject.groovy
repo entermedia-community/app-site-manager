@@ -25,7 +25,10 @@ public void init()
 		librarysearcher.saveData(library);
 	}
 	data.setValue("library",library.getId());
-	data.setValue("owner",user.getId());
+	if( data.get("owner") == null )
+	{
+		data.setValue("owner",user.getId());
+	}	
 	
 	//Search Google and put point on map
 	String location = ""
