@@ -9,10 +9,8 @@ $topuploads.setHitsPerPage(20)
 	<div class="card oi-feedcard">
 		<div class="card-header">$upload.longdescription</div>
 		<div class="card-block oi-feedgallery">
-			<a href="">
 			$context.putPageValue("upload",$upload)
 			$pages.include("./images.html",$context)
-			</a>
 		</div>
 		 <div class="card-footer">
 		 <div class="float-left">[[Uploads]]: $context.getDateTime( $upload.uploaddate ) [[by]] $userManager.getScreenName($upload.owner)</div>

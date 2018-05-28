@@ -5,12 +5,20 @@
 
 #set( $assets = $mediaarchive.getAssetSearcher().query().exact("category-exact",$upload.uploadcategory).hitsPerPage(3).search() )
 #if( $assets.size() == 0)
-	<div id="status$upload.getId()"  class="ajaxstatus "  ajaxpath="$home$apphome/project/feed/images.html?uploadid=$upload.id" >
+	<div id="status$upload.getId()"  class="ajaxstatus"  ajaxpath="$home$apphome/project/feed/images.html?uploadid=$upload.id" >
 		[[loading]] $assets.size() 
 	</div>
-#end	
+#end
+#set ( $stilloading = false)	
 #if( $assets.size() > 0 && $assets.size() < 4)
-	<div id="status$upload.getId()"  class="ajaxstatus "  ajaxpath="$home$apphome/project/feed/images.html?uploadid=$upload.id" >
+	#if( $assets.size() > 0)
+		#foreach($hit in $assets.getPageOfHits())
+			#if ($hit.importstatus!="complete")
+				#set ($stilloading = true)
+			#end
+		#end
+	#end
+	<div id="status$upload.getId()"  class="#if ($stilloading) ajaxstatus #end"  ajaxpath="$home$apphome/project/feed/images.html?uploadid=$upload.id" >
 #end
 
 #if( $assets.size() > 0)
@@ -23,7 +31,8 @@
 	 #if( $type =="audio")
    	    	#set( $type = "mime" )
    	 #end
-        $pages.include("$apphome/components/results/thumbnails/${type}.html", $context)   
+        $pages.include("$apphome/components/results/thumbnails/${type}.html", $context)
+        
 	</li>
 #end
 </ul>
