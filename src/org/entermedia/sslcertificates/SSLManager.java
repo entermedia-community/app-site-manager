@@ -82,6 +82,11 @@ public class SSLManager
 			MultiValued real = (MultiValued) sites.loadData(it);
 			URL url = null;
 
+			if (!real.getBoolean("monitoringenable"))
+			{
+				continue;
+			}
+
 			try
 			{
 				SSLContext ctx = SSLContext.getInstance("TLS");

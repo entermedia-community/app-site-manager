@@ -93,6 +93,11 @@ public class SpeedManager
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
 
+			if (!real.getBoolean("monitoringenable"))
+			{
+				continue;
+			}
+
 			if (real.get("monitoringstatus") != null && real.get("monitoringstatus").compareTo("ok") == 0)
 			{
 				try

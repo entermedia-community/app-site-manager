@@ -394,6 +394,12 @@ public class SiteManager implements CatalogEnabled
 		for (Data it : sitestomonitor)
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
+			
+			if (!real.getBoolean("monitoringenable"))
+			{
+				continue;
+			}
+			
 			String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
 			ServerStats stats = new ServerStats();
 
