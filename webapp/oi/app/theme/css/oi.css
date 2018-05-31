@@ -196,21 +196,6 @@ body {
 	line-height: 1.2;
 }
 
-.oifeedlayout {
-	background: url("../oi/banner.jpg") no-repeat top right fixed; 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
- 	background-size: contain;
- 	min-height:990px;
- 	padding:0;
-}
-.oifeedlayout { 
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
 .logocontainer {
 	margin-top:-20px;
 	margin-left:auto;
@@ -268,7 +253,28 @@ background:none;
 
 .oicontainer { max-width: 1300px; margin: 0 auto; position:relative; }
 .col-sidebar { background: none; }
-.col-content { padding: 0 20px 0 40px;}
+.col-content { }
+.oifeedlayout-content { padding: 20px; }
+.oifeedlayout {
+	background: url("../oi/banner.jpg") no-repeat top right fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+ 	background-size: contain;
+ 	min-height:990px;
+}
+.oifeedlayout { 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+@media (min-width: 992px) {
+	.oifeedlayout {
+		margin-left: 280px
+	}
+}
 
 	
 @media (min-width: 992px) {
@@ -278,6 +284,8 @@ background:none;
 @media (min-width: 1480px) {
 	.oicontainer { max-width: 1480px; }
 }
+
+
 .oi-feedcard  { margin-bottom: 30px; }
 
 .oi-feedcard .card-footer { font-size:90%; padding:.55rem 1.25rem }
@@ -304,6 +312,9 @@ background:none;
 }
 .oi-feedgallery .gallery li img {
     width: 241px;
+}
+.oi-feedgallery .gallery li .player {
+	max-height: 320px;
 }
 .oi-feedgallery .card .card-footer {
 	font-size:80%;
@@ -508,7 +519,7 @@ span.select2-container {
 
 
 #resultpageslabel { line-height:40px; font-size:80%;}
-#resultsdiv div.masonry-grid { padding:0;  background-color:transparent;}
+#resultsdiv div.masonry-grid { padding:10px 12px;  background-color:transparent;}
 
 #oisidebar .ui-widget {
 	margin-bottom:20px;
@@ -521,4 +532,15 @@ span.select2-container {
 }
 #oisidebar .ui-widget-content h3 {
 	font-size:1.2em;
+}
+
+
+
+
+.assetviewer {
+	background-color: #fff;
+}
+
+.assetviewer #media-player {
+	padding:20px;
 }

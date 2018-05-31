@@ -32,7 +32,7 @@
   <style id="select2-css" href="/${applicationid}/components/javascript/select2/css/select2.css"/>
   <style id="select2-css-theme" href="/${applicationid}/components/javascript/select2/css/select2-bootstrap4.css"/>
   
-  
+    
   
   <!-- Main Emshare CSS-->
   <style id="app-css" href="${themeprefix}/styles/theme.css"/>
@@ -332,6 +332,14 @@
   <permission name="openeditdirectedit">
     <group id="administrators"/>
   </permission>
+  
+    	<permission name="viewtimeline">
+		<userprofile property="viewtimeline" equals="true" />
+	</permission>
+	
+  	<permission name="viewclosedcaptions">
+		<userprofile property="viewclosedcaptions" equals="true" />
+	</permission>
   
   <path-action name="Admin.autoLogin"/>
   <path-action name="MediaArchiveModule.loadApplicationId"/>

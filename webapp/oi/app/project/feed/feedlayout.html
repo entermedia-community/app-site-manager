@@ -1,8 +1,10 @@
+<div class="oifeedlayout-content">
+#set ($librarycolid = $librarycol.getId())
 #if( $caneditdata )
 $pages.include("$apphome/project/upload/addnewupload.html")
 <br>
 #end
-#set($topuploads = $mediaarchive.getSearcher("userupload").query().exact("librarycollection",$librarycol.getId()).sort("uploaddateDown").search() )
+#set($topuploads = $mediaarchive.getSearcher("userupload").query().exact("librarycollection", $librarycolid).sort("uploaddateDown").search() )
 $topuploads.setHitsPerPage(20)
 
 #foreach( $upload in $topuploads.getPageOfHits())
@@ -16,8 +18,9 @@ $topuploads.setHitsPerPage(20)
 		 <div class="float-left">[[Uploads]]: $context.getDateTime( $upload.uploaddate ) [[by]] $userManager.getScreenName($upload.owner)</div>
 		 <div class="float-right">
 		     <a  class="emdialog btn btn-sm btn-primary"  data-hidefooter="true" data-librarycol="${librarycol.getId()}" data-uploadid="${upload.id}"  href="$home$apphome/project/feed/share.html" >[[Share]]</a>
-			 <a href="$apphome/project/media/category/${librarycol.getId()}/${upload.uploadcategory}.html" class="btn btn-sm btn-primary">[[View]]</a>
+			 <a href="$apphome/project/media/category/${librarycolid}/${upload.uploadcategory}.html" class="btn btn-sm btn-primary">[[View]]</a>
 			 </div>
 		</div>
 	</div>
 #end
+</div>
