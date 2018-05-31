@@ -242,6 +242,7 @@ public class SiteManager implements CatalogEnabled
 			ObjectMapper mapper = new ObjectMapper();
 			Downloader downloader = new Downloader();
 
+			String fullurl = buildURL(inReal, "/mediadb/services/system/systemstatus.json");
 			String jsonString = downloader.downloadToString(buildURL(inReal, "/mediadb/services/system/systemstatus.json"));
 
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
@@ -255,6 +256,7 @@ public class SiteManager implements CatalogEnabled
 				statList.add(stat);
 			}
 			stats.build(statList);
+			inReal.setValue("fullurl", fullurl);
 		}
 		catch (Exception e)
 		{
@@ -394,6 +396,12 @@ public class SiteManager implements CatalogEnabled
 		for (Data it : sitestomonitor)
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
+			
+			if (!real.getBoolean("monitoringenable"))
+			{
+				continue;
+			}
+			
 			String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
 			ServerStats stats = new ServerStats();
 
