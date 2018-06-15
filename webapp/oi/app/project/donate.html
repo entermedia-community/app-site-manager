@@ -1,4 +1,9 @@
 <h1>[[Donate to Project]]</h1>
+#if($mediaarchive.getCatalogSettingValue("productionmode") == "test")
+<p>Site is in test mode.  Credit card is 4242 4242 4242 4242 any expiry.  Add your keys to catalog settings and switch to production mode to take credit cards.</p>
+#end
+$mediaarchive.getCatalogSettingValue("productionmode")
+
 <div class="card">
 <div class="card-header">
 	<div class="row" style="border-bottom:1px solidc ">
@@ -14,7 +19,7 @@
 
 
  <div class="card-block" style="padding:20px 21px;">                      
-       	<form action="$apphome/project/feed/donatefinish.html" method="post" id="payment-form">
+       	<form action="$apphome/project/donatefinish.html" method="post" id="payment-form">
              	
              	<div class="form-group row">
    				<label for="staticEmail" class="col-sm-2 col-form-label">[[Card Info]]:</label>
