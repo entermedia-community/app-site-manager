@@ -93,7 +93,7 @@ jQuery(document).ready(function(){
 			 > </div>
 			 </a>
   
-  <a href="$apphome/project/feed/${collection.id}.html" title="$collection">
+  <a href="$apphome/project/feed/${collection.id}/#urlencode($collection.name).html" title="$collection">
     <p class="card-text"><strong>$collection</strong> <br>
     #set( $foundrow = $searcherManager.getData($catalogid,"country",$collection.country) )  
 	#set($label = $foundrow.getName($context.getLanguage()))

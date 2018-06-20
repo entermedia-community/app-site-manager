@@ -1,0 +1,12 @@
+<page>
+	<property name="section">tasks</property>
+	
+	<path-action name="ProjectModule.loadCollection"/>
+	
+	<path-action name="TaskModule.createTree" />
+
+	<path-action name="TaskModule.loadGoals" />
+
+     <style id="tasks" href="/${applicationid}/project/goals/goals.css" />
+
+</page>

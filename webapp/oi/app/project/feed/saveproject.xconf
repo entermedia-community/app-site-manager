@@ -8,8 +8,16 @@
 			<idname>collectionid</idname>
 			<searchtype>librarycollection</searchtype>
     </path-action>
- <path-action name="Admin.redirectInternal" 
-	redirectpath="/${applicationid}/member/index.html" />
+
+	<path-action name="ProjectModule.loadCollection">
+	</path-action>
+
+    
+    <path-action name="ProjectModule.searchForAssetsOnCollection">
+		<searchtype>librarycollection</searchtype>
+	</path-action>
+	
+	   
 	   
 	<property name="virtual">true</property>
 	

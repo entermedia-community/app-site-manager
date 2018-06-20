@@ -1,0 +1,10 @@
+<page>
+
+	<path-action name="DataEditModule.loadData">
+		<property name="searchtype">projectgoal</property>
+	</path-action>
+
+	<path-action name="ProjectModule.loadCollection"/>
+	<inner-layout>/${applicationid}/theme/layouts/dialoglayout.html</inner-layout>
+
+</page>

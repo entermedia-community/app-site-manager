@@ -1,14 +1,41 @@
 $pages.include("$apphome/project/logo.html")
-
-	<div class="text-center">
- <a  title="[[Donate to]] $librarycol" data-width="500" class="btn btn-primary" 
- href="$apphome/project/donate.html?collectionid=${librarycol.id}">[[Donate]]</a>
-
-<a href="$apphome/project/contact/contact.html?collectionid=${librarycol.id}" class="btn btn-primary">[[Contact]]</a>
-	</div>
 <div class="projectname">
 	<h4>$librarycol</h4>
 </div>
+
+
+<div class="profile-sidebar">
+	<div class="profile-usermenu">
+					<ul > #set( $section = $content.section)
+						<li id="home" #if($section == "home") class="active" #end>
+							<a href="$apphome/project/feed/${librarycol.id}/#urlencode($librarycol.name).html" >
+							<i class="fa fa-home"></i>
+							Home Page </a>
+						</li>
+						<li id="donate" #if($section == "donate") class="active" #end>
+ <a  title="[[Donate to]] $librarycol" data-width="500"  
+ href="$apphome/project/donate/donate.html?collectionid=${librarycol.id}">
+							<i class="fa fa-hand-holding-usd"></i>
+							[[Donate]] </a>
+						</li>
+						<li id="contact"  #if($section == "contact") class="active" #end>
+							<a href="$apphome/project/contact/contact.html?collectionid=${librarycol.id}" >
+							<i class="fa fa-user"></i>
+							[[Contact]] </a>
+						</li>
+						<li id="members"  #if($section == "members") class="active" #end>
+							<a href="$apphome/project/members/index.html?collectionid=${librarycol.id}" >
+							<i class="fa fa-user-friends"></i>
+							[[Members]] </a>
+						</li>
+						<li id="tasks"  #if($section == "tasks") class="active" #end>
+							<a href="$apphome/project/goals/index.html?collectionid=${librarycol.id}" >
+							<i class="fa fa-flag"></i>
+							[[Goals]] </a>
+						</li>
+					</ul>
+	</div>
+	</div>
 <div class="projectdetails">
 	#if ($!librarycol.projectdescription)
 		<p>$!librarycol.projectdescription</p>

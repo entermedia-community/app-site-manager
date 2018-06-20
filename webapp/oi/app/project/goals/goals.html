@@ -1,0 +1,59 @@
+<div class="clear"></div>
+#set( $col = 0)
+#foreach( $row in $topgoals )
+
+#set( $col = $col + 1)
+
+<div style="float:left;border: 1px solid #aaa;margin:10px 10px 0 0px;width:230px;min-height:700px">
+
+<div class="header" style="color:#666;background-color:#eee;text-align:center;height:35px;">
+	#if( $col == 1)
+	Higher Priority 
+	#elseif( $col == 2)
+	Medium
+	#else
+	Lower Priority
+	#end
+ <a class="btn btn-light btn-sm emdialog pull-left" title="New Goal" data-width="500" 
+	    	href="$apphome/project/goals/editgoal.html?collectionid=$librarycol.getId()" ><i class="fas fa-plus"></i></a>
+</div>
+<div class="clear"></div>
+
+#foreach( $goal in $row )  
+<div class="card card-mini taskcard" style="margin:5px;" >
+  <div class="card-body" style="font-size:120%;position:relative;">
+    <a href="#" title="Drag to a department" class="dragicon">
+    	<i class="fas fa-arrows-alt"></i> 
+    </a>
+    <a href="$apphome/project/goals/editgoal.html?id=${goal.id}&collectionid=$librarycol.getId()"
+    	title="View details" class="emdialog"  data-width="500" >
+    	<i class="fas fa-flag"></i> 
+    	$goal.name
+    </a>
+  </div>
+</div>
+#end
+
+</div>
+#end
+
+#if( $goals.size() > 30)
+
+<a href="modulelink">	View all goals </a>
+
+#end
+
+<div class="clear"></div>
+
+<script>
+
+$('.taskcard').hover(
+  function () {
+    $(this).find(".dragicon").show();
+  }, 
+  function () {
+    $(this).find(".dragicon").hide();
+  }
+);
+
+</script>

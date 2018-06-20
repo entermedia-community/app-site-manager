@@ -196,12 +196,6 @@
     </name> 
   </property>  
 
-  <property id="projectdescription" index="true" stored="true" editable="true"> 
-    <name> 
-      <language id="en"><![CDATA[Description]]></language>  
-    </name> 
-  </property>  
-
     <property id="geo_point_formatedaddress" index="true" editable="true" stored="true">New
     <name>
       <language id="en"><![CDATA[geo_point_formatedaddress]]></language>
