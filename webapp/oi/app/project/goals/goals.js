@@ -1,8 +1,81 @@
 jQuery(document).ready(function(url,params) 
 { 
-	var home = $('#application').data('home') + $('#application').data('apphome');
+	var apphome = $('#application').data('home') + $('#application').data('apphome');
 	
-	//handle drag and drop
+	
+	if( jQuery.fn.draggable )
+	{
+		jQuery(".ui-draggable").livequery( 
+			function()
+			{	
+				jQuery(this).draggable( 
+					{ 
+						helper: function()
+						{
+							var cloned = $(this).clone();
+							return cloned;
+						}
+						,
+						revert: 'invalid'
+					}
+				);
+			}
+		);
+	}
+	//categorydroparea
+	if( jQuery.fn.droppable )
+	{
+		console.log("droppable");
+		
+    	jQuery(".categorydroparea").livequery(
+			function()
+			{
+				outlineSelectionCol = function(event, ui)
+				{
+					jQuery(this).addClass("selected");
+					jQuery(this).addClass("dragoverselected");
+				}
+					
+				unoutlineSelectionCol = function(event, ui)
+				{
+					jQuery(this).removeClass("selected");
+					jQuery(this).removeClass("dragoverselected");
+				}
+			
+				jQuery(this).droppable(
+					{
+						drop: function(event, ui) 
+						{
+								console.log("dropped");
+						
+							var goalid = ui.draggable.data("goalid"); //Drag onto a category
+							var node = $(this);
+							var categoryid = node.parent().data("nodeid");
+							jQuery.get(apphome + "/project/goals/drop/addtocategory.html", 
+									{
+										goalid:goalid,
+										categoryid:categoryid,
+									},
+									function(data) 
+									{
+										node.append("<span class='fader'>&nbsp;+" + data + "</span>");
+										node.find(".fader").fadeOut(3000);
+										node.removeClass("selected");
+										//TODO: Also update the goal card?
+									}
+							);
+						},
+						tolerance: 'pointer',
+						over: outlineSelectionCol,
+						out: unoutlineSelectionCol
+					}
+				);
+			}
+		);
+		} //droppable
+	
+	//handle drag and drop priority
+	/*
 	jQuery('.projectgoals').livequery(function()
 	{
 		var sortable = jQuery(this);
@@ -37,4 +110,5 @@ jQuery(document).ready(function(url,params)
 	        }
 	     });   
 	});
-}
+	*/
+});

@@ -20,5 +20,20 @@ $pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
 
 </form>
 
+#foreach( $task in $goaltasks)
+<div class="card card-mini ui-draggable ui-draggable-handle" data-taskid="$task.id" style="margin:5px;" >
+  <div class="card-body" style="font-size:120%;position:relative;">
+    	<i class="fas fa-flag"></i> 
+    	$task.name
+    	
+    	Status drop down?
+    	
+    	Comments?
+    </a>
+  </div>
+</div>
+#end
+
+
   </div>
 </div>

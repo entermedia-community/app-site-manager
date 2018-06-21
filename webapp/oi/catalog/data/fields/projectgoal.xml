@@ -13,13 +13,13 @@
   <property id="name" index="true" stored="true" editable="true"  > 
     <name> 
       <language id="en"><![CDATA[Description]]></language>  
-      <language id="en"><![CDATA[Descripción]]></language>  
+      <language id="es"><![CDATA[Descripción]]></language>  
     </name> 
   </property>  
   <property id="details" index="true" stored="true" editable="true"  > 
     <name> 
       <language id="en"><![CDATA[Details]]></language>  
-      <language id="en"><![CDATA[Detalles]]></language>  
+      <language id="es"><![CDATA[Detalles]]></language>  
     </name> 
   </property>  
   <property id="creationdate" index="true" stored="true" editable="true"  type="date" datatype="date" >
