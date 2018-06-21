@@ -2,5 +2,5 @@
 
 <properties> 
   <property id="name"/>  
-  <property id="projectdescription"/>  
+  <property id="details"/>  
 </properties>
