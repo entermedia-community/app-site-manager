@@ -125,5 +125,22 @@ jQuery(document).ready(function(url,params)
 					
 	});
 	
+	$(".changetaskstatus").livequery(function()
+	{
+		var div = $(this);
+		var select = div.find("select");
+		select.onchange(function()
+		{
+			var path = div.data("savepath");
+			var params = div.data();
+			params['taskstatus'] = select.val();
+			
+			jQuery.get(path, params, function(data) 
+			{
+				div.html(data);
+			});
+		}
+					
+	});
 	
 });

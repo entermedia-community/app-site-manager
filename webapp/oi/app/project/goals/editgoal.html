@@ -24,23 +24,9 @@ $pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
 <h2>[[Assigned To]]</h2>
 
 #foreach( $task in $goaltasks)
-<div class="pull-left card card-mini ui-draggable ui-draggable-handle" style="float:left;width:150px;margin:5px;" data-taskid="$task.id"  >
-    	<div style="background:#eee;padding:4px;"><i class="fas fa-flag"></i> 
-    	$task.name
-    	</div>
-  <div class="card-body" style="font-size:.8em;position:relative;">
-$pages.include("$apphome/project/goals/comments/listcomments.html?taskid=$task.id")
-  </div>
+$context.putPageValue("task",$task)
+$pages.include("./edittask.html",$context)
 
-		    	
-	<select name="actionstatus" class="selectautosubmit" 
-		data-placeholder="$text" >
-		  <option value="1" selected="selected"></option>
-		  <option value="1" >Started</option>
-		  <option value="1" >Complete</option>
-	</select>
-
-</div>
 #end
 #end
   </div>
