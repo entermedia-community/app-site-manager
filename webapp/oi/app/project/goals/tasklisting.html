@@ -3,20 +3,22 @@
 #set( $task = $mediaarchive.getData("goaltask",$taskid) )
 #end
 <div class="changetaskstatus pull-left card card-mini ui-draggable ui-draggable-handle" 
-	style="float:left;width:150px;margin:5px;" 
-	data-taskid="$task.id"  >
+	style="float:left;width:150px;margin:5px;
+	#if( $task.taskstatus == "2" );background-color:#f6fbe5 #end
+	" 
+	data-taskid="$task.id"
+	data-savepath="$apphome/project/goals/tasksave.html"  >
     	<div style="background:#eee;padding:4px;"><i class="fas fa-flag"></i> 
     	$task.name
     	</div>
-  <div class="card-body" style="font-size:.8em;position:relative;">
+  <div class="card-body" style="font-size:.8em;min-height:130px;">
 $pages.include("$apphome/project/goals/comments/listcomments.html?taskid=$task.id")
   </div>
-
 		    	
 	<select  name="actionstatus" >
-		  <option value="1" selected="selected"></option>
-		  <option value="1" >Started</option>
-		  <option value="1" >Complete</option>
+		  <option value="blank" ></option>
+		  <option value="1" #if( $task.taskstatus == "1") selected #end >Started</option>
+		  <option value="2" #if( $task.taskstatus == "2") selected #end>Complete</option>
 	</select>
 
 </div>
