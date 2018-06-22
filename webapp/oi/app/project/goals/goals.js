@@ -13,6 +13,7 @@ jQuery(document).ready(function(url,params)
 						helper: function()
 						{
 							var cloned = $(this).clone();
+							//TODO: Make transparent and remove white area
 							return cloned;
 						}
 						,
