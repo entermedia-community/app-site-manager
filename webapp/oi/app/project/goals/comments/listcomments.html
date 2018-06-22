@@ -1,0 +1,13 @@
+#set( $taskid = $context.getRequestParameter("taskid"))
+#set( $commentsearcher = $mediaarchive.getSearcher("goaltaskcomments") )
+#set( $comments = $commentsearcher.query().exact("goaltaskid",$taskid).search() )
+	
+#foreach($comment in $comments)	
+	<div class="goalcomment" data-toggle="tooltip" data-placement="top" title="$context.getDateTime($comment.date)">
+		<span class="commenttext">$comment.commenttext</span>
+		<span class="commentauthor">-${comment.author}</span>
+	</div>
+#end	
+<div id="commentaddarea">
+<a class="ajax" targetdiv="commentaddarea" href="$apphome/project/goals/comments/newcomment.html?taskid=$taskid&oemaxlevel=1">add comment</a>
+</div>

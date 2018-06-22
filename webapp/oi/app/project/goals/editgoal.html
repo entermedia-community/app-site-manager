@@ -21,7 +21,7 @@ $pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
 </form>
 #if( $goaltasks.size() > 0)
 
-<h2>[[Actions]]</h2>
+<h2>[[Assigned To]]</h2>
 
 #foreach( $task in $goaltasks)
 <div class="pull-left card card-mini ui-draggable ui-draggable-handle" style="float:left;width:150px;margin:5px;" data-taskid="$task.id"  >
@@ -29,6 +29,9 @@ $pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
     	$task.name
     	</div>
   <div class="card-body" style="font-size:.8em;position:relative;">
+$pages.include("$apphome/project/goals/comments/listcomments.html?taskid=$task.id")
+  </div>
+
 		    	
 	<select name="actionstatus" class="selectautosubmit" 
 		data-placeholder="$text" >
@@ -36,10 +39,7 @@ $pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
 		  <option value="1" >Started</option>
 		  <option value="1" >Complete</option>
 	</select>
-	
-<a href="">add comment</a>
 
-  </div>
 </div>
 #end
 #end

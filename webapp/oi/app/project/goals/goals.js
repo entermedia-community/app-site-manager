@@ -110,4 +110,20 @@ jQuery(document).ready(function(url,params)
 	     });   
 	});
 	*/
+	
+	$("#commentsave").livequery("click",function()
+	{
+		var comment = $(this);
+		var path = comment.data("savepath");
+		var params = comment.data();
+		params['comment'] = $("#commenttext").val();
+		
+		jQuery.get(path, params, function(data) 
+		{
+			$("#commentarea").html(data);
+		});
+					
+	});
+	
+	
 });
