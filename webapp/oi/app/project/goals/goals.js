@@ -82,7 +82,6 @@ jQuery(document).ready(function(url,params)
 		var path = sortable.data("savepath");
 		
 		sortable.sortable({
-			axis: 'y',
 		    update: function (event, ui) 
 		    {
 		        var data = sortable.sortable('serialize');

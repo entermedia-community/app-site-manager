@@ -24,14 +24,18 @@
 #foreach( $goal in $row )  
 
 <li class="card card-mini taskcard ui-draggable ui-draggable-handle" data-goalid="$goal.id" style="margin:5px;" >
+    <a href="$apphome/project/goals/editgoal.html?id=${goal.id}&collectionid=$librarycol.getId()"
+    	title="Goal Details" class="emdialog"  data-width="900px" >
+
+    	<div style="background:#eee;padding:4px;"><i class="fas fa-flag"></i> 
+    	$goal.name
+    	</div>
+
+    </a>
+
   <div class="card-body" style="font-size:120%;position:relative;">
     <a href="#" title="Drag to a department" class="dragicon ">
     	<i class="fas fa-arrows-alt"></i> 
-    </a>
-    <a href="$apphome/project/goals/editgoal.html?id=${goal.id}&collectionid=$librarycol.getId()"
-    	title="View details" class="emdialog"  data-width="500" >
-    	<i class="fas fa-flag"></i> 
-    	$goal.name
     </a>
   </div>
 </li>

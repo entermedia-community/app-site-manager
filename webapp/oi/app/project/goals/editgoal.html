@@ -19,21 +19,29 @@ $context.putPageValue("view", "projectgoal/edit")
 $pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
 
 </form>
+#if( $goaltasks.size() > 0)
+
+<h2>[[Actions]]</h2>
 
 #foreach( $task in $goaltasks)
-<div class="card card-mini ui-draggable ui-draggable-handle" data-taskid="$task.id" style="margin:5px;" >
-  <div class="card-body" style="font-size:120%;position:relative;">
-    	<i class="fas fa-flag"></i> 
+<div class="pull-left card card-mini ui-draggable ui-draggable-handle" style="float:left;width:150px;margin:5px;" data-taskid="$task.id"  >
+    	<div style="background:#eee;padding:4px;"><i class="fas fa-flag"></i> 
     	$task.name
-    	
-    	Status drop down?
-    	
-    	Comments?
-    </a>
+    	</div>
+  <div class="card-body" style="font-size:.8em;position:relative;">
+		    	
+	<select name="actionstatus" class="selectautosubmit" 
+		data-placeholder="$text" >
+		  <option value="1" selected="selected"></option>
+		  <option value="1" >Started</option>
+		  <option value="1" >Complete</option>
+	</select>
+	
+<a href="">add comment</a>
+
   </div>
 </div>
 #end
-
-
+#end
   </div>
 </div>
