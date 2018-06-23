@@ -116,12 +116,13 @@ jQuery(document).ready(function(url,params)
 	{
 		var comment = $(this);
 		var path = comment.data("savepath");
+		var taskid = comment.data("taskid");
 		var params = comment.data();
 		params['comment'] = $("#commenttext").val();
 		
 		jQuery.get(path, params, function(data) 
 		{
-			$("#commentarea").html(data);
+			$("#commentsarea_"+ taskid).html(data);
 		});
 					
 	});

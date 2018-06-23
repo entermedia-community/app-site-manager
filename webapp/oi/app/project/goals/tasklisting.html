@@ -2,23 +2,21 @@
 #set( $taskid = $context.getRequestParameter("taskid"))
 #set( $task = $mediaarchive.getData("goaltask",$taskid) )
 #end
-<div class="changetaskstatus pull-left card card-mini ui-draggable ui-draggable-handle" 
-	style="float:left;width:150px;margin:5px;
-	#if( $task.taskstatus == "2" );background-color:#f6fbe5 #end
-	" 
+<div class="card-task changetaskstatus pull-left card card-mini ui-draggable ui-draggable-handle" 
+	style="float:left;width:205px;margin:5px;" 
 	data-taskid="$task.id"
 	data-savepath="$apphome/project/goals/tasksave.html"  >
-    	<div style="background:#eee;padding:4px;"><i class="fas fa-flag"></i> 
-    	$task.name
+    	<div class="card-task-header 
+    				#if( $task.taskstatus == "1" ) alert-warning #end
+    				#if( $task.taskstatus == "2" ) alert-success #end">
+    		<i class="fas fa-flag"></i> $task.name
     	</div>
-  <div class="card-body" style="font-size:.8em;min-height:130px;">
-$pages.include("$apphome/project/goals/comments/listcomments.html?taskid=$task.id")
-  </div>
-		    	
-	<select  name="actionstatus" >
-		  <option value="blank" ></option>
-		  <option value="1" #if( $task.taskstatus == "1") selected #end >Started</option>
-		  <option value="2" #if( $task.taskstatus == "2") selected #end>Complete</option>
-	</select>
-
+  		<div class="card-task-body">
+  			<select  name="actionstatus" style="width:100%;" >
+			  <option value="blank" ></option>
+			  <option value="1" #if( $task.taskstatus == "1") selected #end >[[Started]]</option>
+			  <option value="2" #if( $task.taskstatus == "2") selected #end>[[Complete]]</option>
+			</select>
+		$pages.include("$apphome/project/goals/comments/listcomments.html?taskid=$task.id")
+  		</div>
 </div>

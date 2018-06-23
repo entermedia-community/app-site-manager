@@ -1,11 +1,10 @@
-<div id="commentarea">
 #set( $taskid = $context.getRequestParameter("taskid"))
-<textarea id="commenttext" style="width:140px;height:140px" name="comment"></textarea>
+<div id="commentaddarea_${taskid}">
+<textarea id="commenttext" class="goal-commentarea" style="" name="comment"></textarea>
 
-<input type="button" id="commentsave" value="save" 
+<button class="btn btn-sm btn-success" id="commentsave" 
 	data-savepath="$apphome/project/goals/comments/savecomment.html" 
 	data-oemaxlevel="1"
 	data-taskid="$taskid"
-	>
-
+	>[[Comment]]</button>
 </div>
