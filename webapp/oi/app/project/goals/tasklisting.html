@@ -11,7 +11,7 @@
     				#if( $task.taskstatus == "2" ) alert-success #end">
     		<i class="fas fa-flag"></i> $task.name
     	</div>
-  		<div class="card-task-body">
+  		<div class="card-task-body #if( $task.taskstatus == "2" ) taskcomplete #end" >
   			<select  name="actionstatus" style="width:100%;" >
 			  <option value="blank" ></option>
 			  <option value="1" #if( $task.taskstatus == "1") selected #end >[[Started]]</option>

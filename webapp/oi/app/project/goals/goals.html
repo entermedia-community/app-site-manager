@@ -1,5 +1,10 @@
 <div id="resultsdiv">
 
+#if( $selectedcat && $topgoals)
+<h4>$selectedcat goals:</h4>
+#elseif( $topgoals)
+<h4>[[All Goals]]:</h4>
+#end
 <div class="clear"></div>
 #set( $col = 0)
 #foreach( $row in $topgoals )
@@ -11,10 +16,12 @@
 <div class="goals-column-header">
 	#if( $col == 1)
 	[[High Priority]] 
+#if( $editdata)	
  <a class="btn btn-secondary btn-sm emdialog pull-left" 
  	title="[[New Goal]]" 
  	data-width="700"
  	href="$apphome/project/goals/editgoal.html?collectionid=$librarycol.getId()" ><i class="fas fa-plus"></i></a>
+ #end	
 	#elseif( $col == 2)
 	[[Medium]]
 	#else
@@ -27,7 +34,7 @@
 
 #foreach( $goal in $row )  
 
-<li class="card card-mini ui-draggable ui-draggable-handle card-goal" data-goalid="$goal.id">
+<li class="card card-mini #if( $editdata) ui-draggable ui-draggable-handle #end card-goal" data-goalid="$goal.id">
     <a href="$apphome/project/goals/editgoal.html?id=${goal.id}&collectionid=$librarycol.getId()"
     	title="Goal Details" class="emdialog"  data-width="900" >
 
