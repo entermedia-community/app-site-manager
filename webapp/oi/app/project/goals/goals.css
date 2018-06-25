@@ -33,8 +33,7 @@ box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
 margin:0 0 20px 0;
 padding:12px 10px;
 width:272px;
-min-height:125px;
-position:fixed;
+min-height:55px;
 }
 .goal-footer {
 	position:absolute;
@@ -79,7 +78,8 @@ ul.projectgoals {
 	overflow: hidden;
 }
 .card-task-header.alert-success {
-	background-color: #d4edda;
+	background-color: #1e7e34;
+	color: white;
 }
 .card-task-header.alert-warning {
 	background-color: #fff3cd;

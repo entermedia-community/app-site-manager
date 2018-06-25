@@ -1,3 +1,5 @@
+<div id="resultsdiv">
+
 <div class="clear"></div>
 #set( $col = 0)
 #foreach( $row in $topgoals )
@@ -8,16 +10,16 @@
 
 <div class="goals-column-header">
 	#if( $col == 1)
-	[[Higher Priority]] 
+	[[High Priority]] 
+ <a class="btn btn-secondary btn-sm emdialog pull-left" 
+ 	title="[[New Goal]]" 
+ 	data-width="700"
+ 	href="$apphome/project/goals/editgoal.html?collectionid=$librarycol.getId()" ><i class="fas fa-plus"></i></a>
 	#elseif( $col == 2)
 	[[Medium]]
 	#else
 	[[Lower Priority]]
 	#end
- <a class="btn btn-secondary btn-sm emdialog pull-left" 
- 	title="[[New Goal]]" 
- 	data-width="700"
- 	href="$apphome/project/goals/editgoal.html?collectionid=$librarycol.getId()" ><i class="fas fa-plus"></i></a>
 </div>
 
 
@@ -41,7 +43,7 @@
 				#if($team.taskstatus==2)
 					#set($goalcolor = "btn-success")
 				#end
-				<a href="#department" class="btn btn-xs ${goalcolor}" title="${team}">$team</a>
+				<a href="$apphome/project/goals/index.html?collectionid=$librarycol.getId()&nodeID=$team.projectdepartment" class="btn btn-xs ${goalcolor}" title="${team}">$team</a>
 				
 			#end
 			</div>
@@ -61,16 +63,4 @@
 #end
 
 <div class="clear"></div>
-
-<script>
-
-$('.taskcard').hover(
-  function () {
-    $(this).find(".dragicon").show();
-  }, 
-  function () {
-    $(this).find(".dragicon").hide();
-  }
-);
-
-</script>
+</div>

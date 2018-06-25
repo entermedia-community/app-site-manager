@@ -2,6 +2,14 @@ jQuery(document).ready(function(url,params)
 { 
 	var apphome = $('#application').data('home') + $('#application').data('apphome');
 	
+	$('.taskcard').hover(
+  function () {
+    $(this).find(".dragicon").show();
+  }, 
+  function () {
+    $(this).find(".dragicon").hide();
+  }
+);
 	
 	if( jQuery.fn.draggable )
 	{
