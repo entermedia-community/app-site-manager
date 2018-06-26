@@ -6,7 +6,16 @@
     <h2 class="section-heading h1 pt-4">Contact us</h2>
     <!--Section description-->
     
+	<style>
 	
+	.contact-icons
+	{
+		  margin: 0;
+    list-style: none;
+		
+	}
+	
+	</style>
 	<div class="row">
 	<div class="col-md-7 col-xl-6">
 		<p class="section-description">Do you have any questions? Please do not hesitate to contact us.</p>
@@ -28,13 +37,17 @@
 					$!{country}</p>
                 </li>
 				#end
+				#if( $librarycol.contactphone)
                 <li>
-                    <p><i class="fa fa-phone"></i> Phone</p>
+                    <p><i class="fa fa-phone"></i> Phone:   $librarycol.contactphone  
+                    </p>
                 </li>
-
+				#end	
+				#if( $librarycol.contactemail)
                 <li>
-                    <p><i class="fa fa-envelope"></i> Email</p>
+                    <p><i class="fa fa-envelope"></i> Email: $librarycol.contactemail </p>
                 </li>
+                #end
             </ul>
         </div>
 	</div>

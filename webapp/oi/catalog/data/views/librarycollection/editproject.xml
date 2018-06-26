@@ -6,6 +6,8 @@
   <property id="contactemail"/>  
   <property id="facebooklink" /> 
   <property id="websitelink" />
+    <property id="contactphone"/>  
+  
   <property id="street"/>  
   <property id="city"/>  
   <property id="country"/>  

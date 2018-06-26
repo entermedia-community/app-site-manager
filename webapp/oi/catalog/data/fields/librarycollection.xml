@@ -213,5 +213,6 @@
     </name>
   </property> 
   	<property id="contactemail" index="true" stored="true" keyword="true" editable="true"  indextype="not_analyzed">Email</property>
+  	<property id="contactphone" index="true" stored="true" keyword="true" editable="true"  >Phone</property>
   
 </properties>
