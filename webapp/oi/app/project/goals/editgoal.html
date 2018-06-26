@@ -8,7 +8,7 @@ $context.putPageValue("view", "projectgoal/edit")
 <form name="saveproject" enctypeXX="multipart/form-data" id="saveproject" method="post" 
 	action="/$applicationid/project/goals/savegoal.html" >
 
-#if( $editdata)
+#if( $caneditdata)
 <input type="hidden" name="save" value="true" />
 #end
 <input type="hidden" name="searchtype" value="projectgoal" />

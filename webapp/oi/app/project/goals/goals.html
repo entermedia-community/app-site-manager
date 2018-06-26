@@ -16,7 +16,7 @@
 <div class="goals-column-header">
 	#if( $col == 1)
 	[[High Priority]] 
-#if( $editdata)	
+#if( $caneditdata)	
  <a class="btn btn-secondary btn-sm emdialog pull-left" 
  	title="[[New Goal]]" 
  	data-width="700"
@@ -34,7 +34,7 @@
 
 #foreach( $goal in $row )  
 
-<li class="card card-mini #if( $editdata) ui-draggable ui-draggable-handle #end card-goal" data-goalid="$goal.id">
+<li class="card card-mini #if( $caneditdata) ui-draggable ui-draggable-handle #end card-goal" data-goalid="$goal.id">
     <a href="$apphome/project/goals/editgoal.html?id=${goal.id}&collectionid=$librarycol.getId()"
     	title="Goal Details" class="emdialog"  data-width="900" >
 
