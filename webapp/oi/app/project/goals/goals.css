@@ -2,11 +2,11 @@
 	padding:10px 0 0 10px;
 }
 .goals-sidebar {
-	width:250px;
+	width:200px;
 	position:absolute;
 }
 .goals-content {
-	margin-left:270px;
+	margin-left:208px;
 }
 
 .showonhover
@@ -34,11 +34,10 @@
 }
 .card-goal
 {
-box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2); 
-margin:0 0 20px 0;
-padding:12px 10px;
-width:272px;
-min-height:80px;
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2); 
+	margin:0 0 20px 0;
+	padding:12px 10px;
+	min-height:80px;
 }
 .goal-footer {
 	margin-top: 10px;

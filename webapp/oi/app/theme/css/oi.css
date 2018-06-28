@@ -272,6 +272,7 @@ background:none;
   -o-background-size: cover;
  	background-size: contain;
  	min-height:990px;
+ 		
 }
 .oifeedlayout { 
   -webkit-background-size: cover;
@@ -282,7 +283,7 @@ background:none;
 
 @media (min-width: 992px) {
 	.oifeedlayout {
-		margin-left: 280px
+		margin-left: 220px
 	}
 }
 
