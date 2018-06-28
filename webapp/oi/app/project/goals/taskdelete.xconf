@@ -1,12 +1,11 @@
 <page>
-	<path-action name="Date.now"/>
 
+	<inner-layout />
+	<path-action name="TaskModule.removeTask" />
 	<path-action name="ProjectModule.loadCollection"/>
 	
 	<path-action name="TaskModule.loadGoal"/>
 	
-	
-	
 	<inner-layout>/${applicationid}/theme/layouts/dialoglayout.html</inner-layout>
-
+	
 </page>

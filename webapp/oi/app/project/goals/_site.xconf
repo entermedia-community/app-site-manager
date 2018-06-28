@@ -5,8 +5,6 @@
 	
 	<path-action name="TaskModule.createTree" />
 
-	<path-action name="TaskModule.loadGoals" />
-
     <style id="tasks" href="/${applicationid}/project/goals/goals.css" />
 
     <script id="goals" src="/${applicationid}/project/goals/goals.js"/>

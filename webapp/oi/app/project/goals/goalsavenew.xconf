@@ -1,7 +1,8 @@
 <page>
 	
+	<path-action name="DataEditModule.saveData"/>
 	<path-action name="TaskModule.addGoalToCategory" />
+	
 	<path-action name="TaskModule.loadGoals" />
 	
-	<inner-layout />
 </page>

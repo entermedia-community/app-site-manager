@@ -55,22 +55,69 @@ jQuery(document).ready(function(url,params)
 					{
 						drop: function(event, ui) 
 						{
-								console.log("dropped");
+							console.log("dropped");
 						
 							var goalid = ui.draggable.data("goalid"); //Drag onto a category
 							var node = $(this);
 							var categoryid = node.parent().data("nodeid");
+
+							node.removeClass("selected");
+							var params = $(".projectgoals").data();
+							params['goalid'] = goalid;
+							params['targetcategoryid'] = categoryid;
+							params['nodeID'] = $(".projectgoals").data("categoryid");
+							
 							jQuery.get(apphome + "/project/goals/drop/addtocategory.html", 
-									{
-										goalid:goalid,
-										categoryid:categoryid,
-									},
+									params,
 									function(data) 
 									{
-										node.append("<span class='fader'>&nbsp;+" + data + "</span>");
-										node.find(".fader").fadeOut(3000);
-										node.removeClass("selected");
-										//TODO: Also update the goal card?
+										$("#goaleditor").replaceWith(data);
+									}
+							);
+						},
+						tolerance: 'pointer',
+						over: outlineSelectionCol,
+						out: unoutlineSelectionCol
+					}
+				);
+			}
+		); //category
+		
+		
+		 jQuery(".card-goal").livequery(
+			function()
+			{
+				outlineSelectionCol = function(event, ui)
+				{
+					jQuery(this).addClass("selected");
+					jQuery(this).addClass("dragoverselected");
+				}
+					
+				unoutlineSelectionCol = function(event, ui)
+				{
+					jQuery(this).removeClass("selected");
+					jQuery(this).removeClass("dragoverselected");
+				}
+			
+				jQuery(this).droppable(
+					{
+						drop: function(event, ui) 
+						{
+							console.log("dropped");
+						
+							var goalid = ui.draggable.data("goalid"); //Drag onto a category
+							var card = $(this);
+							var targetgoalid = card.data("goalid");
+							
+							var params = $(".projectgoals").data();
+							params['goalid'] = goalid;
+							params['targetgoalid'] = targetgoalid;
+							
+							jQuery.get(apphome + "/project/goals/drop/goalinsert.html", params ,
+									function(data) 
+									{
+										//Reload goalist
+										$("#resultsdiv").replaceWith(data);
 									}
 							);
 						},
@@ -81,44 +128,8 @@ jQuery(document).ready(function(url,params)
 				);
 			}
 		);
-		} //droppable
-	
-	//handle drag and drop priority
-	/*
-	jQuery('.projectgoals').livequery(function()
-	{
-		var sortable = jQuery(this);
-		var path = sortable.data("savepath");
 		
-		sortable.sortable({
-		    update: function (event, ui) 
-		    {
-		        var data = sortable.sortable('serialize');
-		        data = replaceAll(data,"viewid[]=","|");
-		        data = replaceAll(data,"&","");
-		        data = data.replace("|","");
-		        var args = {};
-		        args.items = data;
-		        args.viewpath = sortable.data("viewpath");
-		        args.searchtype = sortable.data("searchtype");
-		        args.assettype = sortable.data("assettype");
-		        args.viewid = sortable.data("viewid");
-		        jQuery.ajax({
-		            data: args,
-		            type: 'POST',
-		            url: path 		            
-		        });
-		    },
-	        stop: function (event, ui) 
-	        {
-	            //db id of the item sorted
-	            //alert(ui.item.attr('plid'));
-	            //db id of the item next to which the dragged item was dropped
-	            //alert(ui.item.prev().attr('plid'));
-	        }
-	     });   
-	});
-	*/
+		} //droppable
 	
 	$("#commentsave").livequery("click",function()
 	{

@@ -8,6 +8,12 @@
 .goals-content {
 	margin-left:270px;
 }
+
+.showonhover
+{
+	display:none;
+}
+
 .goals-column {
 	float:left;
 	width:32%;

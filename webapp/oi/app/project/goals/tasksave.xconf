@@ -1,6 +1,6 @@
 <page>
 
 	<inner-layout />
-	<path-action name="TaskModule.saveTask" />
+	<path-action name="TaskModule.saveTaskStatus" />
 	
 </page>

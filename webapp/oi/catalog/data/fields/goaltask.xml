@@ -44,6 +44,20 @@
       <language id="en"><![CDATA[Departments]]></language>  
     </name> 
   </property>  
+  <property id="creationdate" index="true" stored="true" editable="true"  type="date" datatype="date" >
+    <name> 
+      <language id="de"><![CDATA[Erstellungsdatum]]></language>  
+      <language id="en"><![CDATA[Created Date]]></language>  
+      <language id="es"><![CDATA[Fecha de creación]]></language>  
+      <language id="fr"><![CDATA[Date de création]]></language> 
+    </name> 
+  </property>  
+
+  <property id="completedby" index="true" viewtype="user" type="list" listid="user" keyword="true" stored="true"  editable="true" > 
+    <name> 
+      <language id="en"><![CDATA[Completed By]]></language>  
+    </name> 
+  </property>  
 
 
 </properties>
