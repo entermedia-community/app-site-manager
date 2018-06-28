@@ -64,7 +64,9 @@ $pages.include("$apphome/project/logo.html")
 </div>	
 
 	#if( $hits.size() > 0)
+	<div class="projectdetails">
 		<p><a href="$apphome/project/media/${librarycol.id}.html">$hits.size()  [[Uploads]]</a></p>
+	</div>
 		#if( $content.showmedia )
 			$pages.include("$apphome/components/advancedsearch/sidebar.html")
 			$pages.include("$apphome/components/categories/sidebar.html")

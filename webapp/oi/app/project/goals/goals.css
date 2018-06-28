@@ -13,14 +13,14 @@
 {
 	display:none;
 }
-
-.goals-column {
+.goals-column-container {
 	float:left;
-	width:32%;
+	width:33%;
+}
+.goals-column {
 	border: 1px solid #d1d1d1;
 	background-color:#fcfcfc; 
 	margin:0 10px 0 0;
-	
 	min-height:700px
 }
 .goals-column-header {
@@ -132,3 +132,12 @@ ul.projectgoals {
 	background-color:#eee;	
 }
 
+
+.goals-sidebar {
+	margin-top:30px;
+}
+@media (min-width: 992px) {
+	.goals-sidebar {
+	margin-top:0;	
+}
+}

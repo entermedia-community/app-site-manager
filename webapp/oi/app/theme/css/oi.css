@@ -201,6 +201,13 @@ body {
 	line-height: 1.2;
 }
 
+.oiheader {
+	background-color: #f4f5ee;
+	height:115px;
+	box-shadow: 0 0 2px 0 rgba(0,0,0,0.2);
+	border-bottom:1px solid #e4e5de;
+	z-index:500;
+}
 .logocontainer {
 	margin-top:-20px;
 	margin-left:auto;
@@ -222,11 +229,11 @@ body {
 	width: 150px;
 }
 
-.projectname {
-	padding:10px 0;
+.projectname h4 {
+	padding:10px;
 }
 .projectdetails {
-	padding-bottom: 20px;
+	padding:20px 10px;
 }
 .subheaderbackground {
 	background-color: #868e96;
@@ -246,9 +253,9 @@ body {
 }
 
 @media (min-width: 992px) {
-#mainNav {
-background:none;
-}
+	#mainNav {
+	background:none;
+	}
 }
 
 #mainNav.nav-project-page .navbar-nav .nav-item .nav-link
@@ -260,18 +267,120 @@ background:none;
 {
 	color:#FFF;
 }
+.navbar-toggler {
+    padding: .15rem .5rem;
+    font-size: 1.0rem;
+    line-height: 1;
+    background: 0 0;
+    border: 1px solid transparent;
+    border-radius: .25rem;
+}
+.oicontainer { width:100%; margin: 0 auto; position:relative;  }
+.col-sidebar {
+    z-index: 1000;
+    position:absolute;
+    top: 0px;
+    
+    left:-80%;
+    display: block!important;
+    width: 260px;
+    height: 100%;
+    box-shadow: 0 0 2px 0 rgba(0,0,0,0.2);
+    background-color:#fff;
+}
+.col-content { position:relative; }
 
-.oicontainer { max-width: 1300px; margin: 0 auto; position:relative; }
-.col-sidebar { background: none; }
-.col-content { }
+.sidebartoggle, .sidebartoggleout {
+	display:block;
+}
+@media (min-width: 992px) {
+	.oicontainerX { 
+		max-width: 992px; 
+	}
+	.oifeedlayout {
+		margin-left: 220px
+	}
+}
+
+
+@media (min-width: 992px) {
+	.col-sidebar {
+	    position: absolute;
+	    left:0;
+	    width: 240px;
+	    height: auto;
+	    min-height: 100%;
+	}
+	.sidebartoggle, .sidebartoggleout {
+		display:none;
+	}
+	.col-content {
+		margin-left: 240px
+	}
+}
+	
+
+@media (min-width: 1380px) {
+	.oicontainerX { 
+		max-width: 1480px; 
+	}
+	.navbar-brand {
+		padding-left:60px;
+	}
+	.oicontainer-content {
+		padding:0 40px;
+	}
+	.col-sidebar {
+	    position: absolute;
+	    left:0;
+	    width: 280px;
+	    height: auto;
+	    min-height: 100%;
+	}
+	.col-content {
+		margin-left: 280px
+	}
+}
+
+
+.sidebartoggle {
+	position:absolute;
+	left: -2px;
+	z-index:2000;
+}
+
+.sidebaractive {
+	left:0;
+	box-shadow: 0 1px 4px 0 rgba(0,0,0,0.4);
+	z-index:2000;
+}
+.sidebartoggle {
+	position:absolute;
+	top:-5px;
+}
+.sidebartoggleout {
+	position:absolute;
+	top:-5px;
+	right:-24px;
+	z-index:999;
+
+}
+.sidebartogglebtn {
+	box-shadow: 0 1px 4px 0 rgba(0,0,0,0.4);
+}
+.sidebartogglebtnout {
+		z-index:999;
+		box-shadow: 0 1px 4px 0 rgba(0,0,0,0.4);
+}
 .oifeedlayout-content { padding: 20px; }
 .oifeedlayout {
-	background: url("../oi/banner.jpg") no-repeat top right fixed; 
+   background: url("../oi/banner.jpg") no-repeat top right fixed; 
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
- 	background-size: contain;
- 	min-height:990px;
+  background-size: contain;
+  min-height:990px;
+  padding-top:1px;
  		
 }
 .oifeedlayout { 
@@ -281,21 +390,9 @@ background:none;
   background-size: cover;
 }
 
-@media (min-width: 992px) {
-	.oifeedlayout {
-		margin-left: 220px
-	}
+.oicontent {
+	 padding: 20px 30px;
 }
-
-	
-@media (min-width: 992px) {
-	.oicontainer { max-width: 992px; }
-}
-
-@media (min-width: 1480px) {
-	.oicontainer { max-width: 1480px; }
-}
-
 
 .oi-feedcard  { margin-bottom: 30px; }
 
@@ -646,7 +743,7 @@ Licensed under MIT
 }
 
 .profile-usermenu ul li a i {
-  margin-right: 8px;
+  margin: 0 8px;
 }
 
 .profile-usermenu ul li a:hover {

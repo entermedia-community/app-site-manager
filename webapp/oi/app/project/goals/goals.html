@@ -22,19 +22,19 @@
 
 #set( $col = $col + 1)
 
+<div class="goals-column-container">
 <div class="goals-column">
-
 #if( $selectedcat )
 <div class="goals-column-header">
 
 	#if( $col == 1)
 	[[High Priority]] 
-#if( $caneditdata)	
- <a class="btn btn-secondary btn-sm emdialog pull-left" 
- 	title="[[New Goal]]" 
- 	data-width="700"
- 	href="$apphome/project/goals/editgoal.html?collectionid=$librarycol.getId()&categoryid=$!selectedcat.getId()" ><i class="fas fa-plus"></i></a>
- #end	
+		##if( $caneditdata)	
+		 <a class="btn btn-secondary btn-sm emdialog pull-left" 
+		 	title="[[New Goal]]" 
+		 	data-width="700"
+		 	href="$apphome/project/goals/editgoal.html?collectionid=$librarycol.getId()&categoryid=$!selectedcat.getId()" ><i class="fas fa-plus"></i></a>
+		 ##end	
 	#elseif( $col == 2)
 	[[Medium]]
 	#else
@@ -75,6 +75,7 @@
 
 </ul>
 
+</div>
 </div>
 #end
 

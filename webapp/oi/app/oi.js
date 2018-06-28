@@ -27,4 +27,17 @@ $("#autofinishbutton").livequery("click",function(e)
 });
 
 
+$(".sidebartogglebtn").livequery("click",function(e)
+{
+	e.stopPropagation()
+	$(this).toggle();
+	$("#oisidebar").toggleClass('sidebaractive');
+});
+$(".sidebartogglebtnout").livequery("click",function(e)
+		{
+			e.stopPropagation()
+			$("#oisidebar").toggleClass('sidebaractive');
+			$(".sidebartogglebtn").toggle();
+		});
+
 });
