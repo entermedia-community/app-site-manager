@@ -99,13 +99,13 @@
     </name> 
   </property>  
 
-  <property id="countdata" editable="true" index="true" stored="true" viewtype="multiselect" indextype="not_analyzed" >
+  <property id="countdata" editable="true" index="true" stored="true" viewtype="text" indextype="not_analyzed" >
     <name>
       <language id="en"><![CDATA[Counts]]></language>
     </name>
   </property> 
 
-  <property id="goalpoints" editable="true" index="true" stored="true" type="number"> 
+  <property id="goalpoints" editable="true" index="true" stored="true" type="number" viewtype="text" > 
     <name> 
       <language id="en"><![CDATA[Points]]></language>
     </name> 
