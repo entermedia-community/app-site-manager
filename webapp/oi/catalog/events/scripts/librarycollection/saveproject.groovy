@@ -1,6 +1,8 @@
 import org.entermediadb.asset.MediaArchive
 import org.entermediadb.location.Position
+import org.entermediadb.projects.*
 import org.openedit.Data
+
 import org.openedit.data.BaseSearcher
 import org.openedit.data.Searcher
 
@@ -8,13 +10,22 @@ public void init()
 {
 	MediaArchive mediaArchive = context.getPageValue("mediaarchive");//Search for all files looking for videos
 	BaseSearcher collectionsearcher = mediaArchive.getSearcher("librarycollection");
+	String  id = context.getRequestParameter("dataid");
+	if( id == null )
+	{
+		id = data.getId();
+	}
+	LibraryCollection data = (LibraryCollection)collectionsearcher.searchById(id);
+
+	if( data.getValue("geo_point") != null && data.getValue("library") != null)
+	{
+		return;
+	}
 	Searcher librarysearcher = mediaArchive.getSearcher("library");
+
 
 	log.info("User is: " + user.getId() );
 
-	String  id = context.getRequestParameter("dataid");
-	
-	Data data = collectionsearcher.searchById(id);
 	
 	Data library = librarysearcher.searchByField("owner", user.getId());
 	if( library == null)
@@ -30,8 +41,11 @@ public void init()
 		data.setValue("owner",user.getId());
 	}	
 	
+//	org.entermediadb.asset.Category root = mediaArchive.getProjectManager().createRootCategory(mediaArchive,data);
+//	data.getRootCategoryId(root.getId();
+	
 	//Search Google and put point on map
-	String location = ""
+	String location = "";
 	if (data.get("street")) {
 		location = data.get("street");
 	}

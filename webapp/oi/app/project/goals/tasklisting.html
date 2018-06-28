@@ -6,10 +6,12 @@
 	style="float:left;width:205px;margin:5px;" 
 	data-taskid="$task.id"
 	data-savepath="$apphome/project/goals/tasksave.html"  >
+	
+	#set( $selectedcat = $mediaarchive.getCategory($task.projectdepartment))
     	<div class="card-task-header 
     				#if( $task.taskstatus == "1" ) alert-warning #end
     				#if( $task.taskstatus == "2" ) alert-error #end
-    				#if( $task.taskstatus == "3" ) alert-success #end">
+    				#if( $task.taskstatus == "3" ) alert-success #end" title="$selectedcat.getCategoryPath()">
     		<i class="fas fa-flag"></i> $task.name 
     		#if( $caneditdata )
     		<a class="ajax confirm" data-confirm="Are you sure?"
