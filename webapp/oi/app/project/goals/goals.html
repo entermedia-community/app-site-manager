@@ -43,7 +43,7 @@
 </div>
 #end
 
-<ul class="projectgoals ui-sortable" data-collectionid="$librarycol.getId()" data-categoryid="$selectedcat.id" data-savepath="$apphome/project/goals/savecategorysort.html">
+<ul class="projectgoals ui-sortable" data-collectionid="$librarycol.getId()" data-categoryid="$!selectedcat.id" data-savepath="$apphome/project/goals/savecategorysort.html">
 
 #foreach( $goal in $row )  
 
@@ -78,6 +78,8 @@
 </div>
 #end
 
+<div class="clearfix"></div>
+
 #if( $closedgoals.size() > 0)
 <a class="btn" href="goalclosedsearch.html?collectionid=$librarycol.id">	View Closed Goals ($closedgoals.size()) </a>
 #end
@@ -87,5 +89,4 @@
 
 #end
 
-<div class="clearfix"></div>
 </div>

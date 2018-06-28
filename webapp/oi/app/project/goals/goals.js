@@ -41,13 +41,11 @@ jQuery(document).ready(function(url,params)
 			{
 				outlineSelectionCol = function(event, ui)
 				{
-					jQuery(this).addClass("selected");
 					jQuery(this).addClass("dragoverselected");
 				}
 					
 				unoutlineSelectionCol = function(event, ui)
 				{
-					jQuery(this).removeClass("selected");
 					jQuery(this).removeClass("dragoverselected");
 				}
 			
@@ -89,13 +87,11 @@ jQuery(document).ready(function(url,params)
 			{
 				outlineSelectionCol = function(event, ui)
 				{
-					jQuery(this).addClass("selected");
 					jQuery(this).addClass("dragoverselected");
 				}
 					
 				unoutlineSelectionCol = function(event, ui)
 				{
-					jQuery(this).removeClass("selected");
 					jQuery(this).removeClass("dragoverselected");
 				}
 			
