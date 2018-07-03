@@ -95,6 +95,7 @@ public class SpeedManager
 
 			if (!real.getBoolean("monitoringenable"))
 			{
+				inArchive.fireMediaEvent("monitoredsites", "speedcheck", real.getProperties(), null);
 				continue;
 			}
 
@@ -118,8 +119,8 @@ public class SpeedManager
 					log.error("Speedtest failed", e);
 				}
 				sites.saveData(real, null);
-				inArchive.fireMediaEvent("monitoredsites", "speedcheck", real.getProperties(), null);
 			}
+			inArchive.fireMediaEvent("monitoredsites", "speedcheck", real.getProperties(), null);
 		}
 	}
 
