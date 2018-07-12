@@ -48,8 +48,10 @@ public class StripePaymentProcessor
 		boolean forcetestmode = Boolean.parseBoolean(payment.get("forcetestmode"));
 		boolean productionmode = inArchive.isCatalogSettingTrue("productionmode");
 		if(productionmode && !forcetestmode){
+			log.info("Passing in prod mode");
 			Stripe.apiKey  = inArchive.getCatalogSettingValue("stripe_access_token");
 		} else{
+			log.info("Passing in test mode: " + String.valueOf(forcetestmode));
 			Stripe.apiKey  = inArchive.getCatalogSettingValue("stripe_test_access_token");
 		}
 		String amountstring = totalprice.toShortString().replace(".", "").replace("$", "").replace(",", "");
