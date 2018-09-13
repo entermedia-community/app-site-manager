@@ -103,11 +103,11 @@ public class SiteManager implements CatalogEnabled
 		Collection<String> average = inReal.getValues("cpuload");
 		if (average != null)
 		{
-			avg = new ArrayList<>(average);
+			avg = new ArrayList(average);
 		}
 		else
 		{
-			avg = new ArrayList<>();
+			avg = new ArrayList();
 		}
 		avg.add((Double)inStats.getCpu());
 		if (avg.size() > CPU_TIME_AVG)
