@@ -47,8 +47,8 @@ files.deleteMatch( web + "/lib/stripe*.jar");
 files.copyFileByMatch( tmp + "/lib/*.jar", web + "/lib/");
 
 
-files.deleteMatch( web + "/WEB-INF/base/sitemanager/")
-files.copyFileByMatch( tmp + "/base/sitemanager/", root + "/WEB-INF/base/sitemanager/");
+files.deleteMatch( web + "/WEB-INF/base/entermediadb/")
+files.copyFileByMatch( tmp + "/base/entermediadb/", root + "/WEB-INF/base/entermediadb/");
 
 
 

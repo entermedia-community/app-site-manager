@@ -1,0 +1,10 @@
+<properties prefix="monitoredsites" beanname="dataSearcher">
+  <property id="id" index="true" stored="true" editable="true" searchtype="monitoredsites" internalfield="true">Id</property>
+  <property id="name" index="true" stored="true" editable="true" searchtype="monitoredsites">Name</property>
+  <property id="url" index="true" stored="true" editable="true" searchtype="monitoredsites">URL</property>
+  <property id="lastchecked" index="true" stored="true" editable="true" sortable="true" type="date" searchtype="monitoredsites" internalfield="false" datatype="date">Last Checked</property>
+  <property id="dnsmonitoringenable" index="true" type="boolean" stored="true" editable="true" searchtype="monitoredsites" internalfield="false">Enable</property>
+ </properties>
+
+ 
+ 

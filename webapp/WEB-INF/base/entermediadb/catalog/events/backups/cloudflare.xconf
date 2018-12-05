@@ -1,0 +1,11 @@
+<page>
+<property name="eventname">Get CloudFlare user profile</property>	
+	<property name="eventdescription">Get User Profile using API v4</property>	
+
+
+<path-action name="CloudFlareModule.testCloudFlare">
+</path-action>
+  	<property name="period">30d</property>
+  
+<property name="virtual">true</property>
+</page>
