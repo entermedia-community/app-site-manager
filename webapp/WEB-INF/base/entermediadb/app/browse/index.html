@@ -48,10 +48,17 @@
 	Next page
 #end
 </div>
-<div class="col-2" style="padding: 0px 20px 20px 20px;">
-	<img src="$apphome/theme/oi/Google-Group.png" />
-	<p>[[Join a site or start a new one. Be part of a team actively bringing changes to the world.]]</p>
-  		<a href="$apphome/browse/add/addnew.html" class="btn btn-primary" >[[Start New Site]]</a>	
-</div>
+
+	<div class="col-2" style="padding: 0px 20px 20px 20px;">
+		<form style="padding-top:10px" action="$apphome/site/sitedeployer/createsite.html" method="POST">
+				<img src="$apphome/theme/oi/Google-Group.png" />
+				<p>[[Join a site or start a new one. Be part of a team actively bringing changes to the world.]]</p>
+		<!-- 	  		<a href="$apphome/browse/add/addnew.html" class="btn btn-primary" >[[Start New Site]]</a>
+		 -->	  		
+		 			<input type="submit" class="btn btn-primary" value="[[Start New Site]]">
+			  		
+		</form>
+	</div>
+	
 </div>
 </div>
