@@ -20,6 +20,7 @@ import org.entermediadb.modules.update.Downloader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.openedit.CatalogEnabled;
 import org.openedit.Data;
 import org.openedit.MultiValued;

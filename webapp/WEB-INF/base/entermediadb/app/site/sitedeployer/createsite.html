@@ -16,77 +16,23 @@ $usercatalog.name : <a href="$link">$link</a>
 
 #else
 <form action="./createsitefinish.html" method="post" id="createsiteform">
-
-
 <div class="card card-login mx-auto mt-5">
   <div class="card-header">
-  Please review your information and deploy your customized Media Database URL
+  Fill in your Company information
   </div>
   <div class="card-body">
 	<div class="row">
 		<div class="col-sm-6">
 			<div class="form-group">
-				<label for="user">Name</label>
-				<input class="form-control" id="name" name="name" type="text" placeholder="Your Name *" value="$name" required data-msg="Please enter your name.">
+				<label for="user">Company</label>
+				<input class="form-control" id="organization" name="organization" type="text" placeholder="Your Company *" value="" required data-msg="Please enter your Company Name.">
 				
 			</div>
 		</div>
-		<div class="col-sm-6">
+				<div class="col-sm-6">
 			<div class="form-group">
-				<label for="user">Email</label>
-				<input class="form-control" id="email" name="email" type="email" placeholder="Your Email *" value="$email" required email data-msg="Please enter your Email.">
-				
-			</div>
-		</div>
-	</div>
-	
-  
-	<div class="row">
-		<div class="col-sm-6">
-			<div class="form-group">
-				<label for="user">Organization</label>
-				<input class="form-control" id="organization" name="organization" type="text" placeholder="Your Organization *" value="" required data-msg="Please enter your Organization Name.">
-				
-			</div>
-
-		</div>
-		<div class="col-sm-6">
-			<div class="form-group">
-				<label for="user">Industry</label>
-				
-				<select class="form-control" name="organization_type" required data-msg="Please enter your Organization Industria Type.">
-				<option value="accounting">Accounting </option>
-				<option value="educational">Educational</option>
-				<option value="entretainment">Entertainment</option> 
-				<option value="food">Food</option> 
-				<option value="healthcare">Heath Care</option>
-				<option value="manufacturing">Manufacturing</option>
-				<option value="marketingsales">Marketing & Sales</option>
-				<option value="realestate">Real Estate</option>
-				<option value="telecomunications">Telecommunications</option>
-				<option value="transport">Transport</option>
-				<option value="technology">Technology</option>
-				<option value="other">Other</option>
-				</select>
-				
-			</div>
-		</div>
-	</div>
-	
-	
-	<div class="row">
-		<div class="col-sm-6">
-			<div class="form-group">
-				<label for="user">Prefered Instance URL</label>
-				<input class="form-control" id="organization_url" name="organization_url" type="text" placeholder="URL*" value=""  required>
-				
-			</div>
-
-		</div>
-		<div class="col-sm-6">
-			<div class="form-group">
-				<label for="user">Select your Local Time Zone</label>
-				<select class="form-control" name="timezone" required data-msg="Please enter your Local Time Zone.">
+				<label for="user">Select your Business Local Time Zone</label>
+				<select class="form-control" name="timezone" required data-msg="Please enter your Business Local Time Zone.">
 <option value="GMT-12:00">(GMT -12:00) Eniwetok, Kwajalein</option>
 <option value="GMT-11:00">(GMT -11:00) Midway Island, Samoa</option>
 <option value="GMT-10:00">(GMT -10:00) Hawaii</option>
@@ -131,9 +77,93 @@ $usercatalog.name : <a href="$link">$link</a>
 				</select>
 			</div>
 		</div>
+		
 	</div>
 	
+	
 	<div class="row">
+ 		<div class="col-sm-6">
+			<div class="form-group">
+				<label for="user">Email</label>
+				<input class="form-control" id="email" name="email" type="email" placeholder="Company Email *" value="$user.email" required email data-msg="Please enter your Company Email.">
+				
+			</div>
+		</div>
+	</div>
+	</div>
+   
+  </div>
+</div>
+
+
+<div class="card card-login mx-auto mt-5">
+  <div class="card-header">
+  Customize your EnterMediaDB Instance
+  </div>
+  <div class="card-body">
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label for="user">Name</label>
+				<input class="form-control" id="name" name="name" type="text" placeholder="$user.name" value="$name" required data-msg="Please enter your name.">
+				
+			</div>
+		</div>
+				<div class="col-sm-6">
+			<div class="form-group">
+				<label for="user">Industry</label>
+				
+				<select class="form-control" name="organization_type" required data-msg="Please enter your Organization Industria Type.">
+				<option value="accounting">Accounting </option>
+				<option value="educational">Educational</option>
+				<option value="entretainment">Entertainment</option> 
+				<option value="food">Food</option> 
+				<option value="healthcare">Heath Care</option>
+				<option value="manufacturing">Manufacturing</option>
+				<option value="marketingsales">Marketing & Sales</option>
+				<option value="realestate">Real Estate</option>
+				<option value="telecomunications">Telecommunications</option>
+				<option value="transport">Transport</option>
+				<option value="technology">Technology</option>
+				<option value="other">Other</option>
+				</select>
+				
+			</div>
+		</div>
+		
+<!-- 		<div class="col-sm-6">
+			<div class="form-group">
+				<label for="user">Email</label>
+				<input class="form-control" id="email" name="email" type="email" placeholder="Your Email *" value="$email" required email data-msg="Please enter your Email.">
+				
+			</div>
+		</div>
+ -->
+ 	</div>
+	
+  
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="form-group">
+				<label for="user">Prefered Instance URL</label>
+				<input class="form-control" id="organization_url" name="organization_url" type="text" placeholder="URL*" value=""  required>
+				
+			</div>
+
+		</div>
+				<div class="col-sm-6">
+			<div class="form-group">
+				<label for="user">Select a Region to deploy your trial instance</label>
+				<select class="form-control" name="region" required data-msg="Please select a region.">
+				<option value="eu-west">Europe - West</option>
+				<option value="us-east" selected="selected">USA - East</option>
+				<option value="us-west">USA- West</option>
+				</select>
+			</div>
+		</div>
+	</div>
+	
+<!-- 	<div class="row">
 		<div class="col-sm-6" style="padding-bottom:15px;">
 		<div class="g-recaptcha" data-sitekey="6Ld1-FAUAAAAAEfqW8acK94Fw3P2N3MGmc1zfRWs"></div>	
 		<input type="hidden" class="hiddenRecaptcha" name="hiddenRecaptcha" id="hiddenRecaptcha" required>
@@ -142,7 +172,7 @@ $usercatalog.name : <a href="$link">$link</a>
 		</div>
 
 	</div>
-	
+ -->	
 	
 		<div class="row">
 			<div class="col-sm-6">

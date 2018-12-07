@@ -4,7 +4,7 @@
 	
 	<script id="videojs" src="/${applicationid}/components/javascript/videojs/video.min.js" />
 	<style  id="videojs-css"  href="/${applicationid}/components/javascript/videojs/video-js.css" />
-	<style id="results" href="${themeprefix}/styles/pages/results.css"/>
+	<style id="results" href="/${applicationid}/theme/styles/pages/results.css"/>
 	<script id="results" src="/${applicationid}/components/javascript/results.js"/> 
 	
 	

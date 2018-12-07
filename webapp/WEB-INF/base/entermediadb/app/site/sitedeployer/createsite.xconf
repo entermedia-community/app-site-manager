@@ -3,6 +3,6 @@
 	<path-action name="Script.run">
 		<script>./createsite.groovy</script>
     </path-action>
-	<layout>/theme/layouts/application.html</layout>
+	<layout>/${applicationid}/theme/layouts/application.html</layout>
 	<script id="recpatcha" src="https://www.google.com/recaptcha/api.js" />
 </page>

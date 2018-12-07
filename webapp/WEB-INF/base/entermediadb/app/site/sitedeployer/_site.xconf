@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="title">Client Site Deployer</property>
+
+  <Xstyle id="app-css" href="/${applicationid}/styles/theme.css"/>
+ 
+  <path-action name="MediaArchiveModule.loadApplicationId" />
+  
+  <path-action bean="pageManager" name="PageValue.loadPageVariable" allowduplicates="true" />		
+  <path-action bean="searcherManager" name="PageValue.loadPageVariable" allowduplicates="true" />		
+  <path-action name="SessionValue.loadSessionVariable" bean="moduleManager" allowduplicates="true" />
+  <path-action bean="userManager" name="PageValue.loadPageVariable" allowduplicates="true" />
+ 
+  <layout>/${applicationid}/theme/layouts/layout.html</layout>
+</page>

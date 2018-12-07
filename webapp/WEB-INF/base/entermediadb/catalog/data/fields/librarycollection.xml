@@ -102,7 +102,7 @@
       <language id="es"><![CDATA[Estado del proyecto]]></language>  
       <language id="fr"><![CDATA[Etat du projet]]></language> 
     </name> 
-  </property>  
+  </property>
   <property id="projecttype" index="true" stored="true" editable="true" type="list" viewtype="list"  datatype="list"  >Project Type 
     <name> 
       <language id="de"><![CDATA[Projekttyp]]></language>  
@@ -228,6 +228,20 @@
       <language id="en"><![CDATA[Vision]]></language>  
     </name> 
   </property>  
-
+  <property id="monitoredsites" index="true" stored="true" editable="true" type="list" viewtype="list"  datatype="list"  >Site Monitor 
+    <name> 
+      <language id="en"><![CDATA[Site Monitor]]></language>  
+    </name> 
+  </property>
+  <property id="trial_clients" index="true" stored="true" editable="true" type="list" viewtype="list"  datatype="list"  >Trial Client 
+    <name> 
+      <language id="en"><![CDATA[Trial Client]]></language>  
+    </name> 
+  </property>
+  <property id="isTrial"  index="true" datatype="boolean" stored="true" >
+    <name> 
+      <language id="en"><![CDATA[Trial Site]]></language>  
+    </name> 
+  </property>  
 
 </properties>

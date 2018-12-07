@@ -5,7 +5,7 @@
 	</path-action>
 
 	
-	<style id="results" href="${themeprefix}/styles/pages/results.css"/>
+	<style id="results" href="/${applicationid}/theme/styles/pages/results.css"/>
 	<script id="results" src="/${applicationid}/components/javascript/results.js"/> 
 
 	<property name="subsection">home</property>
