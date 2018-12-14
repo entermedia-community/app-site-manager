@@ -85,28 +85,26 @@ public void init()
 		{
 			server = serversSearcher.loadData(serverIterator.next());
 			log.info("checking server " + server);
-			HitTracker hits = mediaarchive.query("entermedia_seats").match("seatstatus", "false")match("entermedia_servers", server.id).search();			
+			HitTracker hits = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).search();			
 			if ( hits.size() < Integer.parseInt(server.maxinstance) )
 			{
 				seat = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).searchOne();
-				continue;
+				break;
 			}
 		}
 		
-		if (seat) {
-			Searcher seatssearcher = searcherManager.getSearcher(catalogid, "entermedia_seats");
+		if (seat != null)
+		{
+			//Searcher seatssearcher = searcherManager.getSearcher(catalogid, "entermedia_seats");
 
 			//Assign client to seat
 			seat.setValue("clientid",newclient.id);
 			seat.setValue("seatstatus","true");
-			seatssearcher.saveData(seat, null);
+			mediaarchive.saveData("entermedia_seats", seat);
 			
 			
-			log.info("GETTING SERVER INFO");
 			//Get Server Info
-			
-			log.info("server: " + server.name);
-			
+			log.info("GETTING " + server.name + " INFO");
 			
 				
 			//Call deploy script 
@@ -244,6 +242,8 @@ protected void addNewCollection(String url, String trialclient, String monitored
 	newcollection.setValue("creationdate", new Date());
 	newcollection.setValue("collectiontype", 1);
 	newcollection.setValue("contactemail", context.getRequestParameter("email"));
+	
+	//TODO: deal with permissions (public based on group?)
 	
 	collectionsearcher.saveData(newcollection,null);
 }
