@@ -8,5 +8,4 @@
   	<property name="period">1m</property>
   
 <property name="virtual">true</property>
-<property name="virtual">true</property>
 </page>
