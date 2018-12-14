@@ -120,6 +120,7 @@ public class SpeedManager
 				}
 				sites.saveData(real, null);
 			}
+			real.setId(null);
 			inArchive.fireMediaEvent("monitoredsites", "speedcheck", real.getProperties(), null);
 		}
 	}
