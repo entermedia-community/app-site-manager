@@ -1,5 +1,12 @@
 body {
   font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.navbar { background-color: #000; border-radius:0!important; margin-bottom:0;  }
+
+.navbar-collapse { width:100%;}
+
+@media (min-width: 768px) {
+        .navbar-collapse { float: right; width:auto;}
+}
 
 p {
   line-height: 1.75; }
@@ -65,11 +72,6 @@ header.masthead .intro-text .intro-heading {
 	left:20px; 
 	top:20px 	
   }
-  
-.navbar-brand  { 
-		position:absolute;
-		left: 100px;
-}
 
 .navbar-toggler {
  	color:#fff;
@@ -258,48 +260,72 @@ body {
 	font-size:1em;
 }
 
-#mainNav
-{
-	float: right;
-	background-color:#000;
-	filter: alpha(opacity=60);
-  /* IE */
-  -moz-opacity: 0.6;
-  /* Mozilla */
-  opacity: 0.6;
-  	z-index: 600;
+#mainNav {
+  background-color: #212529;
 }
 
-#mainNav.nav-project-page .navbar-nav .nav-item .nav-link 
-{
-		color: white;
+#mainNav .navbar-toggler {
+  font-size: 12px;
+  right: 0;
+  padding: 13px;
+  text-transform: uppercase;
+  color: white;
+  border: 0;
+  background-color: #fed136;
+  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+#mainNav .navbar-brand {
+  color: #fed136;
+  font-family: 'Kaushan Script', 'Helvetica Neue', Helvetica, Arial, cursive;
+}
+
+#mainNav .navbar-brand.active, #mainNav .navbar-brand:active, #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+  color: #fec503;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link {
+  font-size: 90%;
+  font-weight: 400;
+  padding: 0.75em 0;
+  letter-spacing: 1px;
+  color: white;
+  font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+#mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
+  color: #01b34f;
+}
 
 @media (min-width: 992px) {
-	#mainNav {
-		background:none;
-	}
-
-
-#mainNav.nav-project-page .navbar-nav .nav-item .nav-link
-{
-	color:#3e4553;
+  #mainNav {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    -webkit-transition: padding-top 0.3s, padding-bottom 0.3s;
+    -moz-transition: padding-top 0.3s, padding-bottom 0.3s;
+    transition: padding-top 0.3s, padding-bottom 0.3s;
+    border: none;
+    background-color: transparent;
+  }
+  #mainNav .navbar-brand {
+    font-size: 1.75em;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+  }
+  #mainNav .navbar-nav .nav-item .nav-link {
+    padding: 1.1em 1em !important;
+  }
+  #mainNav.navbar-shrink {
+    padding-top: 0;
+    padding-bottom: 0;
+    background-color: #212529;
+  }
+  #mainNav.navbar-shrink .navbar-brand {
+    font-size: 1.25em;
+    padding: 12px 0;
+  }
 }
-
-#mainNav.nav-project-page .navbar-nav .nav-item.active a
-{
-		color: white;
-}
-
-#mainNav .navbar-nav .nav-item .nav-link
-{
-	color:#FFF;
-}
-
-}
-
-
 
 .navbar-toggler {
     padding: .15rem .5rem;
@@ -363,8 +389,6 @@ body {
 	
 
 @media (min-width: 1380px) {
-	.navbar-brand {
-	}
 	.card-mini-project {
 		width:33%;
 	}

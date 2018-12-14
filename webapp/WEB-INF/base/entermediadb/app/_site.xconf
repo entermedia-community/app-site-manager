@@ -6,7 +6,6 @@
   <property name="catalogid">entermediadb/catalog</property>
   <property name="fallbackdirectory">/WEB-INF/base/emfrontend2</property>
   <property name="applicationid">entermediadb/app</property>
-  <property name="siteid">entermediadb</property>
   
   <property name="editable">true</property>
    
@@ -50,7 +49,7 @@
   	  <script id="openedit" src="/openedit/components/javascript/openedit.js"/>
   
   
-  <inner-layout>${siteid}/theme/layouts/application.html</inner-layout>
+  <inner-layout>/${applicationid}/theme/layouts/application.html</inner-layout> 
  
   <property name="assetviewerlink">/${apphome}/views/modules/asset/editor/viewer/index.html</property>
   <property name="asseteditlink">/${apphome}/views/modules/asset/editor/generalinformation/index.html</property>
