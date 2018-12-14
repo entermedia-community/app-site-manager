@@ -4,7 +4,7 @@
 						<li id="home" #if($section == "home") class="active" #end>
 							<a href="$apphome/site/home/${librarycol.id}/#urlencode($librarycol.name).html" >
 							<i class="fa fa-home"></i>
-							[[Home]] </a>
+							[[Site]] </a>
 						</li>
 						<li id="chat" #if($section == "collaborate") class="active" #end>
 							<a href="$apphome/site/collaborate/${librarycol.id}/#urlencode($librarycol.name).html" >
@@ -17,23 +17,6 @@
 							<i class="fa fa-hand-holding-usd"></i>
 							[[Billing]] </a>
 						</li>
-<!-- 						<li id="contact"  #if($section == "contact") class="active" #end>
-							<a href="$apphome/site/contact/contact.html?collectionid=${librarycol.id}" >
-							<i class="fa fa-user"></i>
-							[[Contact]] </a>
-						</li>
- -->
- <!-- 						<li id="members"  #if($section == "members") class="active" #end>
-							<a href="$apphome/site/subscribers/index.html?collectionid=${librarycol.id}" >
-							<i class="fa fa-user-friends"></i>
-							[[Community]] </a>
-						</li>
-						<li id="projects"  #if($section == "projects") class="active" #end>
-							<a href="$apphome/site/projects/index.html?collectionid=${librarycol.id}" >
-							<i class="fa fa-calendar"></i>
-							[[Files]] </a>
-						</li>
- -->
 						<li id="tasks"  #if($section == "tasks") class="active" #end>
 							<a href="$apphome/site/goals/priorities/index.html?collectionid=${librarycol.id}" >
 							<i class="fa fa-flag"></i>
