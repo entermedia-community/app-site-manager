@@ -5,7 +5,7 @@ $!request.getAttribute( "oe-exception")
 		#end
 		#set($loginok = $context.findValue("loginokpage") )
 
-		<p class="note">[[Welcome! Please enter your email and password:]]</p>
+		<p class="note">[[Welcome! Please enter your email and password]]:</p>
 		<div class="hr"></div>
 		
 		<form class="form-inline" name="login" id="login" action="$home$content.loginroot/login.html" method="POST" onsubmit="return confirmPassword(this);">
@@ -18,7 +18,7 @@ $!request.getAttribute( "oe-exception")
 			</div>
 
 		 <input type="hidden" name="loginokpage" value="#esc($!loginok)"/>
-		 <button type="submit" class="btn btn-primary" id="login-submit">[[Login]]</button>
+		 <button type="submit" class="btn btn-primary" id="login-submit" style="margin-bottom: 10px;">[[Login]]</button>
 		</form>
 
 		#if ( $context.getPageValue("oe-exception") )
@@ -26,9 +26,11 @@ $!request.getAttribute( "oe-exception")
 			$context.removePageValue("oe-exception")
 		#end
 
+		<div style="margin-top: 26px; margin-bottom: 10px;">
+		$pages.include("$home$content.loginroot/oauth/providers.html", $context)
+		</div>
  		<p class="note" style="margin-top: 26px; margin-bottom: 10px;"><a href="$home$content.loginroot/sendpassword.html">[[Forgotten your password?]]</a></p>
 		
-		$pages.include("$home$content.loginroot/oauth/providers.html", $context)
 		
 </div>	
 
