@@ -730,6 +730,13 @@ span.select2-container {
 	padding:20px;
 }
 
+@media (min-width: 992px) {
+        .nav-item-button {
+                padding-top:10px;
+        }
+}
+
+
 /***
 User Profile Sidebar by @keenthemes
 A component of Metronic Theme - #1 Selling Bootstrap 3 Admin Theme in Themeforest: http://j.mp/metronictheme
