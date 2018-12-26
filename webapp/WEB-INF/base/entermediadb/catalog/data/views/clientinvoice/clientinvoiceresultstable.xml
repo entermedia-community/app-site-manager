@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <root> 
-  <property id="name"/>  
-  <property id="client"/>  
+  <property id="name"/>
+  <property id="notes"/>  
+  <property id="date"/>  
+  <property id="duedate"/>  
   <property id="amount"/>
   <property id="invoicestatus"/>
+  <property id="autopay"/>
 </root>

@@ -1,7 +1,10 @@
 
 <root>
   <property id="name"/>
-  <property id="client"/>  
+  <property id="notes"/>  
+  <property id="date"/>  
+  <property id="duedate"/>  
   <property id="amount"/>
   <property id="invoicestatus"/>
+  <property id="autopay"/>
 </root>

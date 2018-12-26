@@ -824,7 +824,7 @@ margin: auto auto;
 }
 
 .profile-usermenu ul li a {
-  color: #93a3b5;
+  color: black;
   font-weight: 400;
   display:block;
   padding:6px;
@@ -923,3 +923,75 @@ tr.odd td
 	position: absolute;
 	top: 5px;
 }
+
+.fa-wrench {
+	color: black;
+}
+
+.btn-secondary {
+	color: black!important;
+	background-color: transparent!important;
+	border-color: transparent!important;
+}
+
+body{
+  padding:50px;
+  background:#fff;
+}
+.wrapper{
+  width:70%;
+}
+@media(max-width:992px){
+ .wrapper{
+  width:100%;
+} 
+}
+.panel-heading {
+  padding: 0;
+	border:0;
+}
+.panel-title>a, .panel-title>a:active{
+	display:block;
+	padding:15px;
+	color:#555;
+	font-size:16px;
+	font-weight:bold;
+	text-transform:uppercase;
+	letter-spacing:1px;
+	word-spacing:3px;
+	text-decoration:none;
+}
+.panel-heading  a:before {
+	font-family: "fas fa-arrow-up";
+	content: "\e114";
+	float: right;
+	transition: all 0.5s;
+}
+.panel-heading.active a:before {
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	transform: rotate(180deg);
+} 
+
+
+.colorbar-due-invoice {
+    width: 100%; height: 2px;
+    border-style: solid;
+    border-color: red;
+    background-color: red;
+}
+
+.colorbar-status-invoice {
+    width: 100%; height: 2px;
+    border-style: solid;
+    border-color: orange;
+    background-color: orange;
+}
+
+.colorbar-billing-menu {
+    width: 100%; height: 2px;
+    border-style: solid;
+    border-color: yellow;
+    background-color: yellow;
+}
+

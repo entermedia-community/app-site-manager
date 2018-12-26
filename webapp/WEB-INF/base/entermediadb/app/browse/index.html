@@ -1,4 +1,5 @@
- #set( $searcher = $mediaarchive.getSearcher("librarycollection") )
+ #set( $hits = $mediaarchive.query("librarycollection").enduser(true).all().search($context) )
+ 
 <div id="projectresultholder" style="padding:10px 0 0 20px;margin: 0;">
 <div class="row" style="margin:0px;">
   	<div class="col-10" style="padding: 0px 0 0 10px;">

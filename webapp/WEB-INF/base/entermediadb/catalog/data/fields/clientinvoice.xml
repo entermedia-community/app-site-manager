@@ -57,4 +57,14 @@
       <language id="en"><![CDATA[Date]]></language>
     </name>
   </property> 
+  <property id="duedate" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" deleted="false" datatype="date" autocreatefromexif="false" keyword="false" writenametoexif="false">New
+    <name>
+      <language id="en"><![CDATA[Due Date]]></language>
+    </name>
+  </property> 
+  <property id="autopay" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" deleted="false" datatype="boolean" autocreatefromexif="false" keyword="false" writenametoexif="false">New
+    <name>
+      <language id="en"><![CDATA[Auto Pay]]></language>
+    </name>
+  </property> 
 </properties>
