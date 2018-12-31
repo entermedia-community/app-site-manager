@@ -1,5 +1,5 @@
- #set( $hits = $mediaarchive.query("librarycollection").enduser(true).all().search($context) )
- 
+#set( $hits = $mediaarchive.query("librarycollection").enduser(true).all().search() )
+##set( $searcher = $mediaarchive.getSearcher("librarycollection") )
 <div id="projectresultholder" style="padding:10px 0 0 20px;margin: 0;">
 <div class="row" style="margin:0px;">
   	<div class="col-10" style="padding: 0px 0 0 10px;">
@@ -9,10 +9,10 @@
 	<input type="hidden" name="operation" value="contains" />
   	<input type="search" name="name.value" class="form-control ds-input" id="search-input" placeholder="[[Search Sites]]..." 
   		style="width: 80%; max-width: 500px;vertical-align: top;" value='$!hits.getInput("name")'>
-</form>	
+</form>
 #set( $n = $hits.setHitsPerPage(12))
 
-
+$hits.size()
 #if ($hits.size() >= 1)
 	#foreach($site in $hits.getPageOfHits())
 	<div class="card-mini-project" >

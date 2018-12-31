@@ -8,4 +8,5 @@
   <property id="amount"/>
   <property id="invoicestatus"/>
   <property id="autopay"/>
+  <property id="librarycollection"/>
 </root>

@@ -19,8 +19,11 @@
 </bean>
 <bean id="speedManager" class="org.entermedia.speedtest.SpeedManager" scope="prototype">
 </bean>
-
-
+<bean id="InvoiceModule" class="org.entermedia.invoice.InvoiceModule">
+</bean>
+<bean id="invoiceManager" class="org.entermedia.invoice.InvoiceManager" scope="prototype">
+	<property name="moduleManager"><ref bean="moduleManager"/></property>
+</bean>
 </beans>
 
  

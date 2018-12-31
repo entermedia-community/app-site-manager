@@ -962,8 +962,8 @@ body{
 	text-decoration:none;
 }
 .panel-heading  a:before {
-	font-family: "fas fa-arrow-up";
-	content: "\e114";
+    font-family: 'Glyphicons Halflings';
+	content: "fas fa-carret-down";
 	float: right;
 	transition: all 0.5s;
 }

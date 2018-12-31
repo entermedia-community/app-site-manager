@@ -37,7 +37,7 @@
       <language id="en"><![CDATA[Amount]]></language> 
     </name> 
   </property>  
-  <property id="invoicestatus" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" deleted="false" autocreatefromexif="false" keyword="false" writenametoexif="false">New
+  <property id="clientinvoicestatus" index="true" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="list" rendertype="list" required="false" filter="false" multilanguage="false" deleted="false" datatype="list" autocreatefromexif="false" keyword="false" writenametoexif="false">New
     <name> 
       <language id="en"><![CDATA[Status]]></language> 
     </name> 
@@ -67,4 +67,9 @@
       <language id="en"><![CDATA[Auto Pay]]></language>
     </name>
   </property> 
+    <property id="librarycollection" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" deleted="false" datatype="list" autocreatefromexif="false" keyword="false" writenametoexif="false" listid="librarycollection">New
+    <name> 
+      <language id="en"><![CDATA[Collection ID]]></language> 
+    </name> 
+  </property>  
 </properties>

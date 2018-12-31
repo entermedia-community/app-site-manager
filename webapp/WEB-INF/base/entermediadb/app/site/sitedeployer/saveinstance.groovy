@@ -56,11 +56,11 @@ public void init()
 			return;
 		}
 		
-		newclient.setProperty("organization",organization);
-		newclient.setProperty("instanceurl",instanceurl);
-		newclient.setProperty("organizationtype", organization_type);
-		newclient.setProperty("timezone",timezone);
-		newclient.setProperty("region",region);
+		newclient.setValue("organization",organization);
+		newclient.setValue("instanceurl",instanceurl);
+		newclient.setValue("organizationtype", organization_type);
+		newclient.setValue("timezone",timezone);
+		newclient.setValue("region",region);
 		//newclient.setProperty("datestart",DateStorageUtil.getStorageUtil().formatForStorage(new Date()));
 		
 		DateStorageUtil dateStorageUtil = DateStorageUtil.getStorageUtil();
@@ -131,14 +131,23 @@ public void init()
 				
 				//TODO: missing ClientID
 				Data client = mediaarchive.query("client").match("name", organization).searchOne();
+				Data group = null;
 				if ( client == null )
 				{
-					log.info("Client not found");
+					log.info("Client not found, creating new client and group");
 					client= addNewClient();
+					group = addNewGroup();
+					Searcher userSearcher = searcherManager.getSearcher(catalogid, "user");
+					
+					Collection groups = (Collection)user.getAt("groups");
+					groups.add(group.getId());
+					user.setValue("groups", group.getId());
+					userSearcher.saveData(user,null);
 				}
 			
+				group = mediaarchive.query("group").match("name", organization).searchOne();
 				Data monitor = addNewMonitor(server, "http://" + fullURL, client.id);
-				addNewCollection(fullURL, newclient.id, monitor.id);
+				addNewCollection(fullURL, newclient.id, monitor.id, group.id);
 				
 				context.putPageValue("userurl",fullURL);
 				context.putPageValue("client_name", name);
@@ -183,15 +192,15 @@ protected Data addNewMonitor(Data server, String url, String client)
 	//TODO: set userid into client table
 	Data newmonitor = monitorsearcher.createNewData();
 
-	newmonitor.setProperty("name",context.getRequestParameter("organization"));
-	newmonitor.setProperty("notifyemail",context.getRequestParameter("email"));
-	newmonitor.setProperty("server", server.name);
-	newmonitor.setProperty("isssl", "false");
-	newmonitor.setProperty("url", url);
+	newmonitor.setValue("name",context.getRequestParameter("organization"));
+	newmonitor.setValue("notifyemail",context.getRequestParameter("email"));
+	newmonitor.setValue("server", server.name);
+	newmonitor.setValue("isssl", "false");
+	newmonitor.setValue("url", url);
 	newmonitor.setValue("diskmaxusage", 95);
 	newmonitor.setValue("memmaxusage", 200);
 	newmonitor.setValue("monitoringenable", true);
-	newmonitor.setProperty("clientid", client);	
+	newmonitor.setValue("clientid", client);	
 	monitorsearcher.saveData(newmonitor,null);
 	return newmonitor;
 }
@@ -202,14 +211,24 @@ protected Data addNewClient()
 	//TODO: set userid into client table
 	Data newclient = clientsearcher.createNewData();
 
-	newclient.setProperty("name",context.getRequestParameter("organization"));
-	newclient.setProperty("timezone",context.getRequestParameter("timezone"));
+	newclient.setValue("name",context.getRequestParameter("organization"));
+	newclient.setValue("timezone",context.getRequestParameter("timezone"));
 
 	clientsearcher.saveData(newclient,null);
 	return newclient;
 }
 
-protected void addNewCollection(String url, String trialclient, String monitoredsite)
+protected Data addNewGroup()
+{
+	Searcher groupsearcher = searcherManager.getSearcher(catalogid, "group");
+	Data group = groupsearcher.createNewData();
+	group.setValue("id", context.getRequestParameter("organization"));
+	group.setValue("name", context.getRequestParameter("organization"));
+	groupsearcher.saveData(group,null);
+	return group;
+}
+
+protected void addNewCollection(String url, String trialclient, String monitoredsite, String group)
 {
 	Searcher collectionsearcher = searcherManager.getSearcher(catalogid, "librarycollection");
 	//TODO: set userid into client table
@@ -222,18 +241,18 @@ protected void addNewCollection(String url, String trialclient, String monitored
 		Searcher librarysearcher = searcherManager.getSearcher(catalogid, "library");
 		library = librarysearcher.createNewData();
 		
-		library.setProperty("name", context.getRequestParameter("organization"));
-		library.setProperty("owner", user.getId());
-		
+		library.setValue("name", context.getRequestParameter("organization"));
+		library.setValue("owner", user.getId());
+		library.setValue("viewgroups", group);
 		librarysearcher.saveData(library,null);
 	}
 	
 	
-	newcollection.setProperty("name", url);
-	newcollection.setProperty("library", library.getId());
-	newcollection.setProperty("timezone", context.getRequestParameter("timezone"));
-	newcollection.setProperty("owner", user.getId());
-	newcollection.setProperty("websitelink", "http://" + url);
+	newcollection.setValue("name", url);
+	newcollection.setValue("library", library.getId());
+	newcollection.setValue("timezone", context.getRequestParameter("timezone"));
+	newcollection.setValue("owner", user.getId());
+	newcollection.setValue("websitelink", "http://" + url);
 	newcollection.setValue("isTrial", true);
 	newcollection.setValue("startdate", new Date());
 	newcollection.setValue("trial_clients", trialclient);

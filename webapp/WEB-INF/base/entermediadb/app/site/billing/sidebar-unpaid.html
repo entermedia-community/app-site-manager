@@ -1,0 +1,24 @@
+<div class="panel-heading active" role="tab" id="headingOne">
+	<h4 class="panel-title">
+		<a role="button" data-toggle="collapse" data-parent="#accordion"
+			href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+			<i class="fas fa-shopping-cart"></i> [[Due Invoices]]
+		</a>
+	</h4>
+</div>
+<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel"
+	aria-labelledby="headingOne">
+	<div class="panel-body">
+	#set( $totalinvoices = $invoiceManager.getUnpaidInvoiceNumber($librarycol.getId()) )
+	$totalinvoices
+	#set ($amount=$invoiceManager.getAccountBalance($librarycol.getId()))
+	#if($totalinvoices==0)
+		[[Your account balance is up to date]]
+	#elseif($totalinvoices==1)
+		[[You have ]] $totalinvoices [[ invoice due for a total amount of ]] $amount USD
+	#else
+		[[You have ]] $totalinvoices [[ invoices due for a total amount of ]] $amount USD
+	#end
+		<a class="btn btn-primary" href="#" onclick="showPayment()" title="Pay" style="margin-left: 70%;">[[Pay Now]]</a>
+	</div>
+</div>

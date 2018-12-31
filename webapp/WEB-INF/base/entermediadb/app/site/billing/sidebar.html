@@ -1,0 +1,73 @@
+<div class="wrapper center-block">
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		  <div class="colorbar-due-invoice"></div>
+		  <div class="card">
+			<div class="card-header">
+			  <div class="panel panel-default">
+				$pages.include("/${applicationid}/site/billing/sidebar-unpaid.html",$context)
+			  </div>
+		  </div>
+		  </div>
+		  <div class="colorbar-status-invoice"></div>
+		  <div class="card">
+			<div class="card-header">
+		  <div class="panel panel-default">
+		    <div class="panel-heading" role="tab" id="headingTwo">
+		      <h4 class="panel-title">
+		        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+					<i class="fas fa-shopping-cart"></i>
+		          [[Status]]
+		        </a>
+		      </h4>
+		    </div>
+			<div class="card-header">
+			
+			  #set( $searcher = $mediaarchive.getSearcher("clientinvoicestatus") )
+			  #set ($totalunpaid=$invoiceManager.getUnpaidInvoiceNumber($librarycol.getId()))
+			  #set ($totalpaid=$invoiceManager.getPaidInvoiceNumber($librarycol.getId()))
+			  #set ($totalcancelled=$invoiceManager.getCancelledInvoiceNumber($librarycol.getId()))
+			  #set ($totalrefunded=$invoiceManager.getRefundedInvoiceNumber($librarycol.getId()))
+	
+			<div class="form-check" style="padding-left: 10px;">
+			  <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
+			  <label class="form-check-label" for="materialUnchecked">[[Unpaid]] ($totalunpaid)</label>
+			</div>
+			<div class="form-check" style="padding-left: 10px;">
+			  <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
+			  <label class="form-check-label" for="materialUnchecked">[[Paid]] ($totalpaid)</label>
+			</div>
+			<div class="form-check" style="padding-left: 10px;">
+			  <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
+			  <label class="form-check-label" for="materialUnchecked">[[Cancelled]] ($totalcancelled)</label>
+			</div>
+			<div class="form-check" style="padding-left: 10px;">
+			  <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
+			  <label class="form-check-label" for="materialUnchecked">[[Refunded]] ($totalrefunded)</label>
+			</div>
+						
+		  </div>
+		  </div>
+		  </div>
+		  </div>
+			  <div class="colorbar-billing-menu"></div>
+		  <div class="card">
+			<div class="card-header">
+		  <div class="panel panel-default">
+		    <div class="panel-heading" role="tab" id="headingThree">
+		      <h4 class="panel-title">
+		        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+					<i class="fas fa-shopping-cart"></i>
+		          [[Billing]]
+		        </a>
+		      </h4>
+		    </div>
+		    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+		      <div class="panel-body">
+		        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		</div>
+	</div>
+</div>

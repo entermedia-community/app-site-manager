@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<clientinvoicestatuss>
+  <clientinvoicestatus id="paid" name="Paid">Paid</clientinvoicestatus>
+  <clientinvoicestatus id="unpaid" name="Unpaid">Unpaid</clientinvoicestatus>
+  <clientinvoicestatus id="cancelled" name="Cancelled">Cancelled</clientinvoicestatus>
+  <clientinvoicestatus id="refunded" name="Refunded">Refunded</clientinvoicestatus>
+</clientinvoicestatuss>

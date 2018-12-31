@@ -1,139 +1,23 @@
 <div class="oicontent">
 <h2>[[Billing]]</h2>
-
-	<!-- <div class="card">
-	<div class="card-header">
-		<div class="row" style="border-bottom:1px solidc ">
-			<div class="col-sm-10"> 
-			<h4>[[Invoices]]</h4>
-			</div>
-		</div>
-		<div class="row" style="border-bottom:1px solidc ">
-			<div class="col-sm-12"> 
-				<table class="table table-stripped">
-					<thead>
-						<tr>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td><b>#EM101</b></td>
-							<td>$299USD</td>
-							<td><a href="#" onclick="showPayment()" title="Pay">Unpaid</a></td>
-						</tr>
-						<tr>
-							<td><b>#EM101</b></td>
-							<td>$299USD</td>
-							<td>Paid</td>
-						</tr>
-						<tr>
-							<td><b>#EM101</b></td>
-							<td>$299USD</td>
-							<td>Paid</td>
-						</tr>
-					</tbody>
-				<table>
-			</div>
-	
-		</div>
-	</div>
-	 -->
 	 
 <a href="#" onclick="refreshTable()">[[Reload]]</a>
 
 <!-- <a href="#" onclick="loadEditor()">[[Add New]]</a>
  -->
 
-<div class="row">
-	<div class="col-sm-4"> 
-		<div class="wrapper center-block">
-		  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-				  <div class="colorbar-due-invoice"></div>
-		  <div class="card">
-			<div class="card-header">
-			  <div class="panel panel-default">
-			    <div class="panel-heading active" role="tab" id="headingOne">
-			      <h4 class="panel-title">
-			        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-						<i class="fas fa-shopping-cart"></i>
-			          [[Due Invoices]]
-			        </a>
-			      </h4>
-			    </div>
-			    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-			      <div class="panel-body">
-			      [[You have ]] 1 [[due invoice of ]] $42 USD
-			      <a class="btn btn-primary" href="#" onclick="showPayment()" title="Pay" style="margin-left: 70%;">[[Pay Now]]</a>
-			      </div>
-			    </div>
-			  </div>
-		  </div>
-		  </div>
-		  <div class="colorbar-status-invoice"></div>
-		  <div class="card">
-			<div class="card-header">
-		  <div class="panel panel-default">
-		    <div class="panel-heading" role="tab" id="headingTwo">
-		      <h4 class="panel-title">
-		        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-					<i class="fas fa-shopping-cart"></i>
-		          [[Status]]
-		        </a>
-		      </h4>
-		    </div>
-			<div class="card-header">
-				<div class="form-check" style="padding-left: 10px;">
-				  <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
-				  <label class="form-check-label" for="materialUnchecked">Paid</label>
+<div class="card">
+	<div class="card-header">
+		<div class="row">
+			<div class="col-sm-4"> 
+				$pages.include("/${applicationid}/site/billing/sidebar.html",$context)
+			</div>
+			<div class="col-sm-8"> 
+ 				<div id="component" class="table-component" data-librarycollection="$librarycol.getId()" data-name="#EM143" data-view="clientinvoice/clientinvoiceresultstable" data-searchtype="clientinvoice" data-page="1" data-hitssessionid="$!hits.sessionid" >
 				</div>
-				<div class="form-check" style="padding-left: 10px;">
-				  <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
-				  <label class="form-check-label" for="materialUnchecked">Unpaid</label>
-				</div>
-				<div class="form-check" style="padding-left: 10px;">
-				  <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
-				  <label class="form-check-label" for="materialUnchecked">Canceled</label>
-				</div>
-				<div class="form-check" style="padding-left: 10px;">
-				  <input type="radio" class="form-check-input" id="materialUnchecked" name="materialExampleRadios">
-				  <label class="form-check-label" for="materialUnchecked">Refunded</label>
-				</div>
-		  </div>
-		  </div>
-		  </div>
-		  </div>
-			  <div class="colorbar-billing-menu"></div>
-		  <div class="card">
-			<div class="card-header">
-		  <div class="panel panel-default">
-		    <div class="panel-heading" role="tab" id="headingThree">
-		      <h4 class="panel-title">
-		        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-					<i class="fas fa-shopping-cart"></i>
-		          [[Billing]]
-		        </a>
-		      </h4>
-		    </div>
-		    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-		      <div class="panel-body">
-		        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-		      </div>
-		    </div>
-		  </div>
-		</div>
-		</div>
-		</div>
+ 			</div>
 		</div>
 	</div>
-
-	<div class="col-sm-8"> 
-		<div id="component" class="table-component" data-view="clientinvoice/clientinvoiceresultstable" data-searchtype="clientinvoice" data-page="1" data-hitssessionid="$!hits.sessionid" >
-		</div>
-	</div>
-
 </div>
 
 
@@ -301,7 +185,6 @@ $('.panel-collapse').on('show.bs.collapse', function () {
   
   
 </script>
-
 
 <script type="text/javascript">
 var component = $( "#component" );
