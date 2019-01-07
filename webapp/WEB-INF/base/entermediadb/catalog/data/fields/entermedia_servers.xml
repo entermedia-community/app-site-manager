@@ -42,7 +42,7 @@
       <language id="en"><![CDATA[sshname]]></language> 
     </name> 
   </property>  
-  <property id="region" index="true" listchild="country" editable="true" stored="true" filter="true" datatype="list" viewtype="list">New 
+  <property id="server_region" index="true" listchild="country" editable="true" stored="true" filter="true" datatype="list" viewtype="list">New 
     <name>
       <language id="de"><![CDATA[Region]]></language>
       <language id="en"><![CDATA[Region]]></language>

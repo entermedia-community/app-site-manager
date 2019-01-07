@@ -75,7 +75,7 @@ public void init()
                 context.putPageValue("organization", organization);
 
 		//Get server(s) by region
- 		HitTracker servers = mediaarchive.query("entermedia_servers").match("region", region).search();
+ 		HitTracker servers = mediaarchive.query("entermedia_servers").match("server_region", region).search();
 		Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
 
 		Data seat = null;
