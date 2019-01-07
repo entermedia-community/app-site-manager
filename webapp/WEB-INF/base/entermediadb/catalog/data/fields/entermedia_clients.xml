@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties prefix="entermedia_clients" beanname="dataSearcher"> 
+  <property id="id" index="true" internalfield="true" editable="true" stored="true" sortable="true" filter="false" keyword="false">New 
+    <name> 
+      <language id="de"><![CDATA[Id]]></language>  
+      <language id="en"><![CDATA[Id]]></language>  
+      <language id="es"><![CDATA[Id]]></language>  
+      <language id="fr"><![CDATA[Id]]></language> 
+    </name> 
+  </property>  
+  <property id="name" index="true" multilanguage="true" editable="true" stored="true" sortable="true" filter="false" keyword="false">New 
+    <name> 
+      <language id="de"><![CDATA[Identität]]></language>  
+      <language id="en"><![CDATA[Name]]></language>  
+      <language id="es"><![CDATA[Nombre]]></language>  
+      <language id="fr"><![CDATA[Identité]]></language> 
+    </name> 
+  </property>  
+  <property id="sourcepath">New 
+    <name> 
+      <language id="en"><![CDATA[SourcePath]]></language> 
+    </name> 
+  </property>  
+  <property id="clientemail" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name> 
+      <language id="en"><![CDATA[Email]]></language> 
+    </name> 
+  </property>  
+  <property id="organization" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name> 
+      <language id="en"><![CDATA[Organization]]></language> 
+    </name> 
+  </property>  
+  <property id="organizationtype" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[Org Type]]></language> 
+    </name> 
+  </property>  
+  <property id="datestart" index="true" internalfield="false" editable="true" isbadge="false" viewtype="date" rendertype="date" required="false" multilanguage="false" filter="false" datatype="date" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[Start Date]]></language> 
+    </name> 
+  </property>  
+  <property id="dateend" index="true" internalfield="false" editable="true" isbadge="false" viewtype="date" rendertype="date" required="false" multilanguage="false" filter="false" datatype="date" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[End Date]]></language> 
+    </name> 
+  </property>  
+  <property id="trialstatus" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[Status]]></language> 
+    </name> 
+  </property>  
+  <property id="instanceurl" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name> 
+      <language id="en"><![CDATA[Instance URL]]></language> 
+    </name> 
+  </property>  
+  <property id="server_used" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name> 
+      <language id="en"><![CDATA[Server]]></language> 
+    </name> 
+  </property>  
+  <property id="server" index="true" internalfield="false" editable="true" isbadge="false" sortable="true" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name> 
+      <language id="de"><![CDATA[Server-IP]]></language>  
+      <language id="en"><![CDATA[Server Name]]></language>  
+      <language id="es"><![CDATA[Servidor IP]]></language>  
+      <language id="fr"><![CDATA[IP du serveur]]></language> 
+    </name> 
+  </property>  
+  <property id="timezone" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New
+    <name>
+      <language id="en"><![CDATA[Time Zone]]></language>
+    </name>
+  </property>
+</properties>

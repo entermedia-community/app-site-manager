@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties prefix="entermedia_servers" beanname="dataSearcher"> 
+  <property id="id" index="true" internalfield="true" editable="true" stored="true" sortable="true" filter="false" keyword="false">New 
+    <name> 
+      <language id="de"><![CDATA[Id]]></language>  
+      <language id="en"><![CDATA[Id]]></language>  
+      <language id="es"><![CDATA[Id]]></language>  
+      <language id="fr"><![CDATA[Id]]></language> 
+    </name> 
+  </property>  
+  <property id="name" index="true" multilanguage="true" editable="true" stored="true" sortable="true" internalfield="false" isbadge="false" required="false" deleted="false" autocreatefromexif="false" writenametoexif="false" filter="false" keyword="false">New 
+    <name> 
+      <language id="de"><![CDATA[Identität]]></language>  
+      <language id="en"><![CDATA[Name]]></language>  
+      <language id="es"><![CDATA[Nombre]]></language>  
+      <language id="fr"><![CDATA[Identité]]></language> 
+    </name> 
+  </property>  
+  <property id="sourcepath">New 
+    <name> 
+      <language id="en"><![CDATA[SourcePath]]></language> 
+    </name> 
+  </property>  
+  <property id="dockersubnet" index="true" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[dockersubnet]]></language> 
+    </name> 
+  </property>  
+  <property id="serverurl" index="true" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[serverurl]]></language> 
+    </name> 
+  </property>  
+  <property id="serverrealname" index="true" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[Server Real Name]]></language> 
+    </name> 
+  </property>  
+  <property id="sshname" index="true" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[sshname]]></language> 
+    </name> 
+  </property>  
+  <property id="region" index="true" listchild="country" editable="true" stored="true" filter="true" datatype="list" viewtype="list">New 
+    <name>
+      <language id="de"><![CDATA[Region]]></language>
+      <language id="en"><![CDATA[Region]]></language>
+      <language id="es"><![CDATA[Región]]></language>
+      <language id="fr"><![CDATA[Region]]></language>
+    </name>
+  </property>  
+  <property id="maxinstance" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" deleted="false" datatype="number" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name> 
+      <language id="en"><![CDATA[maxinstance]]></language> 
+    </name> 
+  </property> 
+</properties>
