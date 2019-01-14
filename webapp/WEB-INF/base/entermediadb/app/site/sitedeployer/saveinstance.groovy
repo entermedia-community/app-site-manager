@@ -39,7 +39,7 @@ public void init()
 		// String clientsubdomain = context.getRequestParameter("clientsubdomain");
 		//
 		
-		Searcher clientsearcher = searcherManager.getSearcher(catalogid, "trial_clients");
+		Searcher clientsearcher = searcherManager.getSearcher(catalogid, "entermedia_clients");
 		//TODO: set userid into client table
 		Data newclient = clientsearcher.createNewData();
 		
