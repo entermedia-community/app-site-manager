@@ -156,13 +156,13 @@ public void init()
 				
 				context.putPageValue("from", email);
 				context.putPageValue("subject", "New Activation - http://" + fullURL);
-				sendEmail(context.getPageMap(),"help@entermediadb.org","/trialmanager/email/salesnotify.html");
+				sendEmail(context.getPageMap(),"help@entermediadb.org","./email/salesnotify.html");
 				
 				
 				//Email Client
 				context.putPageValue("from", 'help@entermediadb.org');
 				context.putPageValue("subject", "Welcome to EnterMediaDB " + name);
-				sendEmail(context.getPageMap(),email,"/trialmanager/email/businesswelcome.html");
+				sendEmail(context.getPageMap(),email,"./email/businesswelcome.html");
 				
 				
 			}
