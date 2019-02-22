@@ -22,7 +22,7 @@ public void init()
         MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 
         //Search Clients with End Date = Today
-        Searcher clientsearcher = mediaArchive.getSearcher("trial_clients");
+        Searcher clientsearcher = mediaArchive.getSearcher("entermedia_clients");
 
         Date today = new Date();
         Collection expiredClients = clientsearcher.query().exact("trialstatus","active").and().before("dateend", today).search();
@@ -34,13 +34,13 @@ public void init()
                 log.info("Disabling: "+client.name+" -> "+client.dateend);
 
                 //Search Seat Info
-                Searcher seatssearcher = mediaArchive.getSearcher("trial_seats");
+                Searcher seatssearcher = mediaArchive.getSearcher("entermedia_seats");
                 SearchQuery scquery = seatssearcher.createSearchQuery();
                 HitTracker seats = seatssearcher.search(scquery);
                 Data seat = seatssearcher.query().match("clientid", client.id).searchOne();
                 if (seat) {
                                 //Get Server Info
-                                Searcher servers = mediaArchive.getSearcher("trial_servers");
+                                Searcher servers = mediaArchive.getSearcher("entermedia_servers");
                                 Data server = servers.query().exact("id", seat.trial_servers).searchOne()
                                 if (server) {
                                         List<String> command = new ArrayList<String>();

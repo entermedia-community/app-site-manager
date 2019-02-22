@@ -20,7 +20,7 @@ public void init()
          MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 
         //Search Clients with End Date = Today
-        Searcher clientsearcher = mediaArchive .getSearcher("trial_clients");
+        Searcher clientsearcher = mediaArchive .getSearcher("entermedia_clients");
 
         Calendar now = Calendar.getInstance();
         now.add(Calendar.DAY_OF_YEAR, -15);
@@ -34,7 +34,7 @@ public void init()
                 Data client = clientsearcher.searchById(it.id);
 
                 //Get Server Info
-                Searcher servers = mediaArchive .getSearcher("trial_servers");
+                Searcher servers = mediaArchive .getSearcher("entermedia_servers");
                 Data server = servers.query().exact("id", client.server).searchOne()
                 if (server) {
                         log.info("Deleting client: "+client.name+", instance: "+client.instanceurl+" on server "+server.name);
