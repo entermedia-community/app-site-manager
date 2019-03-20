@@ -6,25 +6,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 #if( $librarycol )
-#if( $userupload)
-<meta property="og:url" content="${context.siteRoot}$apphome/project/media/category/${librarycol.getId()}/${userupload.uploadcategory}.html" />
-<meta property="og:title" content="$!userupload.longdescription" />
-<meta property="og:description" content="$librarycol $!mediaarchive.getUserManager().getScreenName($userupload.owner)" />
-#if($hits)
-#set( $asset = $hits.first())
-<meta property="og:image" content="${context.siteRoot}/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${asset.sourcepath}/image1024x768.jpg" />
-<meta property="og:image:width" content="1024" />
-<meta property="og:image:height" content="768" />
-#end
-#else
-<meta property="og:url" content="${context.siteRoot}$apphome/project/feed/${librarycol.getId()}.html" />
-<meta property="og:title" content="$librarycol" />
-<meta property="og:description" content="EnterMediaDB.com" />
-#set( $logo = $mediaarchive.getAsset($librarycol.assetportrait))
-<meta property="og:image" content="${context.siteRoot}/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${logo.sourcepath}/image1024x768.jpg" />
-<meta property="og:image:width" content="1024" />
-<meta property="og:image:height" content="768" />
-#end
+    #if( $userupload)
+        <meta property="og:url" content="${context.siteRoot}$apphome/project/media/category/${librarycol.getId()}/${userupload.uploadcategory}.html" />
+        <meta property="og:title" content="$!userupload.longdescription" />
+        <meta property="og:description" content="$librarycol $!mediaarchive.getUserManager().getScreenName($userupload.owner)" />
+    #if($hits)
+        #set( $asset = $hits.first())
+        <meta property="og:image" content="${context.siteRoot}/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${asset.sourcepath}/image1024x768.jpg" />
+        <meta property="og:image:width" content="1024" />
+        <meta property="og:image:height" content="768" />
+    #end
+    #else
+        <meta property="og:url" content="${context.siteRoot}$apphome/project/feed/${librarycol.getId()}.html" />
+        <meta property="og:title" content="$librarycol" />
+        <meta property="og:description" content="EnterMediaDB.com" />
+        #set( $logo = $mediaarchive.getAsset($librarycol.assetportrait))
+        <meta property="og:image" content="${context.siteRoot}/$mediaarchive.getMediaDbId()/services/module/asset/downloads/preset/${logo.sourcepath}/image1024x768.jpg" />
+        <meta property="og:image:width" content="1024" />
+        <meta property="og:image:height" content="768" />
+    #end
 #end
 <meta name="description" content="">
 <meta property="og:type"               content="article" />
@@ -65,7 +65,7 @@
           <ul class="navbar-nav  ml-auto">
           	#set($section = $content.section) 
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="$sitehome/index.html">[[Home]]</a>
+              <a class="nav-link js-scroll-trigger" href="$sitehome/index.html">[[Home]] **</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="$sitehome/product/index.html">[[Products]]</a>

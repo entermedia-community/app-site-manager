@@ -10,10 +10,11 @@ p {
   line-height: 1.75; }
 
 a {
-  color: #fed136; }
-  a.active, a:active, a:focus, a:hover {
-    color: #fec503; }
-
+  color: #555; 
+}
+  a.active, a:active, a:hover {
+    color: #111; 
+}
 .text-primary {
   color: #fed136 !important; }
 

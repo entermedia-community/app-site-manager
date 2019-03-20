@@ -1,16 +1,16 @@
 $!request.getAttribute( "oe-exception")
 <div class="login-form">
 		#if($user)
-			<p>[[You are logged in as]] $user</p>		
+			<p class="text-center"><strong>[[You are logged in as]] $user (<a href="home$content.loginroot/logout.html">Logout</a>)</strong></p>		
 		#end
 		#set($loginok = $context.findValue("loginokpage") )
 
-		<p class="note">[[Welcome! Please enter your email and password]]:</p>
+		<p class="">[[Welcome! Please enter your email and password]]:</p>
 		<div class="hr"></div>
 		
 		<form class="form-inline" name="login" id="login" action="$home$content.loginroot/login.html" method="POST" onsubmit="return confirmPassword(this);">
 			<label class="sr-only" for="accountname">[[Email or Username]]</label>
-			<input type="text" class="form-control mb-2 mr-sm-2 mb-sm-0" id="accountname" name="accountname" placeholder="[[Email or Username]]">
+			<input type="text" class="form-control mb-3 mr-sm-3 mb-sm-0" id="accountname" name="accountname" placeholder="[[Email or Username]]">
 		
 			<label class="sr-only" for="password">[[Password]]</label>
 			<div class="input-group mb-2 mr-sm-2 mb-sm-0">
@@ -18,8 +18,11 @@ $!request.getAttribute( "oe-exception")
 			</div>
 
 		 <input type="hidden" name="loginokpage" value="#esc($!loginok)"/>
-		 <button type="submit" class="btn btn-primary" id="login-submit" style="margin-bottom: 10px;">[[Login]]</button>
-		</form>
+		 <button type="submit" class="btn btn-secondary" id="login-submit" style="">[[Login]]</button>
+        </form>
+        <div class="note" style="margin-top: 10px; margin-bottom: 10px;">
+            <a href="$home$content.loginroot/sendpassword.html" style="text-decoration:underline">[[Forgotten your password?]]</a>
+        </div>
 
 		#if ( $context.getPageValue("oe-exception") )
 			<div class="alert alert-danger" role="alert" style="margin: 20px 0; text-align: center">$context.getPageValue("oe-exception")</div>
@@ -29,7 +32,7 @@ $!request.getAttribute( "oe-exception")
 		<div style="margin-top: 26px; margin-bottom: 10px;">
 		$pages.include("$home$content.loginroot/oauth/providers.html", $context)
 		</div>
- 		<p class="note" style="margin-top: 26px; margin-bottom: 10px;"><a href="$home$content.loginroot/sendpassword.html">[[Forgotten your password?]]</a></p>
+ 		
 		
 		
 </div>	

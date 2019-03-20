@@ -11,10 +11,6 @@ body {
 p {
   line-height: 1.75; }
 
-a {
-  color: #524104; }
-  a.active, a:active, projectresultholdera:focus, a:hover {
-    color: #fec503; }
 
 .text-primary {
   color: #fed136 !important; }

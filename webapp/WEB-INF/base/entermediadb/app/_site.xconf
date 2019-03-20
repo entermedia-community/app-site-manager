@@ -44,9 +44,9 @@
   <style id="app-css" href="${apphome}/theme/styles/theme.css"/>
   
   <!-- App Customs -->
-  <style id="custom-css" href="${apphome}/theme/css/oi.css"/>
+  <style id="custom-css" href="${apphome}/theme/css/agency.css"/>
   <script id="oijs" src="${apphome}/oi.js" />
-  	  <script id="openedit" src="/openedit/components/javascript/openedit.js"/>
+  <script id="openedit" src="/openedit/components/javascript/openedit.js"/>
   
   
   <inner-layout>/${applicationid}/theme/layouts/application.html</inner-layout> 
