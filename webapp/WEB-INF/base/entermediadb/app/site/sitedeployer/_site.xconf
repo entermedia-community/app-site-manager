@@ -3,8 +3,7 @@
 <page>
   <property name="title">Client Site Deployer</property>
 
-  <Xstyle id="app-css" href="/${applicationid}/styles/theme.css"/>
- 
+  
   <path-action name="MediaArchiveModule.loadApplicationId" />
   
   <path-action bean="pageManager" name="PageValue.loadPageVariable" allowduplicates="true" />		
