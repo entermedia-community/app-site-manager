@@ -24,9 +24,9 @@ public void init()
 	}
 
 	String name = context.getRequestParameter("name");
-/*	String email = context.getRequestParameter("email");
-*/
-	String email = user.getEmail();
+	String email = context.getRequestParameter("email");
+
+	//String email = user.getEmail();
 	if (name != "" && email != "") {
 		email = email.toLowerCase();
 		String organization = context.getRequestParameter("organization");
