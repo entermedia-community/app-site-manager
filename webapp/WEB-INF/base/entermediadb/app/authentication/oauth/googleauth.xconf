@@ -1,0 +1,13 @@
+<page>
+<path-action name="OauthModule.login"/>
+<property name="provider">google</property>
+
+
+<path-action name="Admin.redirect">
+	  <redirectpath>/entermediadb/app/site/sitedeployer/createsite.html</redirectpath>
+
+
+</path-action>
+
+
+</page>
