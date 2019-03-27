@@ -1,23 +1,18 @@
 #set($providers = $mediaarchive.getList("oauthprovider"))
 
-***
-
 #foreach($p in $providers)
-
-#if($p.enabled =="true")
-    #set($providerurl = "$apphome/authentication/oauth/oauth.html?provider=$p.id")
-    #if ($redirecturi)
-        #set($providerurl = "${providerurl}&redirecturi=${redirecturi}")
+    #if($p.enabled =="true")
+        #set($providerurl = "$apphome/authentication/oauth/oauth.html?provider=$p.id")
+        <div class="oauthproviderbtn">
+        <a href="${providerurl}">
+        #if($pages.doesExist("$applicationid/authentication/oauth/${p.id}.png"))
+            <img src="$apphome/authentication/oauth/${p.id}.png"/>
+        #else
+            [[Login with]] $p.name
+        #end
+        </a>
+        </div>
     #end
-    <a href="${providerurl}">
-    #if($pages.doesExist("$applicationid/authentication/oauth/${p.id}.png"))
-        <img src="$apphome/authentication/oauth/${p.id}.png"/>
-    #else
-        [[Login with]] $p.name
-    #end
-    </a>
-
-#end
 #end
 
 

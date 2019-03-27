@@ -1,11 +1,13 @@
-<h1 class="text-center">[[Welcome to EnterMedia]]</h1>
-<div class="card card-login mx-auto mt-5">
-  <div class="card-header">
-  <strong>[[Please use your Google Account to login to EnterMedia]]</strong>
-  </div>
-  <div class="card-body">
-    #set($redirecturi = "entermediadb/app/site/sitedeployer/createsite.html")
-    $context.putPageValue("redirecturi",$redirecturi)
-    $pages.include("../../authentication/oauth/providers.html", $context)
-  </div>
+<h1 class="text-center">[[Sign Up]]</h1>
+<p class="text-center">[[Already have a EnterMedia account]]? <a href="/entermediadb/app/authentication/login.html">[[Log in]]</a></p>
+<div class="container">
+	<div class="row justify-content-md-center">
+	    <div class="col col-lg-7">
+			<div class="text-center" style="padding-top:50px">
+				
+                    $pages.include("../../authentication/oauth/providers.html", $context)
+				
+			</div>
+	    </div>
+	</div>
 </div>
