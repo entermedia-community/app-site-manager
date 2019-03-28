@@ -3,6 +3,7 @@
 	<path-action name="Script.run">
 		<script>./createsite.groovy</script>
     </path-action>
+    
 	<path-action name="ProfileModule.reLoadUserProfile">    </path-action>
 	
 	<script id="recpatcha" src="https://www.google.com/recaptcha/api.js" />

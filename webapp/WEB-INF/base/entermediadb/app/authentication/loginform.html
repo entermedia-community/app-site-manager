@@ -5,7 +5,7 @@ $!request.getAttribute( "oe-exception")
 		#end
 		#set($loginok = $context.findValue("loginokpage") )
 
-		<p class="">[[Welcome! Please enter your email and password]]:</p>
+		<p class="text-center">[[Welcome! Please enter your email and password]]:</p>
 		<div class="hr"></div>
 		
 		<form class="form-inline" name="login" id="login" action="$home$content.loginroot/login.html" method="POST" onsubmit="return confirmPassword(this);">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-  <property name="title">Client Site Deployer</property>
+  <property name="title">EnterMedia Site Deployer</property>
 
   
   <path-action name="MediaArchiveModule.loadApplicationId" />

@@ -3,5 +3,5 @@
     <path-action name="Script.run">
 		<script>./saveinstance.groovy</script>
 	</path-action>
-	<layout>/${applicationid}/theme/layouts/application.html</layout>
+	
 </page>
