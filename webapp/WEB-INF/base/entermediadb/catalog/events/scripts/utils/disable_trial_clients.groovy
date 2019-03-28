@@ -25,7 +25,7 @@ public void init()
         Searcher clientsearcher = mediaArchive.getSearcher("entermedia_clients");
 
         Date today = new Date();
-        Collection expiredClients = clientsearcher.query().exact("trialstatus","active").and().before("dateend", today).search();
+        Collection expiredClients = clientsearcher.query().exact("trialstatus", "active").and().before("dateend", today).search();
         log.info("Found "+expiredClients.size()+" sites expired.");
         expiredClients.each{
                 //Get The Client
@@ -58,14 +58,12 @@ public void init()
 
                                         //Keep the server it was installed for the record
                                         client.setProperty("server", seat.trial_servers);
-
-
-
                                 }
                 }
                 //Set Status Expired to Client
                 client.setProperty("trialstatus","expired");
                 clientsearcher.saveData(client, null);
+                
                 //Email Client
                 context.putPageValue("client_name", client.name);
                 context.putPageValue("from", 'help@entermediadb.org');

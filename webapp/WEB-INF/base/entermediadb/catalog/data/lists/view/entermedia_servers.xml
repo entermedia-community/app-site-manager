@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="entermedia_serversgeneral" moduleid="entermedia_servers" systemdefined="false" byassettype="false">General</property>  
+  <property id="entermedia_serversadvancedsearch" moduleid="entermedia_servers" systemdefined="true" byassettype="false">Advanced Search</property>  
+  <property id="entermedia_serversresultstable" moduleid="entermedia_servers" systemdefined="true" byassettype="false">Results</property>  
+  <property id="entermedia_serversheaderdetail" moduleid="entermedia_servers" systemdefined="true" byassettype="false">Header Details</property> 
+</properties>
