@@ -13,6 +13,9 @@ import org.openedit.util.RequestUtils
 public void init() 
 {
 	String catalogid = "entermediadb/catalog";
+    String notifyemail = "cristobal@entermediadb.org"
+
+
 	
 	String clientform = context.getSessionValue("clientform");
 	if (clientform != null) {
@@ -61,6 +64,7 @@ public void init()
 		newclient.setValue("organizationtype", organization_type);
 		newclient.setValue("timezone",timezone);
 		newclient.setValue("region",region);
+        newclient.setValue("trialstatus", "pending");
 		//newclient.setProperty("datestart",DateStorageUtil.getStorageUtil().formatForStorage(new Date()));
 		
 		DateStorageUtil dateStorageUtil = DateStorageUtil.getStorageUtil();
@@ -72,7 +76,9 @@ public void init()
         String selected_url = instanceurl.toLowerCase();
 
 		context.putPageValue("selected_url", selected_url);
-                context.putPageValue("organization", organization);
+        context.putPageValue("organization", organization);
+
+
 
 		//Get server(s) by region
  		HitTracker servers = mediaarchive.query("entermedia_servers").match("server_region", region).search();
@@ -84,14 +90,16 @@ public void init()
 		for (Iterator serverIterator = servers.iterator(); serverIterator.hasNext();)
 		{
 			server = serversSearcher.loadData(serverIterator.next());
-			log.info("checking server " + server);
-			HitTracker hits = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).search();			
-			if ( hits.size() < Integer.parseInt(server.maxinstance) )
-			{
+			log.info("- Checking server " + server);
+			//HitTracker hits = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).search();			
+			//if ( hits.size() < Integer.parseInt(server.maxinstance) )
+			//{
 				seat = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).searchOne();
 				break;
-			}
+			//}
 		}
+
+        log.info(seat);
 		
 		if (seat != null)
 		{
@@ -104,10 +112,10 @@ public void init()
 			
 			
 			//Get Server Info
-			log.info("GETTING " + server.name + " INFO");
+			log.info("Getting " + server.name + " info");
 			
 				
-			//Call deploy script 
+			// Call deploy script 
 			// deploy_trial_client.sh SERVER SUBNET URL NODE
 			try {
 				List<String> command = new ArrayList<String>();
@@ -124,7 +132,7 @@ public void init()
 				Data trialclient = clientsearcher.query().match("id", newclient.id).searchOne();
 				
 				trialclient.setValue("trialstatus", "active");
-				trialclient.setValue("server_used", server.name);
+				trialclient.setValue("server_used", server.id);
 				clientsearcher.saveData(trialclient, null);
 				
 				String fullURL = selected_url + "." + server.serverurl;
@@ -134,35 +142,44 @@ public void init()
 				Data group = null;
 				if ( client == null )
 				{
-					log.info("Client not found, creating new client and group");
-					client= addNewClient();
-					group = addNewGroup();
-					Searcher userSearcher = searcherManager.getSearcher(catalogid, "user");
+					//log.info("Client not found, creating new client and group");
+					//client= addNewClient();
+					//group = addNewGroup();
+					//Searcher userSearcher = searcherManager.getSearcher(catalogid, "user");
 					
-					Collection groups = (Collection)user.getAt("groups");
-					groups.add(group.getId());
-					user.setValue("groups", group.getId());
-					userSearcher.saveData(user,null);
+					//Collection groups = (Collection)user.getAt("groups");
+					//groups.add(group.getId());
+					//user.setValue("groups", group.getId());
+					//userSearcher.saveData(user,null);
 				}
+                else {
+                    //Account exists, send error message to let them know
+
+                }
 			
-				group = mediaarchive.query("group").match("name", organization).searchOne();
-				Data monitor = addNewMonitor(server, "http://" + fullURL, client.id);
-				addNewCollection(fullURL, newclient.id, monitor.id, group.id);
+				//group = mediaarchive.query("group").match("name", organization).searchOne();
+
+                //Add Site to Monitoring
+				//Data monitor = addNewMonitor(server, "http://" + fullURL, client.id);
+				//addNewCollection(fullURL, newclient.id, monitor.id, group.id);
+
+
 				
 				context.putPageValue("userurl",fullURL);
 				context.putPageValue("client_name", name);
 				context.putPageValue("newuser", "admin");
 				context.putPageValue("newpassword", "admin");
 				
+                //Send Notification to us
 				context.putPageValue("from", email);
 				context.putPageValue("subject", "New Activation - http://" + fullURL);
-				sendEmail(context.getPageMap(),"help@entermediadb.org","./email/salesnotify.html");
+				sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");
 				
 				
-				//Email Client
-				context.putPageValue("from", 'help@entermediadb.org');
+				//Send Email to Client
+				context.putPageValue("from", notifyemail);
 				context.putPageValue("subject", "Welcome to EnterMediaDB " + name);
-				sendEmail(context.getPageMap(),email,"./email/businesswelcome.html");
+				sendEmail(context.getPageMap(),email,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
 				
 				
 			}
@@ -174,12 +191,11 @@ public void init()
 		else {
 			log.info("No seats available");
 			context.putPageValue("errormsg","No Demo sites available for now. Please contact EnterMedia support team.");
+            
             //Send Email Notify No Seats
             context.putPageValue("from", email);
             context.putPageValue("subject", "No Seats Available for Trial Sites");
-            sendEmail(context.getPageMap(),"help@entermediadb.org","/trialmanager/email/noseats.html");
-
-
+            sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
 		}
 		
 		
