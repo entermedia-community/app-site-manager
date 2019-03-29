@@ -1,20 +1,26 @@
+#set($selectedUser = $user)
+
+#set ($clientSearcher = $searcherManager.getSearcher($catalogid, "entermedia_clients"))
+$context.putPageValue("searcher", $userSearcher)    
+
+
+
+
 <h1>Control Panel</h1>
 
-<button>Deploy Site</button>
+<a href="/entermediadb/app/site/sitedeployer/createsite.html" class="btn btn-secondary btn-sm">Deploy Site</a>
+
 
 Or Instance Info
 
+
+<hr>
 <h2>Support</h2>
-
-
 <p>You have 50 free points to get started. Your account is not under a support agreement. Get Support</p>
 
 <p>Create new tickets or view the status of existing tickets</p>
 
-Add New Ticket
+<a href="#" class="btn btn-secondary btn-sm">Add New Ticket</a>
 
-Goal List
+<a href="#" class="btn btn-secondary btn-sm">Goal List</a>
 
-##bussiness card here
-
-<p>$user xxx-xxx-xxxx email@sddf.com</p>
