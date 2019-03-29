@@ -3,49 +3,12 @@
         Your Info        
     </div>
     <div class="sidebar-box-content">
-        <strong>$client.name</strong>
+        <strong>$user.name</strong><br>
+        $user.email
+        <a href="#" class="btn btn-xs btn-primary float-right" style="margin:10px 0 0 0;"><i class="fas fa-edit"></i> Edit</a>
+        <div class="clearfix"></div>
     </div>
 
 </div>
-
-
-
-
-<div class="projectdetails">
-	#if ($!librarycol.projectdescription)
-		<p>$!librarycol.projectdescription</p>
-	#end
-	
-	#set( $country = $mediaarchive.getData("country",$librarycol.country))
-	#if ($country)
-		<p>[[Country]]: $country</p>
-	#end
-	#if ($!librarycol.facebooklink)
-<p>
-		<a href="$!librarycol.facebooklink"><i class="fab fa-facebook-square"></i> Facebook</a>
-</p>
-	#end
-	
-	#if ($!librarycol.websitelink)
-		<a href="$!librarycol.websitelink"><i class="fas fa-link"></i> [[Web Site]]</a>
-	#end
-
-	
-	
-</div>	
-
-	#if( $hits.size() > 0)
-	<div class="projectdetails">
-		<p><a href="$apphome/project/media/${librarycol.id}.html">$hits.size()  [[Uploads]]</a></p>
-	</div>
-		#if( $content.showmedia )
-			$pages.include("$apphome/components/advancedsearch/sidebar.html")
-			$pages.include("$apphome/components/categories/sidebar.html")
-			
-		#end
-		$pages.include("$apphome/components/dontshow/index.html")
-		  	
-		
-	#end
 
 
