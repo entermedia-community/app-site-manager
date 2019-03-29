@@ -1,17 +1,35 @@
 #set($selectedUser = $user)
 
-#set ($clientSearcher = $searcherManager.getSearcher($catalogid, "entermedia_clients"))
-$context.putPageValue("searcher", $userSearcher)    
-
+#set( $instancehits = $mediaarchive.query("entermedia_clients").exact("userid", $selectedUser.id).enduser(true).search($context) )
 
 
 
 <h1>Control Panel</h1>
 
-<a href="/entermediadb/app/site/sitedeployer/createsite.html" class="btn btn-secondary btn-sm">Deploy Site</a>
+#if( !$instancehits.isEmpty() )
+    <div class="emdata">
+    <table class="table table-stripped table-hover">
+        <thead>
+            <tr class="tableheader">
+                <th>Instance Name</th>
+                <th>Created</th>
+                <th>URL</th>
+            </tr>
+        </thead>
+    #foreach( $hit in $instancehits )
+        <tr>
+            <td>$hit.name</td>
+            <td>$hit.datestart</td>
+            <td>$hit.instanceurl</td>
+        </tr>
+    #end
+    </table>
+    </div>
+#else 
+    <a href="/entermediadb/app/site/sitedeployer/createsite.html" class="btn btn-secondary btn-sm">Deploy Site</a>
+#end
 
 
-Or Instance Info
 
 
 <hr>
