@@ -1,6 +1,7 @@
 body {
   overflow-x: hidden;
-  font-family: 'Roboto Slab', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+ font-size: .9rem; 
+ font-family: 'Open Sans', sans-serif;
 }
 
 p {
@@ -813,8 +814,6 @@ text-align:center;
   display:block;
 }
 
-body {font-size: 16px; font-family: 'Open Sans', sans-serif;
-}
 
 .clearfix::after {
     content: "";
@@ -990,7 +989,7 @@ iframe { border:0 none; }
 #blogsidebar { padding-top:40px; border-left: 2px solid #efefef;}
 #blogsidebar h3 { background-color: #efefef; padding: 6px 10px; }
 
-.post-content, .em-index, .em-single, .em-page { padding-top: 40px;}
+.post-content, .em-index, .em-single, .em-page { }
 
 .em-index img,
 .em-single img,

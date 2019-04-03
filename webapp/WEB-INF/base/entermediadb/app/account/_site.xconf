@@ -1,6 +1,4 @@
 <page>
-
-<property name="section">account</property>
+	<property name="section">account</property>
 	<inner-layout>/${applicationid}/account/memberlayout.html</inner-layout>
-
 </page>
