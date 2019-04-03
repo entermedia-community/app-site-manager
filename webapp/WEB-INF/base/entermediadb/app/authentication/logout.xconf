@@ -10,4 +10,8 @@
   <permission name="view">
     <boolean value="true"/>
   </permission>
+  
+  	<layout>/entermediadb/theme/layouts/application.html</layout>
+	
+	<inner-layout/>
 </page>
