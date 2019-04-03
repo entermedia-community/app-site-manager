@@ -1,0 +1,4 @@
+<page>
+	<property name="section">authentication</property>
+	<layout>/entermediadb/theme/layouts/application.html</layout>
+</page>
