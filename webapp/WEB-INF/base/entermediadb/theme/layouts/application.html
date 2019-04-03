@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+
+	<title>EnterMedia Site Manager  </title>
+    
+    
+    #foreach( $script in $content.getScriptPaths() )
+	    <script type="text/javascript" src="$home$script">  </script>
+    #end
+
+    #foreach( $style in $content.getStylePaths() )
+	    <link rel="stylesheet" type="text/css" href="$home$style" />
+    #end
+
+    
+	<link rel="icon" href="${sitehome}/entermediafavicon.ico" />
+</head>
+
+<body  showadmintoolbar="$canshowadmintoolbar"  id="page-top">
+    <div id="application" data-home="$home" data-apphome="$apphome" data-themeprefix="/${applicationid}/theme" data-browserlanguage="$!{browserlanguage}" data-mediadbappid="$!mediaarchive.getMediaDbId()" data-catalogid="$content.catalogid" data-editmode='$!user.get("oe_edit_mode")'>
+
+        $pages.include("./nav.html")
+        #if( $content.isfullscreen )
+            $pages.includeContent()
+        #else
+            <div id="applicationcontent">
+                <div class="container">
+                    $pages.includeContent()
+                </div>
+            </div>
+        #end
+        
+    </div>
+
+</body>
+</html>

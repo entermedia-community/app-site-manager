@@ -6,16 +6,15 @@
   <property name="catalogid">entermediadb/catalog</property>
   <property name="fallbackdirectory">/WEB-INF/base/emfrontend2</property>
   <property name="applicationid">entermediadb/app</property>
+
+  <inner-layout>/entermediadb/theme/layouts/application.html</inner-layout>
   
   <property name="editable">true</property>
-   
-  
-  
-    <script id="jquery" src="/${applicationid}/components/javascript/jquery-3.3.1.min.js"/>
-  	<script id="jquery-ui" src="/${applicationid}/components/javascript/jquery-ui-1.11.4.min.js"/>
-  	<script id="jquery-ui-i18n" src="/${applicationid}/components/javascript/ui/i18n/jquery-ui-i18n.js"/>
-  	<script id="minicolur" src="/${applicationid}/components/javascript/colorpicker/jquery.minicolors.js" />
-  	<style  id="minicolorcss" href="/${applicationid}/components/javascript/colorpicker/jquery.minicolors.css"/>
+  <script id="jquery" src="/${applicationid}/components/javascript/jquery-3.3.1.min.js"/>
+  <script id="jquery-ui" src="/${applicationid}/components/javascript/jquery-ui-1.11.4.min.js"/>
+  <script id="jquery-ui-i18n" src="/${applicationid}/components/javascript/ui/i18n/jquery-ui-i18n.js"/>
+  <script id="minicolur" src="/${applicationid}/components/javascript/colorpicker/jquery.minicolors.js" />
+  <style  id="minicolorcss" href="/${applicationid}/components/javascript/colorpicker/jquery.minicolors.css"/>
   
   <style id="bootstap" href="${apphome}/components/javascript/bootstrap/4/css/bootstrap.min.css" />
   <style id="fontsawesome" href="${apphome}/components/javascript/bootstrap/fonts/css/fontawesome-all.min.css" />
@@ -48,9 +47,6 @@
   <script id="oijs" src="${apphome}/oi.js" />
   <script id="openedit" src="/openedit/components/javascript/openedit.js"/>
   
-  
-  <inner-layout>/${applicationid}/theme/layouts/application.html</inner-layout> 
- 
   <property name="assetviewerlink">/${apphome}/views/modules/asset/editor/viewer/index.html</property>
   <property name="asseteditlink">/${apphome}/views/modules/asset/editor/generalinformation/index.html</property>
   
