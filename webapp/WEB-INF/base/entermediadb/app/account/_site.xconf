@@ -1,5 +1,6 @@
 <page>
 	<property name="section">account</property>
 	<layout>/entermediadb/theme/layouts/application.html</layout>
-	<inner-layout/>
+	<inner-layout>/${applicationid}/account/memberlayout.html</inner-layout>
+
 </page>
