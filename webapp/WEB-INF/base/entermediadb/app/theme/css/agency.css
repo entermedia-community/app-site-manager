@@ -1599,7 +1599,10 @@ padding:20px 60px;
 .note { font-size: .8em;}
 
 
-
+.applicationcontent {
+    margin-top:70px;
+    padding-top:40px;
+}
 
 .account-nav {
     border-bottom: 2px solid #666;
