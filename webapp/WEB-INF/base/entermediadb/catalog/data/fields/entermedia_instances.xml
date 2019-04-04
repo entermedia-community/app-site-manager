@@ -42,7 +42,7 @@
       <language id="en"><![CDATA[Instance URL]]></language> 
     </name> 
   </property>  
-  <property id="server" listid="entermedia_servers" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+  <property id="entermedia_servers" listid="entermedia_servers" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
     <name> 
       <language id="en"><![CDATA[Server]]></language> 
     </name> 
