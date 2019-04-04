@@ -81,6 +81,8 @@ public void init()
 
 
 		//Get server(s) by region
+		log.info("- Checking region" + region);
+		
  		HitTracker servers = mediaarchive.query("entermedia_servers").match("server_region", region).search();
 		Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
 
@@ -142,15 +144,15 @@ public void init()
 				Data group = null;
 				if ( client == null )
 				{
-					//log.info("Client not found, creating new client and group");
-					//client= addNewClient();
-					//group = addNewGroup();
-					//Searcher userSearcher = searcherManager.getSearcher(catalogid, "user");
+					log.info("Client not found, creating new client and group");
+					client= addNewClient();
+					group = addNewGroup();
+					Searcher userSearcher = searcherManager.getSearcher(catalogid, "user");
 					
-					//Collection groups = (Collection)user.getAt("groups");
-					//groups.add(group.getId());
-					//user.setValue("groups", group.getId());
-					//userSearcher.saveData(user,null);
+					Collection groups = (Collection)user.getAt("groups");
+					groups.add(group.getId());
+					user.setValue("groups", groups);
+					userSearcher.saveData(user,null);
 				}
                 else {
                     //Account exists, send error message to let them know
