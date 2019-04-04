@@ -22,11 +22,6 @@
       <language id="en"><![CDATA[SourcePath]]></language> 
     </name> 
   </property>  
-  <property id="trial_servers" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" listid="trial_servers" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" filter="false" deleted="true" keyword="false">New 
-    <name> 
-      <language id="en"><![CDATA[trial_servers]]></language> 
-    </name> 
-  </property>  
   <property id="clientid" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" listid="client" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
     <name> 
       <language id="en"><![CDATA[Client ID]]></language> 

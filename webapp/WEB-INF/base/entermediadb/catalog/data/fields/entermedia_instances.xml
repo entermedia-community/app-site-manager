@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties prefix="entermedia_instances" beanname="dataSearcher"> 
+  <property id="id" index="true" internalfield="true" editable="true" stored="true" sortable="true" filter="false" keyword="false">New 
+    <name> 
+      <language id="de"><![CDATA[Id]]></language>  
+      <language id="en"><![CDATA[Id]]></language>  
+      <language id="es"><![CDATA[Id]]></language>  
+      <language id="fr"><![CDATA[Id]]></language> 
+    </name> 
+  </property>  
+  <property id="name" index="true" multilanguage="false" editable="true" stored="true" sortable="true" filter="false" keyword="false">New 
+    <name> 
+      <language id="de"><![CDATA[Identität]]></language>  
+      <language id="en"><![CDATA[Name]]></language>  
+      <language id="es"><![CDATA[Nombre]]></language>  
+      <language id="fr"><![CDATA[Identité]]></language> 
+    </name> 
+  </property>  
+  <property id="datestart" index="true" internalfield="false" editable="true" isbadge="false" viewtype="date" rendertype="date" required="false" multilanguage="false" filter="false" datatype="date" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[Start Date]]></language> 
+    </name> 
+  </property>  
+  <property id="dateend" index="true" internalfield="false" editable="true" isbadge="false" viewtype="date" rendertype="date" required="false" multilanguage="false" filter="false" datatype="date" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[End Date]]></language> 
+    </name> 
+  </property>  
+  <property id="instance_status" listid="entermedia_instance_status" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[Status]]></language> 
+    </name> 
+  </property>  
+  <property id="istrial" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="boolean" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[Is Trial Site]]></language> 
+    </name> 
+  </property>  
+    <property id="instanceurl" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name> 
+      <language id="en"><![CDATA[Instance URL]]></language> 
+    </name> 
+  </property>  
+  <property id="server" listid="entermedia_servers" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[Server]]></language> 
+    </name> 
+  </property>  
+ </properties>

@@ -1,0 +1,4 @@
+<properties beanname="listSearcher">
+  <property id="id" index="true" stored="true" editable="true" searchtype="sslstatus" internalfield="true">Id</property>
+  <property id="name" index="true" stored="true" editable="true" searchtype="sslstatus">Name</property>
+</properties>

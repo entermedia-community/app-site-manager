@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<server_regionss> 
+  <server_regions id="us-east"> 
+    <name><![CDATA[USA - East]]></name> 
+  </server_regions>  
+  <server_regions id="eu-west"> 
+    <name><![CDATA[Europe - West]]></name> 
+  </server_regions>  
+  <server_regions id="us-west">
+    <name><![CDATA[USA - West]]></name>
+  </server_regions>
+</server_regionss>

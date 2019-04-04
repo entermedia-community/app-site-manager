@@ -1,15 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<properties prefix="entermedia_clients" beanname="dataSearcher"> 
-  <property id="id" index="true" internalfield="true" editable="true" stored="true" sortable="true" filter="false" keyword="false">New 
+<properties> 
+  <property id="contracttype" index="true" deleted="false" editable="true" stored="true">New 
     <name> 
-      <language id="de"><![CDATA[Id]]></language>  
-      <language id="en"><![CDATA[Id]]></language>  
-      <language id="es"><![CDATA[Id]]></language>  
-      <language id="fr"><![CDATA[Id]]></language> 
+      <language id="en"><![CDATA[contracttype]]></language> 
     </name> 
   </property>  
-  <property id="name" index="true" multilanguage="true" editable="true" stored="true" sortable="true" filter="false" keyword="false">New 
+  <property id="timezone" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" deleted="false" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[Time Zone]]></language> 
+    </name> 
+  </property>  
+  <property id="billingamount" index="true" deleted="false" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[billingamount]]></language> 
+    </name> 
+  </property>  
+  <property id="billingcycle" index="true" deleted="false" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[billingcycle]]></language> 
+    </name> 
+  </property>  
+  <property id="status" index="true" listid="convertstatus" filter="false" deleted="false" editable="true" stored="true" viewtype="list" sortable="true" keyword="false" datatype="list">New 
+    <name> 
+      <language id="de"><![CDATA[Status]]></language>  
+      <language id="en"><![CDATA[Status]]></language>  
+      <language id="es"><![CDATA[Estado]]></language>  
+      <language id="fr"><![CDATA[Statut]]></language> 
+    </name> 
+  </property>
+  <property id="clientcategory" index="true" deleted="false" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[Client Category]]></language> 
+    </name> 
+  </property>  
+  <property id="notes" index="true" filter="false" deleted="false" editable="true" stored="true" sortable="true" keyword="false">New 
+    <name> 
+      <language id="de"><![CDATA[Notizen]]></language>  
+      <language id="en"><![CDATA[Notes]]></language>  
+      <language id="es"><![CDATA[notas]]></language>  
+      <language id="fr"><![CDATA[Remarques]]></language> 
+    </name> 
+  </property>  
+  <property id="paymentform" index="true" deleted="false" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[paymentform]]></language> 
+    </name> 
+  </property>  
+  <property id="additionalpaidspace" index="true" deleted="false" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[additionalpaidspace]]></language> 
+    </name> 
+  </property>  
+  <property id="discount" index="true" deleted="false" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[discount]]></language> 
+    </name> 
+  </property>
+  <property id="instances" index="true" listid="entermedia_instances" filter="false" deleted="false" editable="true" stored="true" viewtype="list" sortable="true" keyword="false" datatype="list">New 
+    <name> 
+      <language id="en"><![CDATA[Instances]]></language>  
+      <language id="es"><![CDATA[Sitios]]></language>  
+      <language id="fr"><![CDATA[Sites]]></language> 
+    </name> 
+  </property>
+  <property id="name" index="true" multilanguage="false" filter="false" deleted="false" editable="true" stored="true" sortable="true" keyword="false">New 
     <name> 
       <language id="de"><![CDATA[Identität]]></language>  
       <language id="en"><![CDATA[Name]]></language>  
@@ -17,62 +72,12 @@
       <language id="fr"><![CDATA[Identité]]></language> 
     </name> 
   </property>  
-  <property id="sourcepath">New 
-    <name> 
-      <language id="en"><![CDATA[SourcePath]]></language> 
-    </name> 
-  </property>  
-  <property id="clientemail" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
-    <name> 
-      <language id="en"><![CDATA[Email]]></language> 
-    </name> 
-  </property>  
-  <property id="organization" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
-    <name> 
-      <language id="en"><![CDATA[Organization]]></language> 
-    </name> 
-  </property>  
-  <property id="organizationtype" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
-    <name> 
-      <language id="en"><![CDATA[Org Type]]></language> 
-    </name> 
-  </property>  
-  <property id="datestart" index="true" internalfield="false" editable="true" isbadge="false" viewtype="date" rendertype="date" required="false" multilanguage="false" filter="false" datatype="date" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
-    <name> 
-      <language id="en"><![CDATA[Start Date]]></language> 
-    </name> 
-  </property>  
-  <property id="dateend" index="true" internalfield="false" editable="true" isbadge="false" viewtype="date" rendertype="date" required="false" multilanguage="false" filter="false" datatype="date" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
-    <name> 
-      <language id="en"><![CDATA[End Date]]></language> 
-    </name> 
-  </property>  
-  <property id="trialstatus" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
-    <name> 
-      <language id="en"><![CDATA[Status]]></language> 
-    </name> 
-  </property>  
-  <property id="instanceurl" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
-    <name> 
-      <language id="en"><![CDATA[Instance URL]]></language> 
-    </name> 
-  </property>  
-  <property id="server_used" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
-    <name> 
-      <language id="en"><![CDATA[Server]]></language> 
-    </name> 
-  </property>  
-  <property id="server" index="true" internalfield="false" editable="true" isbadge="false" sortable="true" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
-    <name> 
-      <language id="de"><![CDATA[Server-IP]]></language>  
-      <language id="en"><![CDATA[Server Name]]></language>  
-      <language id="es"><![CDATA[Servidor IP]]></language>  
-      <language id="fr"><![CDATA[IP du serveur]]></language> 
-    </name> 
-  </property>  
-  <property id="timezone" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New
+  <property id="id" index="true" filter="false" internalfield="true" deleted="false" editable="true" stored="true" sortable="true" keyword="false">New
     <name>
-      <language id="en"><![CDATA[Time Zone]]></language>
+      <language id="de"><![CDATA[Id]]></language>
+      <language id="en"><![CDATA[Id]]></language>
+      <language id="es"><![CDATA[Id]]></language>
+      <language id="fr"><![CDATA[Id]]></language>
     </name>
   </property>
 </properties>

@@ -26,13 +26,12 @@ public void init()
 		return;
 	}
 
-	String name = context.getRequestParameter("name");
+	String organization = context.getRequestParameter("organization");
 	String email = context.getRequestParameter("email");
 
 	//String email = user.getEmail();
-	if (name != "" && email != "") {
+	if (organization != "" && email != "") {
 		email = email.toLowerCase();
-		String organization = context.getRequestParameter("organization");
 		String instanceurl = context.getRequestParameter("organization_url");
 		String organization_type = context.getRequestParameter("organization_type");
         String timezone = context.getRequestParameter("timezone");	
@@ -45,8 +44,11 @@ public void init()
 		Searcher clientsearcher = searcherManager.getSearcher(catalogid, "entermedia_clients");
 		//TODO: set userid into client table
 		Data newclient = clientsearcher.createNewData();
-		
-		newclient.setName(name);
+
+		Searcher instancesearcher = searcherManager.getSearcher(catalogid, "entermedia_instances");
+		Data newinstance = instancesearcher.createNewData();
+
+		newclient.setName(organization);
 		
 		//Validate Email
 		String email_regex = /[_A-Za-z0-9-]+(.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(.[A-Za-z0-9]+)*(.[A-Za-z]{2,})/;
@@ -59,19 +61,14 @@ public void init()
 			return;
 		}
 		
-		newclient.setValue("organization",organization);
-		newclient.setValue("instanceurl",instanceurl);
-		newclient.setValue("organizationtype", organization_type);
+//		newclient.setValue("organization",organization);
+		// use NAME insted of organization ?
+		newclient.setValue("clientcategory", organization_type);
 		newclient.setValue("timezone",timezone);
-		newclient.setValue("region",region);
-        newclient.setValue("trialstatus", "pending");
-		//newclient.setProperty("datestart",DateStorageUtil.getStorageUtil().formatForStorage(new Date()));
+//		newclient.setValue("region",region);
 		
-		DateStorageUtil dateStorageUtil = DateStorageUtil.getStorageUtil();
-		newclient.setValue("datestart", new Date());
-		newclient.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
 		clientsearcher.saveData(newclient,null);
-
+		
 		//Create Valid URL
         String selected_url = instanceurl.toLowerCase();
 
@@ -132,11 +129,7 @@ public void init()
 				log.info("Exec: " + done.getStandardOut());
 				
 				Data trialclient = clientsearcher.query().match("id", newclient.id).searchOne();
-				
-				trialclient.setValue("trialstatus", "active");
-				trialclient.setValue("server_used", server.id);
-				clientsearcher.saveData(trialclient, null);
-				
+					
 				String fullURL = selected_url + "." + server.serverurl;
 				
 				//TODO: missing ClientID
@@ -145,7 +138,7 @@ public void init()
 				if ( client == null )
 				{
 					log.info("Client not found, creating new client and group");
-					client= addNewClient();
+					client = addNewClient();
 					group = addNewGroup();
 					Searcher userSearcher = searcherManager.getSearcher(catalogid, "user");
 					
@@ -165,7 +158,18 @@ public void init()
 				//Data monitor = addNewMonitor(server, "http://" + fullURL, client.id);
 				//addNewCollection(fullURL, newclient.id, monitor.id, group.id);
 
-
+				newinstance.setValue("instanceurl", fullURL);
+				newinstance.setValue("status", "active");
+				newinstance.setValue("istrial", true);
+				newinstance.setValue("server", server.id);
+				//newclient.setProperty("datestart",DateStorageUtil.getStorageUtil().formatForStorage(new Date()));
+				
+				DateStorageUtil dateStorageUtil = DateStorageUtil.getStorageUtil();
+				newinstance.setValue("datestart", new Date());
+				newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
+				
+				instancesearcher.saveData(newinstance,null);
+		
 				
 				context.putPageValue("userurl",fullURL);
 				context.putPageValue("client_name", name);
