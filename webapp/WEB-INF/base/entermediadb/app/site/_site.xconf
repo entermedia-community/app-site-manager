@@ -10,7 +10,9 @@
 
 	<property name="subsection">home</property>
 	
-	<inner-layout>/${applicationid}/site/sitelayout.html</inner-layout>
+	<layout>/entermediadb/theme/layouts/application.html</layout>
+	
+	<!-- <inner-layout>/${applicationid}/site/sitelayout.html</inner-layout> -->
     <script id="stripe" src="https://js.stripe.com/v3/"/>
     
     <permission name="editdata">
