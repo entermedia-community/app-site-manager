@@ -11,5 +11,8 @@
   <path-action name="SessionValue.loadSessionVariable" bean="moduleManager" allowduplicates="true" />
   <path-action bean="userManager" name="PageValue.loadPageVariable" allowduplicates="true" />
  
-  <layout>/${applicationid}/theme/layouts/layout.html</layout>
+  
+  <inner-layout>./layout.html</inner-layout>
+  
+  
 </page>
