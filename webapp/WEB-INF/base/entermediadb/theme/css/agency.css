@@ -1600,7 +1600,11 @@ padding:20px 60px;
 
 .applicationcontent {
     margin-top:70px;
-    padding-top:40px;
+    padding-top:30px;
+}
+
+.applicationcontent h1 {
+    margin:20px 0;
 }
 
 .account-nav {
@@ -1629,7 +1633,7 @@ padding:20px 60px;
 } 
 .account-content h1 {
     padding: 10px 0;
-    margin-bottom: 25px;
+    margin:10px 0 25px;
     border-bottom: 2px solid #CDDDCA;
 }
 

@@ -9,11 +9,8 @@
 <h1 class="text-center">[[Welcome]] $name [[to your]] MediaDB [[platform]]</h1>
 
 #if( $usercatalog )
-
-#set( $link =  "http://${usercatalog.clientsubdomain}.${hostingdomain}$usercatalog.rootpath" )
-$usercatalog.name : <a href="$link">$link</a>
-
-
+    #set( $link =  "http://${usercatalog.clientsubdomain}.${hostingdomain}$usercatalog.rootpath" )
+    $usercatalog.name : <a href="$link">$link</a>
 #else
 <form action="./createsitefinish.html" method="post" id="createsiteform">
 <div class="card card-login mx-auto mt-5">
