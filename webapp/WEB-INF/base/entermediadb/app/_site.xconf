@@ -2,11 +2,12 @@
 
 <page>
   <property name="title">EnterMediaDB.com</property>
-  
+  <property name="section">account</property>
+    
   <property name="catalogid">entermediadb/catalog</property>
   <property name="fallbackdirectory">/WEB-INF/base/emfrontend2</property>
   <property name="applicationid">entermediadb/app</property>
-
+		
   <layout>/entermediadb/theme/layouts/application.html</layout>
   
   <property name="editable">true</property>
