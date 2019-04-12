@@ -123,6 +123,7 @@ public void init()
 				command.add(server.dockersubnet);  //server subnet
 				command.add(selected_url);  //client url
 				command.add(String.valueOf(seat.nodeid));  //client nodeid				
+				command.add(server.getValue("serverurl");  // DNS
 				
 				Exec exec = moduleManager.getBean("exec");
 				ExecResult done = exec.runExec("setupclient", command);
