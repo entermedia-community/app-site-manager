@@ -1,0 +1,11 @@
+<page>
+<property name="eventname">POST DNS Record</property>	
+	<property name="eventdescription">POST DNS Record API v.2</property>	
+
+
+<path-action name="SiteModule.createDNSRecord">
+</path-action>
+  	<property name="period">30d</property>
+  
+<property name="virtual">true</property>
+</page>

@@ -7,9 +7,9 @@
 </bean>
 <bean id="siteManager" class="org.entermedia.sitemanager.SiteManager" scope="prototype">
 </bean>
-<bean id="CloudFlareModule" class="org.entermedia.cloudflare.CloudFlareModule">
+<bean id="AutoFailoverModule" class="org.entermedia.autofailover.AutoFailoverModule">
 </bean>
-<bean id="cloudFlareManager" class="org.entermedia.cloudflare.CloudFlareManager" scope="prototype">
+<bean id="autoFailoverManager" class="org.entermedia.autofailover.AutoFailoverManager" scope="prototype">
 </bean>
 <bean id="SSLModule" class="org.entermedia.sslcertificates.SSLModule">
 </bean>
@@ -22,6 +22,11 @@
 <bean id="InvoiceModule" class="org.entermedia.invoice.InvoiceModule">
 </bean>
 <bean id="invoiceManager" class="org.entermedia.invoice.InvoiceManager" scope="prototype">
+	<property name="moduleManager"><ref bean="moduleManager"/></property>
+</bean>
+<bean id="AssetCountModule" class="org.entermedia.assetcount.AssetCountModule">
+</bean>
+<bean id="assetCountManager" class="org.entermedia.assetcount.AssetCountManager" scope="prototype">
 	<property name="moduleManager"><ref bean="moduleManager"/></property>
 </bean>
 </beans>
