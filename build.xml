@@ -65,6 +65,7 @@
 		</copy>
 
 	    <javac debug="true" destdir="${compiled}" srcdir="${src}" source="1.8" target="1.8">
+	     <compilerarg line="-Xlint" />
 	      <classpath>
 	        <fileset dir="${lib}">
 	          <include name="*.jar"/>
