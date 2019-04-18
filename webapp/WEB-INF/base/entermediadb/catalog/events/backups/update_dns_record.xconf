@@ -1,0 +1,11 @@
+<page>
+<property name="eventname">PATCH DNS Record</property>	
+	<property name="eventdescription">PATCH DNS Record API v.2</property>	
+
+
+<path-action name="AutoFailoverModule.updateDNSRecord">
+</path-action>
+  	<property name="period">30d</property>
+  
+<property name="virtual">true</property>
+</page>

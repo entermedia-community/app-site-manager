@@ -23,5 +23,4 @@ public class SiteModule extends BaseMediaModule
 
 		manager.scanSoftwareVersions(archive);
 	}
-	
 }

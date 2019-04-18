@@ -1,5 +1,13 @@
 package org.entermedia.sitemanager;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
@@ -9,6 +17,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.entermedia.autofailover.AutoFailoverManager;
 import org.entermedia.diskpartitions.DiskPartition;
 import org.entermedia.diskpartitions.DiskSpace;
 import org.entermedia.serverstats.ServerStat;
@@ -20,9 +29,9 @@ import org.entermediadb.modules.update.Downloader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.openedit.CatalogEnabled;
 import org.openedit.Data;
+import org.openedit.ModuleManager;
 import org.openedit.MultiValued;
 import org.openedit.OpenEditException;
 import org.openedit.data.Searcher;
@@ -31,23 +40,19 @@ import org.openedit.util.HttpRequestBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class SiteManager implements CatalogEnabled
 {
 	private static final Log log = LogFactory.getLog(SiteManager.class);
 
-	private String catalogId;
+	protected String fieldCatalogId;
+	protected MediaArchive fieldMediaArchive;
+	protected ModuleManager fieldModuleManager;
+	protected AutoFailoverManager fieldAutoFailoverManager;
+	protected Searcher fieldDnsSearcher;
 	private JSONObject fieldJson;
 	private int MAX_ERROR = 10;
 	int CPU_TIME_AVG = 10;
-
+	
 	private void sendResolved(MultiValued inReal, MediaArchive inArchive, String inDates)
 	{
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-resolve.html";
@@ -397,11 +402,14 @@ public class SiteManager implements CatalogEnabled
 		for (Data it : sitestomonitor)
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
-			
 			if (!real.getBoolean("monitoringenable"))
 			{
 				continue;
 			}
+
+			Data dns = (Data) getDnsSearcher().searchById((String)real.getValue("monitoredsitesdns"));
+			
+			//TODO: if DNS = nul create one
 			
 			String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
 			ServerStats stats = new ServerStats();
@@ -423,18 +431,27 @@ public class SiteManager implements CatalogEnabled
 				isold = real.getBoolean("isold");
 				try
 				{
+					boolean isFailover = (boolean)dns.getValue("isfailover");
 					if (isold == true)
 					{
 						if (scanOldSite(real) != null)
 						{
+							if (isFailover)
+							{
+								leaveFailover(real, dns);
+							}
 							reachable = true;
 						}
 					}
 					else 
 					{
 						stats = scanStats(stats, real);
-						reachable = true;
-					}
+ 						reachable = true;
+						if (isFailover)
+						{
+							leaveFailover(real, dns);
+						}
+					}	
 				}
 				catch (Exception e)
 				{
@@ -446,6 +463,16 @@ public class SiteManager implements CatalogEnabled
 					setErrorType(disk, memory, heap, cpu, reachable, false/*
 																			 * swap
 																			 */, real);
+					if ((boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
+					{
+						// go failover
+						enterFailover(real, dns, false);	
+					}	
+					else if (!(boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
+					{
+						// prep failover
+						enterFailover(real, dns, true);
+					}
 					throw new OpenEditException("Server unreachable");
 				}
 
@@ -530,16 +557,99 @@ public class SiteManager implements CatalogEnabled
 		}
 		log.info("scan complete");
 	}
-
-	@Override
-	public void setCatalogId(String catalogId)
+	
+	private void enterFailover(MultiValued real, Data dns, boolean isPrep)
 	{
-		this.catalogId = catalogId;
+		AutoFailoverManager dnsManager = getAutoFailoverManager();
+		Searcher dnsSearcher = getDnsSearcher();
+
+		if (isPrep)
+		{
+			// preparing to failover, lowering TTL 
+			real.setValue("lastcheckfail", true);
+			dnsManager.updateRecord(dns.get("name"), (int)dns.getValue("failoverttl"));
+		}
+		else 
+		{
+			// failover, TTL low, set failover url
+			real.setValue("lastcheckfail", true);
+			dns.setValue("isfailover", true);
+			dnsManager.updateRecord(dns.get("name"), dns.get("failovercontent"));
+		}
+		dnsSearcher.saveData(dns, null);
+	}
+
+	private void leaveFailover(MultiValued real, Data dns)
+	{
+		AutoFailoverManager dnsManager = getAutoFailoverManager();
+		Searcher dnsSearcher = getDnsSearcher();
+
+		real.setValue("lastcheckfail", false);
+		dns.setValue("isfailover", false);
+		dnsManager.updateRecord(dns.get("name"), dns.get("originalcontent"), Integer.parseInt((String)dns.getValue("originalttl")));
+		dnsSearcher.saveData(dns, null);
 	}
 
 	public String getCatalogId()
 	{
-		return catalogId;
+		return fieldCatalogId;
+	}
+
+	public void setCatalogId(String inCatalogId)
+	{
+		fieldCatalogId = inCatalogId;
+	}
+
+	public MediaArchive getMediaArchive()
+	{
+		if (fieldMediaArchive == null)
+		{
+			fieldMediaArchive = (MediaArchive)getModuleManager().getBean(getCatalogId(), "mediaArchive");
+		}
+		return fieldMediaArchive;
+	}
+
+	public void setMediaArchive(MediaArchive inMediaArchive)
+	{
+		fieldMediaArchive = inMediaArchive;
+	}
+
+	public ModuleManager getModuleManager()
+	{
+		return fieldModuleManager;
+	}
+
+	public void setModuleManager(ModuleManager inModuleManager)
+	{
+		fieldModuleManager = inModuleManager;
+	}
+
+	public AutoFailoverManager getAutoFailoverManager()
+	{
+		if (fieldAutoFailoverManager == null)
+		{
+			setAutoFailoverManager((AutoFailoverManager) getModuleManager().getBean(getCatalogId(), "autoFailoverManager"));
+		}
+		return fieldAutoFailoverManager;
+	}
+
+	public void setAutoFailoverManager(AutoFailoverManager inAutoFailoverManager)
+	{
+		fieldAutoFailoverManager = inAutoFailoverManager;
+	}
+
+	public void setDnsSearcher(Searcher inDnsSearcher)
+	{
+		fieldDnsSearcher = inDnsSearcher;
+	}
+
+	private Searcher getDnsSearcher()
+	{
+		if (fieldDnsSearcher == null)
+		{
+			setDnsSearcher(getMediaArchive().getSearcher("monitoredsitesdns"));
+		}
+		return fieldDnsSearcher;
 	}
 
 	public JSONObject getJson()

@@ -6,10 +6,12 @@
 <bean id="SiteModule" class="org.entermedia.sitemanager.SiteModule">
 </bean>
 <bean id="siteManager" class="org.entermedia.sitemanager.SiteManager" scope="prototype">
+	<property name="moduleManager"><ref bean="moduleManager"/></property>
 </bean>
 <bean id="AutoFailoverModule" class="org.entermedia.autofailover.AutoFailoverModule">
 </bean>
 <bean id="autoFailoverManager" class="org.entermedia.autofailover.AutoFailoverManager" scope="prototype">
+	<property name="moduleManager"><ref bean="moduleManager"/></property>
 </bean>
 <bean id="SSLModule" class="org.entermedia.sslcertificates.SSLModule">
 </bean>

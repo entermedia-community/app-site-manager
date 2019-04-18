@@ -10,6 +10,15 @@ public class AutoFailoverModule extends BaseMediaModule
 		String catalogid = inReq.findValue("catalogid");
 		AutoFailoverManager manager = (AutoFailoverManager) getModuleManager().getBean(catalogid, "autoFailoverManager");
 
-		manager.createRecord("thomas", "openinstitute.org", "thomasopeninstitute.org", null, 60, 0);
+		manager.createRecord("thomas", "CNAME", "openinstitute.org", "mediadb36.entermediadb.net", null, null, 10);
+	}
+
+
+	public void updateDNSRecord(WebPageRequest inReq)
+	{
+		String catalogid = inReq.findValue("catalogid");
+		AutoFailoverManager manager = (AutoFailoverManager) getModuleManager().getBean(catalogid, "autoFailoverManager");
+
+		manager.updateRecord("thomas", "test.api2.com", null, 60, 10);
 	}
 }
