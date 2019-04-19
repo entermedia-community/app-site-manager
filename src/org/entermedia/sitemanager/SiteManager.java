@@ -431,12 +431,11 @@ public class SiteManager implements CatalogEnabled
 				isold = real.getBoolean("isold");
 				try
 				{
-					boolean isFailover = (boolean)dns.getValue("isfailover");
 					if (isold == true)
 					{
 						if (scanOldSite(real) != null)
 						{
-							if (isFailover)
+							if ((boolean)real.getValue("isautofailover") && (boolean)dns.getValue("isfailover"))
 							{
 								leaveFailover(real, dns);
 							}
@@ -447,7 +446,8 @@ public class SiteManager implements CatalogEnabled
 					{
 						stats = scanStats(stats, real);
  						reachable = true;
-						if (isFailover)
+						real.setValue("monitorstatuscolor", "GREEN");
+						if ((boolean)real.getValue("isautofailover") & (boolean)dns.getValue("isfailover"))
 						{
 							leaveFailover(real, dns);
 						}
@@ -462,16 +462,31 @@ public class SiteManager implements CatalogEnabled
 					real.setValue("isreachable", false);
 					setErrorType(disk, memory, heap, cpu, reachable, false/*
 																			 * swap
-																			 */, real);
-					if ((boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
+																	 */, real);
+					
+					if ((boolean)real.getValue("isautofailover"))
 					{
-						// go failover
-						enterFailover(real, dns, false);	
-					}	
-					else if (!(boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
+						if ((boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
+						{
+							// go failover
+							enterFailover(real, dns, false);	
+						}	
+						else if (!(boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
+						{
+							// prep failover
+							enterFailover(real, dns, true);
+						}
+					}
+					else
 					{
-						// prep failover
-						enterFailover(real, dns, true);
+						if (!(boolean)real.getValue("lastcheckfail"))
+						{
+							real.setValue("monitorstatuscolor", "YELLOW");
+						}
+						else
+						{
+							real.setValue("monitorstatuscolor", "RED");
+						}
 					}
 					throw new OpenEditException("Server unreachable");
 				}
@@ -527,6 +542,7 @@ public class SiteManager implements CatalogEnabled
 					}
 				}
 				real.setValue("monitoringstatus", "ok");
+				real.setValue("monitorstatuscolor", "YELLOW");
 				real.setValue("alerttype",new ArrayList<String>());
 			}
 			catch (Exception e)
@@ -561,7 +577,6 @@ public class SiteManager implements CatalogEnabled
 	private void enterFailover(MultiValued real, Data dns, boolean isPrep)
 	{
 		AutoFailoverManager dnsManager = getAutoFailoverManager();
-		Searcher dnsSearcher = getDnsSearcher();
 
 		if (isPrep)
 		{
@@ -576,18 +591,15 @@ public class SiteManager implements CatalogEnabled
 			dns.setValue("isfailover", true);
 			dnsManager.updateRecord(dns.get("name"), dns.get("failovercontent"));
 		}
-		dnsSearcher.saveData(dns, null);
 	}
 
 	private void leaveFailover(MultiValued real, Data dns)
 	{
 		AutoFailoverManager dnsManager = getAutoFailoverManager();
-		Searcher dnsSearcher = getDnsSearcher();
 
 		real.setValue("lastcheckfail", false);
 		dns.setValue("isfailover", false);
 		dnsManager.updateRecord(dns.get("name"), dns.get("originalcontent"), Integer.parseInt((String)dns.getValue("originalttl")));
-		dnsSearcher.saveData(dns, null);
 	}
 
 	public String getCatalogId()
@@ -628,7 +640,7 @@ public class SiteManager implements CatalogEnabled
 	{
 		if (fieldAutoFailoverManager == null)
 		{
-			setAutoFailoverManager((AutoFailoverManager) getModuleManager().getBean(getCatalogId(), "autoFailoverManager"));
+			setAutoFailoverManager((AutoFailoverManager) getModuleManager().getBean(getCatalogId(), "autoFailoverManager"));	
 		}
 		return fieldAutoFailoverManager;
 	}

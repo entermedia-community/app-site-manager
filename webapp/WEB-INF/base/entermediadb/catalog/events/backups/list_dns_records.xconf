@@ -1,0 +1,11 @@
+<page>
+<property name="eventname">GET DNS Records</property>	
+	<property name="eventdescription">GET DNS Records API v.2</property>	
+
+
+<path-action name="AutoFailoverModule.getDNSRecords">
+</path-action>
+  	<property name="period">30d</property>
+  
+<property name="virtual">true</property>
+</page>

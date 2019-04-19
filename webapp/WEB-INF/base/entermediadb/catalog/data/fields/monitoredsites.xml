@@ -41,4 +41,5 @@
      <language id="en"><![CDATA[DNS Record]]></language>
    </name>
   </property>  
+  <property id="isautofailover" index="true" editable="true" keyword="true" type="boolean">Auto Failover</property>
  </properties> 
