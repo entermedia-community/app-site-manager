@@ -435,9 +435,12 @@ public class SiteManager implements CatalogEnabled
 					{
 						if (scanOldSite(real) != null)
 						{
-							if ((boolean)real.getValue("isautofailover") && (boolean)dns.getValue("isfailover"))
+							if (real.getValue("isautofailover") != null )
 							{
-								leaveFailover(real, dns);
+								if ((boolean)real.getValue("isautofailover") && (boolean)dns.getValue("isfailover"))
+								{
+									leaveFailover(real, dns);
+								}
 							}
 							reachable = true;
 						}
@@ -447,9 +450,12 @@ public class SiteManager implements CatalogEnabled
 						stats = scanStats(stats, real);
  						reachable = true;
 						real.setValue("monitorstatuscolor", "GREEN");
-						if ((boolean)real.getValue("isautofailover") & (boolean)dns.getValue("isfailover"))
+						if (real.getValue("isautofailover") != null )
 						{
-							leaveFailover(real, dns);
+							if ((boolean)real.getValue("isautofailover") & (boolean)dns.getValue("isfailover"))
+							{
+								leaveFailover(real, dns);
+							}
 						}
 					}	
 				}
@@ -463,29 +469,31 @@ public class SiteManager implements CatalogEnabled
 					setErrorType(disk, memory, heap, cpu, reachable, false/*
 																			 * swap
 																	 */, real);
-					
-					if ((boolean)real.getValue("isautofailover"))
+					if (real.getValue("isautofailover") != null )
 					{
-						if ((boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
+						if ((boolean)real.getValue("isautofailover"))
 						{
-							// go failover
-							enterFailover(real, dns, false);	
-						}	
-						else if (!(boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
-						{
-							// prep failover
-							enterFailover(real, dns, true);
-						}
-					}
-					else
-					{
-						if (!(boolean)real.getValue("lastcheckfail"))
-						{
-							real.setValue("monitorstatuscolor", "YELLOW");
+							if ((boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
+							{
+								// go failover
+								enterFailover(real, dns, false);	
+							}	
+							else if (!(boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
+							{
+								// prep failover
+								enterFailover(real, dns, true);
+							}
 						}
 						else
 						{
-							real.setValue("monitorstatuscolor", "RED");
+							if (!(boolean)real.getValue("lastcheckfail"))
+							{
+								real.setValue("monitorstatuscolor", "YELLOW");
+							}
+							else
+							{
+								real.setValue("monitorstatuscolor", "RED");
+							}
 						}
 					}
 					throw new OpenEditException("Server unreachable");
