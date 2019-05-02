@@ -32,7 +32,7 @@
       <language id="en"><![CDATA[Status]]></language> 
     </name> 
   </property>  
-  <property id="istrial" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="boolean" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+  <property id="istrial" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="boolean" viewtype="boolean" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
     <name> 
       <language id="en"><![CDATA[Is Trial Site]]></language> 
     </name> 

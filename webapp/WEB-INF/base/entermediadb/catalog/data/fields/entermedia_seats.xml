@@ -9,7 +9,7 @@
       <language id="fr"><![CDATA[Id]]></language> 
     </name> 
   </property>  
-  <property id="name" index="true" multilanguage="true" editable="true" stored="true" sortable="true" filter="false" keyword="false">New 
+  <property id="name" index="true" multilanguage="false" editable="true" stored="true" sortable="true" filter="false" keyword="false">New 
     <name> 
       <language id="de"><![CDATA[Identität]]></language>  
       <language id="en"><![CDATA[Name]]></language>  
