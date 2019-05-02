@@ -91,7 +91,7 @@ public void init()
 		for (Iterator serverIterator = servers.iterator(); serverIterator.hasNext();)
 		{
 			server = serversSearcher.loadData(serverIterator.next());
-			log.info("- Checking server " + server);
+			log.info("- Checking server " + server.getName());
 			//HitTracker hits = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).search();			
 			//if ( hits.size() < Integer.parseInt(server.maxinstance) )
 			//{
