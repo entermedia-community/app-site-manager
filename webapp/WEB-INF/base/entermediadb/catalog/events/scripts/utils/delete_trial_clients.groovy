@@ -20,37 +20,37 @@ public void init()
          MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 
         //Search Clients with End Date = Today
-        Searcher clientsearcher = mediaArchive .getSearcher("entermedia_clients");
+        Searcher instanceSearcher = mediaArchive .getSearcher("entermedia_instances");
 
         Calendar now = Calendar.getInstance();
         now.add(Calendar.DAY_OF_YEAR, -15);
 
 
-        Collection expiredClients = clientsearcher.query().exact("trialstatus","expired").and().before("dateend", now.getTime()).search();
+        Collection expiredClients = instanceSearcher.query().exact("trialstatus","expired").and().before("dateend", now.getTime()).search();
         log.info("Found "+expiredClients.size()+" sites to delete.");
 
         expiredClients.each{
                 //Get The Client
-                Data client = clientsearcher.searchById(it.id);
+                Data instance = instanceSearcher.searchById(it.id);
 
                 //Get Server Info
                 Searcher servers = mediaArchive .getSearcher("entermedia_servers");
-                Data server = servers.query().exact("id", client.server).searchOne()
+                Data server = servers.query().exact("id", instance.server).searchOne()
                 if (server) {
-                        log.info("Deleting client: "+client.name+", instance: "+client.instanceurl+" on server "+server.name);
+                        log.info("Deleting client: "+instance.name+", instance: "+instance.instanceurl+" on server "+server.name);
 
                         List<String> command = new ArrayList<String>();
                         command.add(server.sshname); //server name
-                        command.add(client.instanceurl);  //client url
+                        command.add(instance.instanceurl);  //client url
 
                         Exec exec = moduleManager.getBean("exec");
                         ExecResult done = exec.runExec("removeclient", command);
                         //log.info("Exec: " + done.getStandardOut());
 
                         //Set Status Deleted to Client
-                        client.setProperty("trialstatus","deleted");
+                        instance.setProperty("trialstatus","deleted");
                         //client.setProperty("server","");
-                        clientsearcher.saveData(client, null);
+                        instanceSearcher.saveData(instance, null);
                 }
         }
 }

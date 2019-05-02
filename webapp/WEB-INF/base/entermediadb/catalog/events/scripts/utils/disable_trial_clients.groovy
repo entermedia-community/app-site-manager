@@ -22,22 +22,22 @@ public void init()
         MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 
         //Search Clients with End Date = Today
-        Searcher clientsearcher = mediaArchive.getSearcher("entermedia_clients");
+        Searcher instancesearcher = mediaArchive.getSearcher("entermedia_instances");
 
         Date today = new Date();
-        Collection expiredClients = clientsearcher.query().exact("trialstatus", "active").and().before("dateend", today).search();
-        log.info("Found "+expiredClients.size()+" sites expired.");
-        expiredClients.each{
+        Collection expiredInstances = instancesearcher.query().exact("trialstatus", "active").and().before("dateend", today).search();
+        log.info("Found "+expiredInstances.size()+" sites expired.");
+        expiredInstances.each{
                 //Get The Client
-                Data client = clientsearcher.searchById(it.id);
+                Data instance = instancesearcher.searchById(it.id);
 
-                log.info("Disabling: "+client.name+" -> "+client.dateend);
+                log.info("Disabling: "+instance.name+" -> "+instance.dateend);
 
                 //Search Seat Info
                 Searcher seatssearcher = mediaArchive.getSearcher("entermedia_seats");
                 SearchQuery scquery = seatssearcher.createSearchQuery();
                 HitTracker seats = seatssearcher.search(scquery);
-                Data seat = seatssearcher.query().match("clientid", client.id).searchOne();
+                Data seat = seatssearcher.query().match("clientid", instance.id).searchOne();
                 if (seat) {
                                 //Get Server Info
                                 Searcher servers = mediaArchive.getSearcher("entermedia_servers");
@@ -45,7 +45,7 @@ public void init()
                                 if (server) {
                                         List<String> command = new ArrayList<String>();
                                         command.add(server.name); //server name
-                                        command.add(client.instanceurl);  //client url
+                                        command.add(instance.instanceurl);  //client url
                                         command.add(String.valueOf(seat.nodeid));  //client nodeid
 
                                         Exec exec = moduleManager.getBean("exec");
@@ -57,18 +57,18 @@ public void init()
                                         seatssearcher.saveData(seat, null);
 
                                         //Keep the server it was installed for the record
-                                        client.setProperty("server", seat.trial_servers);
+                                        instance.setProperty("server", seat.trial_servers);
                                 }
                 }
                 //Set Status Expired to Client
-                client.setProperty("trialstatus","expired");
-                clientsearcher.saveData(client, null);
+                instance.setProperty("trialstatus","expired");
+                instancesearcher.saveData(instance, null);
                 
                 //Email Client
-                context.putPageValue("client_name", client.name);
+                context.putPageValue("client_name", instance.name);
                 context.putPageValue("from", 'help@entermediadb.org');
                 context.putPageValue("subject", "EnterMediaDB Instance Expired");
-                sendEmail(context.getPageMap(),client.clientemail,"/trialmanager/email/expired.html");
+                sendEmail(context.getPageMap(),instance.clientemail,"/trialmanager/email/expired.html");
 
         }
 }
