@@ -24,7 +24,7 @@ public class InvoiceManager implements CatalogEnabled
 	public int getUnpaidInvoiceNumber(String inCollectionId)
 	{
 		int res = 0;
-		Collection<Data> clientinvoices = getMediaArchive().query("clientinvoice").match("clientinvoicestatus", InvoiceStatus.UNPAID).match("librarycollection", inCollectionId).search();
+		Collection<Data> clientinvoices = getMediaArchive().query("clientinvoice").match("clientinvoicestatus", InvoiceStatus.UNPAID).exact("librarycollection", inCollectionId).search();
 
 		if (clientinvoices != null)
 		{
@@ -36,7 +36,7 @@ public class InvoiceManager implements CatalogEnabled
 	public int getPaidInvoiceNumber(String inCollectionId)
 	{
 		int res = 0;
-		Collection<Data> clientinvoices = getMediaArchive().query("clientinvoice").match("status", InvoiceStatus.PAID).match("librarycollection", inCollectionId).search();
+		Collection<Data> clientinvoices = getMediaArchive().query("clientinvoice").match("status", InvoiceStatus.PAID).exact("librarycollection", inCollectionId).search();
 
 		if (clientinvoices != null)
 		{
@@ -48,7 +48,7 @@ public class InvoiceManager implements CatalogEnabled
 	public int getCancelledInvoiceNumber(String inCollectionId)
 	{
 		int res = 0;
-		Collection<Data> clientinvoices = getMediaArchive().query("clientinvoice").match("status", InvoiceStatus.CANCELLED).match("librarycollection", inCollectionId).search();
+		Collection<Data> clientinvoices = getMediaArchive().query("clientinvoice").match("status", InvoiceStatus.CANCELLED).exact("librarycollection", inCollectionId).search();
 		
 		if (clientinvoices != null)
 		{
@@ -60,7 +60,7 @@ public class InvoiceManager implements CatalogEnabled
 	public int getRefundedInvoiceNumber(String inCollectionId)
 	{
 		int res = 0;
-		Collection<Data> clientinvoices = getMediaArchive().query("clientinvoice").match("status", InvoiceStatus.REFUNDED).match("librarycollection", inCollectionId).search();
+		Collection<Data> clientinvoices = getMediaArchive().query("clientinvoice").match("status", InvoiceStatus.REFUNDED).exact("librarycollection", inCollectionId).search();
 
 		if (clientinvoices != null)
 		{
@@ -74,7 +74,7 @@ public class InvoiceManager implements CatalogEnabled
 	public String getAccountBalance(String inCollectionId)
 	{
 		Searcher invoiceSearcher = getMediaArchive().getSearcher("clientinvoice");
-		Collection<Data> clientinvoices = invoiceSearcher.query().match("clientinvoicestatus", InvoiceStatus.UNPAID).match("librarycollection", inCollectionId).search();
+		Collection<Data> clientinvoices = invoiceSearcher.query().match("clientinvoicestatus", InvoiceStatus.UNPAID).exact("librarycollection", inCollectionId).search();
 		double amount = 0;
 
 		for (Data it : clientinvoices)

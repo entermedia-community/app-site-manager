@@ -25,8 +25,10 @@ public void init()
         Searcher instancesearcher = mediaArchive.getSearcher("entermedia_instances");
 
         Date today = new Date();
-        Collection expiredInstances = instancesearcher.query().exact("istrial", "true").and().exact("instance_status", "active").and().before("dateend", today).search();
-        log.info("Found "+expiredInstances.size()+" sites expired.");
+        Collection expiredInstances = instancesearcher.query().exact("istrial", "true").exact("instance_status", "active").before("dateend", today).search();
+        Collection expiredClientss = instanceSearcher.query().before("dateend", now.getTime()).search();
+        log.info("Found "+ expiredClients.size() +" sites to delete.");
+		log.info("Found "+ expiredClientss.size() +" sites matching.");
         expiredInstances.each{
                 //Get The Client
                 Data instance = instancesearcher.searchById(it.id);
