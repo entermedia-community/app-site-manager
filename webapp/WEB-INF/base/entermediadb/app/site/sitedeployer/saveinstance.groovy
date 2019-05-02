@@ -168,6 +168,8 @@ public void init()
 				newinstance.setValue("datestart", new Date());
 				newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
 								
+
+				instancesearcher.saveData(newinstance);
 				Collection instances = (Collection)trialclient.getValues("instances");
 				if (instances == null)
 				{
@@ -176,8 +178,6 @@ public void init()
 				instances.add(newinstance.getId());
 				log.info("instanceid " + newinstance.getId());
 				trialclient.setValue("instances", instances);
-
-				instancesearcher.saveData(newinstance);
 				clientsearcher.saveData(trialclient);
 				
 				
@@ -194,7 +194,7 @@ public void init()
 				
 				//Send Email to Client
 				context.putPageValue("from", notifyemail);
-				context.putPageValue("subject", "Welcome to EnterMediaDB " + name);
+				context.putPageValue("subject", "Welcome to EnterMediaDB " + organization);
 				sendEmail(context.getPageMap(),email,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
 				
 				
