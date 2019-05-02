@@ -163,8 +163,15 @@ public void init()
 				newinstance.setValue("datestart", new Date());
 				newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
 				
-				instancesearcher.saveData(newinstance,null);
-		
+				trialclient.setValue("instances", inValue)
+				
+				Collection instances = (Collection)trialclient.getAt("instances");
+				instances.add(newinstance.getId());
+				trialclient.setValue("instances", instances);
+
+				instancesearcher.saveData(newinstance);
+				clientsearcher.saveData(trialclient);
+				
 				
 				context.putPageValue("userurl",fullURL);
 				context.putPageValue("client_name", name);
