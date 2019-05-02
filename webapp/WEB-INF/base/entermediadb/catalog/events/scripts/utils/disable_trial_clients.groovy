@@ -25,7 +25,7 @@ public void init()
         Searcher instancesearcher = mediaArchive.getSearcher("entermedia_instances");
 
         Date today = new Date();
-        Collection expiredInstances = instancesearcher.query().exact("istrial", true).and().before("dateend", today).and().exact("status", "active").search();
+        Collection expiredInstances = instancesearcher.query().exact("istrial", true).and().before("dateend", today).and().exact("instance_status", "active").search();
         log.info("Found "+expiredInstances.size()+" sites expired.");
         expiredInstances.each{
                 //Get The Client
@@ -61,7 +61,7 @@ public void init()
                                 }
                 }
                 //Set Status Expired to Client
-                instance.setProperty("status","expired");
+                instance.setProperty("instance_status","disabled");
                 instancesearcher.saveData(instance, null);
                 
                 //Email Client

@@ -13,7 +13,7 @@ import org.openedit.util.RequestUtils
 public void init() 
 {
 	String catalogid = "entermediadb/catalog";
-    String notifyemail = "cristobal@entermediadb.org"
+    String notifyemail = "help@entermediadb.org"
 
 
 	
@@ -40,8 +40,6 @@ public void init()
 		//
 		// String clientsubdomain = context.getRequestParameter("clientsubdomain");
 		//
-		log.info("URL is: " + instanceurl);
-		
 		Searcher clientsearcher = searcherManager.getSearcher(catalogid, "entermedia_clients");
 		//TODO: set userid into client table
 		Data newclient = clientsearcher.createNewData();
@@ -72,7 +70,6 @@ public void init()
 		
 		//Create Valid URL
         String selected_url = instanceurl.toLowerCase();
-		log.info("URL compliant is: " + selected_url);
 		
 		context.putPageValue("selected_url", selected_url);
         context.putPageValue("organization", organization);
@@ -92,20 +89,18 @@ public void init()
 		{
 			server = serversSearcher.loadData(serverIterator.next());
 			log.info("- Checking server " + server.getName());
-			//HitTracker hits = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).search();			
-			//if ( hits.size() < Integer.parseInt(server.maxinstance) )
-			//{
+			HitTracker hits = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).search();			
+			if ( hits.size() < Integer.parseInt(server.maxinstance) )
+			{
 				seat = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).searchOne();
 				break;
-			//}
+			}
 		}
 
         log.info(seat);
 		
 		if (seat != null)
 		{
-			//Searcher seatssearcher = searcherManager.getSearcher(catalogid, "entermedia_seats");
-
 			//Assign client to seat
 			seat.setValue("clientid",newclient.id);
 			seat.setValue("seatstatus","true");
@@ -117,10 +112,8 @@ public void init()
 			
 				
 			// Call deploy script 
-			// deploy_trial_client.sh SERVER SUBNET URL NODE
 			try {
 				List<String> command = new ArrayList<String>();
-				//command.add(server.name); //server name
 				command.add(server.sshname); //server name
 				command.add(server.dockersubnet);  //server subnet
 				command.add(selected_url);  //client url
@@ -152,17 +145,16 @@ public void init()
 				}
                 else {
                     //Account exists, send error message to let them know
-
+					group = mediaarchive.query("group").match("name", organization).searchOne();
                 }
 			
-				//group = mediaarchive.query("group").match("name", organization).searchOne();
 
                 //Add Site to Monitoring
-				//Data monitor = addNewMonitor(server, "http://" + fullURL, client.id);
-				//addNewCollection(fullURL, newclient.id, monitor.id, group.id);
+				Data monitor = addNewMonitor(server, "http://" + fullURL, client.id);
+				addNewCollection(fullURL, newclient.id, monitor.id, group.id);
 
 				newinstance.setValue("instanceurl", fullURL);
-				newinstance.setValue("status", "active");
+				newinstance.setValue("instance_status", "active");
 				newinstance.setValue("istrial", true);
 				newinstance.setValue("server", server.id);
 				//newclient.setProperty("datestart",DateStorageUtil.getStorageUtil().formatForStorage(new Date()));

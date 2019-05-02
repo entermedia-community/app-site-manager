@@ -26,8 +26,8 @@ public void init()
         now.add(Calendar.DAY_OF_YEAR, -15);
 
 
-        Collection expiredClients = instanceSearcher.query().exact("trialstatus","expired").and().before("dateend", now.getTime()).search();
-        log.info("Found "+expiredClients.size()+" sites to delete.");
+        Collection expiredClients = instanceSearcher.query().exact("istrial", true).and().exact("instance_status","disabled").and().before("dateend", now.getTime()).search();
+        log.info("Found "+ expiredClients.size() +" sites to delete.");
 
         expiredClients.each{
                 //Get The Client
@@ -48,7 +48,7 @@ public void init()
                         //log.info("Exec: " + done.getStandardOut());
 
                         //Set Status Deleted to Client
-                        instance.setProperty("trialstatus","deleted");
+                        instance.setProperty("instance_status","deleted");
                         //client.setProperty("server","");
                         instanceSearcher.saveData(instance, null);
                 }
