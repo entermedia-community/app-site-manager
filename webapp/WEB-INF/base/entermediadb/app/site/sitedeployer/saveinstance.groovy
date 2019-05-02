@@ -40,7 +40,7 @@ public void init()
 		//
 		// String clientsubdomain = context.getRequestParameter("clientsubdomain");
 		//
-		log.info("URL is: ", instanceurl);
+		log.info("URL is: " + instanceurl);
 		
 		Searcher clientsearcher = searcherManager.getSearcher(catalogid, "entermedia_clients");
 		//TODO: set userid into client table
@@ -72,7 +72,7 @@ public void init()
 		
 		//Create Valid URL
         String selected_url = instanceurl.toLowerCase();
-		log.info("URL compliant is: ", selected_url);
+		log.info("URL compliant is: " + selected_url);
 		
 		context.putPageValue("selected_url", selected_url);
         context.putPageValue("organization", organization);
