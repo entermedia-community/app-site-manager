@@ -138,7 +138,12 @@ public void init()
 					group = addNewGroup();
 					Searcher userSearcher = searcherManager.getSearcher(catalogid, "user");
 					
-					Collection groups = (Collection)user.getAt("groups");
+					Collection groups = (Collection)user.getValues("groups");
+					if (groups == null)
+					{
+						groups = new ArrayList<Data>();
+					}
+		
 					groups.add(group.getId());
 					user.setValue("groups", groups);
 					userSearcher.saveData(user,null);
@@ -163,12 +168,13 @@ public void init()
 				newinstance.setValue("datestart", new Date());
 				newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
 								
-				Collection instances = (Collection)trialclient.getAt("instances");
+				Collection instances = (Collection)trialclient.getValues("instances");
 				if (instances == null)
 				{
 					instances = new ArrayList<Data>();
 				}
 				instances.add(newinstance.getId());
+				log.info("instanceid " + newinstance.getId());
 				trialclient.setValue("instances", instances);
 
 				instancesearcher.saveData(newinstance);
@@ -176,7 +182,7 @@ public void init()
 				
 				
 				context.putPageValue("userurl",fullURL);
-				context.putPageValue("client_name", name);
+				context.putPageValue("client_name", organization);
 				context.putPageValue("newuser", "admin");
 				context.putPageValue("newpassword", "admin");
 				
