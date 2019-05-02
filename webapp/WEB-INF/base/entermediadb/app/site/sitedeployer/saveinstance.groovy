@@ -164,6 +164,10 @@ public void init()
 				newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
 								
 				Collection instances = (Collection)trialclient.getAt("instances");
+				if (instances == null)
+				{
+					instances = new ArrayList<Data>();
+				}
 				instances.add(newinstance.getId());
 				trialclient.setValue("instances", instances);
 
