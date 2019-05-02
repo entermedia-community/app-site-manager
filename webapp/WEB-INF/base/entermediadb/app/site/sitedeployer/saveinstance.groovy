@@ -162,9 +162,7 @@ public void init()
 				DateStorageUtil dateStorageUtil = DateStorageUtil.getStorageUtil();
 				newinstance.setValue("datestart", new Date());
 				newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
-				
-				trialclient.setValue("instances", inValue)
-				
+								
 				Collection instances = (Collection)trialclient.getAt("instances");
 				instances.add(newinstance.getId());
 				trialclient.setValue("instances", instances);
