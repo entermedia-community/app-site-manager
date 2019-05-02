@@ -156,7 +156,7 @@ public void init()
 				newinstance.setValue("instanceurl", fullURL);
 				newinstance.setValue("instance_status", "active");
 				newinstance.setValue("istrial", true);
-				newinstance.setValue("server", server.id);
+				newinstance.setValue("entermedia_servers", server.id);
 				//newclient.setProperty("datestart",DateStorageUtil.getStorageUtil().formatForStorage(new Date()));
 				
 				DateStorageUtil dateStorageUtil = DateStorageUtil.getStorageUtil();
