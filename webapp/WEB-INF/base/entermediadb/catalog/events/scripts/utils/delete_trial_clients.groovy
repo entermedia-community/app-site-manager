@@ -27,8 +27,10 @@ public void init()
 
 
         Collection expiredClients = instanceSearcher.query().exact("istrial", "true").and().exact("instance_status","disabled").and().before("dateend", now.getTime()).search();
+        Collection expiredClientss = instanceSearcher.query().before("dateend", now.getTime()).search();
         log.info("Found "+ expiredClients.size() +" sites to delete.");
-
+		log.info("Found "+ expiredClientss.size() +" sites matching.");
+		
         expiredClients.each{
                 //Get The Client
                 Data instance = instanceSearcher.searchById(it.id);
