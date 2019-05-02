@@ -22,16 +22,16 @@ public void init()
         MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 
         //Search Clients with End Date = Today
-        Searcher instancesearcher = mediaArchive.getSearcher("entermedia_instances");
+        Searcher instanceSearcher = mediaArchive.getSearcher("entermedia_instances");
 
         Date today = new Date();
-        Collection expiredInstances = instancesearcher.query().exact("istrial", "true").exact("instance_status", "active").before("dateend", today).search();
-        Collection expiredClientss = instanceSearcher.query().before("dateend", now.getTime()).search();
-        log.info("Found "+ expiredClients.size() +" sites to delete.");
+        Collection expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status", "active").before("dateend", today).search();
+        Collection expiredClientss = instanceSearcher.query().before("dateend", today).search();
+        log.info("Found "+ expiredInstances.size() +" sites to delete.");
 		log.info("Found "+ expiredClientss.size() +" sites matching.");
         expiredInstances.each{
                 //Get The Client
-                Data instance = instancesearcher.searchById(it.id);
+                Data instance = instanceSearcher.searchById(it.id);
 
                 log.info("Disabling: "+instance.name+" -> "+instance.dateend);
 
@@ -64,13 +64,16 @@ public void init()
                 }
                 //Set Status Expired to Client
                 instance.setProperty("instance_status","disabled");
-                instancesearcher.saveData(instance, null);
+                instanceSearcher.saveData(instance, null);
                 
                 //Email Client
                 context.putPageValue("client_name", instance.name);
                 context.putPageValue("from", 'help@entermediadb.org');
                 context.putPageValue("subject", "EnterMediaDB Instance Expired");
-                sendEmail(context.getPageMap(),instance.clientemail,"/trialmanager/email/expired.html");
+				Searcher clientssearcher = mediaArchive.getSearcher("entermedia_clients");
+				Data client = clientssearcher.query().contains("instances", instance.id).search();
+				
+                sendEmail(context.getPageMap(),client.clientemail,"/trialmanager/email/expired.html");
 
         }
 }
