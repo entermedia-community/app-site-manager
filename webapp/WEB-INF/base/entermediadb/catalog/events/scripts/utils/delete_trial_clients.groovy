@@ -26,7 +26,7 @@ public void init()
         now.add(Calendar.DAY_OF_YEAR, -15);
 
 
-        Collection expiredClients = instanceSearcher.query().exact("istrial", true).and().exact("instance_status","disabled").and().before("dateend", now.getTime()).search();
+        Collection expiredClients = instanceSearcher.query().exact("istrial", "true").and().exact("instance_status","disabled").and().before("dateend", now.getTime()).search();
         log.info("Found "+ expiredClients.size() +" sites to delete.");
 
         expiredClients.each{
