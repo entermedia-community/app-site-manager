@@ -50,6 +50,8 @@ files.copyFileByMatch( tmp + "/lib/*.jar", web + "/lib/");
 files.deleteMatch( web + "/WEB-INF/base/entermediadb/")
 files.copyFileByMatch( tmp + "/base/entermediadb/", root + "/WEB-INF/base/entermediadb/");
 
+files.deleteMatch( web + "/WEB-INF/base/eminstitute/")
+files.copyFileByMatch( tmp + "/base/eminstitute/", root + "/WEB-INF/base/eminstitute/");
 
 
 files.deleteMatch( web + "/WEB-INF/base/oi/")
