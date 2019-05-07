@@ -1,0 +1,5 @@
+#
+#Fri Apr 05 16:47:21 EDT 2019
+Account=Compte
+Login=iniciar Sessi\u00F3
+Log\ Out=Tancar sessi\u00F3

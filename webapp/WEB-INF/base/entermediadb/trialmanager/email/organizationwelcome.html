@@ -1,0 +1,35 @@
+<p>#set( $hostingdomain = $context.findValue("hostingdomain") ) Hello $newuser.getScreenName(),</p>
+
+<p><strong>Welcome to EnterMediaDB Organization Hosting!</strong></p>
+
+<p>Your site is now live! You can now upload your own assets and experiment with features and customization.</p>
+
+<p><span style="line-height: 1.42857;">This is a 30 day free trial. Additional testing time is available by special request. Let us know what we can do to help with your evaluation.&nbsp;</span></p>
+
+<p>At the end of the trial, organizational hosting service is available for $299 per month. This hosting package includes a daily data snapshots, product support, dedicated hardware resources.</p>
+
+<p><strong style="line-height: 1.42857;"><span style="line-height: 1.42857;">Login Information:</span></strong></p>
+
+<p>To get you started, here is a link to your unique hosting site with instructions:</p>
+
+<p>#set( $link = "http://${usercatalog.clientsubdomain}.${hostingdomain}$usercatalog.rootpath/")&nbsp;<a href="$link">$link</a></p>
+
+<p>Here are your initial credentials for the EMShare application:</p>
+
+<p>Username - admin Password - $userManager.decryptPassword( $searcherManager.getData($usercatalog.id,"user","admin") )</p>
+
+<p>If you have an existing DropBox account, and would like to set it up as a monitored HotFolder, please email us at: hosting@entermediasoftware.com. We will help you connect it to your existing EnterMedia application.</p>
+
+<p><strong>Next Steps:</strong></p>
+
+<p>Check out product documentation in our Learning Center:&nbsp;http://entermediasoftware.com/learning-center/docs/</p>
+
+<p>For community support and general ideas, join our open source Google Group at: https://groups.google.com/forum/?hl=en#!forum/entermedia</p>
+
+<p>Out support team will offer limited support during your trial period. If you would like a product demo or a complimentary training session, just email us at help@entermediasoftware.com to schedule a meeting.&nbsp;</p>
+
+<p>Full product support is available with each professional hosting plan. &nbsp;</p>
+
+<p>Thanks,</p>
+
+<p><strong>The EnterMediaDB Team</strong></p>

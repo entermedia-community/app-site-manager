@@ -1,0 +1,5 @@
+#
+#Mon Apr 22 10:32:09 EDT 2019
+Account=sz\u00E1mla
+Login=Bel\u00E9p\u00E9s
+Log\ Out=Kijelentkez\u00E9s

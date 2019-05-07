@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="module">library</property>
+  <property name="searchtype">library</property>
+  <property name="fallbackdirectory">/entermediadb/mediadb/services/module/default</property>
+</page>

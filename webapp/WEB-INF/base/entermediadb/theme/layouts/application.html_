@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" *->
+  <head>
+
+	<title>EnterMedia Site Manager  </title>
+	
+	<!-- Bootstrap core CSS -->
+    <link href="${sitehome}/theme/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="${sitehome}/theme/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+<link href="/entermediadb/theme/css/code.css" rel='stylesheet' type='text/css'>
+    <!-- Custom styles for this template -->
+    <link href="${sitehome}/theme/css/agency.css" rel="stylesheet">
+	<link rel="icon" href="${sitehome}/entermediafavicon.ico" />
+</head>
+
+<body  showadmintoolbar="$canshowadmintoolbar"  id="page-top">
+<div id="application" data-home="$home" data-apphome="$apphome" data-themeprefix="/${applicationid}/theme" data-browserlanguage="$!{browserlanguage}" data-mediadbappid="$!mediaarchive.getMediaDbId()" data-catalogid="$content.catalogid" data-editmode='$!user.get("oe_edit_mode")'>
+
+
+
+$pages.include("/entermediadb/theme/layouts/nav.html")
+
+		#if( $content.isfullscreen )
+  		   $pages.includeContent()
+		#else
+			<div id="applicationcontent">
+                                <div class="container">
+
+ 			        $pages.includeContent()
+                              </div>
+                          </div>
+		#end
+	
+	</div>
+	    <!-- Bootstrap core JavaScript -->
+    <script src="${sitehome}/theme/vendor/jquery/jquery.min.js"></script>
+    <script src="${sitehome}/theme/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="${sitehome}/theme/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Plugin JavaScript -->
+    <script src="${sitehome}/theme/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Contact form JavaScript -->
+    <script src="${sitehome}/theme/js/jquery.validate.min.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="${sitehome}/theme/js/agency.js"></script>
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-18961523-6"></script>
+	<script type="text/javascript" src="$home/openedit/components/javascript/openedit.js">  </script>
+	
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-18961523-6');
+	</script>
+	
+	</body>
+</html>

@@ -1,0 +1,5 @@
+#
+#Thu Apr 11 03:51:25 EDT 2019
+Account=Konto
+Login=Logg Inn
+Log\ Out=Logg ut

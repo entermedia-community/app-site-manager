@@ -1,0 +1,12 @@
+#
+#Thu Feb 22 15:43:11 UTC 2018
+Emails\ Sent=Correos electr\u00F3nicos enviados
+Last\ Checked=\u00DAltima comprobaci\u00F3n
+Disk\ Space\ Total=Espacio en disco total
+Disk\ Space\ Free=Espacio libre en disco
+Client\ ID=Identificaci\u00F3n del cliente
+Name=Nombre
+Emails\ to\ Notify\ on\ Error=Correos electr\u00F3nicos para Notificar en caso de error
+Server\ Memory\ Free=Servidor sin memoria
+URL=URL
+Monitoring\ Status=Estado de monitoreo

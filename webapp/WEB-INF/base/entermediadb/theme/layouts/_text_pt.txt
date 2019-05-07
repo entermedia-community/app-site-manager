@@ -1,0 +1,6 @@
+#
+#Thu Apr 04 18:12:22 EDT 2019
+Account=Conta
+My\ Account=Minha conta
+Login=Entrar
+Log\ Out=Sair

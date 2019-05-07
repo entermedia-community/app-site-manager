@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="period">1d</property>
+  <property name="enabled">false</property>
+  <property name="eventname">Take Daily DB Snapshot</property>
+</page>

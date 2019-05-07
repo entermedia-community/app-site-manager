@@ -1,0 +1,5 @@
+#
+#Sat Dec 22 09:57:25 EST 2018
+Account=Konto
+Login=Anmeldung
+Log\ Out=Ausloggen

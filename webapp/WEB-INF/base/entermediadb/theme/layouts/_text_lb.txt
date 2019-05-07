@@ -1,0 +1,5 @@
+#
+#Fri Apr 12 15:59:15 EDT 2019
+Account=Account
+Login=Login
+Log\ Out=Ausloggen

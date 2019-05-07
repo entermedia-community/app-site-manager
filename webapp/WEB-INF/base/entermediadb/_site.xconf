@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="siteid">entermediadb</property>
+  <property name="catalogid">entermediadb/catalog</property>
+  <property name="applicationid">entermediadb</property>
+  <inner-layout>${siteid}/theme/layouts/application.html</inner-layout>
+
+  <script id="jquery" src="/entermediadb/app/components/javascript/jquery-3.3.1.min.js"/>
+  <script id="jquery-ui" src="/entermediadb/app/components/javascript/jquery-ui-1.11.4.min.js"/>
+  <script id="jquery-ui-i18n" src="/entermediadb/app/components/javascript/ui/i18n/jquery-ui-i18n.js"/>
+  <script id="jquery-form" src="/entermediadb/app/components/javascript/jquery.form.js"/>
+  <script id="jquery-liveajax" src="/entermediadb/app/components/javascript/liveajax/liveajax.js"/>
+  <script id="jquery-validate" src="/entermediadb/app/components/javascript/jquery.validation/jquery.validate.js"/>
+  <script id="boostrap" src="/entermediadb/app/components/javascript/bootstrap/4/js/bootstrap.bundle.min.js" />
+  <script id="bootstrap-popper" src="/entermediadb/app/components/javascript/bootstrap/4/js/popper.min.js" />
+  <style id="bootstap" href="/entermediadb/app/components/javascript/bootstrap/4/css/bootstrap.min.css" />
+  <style id="fontsawesome" href="/entermediadb/app/components/javascript/bootstrap/fonts/css/fontawesome-all.min.css" />
+  <script id="openedit" src="/openedit/components/javascript/openedit.js"/>
+  <script id="select2" src="/entermediadb/app/components/javascript/select2/js/select2.full.js"/>
+  <style id="select2-css" href="${apphome}/components/javascript/select2/css/select2.css"/>
+  
+<!--  <style id="select2-css-theme" href="/entermediadb/app/components/javascript/select2/css/select2-bootstrap4.css"/>  -->
+
+<!-- App Customs -->
+  <style id="custom-css" href="/entermediadb/theme/css/agency.css"/>
+  <style id="custom-acss" href="/entermediadb/theme/css/em_custom.css"/>
+
+</page>

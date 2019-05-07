@@ -1,0 +1,5 @@
+#
+#Sun Apr 14 10:43:11 EDT 2019
+Account=Rekening
+Login=Masuk
+Log\ Out=Keluar

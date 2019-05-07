@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="module">entermedia_servers</property>
+  <property name="searchtype">entermedia_servers</property>
+  <property name="fallbackdirectory">/sitemanager/mediadb/services/module/default</property>
+</page>

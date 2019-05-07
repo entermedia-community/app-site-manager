@@ -1,18 +1,4 @@
-#set($providers = $mediaarchive.getList("oauthprovider"))
+<div class="oauthproviderbtn" style="text-align:center"><a href="/app/authentication/oauth/oauth.html?provider=facebook"><img src="/app/authentication/oauth/facebook.png" /> </a></div>
 
-#foreach($p in $providers)
-    #if($p.enabled =="true")
-        #set($providerurl = "$apphome/authentication/oauth/oauth.html?provider=$p.id")
-        <div class="oauthproviderbtn">
-        <a href="${providerurl}">
-        #if($pages.doesExist("$applicationid/authentication/oauth/${p.id}.png"))
-            <img src="$apphome/authentication/oauth/${p.id}.png"/>
-        #else
-            [[Login with]] $p.name
-        #end
-        </a>
-        </div>
-    #end
-#end
-
-
+<div class="oauthproviderbtn" style="text-align:center"><a href="/app/authentication/oauth/oauth.html?provider=google"><img src="/app/authentication/oauth/google.png" /> </a></div>
+<!-- toolbar footer -->

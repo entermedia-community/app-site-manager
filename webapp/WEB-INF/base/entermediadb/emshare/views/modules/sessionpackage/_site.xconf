@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="module">sessionpackage</property>
+  <property name="fallbackdirectory">/entermediadb/emshare/views/modules/default</property>
+</page>

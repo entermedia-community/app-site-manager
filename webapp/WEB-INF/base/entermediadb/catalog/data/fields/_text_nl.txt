@@ -1,0 +1,10 @@
+#
+#Tue Sep 11 14:12:46 EDT 2018
+Status=staat
+ClientId=Klant identificatie
+Details=Details
+Created\ Date=Aanmaakdatum
+Path=Pad
+Owner=Eigenaar
+Description=Beschrijving
+Session\ Package=Sessiepakket

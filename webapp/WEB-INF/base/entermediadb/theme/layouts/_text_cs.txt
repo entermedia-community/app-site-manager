@@ -1,0 +1,6 @@
+#
+#Thu Dec 27 14:09:22 EST 2018
+Account=\u00DA\u010Det
+My\ Account=M\u016Fj \u00FA\u010Det
+Login=P\u0159ihl\u00E1sit se
+Log\ Out=Odhl\u00E1sit se

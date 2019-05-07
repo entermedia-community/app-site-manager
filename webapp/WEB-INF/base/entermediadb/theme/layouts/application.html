@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
 
-	<title>EnterMedia Site Manager  </title>
+  <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	#set($meta_title = $postdata.getValue("post_title"))
+	#if(!$meta_title)
+		#set($meta_title = "EnterMedia Open-source Digital Asset Managment")
+	#end
+	<title>$meta_title</title>
     
     
     #foreach( $script in $content.getScriptPaths() )
@@ -14,24 +21,40 @@
     #end
 
     
-	<link rel="icon" href="${sitehome}/entermediafavicon.ico" />
+	<link rel="icon" href="/entermediadb/theme/images/em-favicon.ico" />
 </head>
 
 <body  showadmintoolbar="$canshowadmintoolbar"  id="page-top">
-    <div id="application" data-home="$home" data-apphome="$apphome" data-themeprefix="/${applicationid}/theme" data-browserlanguage="$!{browserlanguage}" data-mediadbappid="$!mediaarchive.getMediaDbId()" data-catalogid="$content.catalogid" data-editmode='$!user.get("oe_edit_mode")'>
+<div id="application" data-home="$home" data-apphome="$apphome" data-themeprefix="/${applicationid}/theme" data-browserlanguage="$!{browserlanguage}" data-mediadbappid="$!mediaarchive.getMediaDbId()" data-catalogid="$content.catalogid" data-editmode='$!user.get("oe_edit_mode")'>
 
-        $pages.include("./nav.html")
-        #if( $content.isfullscreen )
-            $pages.includeContent()
-        #else
-            <div id="applicationcontent">
-                <div class="container">
-                    $pages.includeContent()
-                </div>
-            </div>
-        #end
-        
-    </div>
+	$pages.include("/entermediadb/theme/layouts/nav.html")
 
-</body>
+
+		#if( $content.isfullscreen )
+  		   $pages.includeContent()
+		#else
+		<div id="applicationcontent" class="applicationcontent">
+            <div class="container">
+                $pages.includeContent()
+             </div>
+         </div>
+		#end
+	
+	</div>
+
+	
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-18961523-6"></script>
+
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'UA-18961523-6');
+	</script>
+	
+	</body>
 </html>
+
+

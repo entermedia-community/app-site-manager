@@ -1,8 +1,9 @@
 #
-#Tue Sep 11 13:14:49 EDT 2018
+#Tue Apr 09 22:47:30 EDT 2019
 Profiles=profielen
 Account=Account
 Home=Huis
-Login=Log in
 Collectives=collectieven
+Login=Log in
 Contact=Contact
+Log\ Out=Uitloggen

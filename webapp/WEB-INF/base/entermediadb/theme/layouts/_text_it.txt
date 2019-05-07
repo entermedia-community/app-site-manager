@@ -1,0 +1,5 @@
+#
+#Wed Apr 10 07:05:04 EDT 2019
+Account=Account
+Login=Accesso
+Log\ Out=Disconnettersi

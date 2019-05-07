@@ -1,11 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <page>
-<property name="eventname">Monitor sites for outages</property>	
-	<property name="eventdescription">Check for problems on sites</property>	
-
-
-<path-action name="SiteModule.checkSites">
-</path-action>
-  	<property name="period">1m</property>
-  
-<property name="virtual">true</property>
+  <property name="period">5m</property>
+  <property name="virtual">true</property>
+  <property name="eventdescription">Check for problems on sites</property>
+  <property name="eventname">Monitor sites for outages</property>
+  <property name="enabled">true</property>
+  <path-action name="SiteModule.checkSites"/>
 </page>

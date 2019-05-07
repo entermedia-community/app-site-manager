@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="module">trial_clients</property>
+  <property name="searchtype">trial_clients</property>
+  <property name="fallbackdirectory">/sitemanager/mediadb/services/module/default</property>
+</page>

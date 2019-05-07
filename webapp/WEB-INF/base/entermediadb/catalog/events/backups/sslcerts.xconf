@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <page>
 <property name="eventname">Monitor sites for SSL certificates</property>	
 	<property name="eventdescription">Check SSL certs expiration date</property>	
@@ -7,3 +8,4 @@
   
 <property name="virtual">true</property>
 </page>
+

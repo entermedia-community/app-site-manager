@@ -1,0 +1,5 @@
+#
+#Wed Apr 24 03:23:35 EDT 2019
+Account=\u00FA\u010Det
+Login=Prihl\u00E1si\u0165 sa
+Log\ Out=Odhl\u00E1si\u0165 sa

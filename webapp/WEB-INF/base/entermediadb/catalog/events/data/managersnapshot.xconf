@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="period">20d</property>
+  <property name="enabled">true</property>
+  <property name="eventname">Manager Snapshot</property>
+</page>

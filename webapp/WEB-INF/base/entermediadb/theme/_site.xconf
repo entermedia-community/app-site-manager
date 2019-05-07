@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="fallbackdirectory">/WEB-INF/base/entermediadb/theme</property>
+  <property name="applicationid">entermediadb/theme</property>
+  <property name="catalogid">entermediadb/catalog</property>
+  <path-action name="MediaArchiveModule.loadApplicationId"/>
+</page>

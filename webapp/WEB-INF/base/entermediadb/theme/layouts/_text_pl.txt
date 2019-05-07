@@ -1,0 +1,5 @@
+#
+#Mon Feb 25 05:48:26 EST 2019
+Account=Konto
+Login=Zaloguj Si\u0119
+Log\ Out=Wyloguj
