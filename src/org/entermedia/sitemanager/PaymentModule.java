@@ -83,6 +83,7 @@ public class PaymentModule extends BaseMediaModule {
 		
 		getOrderProcessor().process(archive, inReq.getUser(), payment,  token);
 		payment.setValue("paymentdate", new Date());
+		payment.setValue("userid", inReq.getUserName());
 		String frequency = inReq.findValue("frequency");
 		if(frequency != null && frequency != "") {
 			Searcher plans = archive.getSearcher("paymentplan");
