@@ -1,7 +1,0 @@
-#
-#Thu Feb 22 15:44:42 UTC 2018
-Name=Nombre
-Status=Estado
-Additional\ Paid\ Space=Espacio adicional pagado
-Billing\ Amount=Monto de facturaci\u00F3n
-Contract\ Type=tipo de contrato
