@@ -3,7 +3,7 @@
 	<path-action name="OauthModule.login"/>
 	<property name="provider">google</property>
 	<path-action name="Admin.redirect">
-		  <redirectpath>/entermediadb/app/account/welcome.html</redirectpath>
+		  <redirectpath>$apphome/account/welcome.html</redirectpath>
 	</path-action>
 
 </page>

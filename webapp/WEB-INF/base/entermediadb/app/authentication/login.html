@@ -10,7 +10,7 @@
 			<h1 class="text-center">[[Log in]] #if( $allowguest )[[or Create a New Account]]#end</h1>
 				##<div class="row">
 					##$pages.include("$content.loginroot/loginform.html",$context)
-					$pages.include("$home$content.loginroot/oauth/providers.html", $context)
+					$pages.include("$apphome/authentication/oauth/providers.html", $context)
 					#if( $allowguest )
 						$pages.include("$content.loginroot/register.html",$context)
 					#end	
