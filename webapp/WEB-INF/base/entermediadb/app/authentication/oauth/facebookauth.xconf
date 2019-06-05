@@ -3,7 +3,7 @@
 <path-action name="OauthModule.login"/>
 <property name="provider">facebook</property>
 	<path-action name="Admin.redirect">
-		  <redirectpath>$apphome/account/welcome.html</redirectpath>
+		  <redirectpath>/entermediadb/app/account/index.html</redirectpath>
 	</path-action>
 
 </page>
