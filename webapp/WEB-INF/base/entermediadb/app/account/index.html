@@ -1,10 +1,9 @@
 #set($selectedUser = $user)
-
+$isnewuser
 #set( $instancehits = $mediaarchive.query("entermedia_clients").exact("userid", $selectedUser.id).enduser(true).search($context) )
 
 
-
-<h1>Control Panel</h1>
+<h1>[[Control Panel]]</h1>
 
 #if( !$instancehits.isEmpty() )
     <div class="emdata">
@@ -26,16 +25,17 @@
     </table>
     </div>
 #else 
-    <a href="/entermediadb/app/site/sitedeployer/createsite.html" class="btn btn-secondary btn-sm">Deploy Site</a>
+    <a href="/entermediadb/app/site/sitedeployer/createsite.html" class="btn btn-secondary btn-sm">[[Deploy Site]]</a>
 #end
 
 
 
-<div class="" style="padding:20px; background-color: #eee; margin:40px 0">
+<div class="" style="padding:20px; background-color: #eee; margin:40px 0"> 
 
-    <h2>Support</h2>
-    
-    <p>Feel free to email us at: <a href="mailto:help@entermediadb.org">help@entermediadb.org</a> to know more about our Support Plans.</p>
+<h2>[[Support]]</h2>
 
+<p>Feel free to email us at: <a href="mailto:help@entermediadb.org">help@entermediadb.org</a> to know more about our Support Plans.</p>
 
 </div>
+
+
