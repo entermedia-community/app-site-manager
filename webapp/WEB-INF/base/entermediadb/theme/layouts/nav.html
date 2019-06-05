@@ -33,15 +33,15 @@
 	
         #if( $user )
             <li class="nav-item " >
-             	<a class="nav-link #if($content.section == "account") active #end" href="/app/account/index.html">[[Account]]</a>
+             	<a class="nav-link #if($content.section == "account") active #end" href="/entermediadb/app/account/index.html">[[Account]]</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link #if($content.section == "authentication") active #end" href="/app/authentication/logout.html">[[Log Out]]</a>
+              <a class="nav-link #if($content.section == "authentication") active #end" href="/entermediadb/app/authentication/logout.html">[[Log Out]]</a>
             </li>
             #else
             <li class="nav-item ">
-              <a class="nav-link #if($content.section == "authentication") active #end" href="/app/authentication/login.html">[[Login]]</a>
+              <a class="nav-link #if($content.section == "authentication") active #end" href="/entermediadb/app/authentication/login.html">[[Login]]</a>
             </li>
 	    <li class="nav-item">
               <a class="btn btn-secondary btn-sm" href="/entermediadb/app/site/sitedeployer/createaccount.html">Free Account</a>
