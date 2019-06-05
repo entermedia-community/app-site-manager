@@ -1,0 +1,32 @@
+#
+#Tue Feb 27 20:51:44 UTC 2018
+Editing\ Boxes=Edici\u00F3n de cuadros
+Use\ Asset\ Type=Usar tipo de activo
+Save=Guardar
+Render\ Table=Render Table
+Render\ Table\ Custom\ View=Renderizar vista personalizada de tabla
+Render\ as\ Table?=Render como tabla?
+Table=Mesa
+Show\ on\ registration\ section\:=Mostrar en la secci\u00F3n de registro\:
+Fields=Campos
+Asset\ Type=Tipo de activo
+Render\ Table\ Default\ Sort=Render Table Default Sort
+org.openedit.xml.XmlFile@24f7e41b=org.openedit.xml.XmlFile@24f7e41b
+org.openedit.xml.XmlFile@6e423c4=org.openedit.xml.XmlFile@6e423c4
+Default=Defecto
+Remove\ Selected\ From\ This\ View=Quitar Seleccionados de esta Vista
+New\ View\ Name=Nombre de la Nueva Vista
+Edit\ Permissions=Editar permisos
+Link\ to\ Module=Enlace al M\u00F3dulo
+System\ View?=Vista del sistema?
+Rename\ View\ As=Renombrar Vista Como
+Render\ Table\ External\ ID=Renderizar Id. Externo de la Tabla
+Views=Vistas
+Visible\ Fields=Campos Visibles
+View=Vista
+Make\ Default=Hacer por defecto
+Add\ New\ Property=A\u00F1adir Nueva Propiedad
+Settings=Configuraciones
+Add=A\u00F1adir
+View\ Name=Ver nombre
+Add\ New=Agregar nuevo

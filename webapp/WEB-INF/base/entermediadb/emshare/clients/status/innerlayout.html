@@ -1,0 +1,12 @@
+#set($data = $mediaarchive.getData("monitoredsites", $content.getPageName()))
+
+
+<h1>$data status</h1>
+
+<img src="$apphome/theme/images/${data.monitoringstatus}.png"/>
+
+#set ( $searcher = $mediaarchive.getSearcher("monitoredsites") )
+$context.putPageValue("searcher", $searcher)
+$context.putPageValue("view","monitoredsites/client")	
+$context.putPageValue("data", $data)	
+$pages.include("/${applicationid}/components/xml/detaileditor.html?detailsreadonly=true", $context)
