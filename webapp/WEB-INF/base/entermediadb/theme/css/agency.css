@@ -160,6 +160,7 @@ img::-moz-selection {
 
 #mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
   color: #01b34f;
+ text-decoration: none;
 }
 
 @media (min-width: 992px) {
@@ -1606,35 +1607,55 @@ padding:20px;
 .account-sidebar {
     width:250px;
     position:absolute;
-    padding-top:10px;
+    
 }
 .account-content {
     margin-left:260px;
     padding:10px 40px;
 } 
 .account-content h1 {
-    padding: 10px 0;
-    margin:10px 0 25px;
+    padding: 0 0 10px;
+    margin:0 0 25px;
     border-bottom: 2px solid #CDDDCA;
 }
 
 
 .sidebar-box {
     border:1px solid #e6e6e6;
-    margin:10px 5px;
+background-color: #fff;
+    margin:10px 5px 20px;
       
 }
 .sidebar-box-header {
-    background-color: #efefef;
+    background-color: #f5f5f5;
     border-top: 8px solid #FEBC47;
     font-size: 1.1rem;
     line-height: 2;
     padding:2px 10px;
 }
 
+.sidebar-box-support .sidebar-box-header  {
+	   border-top: 8px solid #419D50;
+}
+
 .sidebar-box-content {
     padding:10px;
 }
+
+.sidebar-opentickets {
+	margin: 0 0 10px;
+	padding: 0;
+	list-style: none;
+}
+.sidebar-opentickets li {
+	display:block;
+	margin-bottom: 5px;
+	padding:3px;
+}
+.sidebar-opentickets li:hover {
+	background-color: rgb(0,0,0,0.1);
+}
+
 
 .oauthproviderbtn {
     margin-bottom: 15px;

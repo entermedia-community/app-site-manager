@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-  <property name="fallbackdirectory">/WEB-INF/base/entermediadb/app</property>
+  <property name="fallbackdirectory">/WEB-INF/base/eminstitute/app</property>
   <property name="catalogid">entermediadb/catalog</property>
   <property name="applicationid">entermediadb/app</property>
   <property name="siteid">entermediadb</property>
   <path-action name="MediaArchiveModule.loadApplicationId"/>
+  
   <property name="isfullscreen">true</property>
   <property name="section">account</property>
+  
+  <inner-layout />
 
 
 </page>
