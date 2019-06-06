@@ -1,5 +1,0 @@
-#
-#Thu Jan 10 09:27:27 EST 2019
-Account=Compte
-Login=S&\#39;identifier
-Log\ Out=Connectez - Out

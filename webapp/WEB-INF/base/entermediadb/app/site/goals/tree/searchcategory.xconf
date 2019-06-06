@@ -1,4 +1,0 @@
-<page>
-
-	<inner-layout>/${applicationid}/layouts/dialoglayout.html</inner-layout>
-</page>

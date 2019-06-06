@@ -1,5 +1,0 @@
-#
-#Thu Apr 18 05:18:30 EDT 2019
-Account=Paskyra
-Login=Prisijungti
-Log\ Out=Atsijungti

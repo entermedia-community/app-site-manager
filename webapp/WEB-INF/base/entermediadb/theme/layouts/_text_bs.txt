@@ -1,5 +1,0 @@
-#
-#Sat Apr 13 12:54:14 EDT 2019
-Account=Ra\u010Dun
-Login=Ulogovati se
-Log\ Out=Odjaviti se

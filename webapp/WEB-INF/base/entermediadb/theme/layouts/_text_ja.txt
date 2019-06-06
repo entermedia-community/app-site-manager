@@ -1,5 +1,0 @@
-#
-#Wed Apr 10 23:25:43 EDT 2019
-Account=\u30A2\u30AB\u30A6\u30F3\u30C8
-Login=\u30ED\u30B0\u30A4\u30F3
-Log\ Out=\u30ED\u30B0\u30A2\u30A6\u30C8

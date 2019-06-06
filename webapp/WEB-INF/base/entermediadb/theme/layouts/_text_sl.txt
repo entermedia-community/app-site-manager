@@ -1,5 +1,0 @@
-#
-#Sun May 05 06:53:30 EDT 2019
-Account=ra\u010Dun
-Login=Vpi\u0161i se
-Log\ Out=Izpisati

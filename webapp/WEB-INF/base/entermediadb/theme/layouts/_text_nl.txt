@@ -1,9 +1,0 @@
-#
-#Tue Apr 09 22:47:30 EDT 2019
-Profiles=profielen
-Account=Account
-Home=Huis
-Collectives=collectieven
-Login=Log in
-Contact=Contact
-Log\ Out=Uitloggen

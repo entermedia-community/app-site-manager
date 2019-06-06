@@ -1,5 +1,0 @@
-#
-#Tue Apr 09 20:39:38 EDT 2019
-Account=hesap
-Login=Oturum a\u00E7
-Log\ Out=\u00C7\u0131k\u0131\u015F Yap

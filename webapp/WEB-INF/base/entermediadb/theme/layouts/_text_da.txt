@@ -1,5 +1,0 @@
-#
-#Sat Apr 27 19:30:33 EDT 2019
-Account=Konto
-Login=Log p\u00E5
-Log\ Out=Log ud

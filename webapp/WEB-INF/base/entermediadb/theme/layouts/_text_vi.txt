@@ -1,5 +1,0 @@
-#
-#Sat Apr 13 07:46:35 EDT 2019
-Account=T\u00E0i kho\u1EA3n
-Login=\u0110\u0103ng nh\u1EADp
-Log\ Out=\u0110\u0103ng xu\u1EA5t
