@@ -1,6 +1,8 @@
 #set($selectedUser = $user)
 
-#set( $instancehits = $mediaarchive.query("entermedia_clients").exact("userid", $selectedUser.id).enduser(true).search($context) )
+##Search collections this user own or is teammeber
+##Search instances in these collections
+#set( $instancehits = $mediaarchive.query("entermedia_instances").exact("userid", $selectedUser.id).enduser(true).search($context) )
 
 
 <h1>[[Control Panel]]</h1>

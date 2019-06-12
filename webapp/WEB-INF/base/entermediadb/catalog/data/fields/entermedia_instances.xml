@@ -17,6 +17,11 @@
       <language id="fr"><![CDATA[Identité]]></language> 
     </name> 
   </property>  
+    <property id="librarycollection" required="true" index="true" stored="true" editable="true"  type="list" viewtype="autocomplete" listid="librarycollection" datatype="list" >Library 
+    <name> 
+      <language id="en"><![CDATA[Organization]]></language>  
+    </name> 
+  </property>  
   <property id="datestart" index="true" internalfield="false" editable="true" isbadge="false" viewtype="date" rendertype="date" required="false" multilanguage="false" filter="false" datatype="date" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
     <name> 
       <language id="en"><![CDATA[Start Date]]></language> 
