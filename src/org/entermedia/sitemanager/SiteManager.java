@@ -11,10 +11,13 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.entermedia.autofailover.AutoFailoverManager;
@@ -37,6 +40,7 @@ import org.openedit.OpenEditException;
 import org.openedit.data.Searcher;
 import org.openedit.util.DateStorageUtil;
 import org.openedit.util.HttpRequestBuilder;
+import org.openedit.util.HttpSharedConnection;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -52,6 +56,9 @@ public class SiteManager implements CatalogEnabled
 	private JSONObject fieldJson;
 	private int MAX_ERROR = 10;
 	int CPU_TIME_AVG = 10;
+	
+	private HttpSharedConnection httpconnection;
+
 	
 	private void sendResolved(MultiValued inReal, MediaArchive inArchive, String inDates)
 	{
@@ -80,6 +87,79 @@ public class SiteManager implements CatalogEnabled
 
 	}
 
+	private JSONObject buildPushNotification(MultiValued inReal, JSONObject json)
+	{
+		if (json == null)
+		{
+			json = new JSONObject();
+			json.put("channel", "emergency_monitor");
+			json.put("as_user", false);
+			json.put("username", "csbotkey");
+			json.put("text", "<!channel> Monitor Alert: ");
+		}
+
+		String message = "\n" + "" + inReal.get("name") + " at " + inReal.get("server") + " - " + inReal.get("url") + ": ";
+		if (!(boolean)inReal.getValue("isreachable"))
+		{
+			message += ". Health checks failed two consecutive time on, the instance might be down, please review it ASAP.";
+		}
+		if ((boolean)inReal.getValue("isssl"))
+		{
+			switch (inReal.get("sslstatus"))
+			{
+			case "torenew":
+				message += " The instance's SSL certificate will expires in " + inReal.get("daystoexpiration") + " 	days" + ".";
+				break;
+			case "expired":
+				message += " The instance's SSL certificate has expired on " + inReal.get("expirationdate") + ".";
+				break;
+			case "error":
+				message += " Can't retrieve any SSL certificate for the following instance.";
+				break;
+			default:
+				break;
+			}
+		}
+		if (inReal.get("isdisk").compareTo("true") == 0)
+		{
+			message += " One or more disk partition is running out of space.";
+		}
+		json.put("text", (String)json.get("text") + message);
+		return json;
+	}
+
+	private void sendPushNotification(JSONObject json)
+	{
+		String url = "https://slack.com/api/chat.postMessage";
+		String token = getMediaArchive().getCatalogSettingValue("slack_api_key");
+
+		try
+		{
+			if (token == null || token != null && token.isEmpty())
+			{
+				throw new Exception("No Slack user token set in catalogsettings");
+			}
+			HttpPost httpMethod = new HttpPost(url);
+			httpMethod.setHeader("Authorization", "Bearer " + token);
+			httpMethod.setEntity(new StringEntity(json.toString(), "UTF-8"));
+			
+			httpMethod.setHeader("Content-Type", "application/json; charset=utf-8");
+
+			HttpResponse response = getHttpConnection().getSharedClient().execute((HttpUriRequest) httpMethod);
+			StatusLine sl = response.getStatusLine();
+
+			if (sl.getStatusCode() != 201)
+			{
+				throw new Exception("Can't send push notification: status code " + sl.getStatusCode());
+			}
+		}
+		catch (Exception e)
+		{
+			log.error("Error sending push notification", e);
+		}
+
+	}
+	
 	private Map<String, Integer> getUsageMaxByClient(final Data inReal)
 	{
 		HashMap<String, Integer> map = new HashMap<String, Integer>()
@@ -398,7 +478,9 @@ public class SiteManager implements CatalogEnabled
 		log.info("starting scan");
 		Searcher sites = inArchive.getSearcher("monitoredsites");
 		Collection<Data> sitestomonitor = sites.query().all().search();
-
+		JSONObject json = null;
+		boolean pushNotification = false;
+		
 		for (Data it : sitestomonitor)
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
@@ -437,12 +519,17 @@ public class SiteManager implements CatalogEnabled
 						{
 							if (real.getValue("isautofailover") != null )
 							{
-								if ((boolean)real.getValue("isautofailover") && (boolean)dns.getValue("isfailover"))
+								if ((boolean)real.getValue("isautofailover"))
 								{
-									leaveFailover(real, dns);
+									if ((boolean)dns.getValue("isfailover"))
+									{
+										leaveFailover(real, dns);
+									}
 								}
 							}
 							reachable = true;
+							real.setValue("monitorstatuscolor", "GREEN");
+							real.setValue("lastcheckfail", false);
 						}
 					}
 					else 
@@ -450,11 +537,15 @@ public class SiteManager implements CatalogEnabled
 						stats = scanStats(stats, real);
  						reachable = true;
 						real.setValue("monitorstatuscolor", "GREEN");
+						real.setValue("lastcheckfail", false);
 						if (real.getValue("isautofailover") != null )
 						{
-							if ((boolean)real.getValue("isautofailover") & (boolean)dns.getValue("isfailover"))
+							if ((boolean)real.getValue("isautofailover"))
 							{
-								leaveFailover(real, dns);
+								if ((boolean)dns.getValue("isfailover"))
+								{
+									leaveFailover(real, dns);
+								}
 							}
 						}
 					}	
@@ -466,6 +557,14 @@ public class SiteManager implements CatalogEnabled
 				if (!reachable)
 				{
 					real.setValue("isreachable", false);
+					real.setValue("lastcheckfail", true);
+					String clusterColor = (String)real.getValue("monitorstatuscolor");
+					
+					if (clusterColor.compareTo("GREEN") == 0)
+					{
+						real.setValue("lastcheckfail", true);
+					}
+					
 					setErrorType(disk, memory, heap, cpu, reachable, false/*
 																			 * swap
 																	 */, real);
@@ -486,11 +585,11 @@ public class SiteManager implements CatalogEnabled
 						}
 						else
 						{
-							if (!(boolean)real.getValue("lastcheckfail"))
+							if ((boolean)real.getValue("lastcheckfail") && clusterColor.compareTo("GREEN") == 0)
 							{
 								real.setValue("monitorstatuscolor", "YELLOW");
 							}
-							else
+							else if (clusterColor.compareTo("YELLOW") == 0)
 							{
 								real.setValue("monitorstatuscolor", "RED");
 							}
@@ -538,6 +637,12 @@ public class SiteManager implements CatalogEnabled
 						setErrorType(disk, memory, heap, cpu, reachable, false/*
 																				 * swap
 																				 */, real);
+						String clusterColor = (String)real.getValue("monitorstatuscolor");
+
+						if (clusterColor.compareTo("GREEN") == 0)
+						{
+							real.setValue("monitorstatuscolor", "RED");
+						}
 						throw new OpenEditException("Hardware overload");
 					}
 				}
@@ -550,7 +655,6 @@ public class SiteManager implements CatalogEnabled
 					}
 				}
 				real.setValue("monitoringstatus", "ok");
-				real.setValue("monitorstatuscolor", "YELLOW");
 				real.setValue("alerttype",new ArrayList<String>());
 			}
 			catch (Exception e)
@@ -567,16 +671,25 @@ public class SiteManager implements CatalogEnabled
 				{
 					alertcount += 1;
 					real.setValue("alertcount", alertcount);
-					if (!Boolean.parseBoolean(real.get("mailsent")))
+					if (real.get("monitorstatuscolor").compareTo("RED") == 0)
 					{
-						if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
+						if (!Boolean.parseBoolean(real.get("mailsent")))
 						{
-							buildEmail(real, inArchive);
+							if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
+							{
+								buildEmail(real, inArchive);
+								json = buildPushNotification(real, json);
+								pushNotification = true;
+							}
 						}
 					}
 				}
 			}
 			real.setProperty("lastchecked", dates);
+			if (pushNotification && json != null)
+			{
+				sendPushNotification(json);
+			}
 			sites.saveData(real, null);
 		}
 		log.info("scan complete");
@@ -681,4 +794,14 @@ public class SiteManager implements CatalogEnabled
 	{
 		fieldJson = inJson;
 	}
+
+	public HttpSharedConnection getHttpConnection()
+	{
+		if (httpconnection == null)
+		{
+			httpconnection = new HttpSharedConnection();
+		}
+		return httpconnection;
+	}
+
 }
