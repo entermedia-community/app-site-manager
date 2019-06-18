@@ -148,7 +148,7 @@ public class SiteManager implements CatalogEnabled
 			HttpResponse response = getHttpConnection().getSharedClient().execute((HttpUriRequest) httpMethod);
 			StatusLine sl = response.getStatusLine();
 
-			if (sl.getStatusCode() != 201)
+			if (sl.getStatusCode() != 200)
 			{
 				throw new Exception("Can't send push notification: status code " + sl.getStatusCode());
 			}
