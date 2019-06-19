@@ -12,7 +12,7 @@
   <path-action bean="userManager" name="PageValue.loadPageVariable" allowduplicates="true" />
  
   
-  <inner-layout>./layout.html</inner-layout>
+  <inner-layout>/${applicationid}/site/sitedeployer/layout.html</inner-layout>
   
   
 </page>

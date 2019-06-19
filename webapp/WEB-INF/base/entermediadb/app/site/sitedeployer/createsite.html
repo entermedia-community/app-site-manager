@@ -2,7 +2,10 @@
 
 
 ##TODO: Change to susbribers logic?
-#set( $organizations = $mediaarchive.query("librarycollection").exact("owner",$user.getId()).search() )
+##Search collections this user is teammeber
+#set($selectedUser = $user)
+#set( $organizations = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selectedUser.getId()).exact("ontheteam","true").search() )
+
 #if(!$organizations)
 	Register a <a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog">new organization here</a>.
 #else
@@ -14,7 +17,7 @@
 
 <div class="card card-login mx-auto mt-5">
   <div class="card-header">
-  <strong>[[Customize your EnterMediaDB Instance]]</strong>
+  <strong>[[Customize your Instance]]</strong>
   </div>
   <div class="card-body">
 	<div class="row">
@@ -32,17 +35,18 @@
 				<option value="$collective.getId()">#esc($collective.name)</option>
 			#end
 		   </select>
-
-		   Or register a <a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog">new organization here</a>.
-				
 			</div>
+			<p>Or register a <a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog" style="text-decoration: underline" title="[[Create Organization]]">new organization here</a>.</p>
+		</div>
+		<div class="col-sm-6">
+		
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-sm-6">
 			<div class="form-group">
 				<label for="user">[[Instance Name]]</label>
-				<input class="form-control" id="instancename" name="instancename" type="text" placeholder="[[Instance Name]]" value="" required data-msg="[[Please enter your name]].">
+				<input class="form-control" id="instancename" name="instancename" type="text" placeholder="[[Instance Name]]" value="" required data-msg="[[Please enter Instance name]].">
 				
 			</div>
 		</div>
@@ -122,7 +126,7 @@
 
 var rf = function()
 {
-	niceURI = $("#name").val().toLowerCase().replace(/[^a-zA-Z0-9-_]/g, '');
+	niceURI = $("#instancename").val().toLowerCase().replace(/[^a-zA-Z0-9-_]/g, '');
 	$("#organization_url").val(niceURI.substring(0, 24));
 	
 	/*$.ajax({
@@ -143,7 +147,7 @@ var rf = function()
 
 jQuery(document).ready(function() 
 { 
-	$("#name").on("keyup",function()
+	$("#instancename").on("keyup",function()
 	{
 		rf();
 	});

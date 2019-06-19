@@ -1,13 +1,8 @@
 ##Exising ones 
 ##No existing programs found.
 
-<div class="contentcolumn" style="margin:40px;">
-<h1>[[Create an Organization]]</h1>  
-  <div class="" style="padding:20px;">
 
-#set( $searcher = $mediaarchive.getSearcher("librarycollection") )
-#set( $xmledithome  = "$apphome/components/xml")
-$context.putPageValue("searcher", $searcher)
+
 <form name="saveproject" id="saveproject" action="$apphome/site/sitedeployer/add/saveorganization.html" method="post" class="force-validate-inputs">
 
 	<input type="hidden" name="save" value="true" />
@@ -16,7 +11,10 @@ $context.putPageValue("searcher", $searcher)
 	<input type="hidden" name="field" value="owner" />
 	<input type="hidden" name="owner.value" value="$user.getId()" />
 	
-	#set( $searcher = $mediaarchive.getSearcher("organization") )
+	
+	<input type="hidden" name="collectionroot" value="site/sitedeployer/createsite.html" />
+	
+	#set( $searcher = $mediaarchive.getSearcher("librarycollection") )
 	$context.putPageValue("searcher",$searcher)
 	$context.putPageValue("view", "organization/addnew")
 	
@@ -25,5 +23,3 @@ $context.putPageValue("searcher", $searcher)
   
 </form>
 
-  </div>
-</div>

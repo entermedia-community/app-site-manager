@@ -56,8 +56,9 @@ public void init()
 		Searcher instancesearcher = searcherManager.getSearcher(catalogid, "entermedia_instances");
 		Data newinstance = instancesearcher.createNewData();
 		newinstance.setValue("librarycollection", organizationid);
-		newinstance.setValue("instance_status", "false");
+		newinstance.setValue("instance_status", "pending");
 		newinstance.setValue("name", instancename); //Needs validation?
+		newinstance.setValue("instanceurl", selected_url);
 		newinstance.setValue("istrial", true);
 		
 		instancesearcher.saveData(newinstance);
@@ -71,135 +72,139 @@ public void init()
 		Data seat = null;
 		Data server = null;
 		//Check if server's seat has room
-		for (Iterator serverIterator = servers.iterator(); serverIterator.hasNext();)
-		{
-			server = serversSearcher.loadData(serverIterator.next());
-			log.info("- Checking server " + server.getName());
-			HitTracker seats = mediaarchive.query("entermedia_seats").match("seatstatus", "true").match("entermedia_servers", server.id).search();
-			if ( seats.size() < Integer.parseInt(server.maxinstance) )
+		if (servers) 
 			{
-				seat = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).searchOne();
-				break;
-			}
-		 }
-
-        
-		
-		if (seat == null) {
-			log.info("No seats available. Max: "+server.maxinstance);
-			context.putPageValue("errormsg","<h1>Ups!</h1><p>No Demo sites available for now. Please contact <a href='mailto:help@entermediadb.org'>EnterMedia Support Team</a>.</p>");
-			
-			//Send Email Notify No Seats
-			context.putPageValue("from", clientemail);
-			context.putPageValue("subject", "No Seats Available for Trial Sites");
-			sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
-		}
-		else{
-			log.info(seat);
-			// Call deploy script 
-			try {
-				List<String> command = new ArrayList<String>();
-				command.add(server.sshname); //server name
-				command.add(server.dockersubnet);  //server subnet
-				command.add(selected_url);  //client url
-				command.add(String.valueOf(seat.nodeid));  //client nodeid				
-				command.add(server.getValue("serverurl"));  // DNS
-				
-				Exec exec = moduleManager.getBean("exec");
-				ExecResult done = exec.runExec("setupclient", command); //Todo: Need to move this script here?
-				log.info("Exec: " + done.getStandardOut());
-				if (done.getStandardOut() != null) {
-					
-					String fullURL = selected_url + "." + server.serverurl;
-					
-					newinstance.setValue("instanceurl", fullURL);
-					newinstance.setValue("instance_status", "active");
-					newinstance.setValue("istrial", true);
-					newinstance.setValue("entermedia_servers", server.id);
-					DateStorageUtil dateStorageUtil = DateStorageUtil.getStorageUtil();
-					newinstance.setValue("datestart", new Date());
-					newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
-					instancesearcher.saveData(newinstance);
-					
-					//Assign client to seat
-					seat.setValue("instanceid", newinstance.getId());
-					seat.setValue("seatstatus", "true");
-					mediaarchive.saveData("entermedia_seats", seat);
-					
-					
-					
-					/*
-					Data client = mediaarchive.query("client").match("name", organization).searchOne();
-					Data group = null;
-					if ( client == null )
-					{
-						log.info("Client not found, creating new client and group");
-						client = addNewClient();
-						group = addNewGroup();
-						Searcher userSearcher = searcherManager.getSearcher(catalogid, "user");
-						
-						Collection groups = (Collection)user.getValues("groups");
-						if (groups == null)
-						{
-							groups = new ArrayList<Data>();
-						}
-			
-						groups.add(group.getId());
-						user.setValue("groups", groups);
-						userSearcher.saveData(user, null);
-					}
-	                else {
-	                    //Account exists, send error message to let them know
-						group = mediaarchive.query("group").match("name", organization).searchOne();
-	                }
-				
-	
-	                //Add Site to Monitoring
-					Data monitor = addNewMonitor(server, "http://" + fullURL, client.id);
-	
-					//Add New Collection
-					//addNewCollection(fullURL, newclient.id, monitor.id, group.id);
-	
-					
-									
-	
-					
-					Collection instances = (Collection)trialclient.getValues("instances");
-					if (instances == null)
-					{
-						instances = new ArrayList<Data>();
-					}
-					instances.add(newinstance.getId());
-					log.info("instanceid " + newinstance.getId());
-					trialclient.setValue("instances", instances);
-					clientsearcher.saveData(trialclient);
-					*/
-					
-					context.putPageValue("userurl",fullURL);
-					//context.putPageValue("client_name", organization);
-					context.putPageValue("newuser", "admin");
-					context.putPageValue("newpassword", "admin");
-					
-	                //Send Notification to us
-					context.putPageValue("from", clientemail);
-					context.putPageValue("subject", "New Activation - http://" + fullURL);
-					sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");
-					
-					
-					//Send Email to Client
-					context.putPageValue("from", notifyemail);
-					context.putPageValue("subject", "Welcome to EnterMediaDB ");
-					sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
+			for (Iterator serverIterator = servers.iterator(); serverIterator.hasNext();)
+			{
+				server = serversSearcher.loadData(serverIterator.next());
+				log.info("- Checking server " + server.getName());
+				HitTracker seats = mediaarchive.query("entermedia_seats").match("seatstatus", "true").match("entermedia_servers", server.id).search();
+				if ( seats.size() < Integer.parseInt(server.maxinstance) )
+				{
+					seat = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).searchOne();
+					break;
 				}
+			 }
+		
+			if (seat == null) {
+				log.info("No seats available. Max: "+server.maxinstance);
+				context.putPageValue("errormsg","<h1>Ups!</h1><p>No Demo sites available for now. Please contact <a href='mailto:help@entermediadb.org'>EnterMedia Support Team</a>.</p>");
+				
+				//Send Email Notify No Seats
+				context.putPageValue("from", clientemail);
+				context.putPageValue("subject", "No Seats Available for Trial Sites");
+				sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
+			}
+			else{
+				log.info("Seat found: " + seat);
+				// Call deploy script 
+				try {
+					List<String> command = new ArrayList<String>();
+					command.add(server.sshname); //server name
+					command.add(server.dockersubnet);  //server subnet
+					command.add(selected_url);  //client url
+					command.add(String.valueOf(seat.nodeid));  //client nodeid				
+					command.add(server.getValue("serverurl"));  // DNS
+					
+					Exec exec = moduleManager.getBean("exec");
+					ExecResult done = exec.runExec("setupclient", command); //Todo: Need to move this script here?
+					log.info("Exec: " + done.getStandardOut());
+					if (done.getStandardOut() != null) {
+						
+						String fullURL = selected_url + "." + server.serverurl;
+						
+						newinstance.setValue("instanceurl", fullURL);
+						newinstance.setValue("instance_status", "active");
+						newinstance.setValue("istrial", true);
+						newinstance.setValue("entermedia_servers", server.id);
+						DateStorageUtil dateStorageUtil = DateStorageUtil.getStorageUtil();
+						newinstance.setValue("datestart", new Date());
+						newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
+						instancesearcher.saveData(newinstance);
+						
+						//Assign client to seat
+						seat.setValue("instanceid", newinstance.getId());
+						seat.setValue("seatstatus", "true");
+						mediaarchive.saveData("entermedia_seats", seat);
+						
+						
+						
+						/*
+						Data client = mediaarchive.query("client").match("name", organization).searchOne();
+						Data group = null;
+						if ( client == null )
+						{
+							log.info("Client not found, creating new client and group");
+							client = addNewClient();
+							group = addNewGroup();
+							Searcher userSearcher = searcherManager.getSearcher(catalogid, "user");
+							
+							Collection groups = (Collection)user.getValues("groups");
+							if (groups == null)
+							{
+								groups = new ArrayList<Data>();
+							}
+				
+							groups.add(group.getId());
+							user.setValue("groups", groups);
+							userSearcher.saveData(user, null);
+						}
+		                else {
+		                    //Account exists, send error message to let them know
+							group = mediaarchive.query("group").match("name", organization).searchOne();
+		                }
+					
+		
+		                //Add Site to Monitoring
+						Data monitor = addNewMonitor(server, "http://" + fullURL, client.id);
+		
+						//Add New Collection
+						//addNewCollection(fullURL, newclient.id, monitor.id, group.id);
+		
+						
+										
+		
+						
+						Collection instances = (Collection)trialclient.getValues("instances");
+						if (instances == null)
+						{
+							instances = new ArrayList<Data>();
+						}
+						instances.add(newinstance.getId());
+						log.info("instanceid " + newinstance.getId());
+						trialclient.setValue("instances", instances);
+						clientsearcher.saveData(trialclient);
+						*/
+						
+						context.putPageValue("userurl",fullURL);
+						//context.putPageValue("client_name", organization);
+						context.putPageValue("newuser", "admin");
+						context.putPageValue("newpassword", "admin");
+						
+		                //Send Notification to us
+						context.putPageValue("from", clientemail);
+						context.putPageValue("subject", "New Activation - http://" + fullURL);
+						sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");
+						
+						
+						//Send Email to Client
+						context.putPageValue("from", notifyemail);
+						context.putPageValue("subject", "Welcome to EnterMediaDB ");
+						sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
+					}
+				
+					}
+					catch(Exception e){
+						 e.printStackTrace();
+					}
+			
+			}
+			}
+			else {
+				log.info("No servers available.");
+				context.putPageValue("errormsg","<h1>Ups!</h1><p>No Demo sites available for now. Please contact <a href='mailto:help@entermediadb.org'>EnterMedia Support Team</a>.</p>");
 				
 			}
-			catch(Exception e){
-				 e.printStackTrace();
-			}
-			
-		}
-		
-		
 		
 	}
 }
