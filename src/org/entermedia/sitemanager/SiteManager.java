@@ -120,7 +120,7 @@ public class SiteManager implements CatalogEnabled
 				break;
 			}
 		}
-		if (inReal.get("isdisk").compareTo("true") == 0)
+		if (inReal.get("isdisk") != null && inReal.get("isdisk").compareTo("true") == 0)
 		{
 			message += " One or more disk partition is running out of space.";
 		}
