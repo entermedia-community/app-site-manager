@@ -680,19 +680,19 @@ public class SiteManager implements CatalogEnabled
 					}
 				}
 				real.setProperty("lastchecked", dates);
-				if (pushNotification && json != null)
-				{
-					try
-					{
-						sendPushNotification(json);
-					}
-					catch (Exception enotif)
-					{
-						log.error("Error sending slack notification" + real.get("name"), enotif);
-					}
-				}
 			}
 		sites.saveData(real, null);
+		}
+		if (pushNotification && json != null)
+		{
+			try
+			{
+				sendPushNotification(json);
+			}
+			catch (Exception e)
+			{
+				log.error("Error sending slack notification", e);
+			}
 		}
 		log.info("scan complete");
 	}
