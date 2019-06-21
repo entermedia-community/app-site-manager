@@ -54,10 +54,10 @@ public class SiteManager implements CatalogEnabled
 	protected AutoFailoverManager fieldAutoFailoverManager;
 	protected Searcher fieldDnsSearcher;
 	private JSONObject fieldJson;
-	private int MAX_ERROR = 10;
 	int CPU_TIME_AVG = 10;
 	
 	private HttpSharedConnection httpconnection;
+	private HttpClient fieldHttpClient;
 
 	
 	private void sendResolved(MultiValued inReal, MediaArchive inArchive, String inDates)
@@ -146,7 +146,10 @@ public class SiteManager implements CatalogEnabled
 			httpMethod.setHeader("Content-Type", "application/json; charset=utf-8");
 
 			log.info("before call slack API");
-			HttpResponse response = getHttpConnection().getSharedClient().execute((HttpUriRequest) httpMethod);
+			
+//			HttpResponse response = getHttpConnection().getSharedClient().execute((HttpUriRequest) httpMethod);
+			HttpResponse response = getHttpClient().execute((HttpUriRequest) httpMethod);
+			
 			log.info("aftercall slack API");
 			StatusLine sl = response.getStatusLine();
 
@@ -690,8 +693,8 @@ public class SiteManager implements CatalogEnabled
 				}
 			}
 		sites.saveData(real, null);
-		log.info("scan complete");
 		}
+		log.info("scan complete");
 	}
 	
 	private void enterFailover(MultiValued real, Data dns, boolean isPrep)
@@ -803,4 +806,20 @@ public class SiteManager implements CatalogEnabled
 		return httpconnection;
 	}
 
+	public HttpClient getHttpClient()
+	{
+		if (fieldHttpClient == null)
+		{
+			RequestConfig globalConfig = RequestConfig.custom()
+		            .setCookieSpec(CookieSpecs.DEFAULT)
+		            .setConnectTimeout(15 * 1000)
+		            .setSocketTimeout(120 * 1000)
+		            .build();
+			fieldHttpClient = HttpClients.custom()
+		            .setDefaultRequestConfig(globalConfig)
+		            .build();
+		}
+		return fieldHttpClient;
+	}
+	
 }
