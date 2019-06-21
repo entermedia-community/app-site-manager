@@ -145,7 +145,9 @@ public class SiteManager implements CatalogEnabled
 			
 			httpMethod.setHeader("Content-Type", "application/json; charset=utf-8");
 
+			log.info("before call slack API");
 			HttpResponse response = getHttpConnection().getSharedClient().execute((HttpUriRequest) httpMethod);
+			log.info("aftercall slack API");
 			StatusLine sl = response.getStatusLine();
 
 			if (sl.getStatusCode() != 200)
@@ -515,49 +517,36 @@ public class SiteManager implements CatalogEnabled
 				{
 					if (isold == true)
 					{
-						log.info("starting old scan 1");
 						if (scanOldSite(real) != null)
 						{
-							log.info("starting old scan 2");
 							if (real.getValue("isautofailover") != null )
 							{
-								log.info("starting old scan 3");
 								if ((boolean)real.getValue("isautofailover"))
 								{
-									log.info("starting old scan 4");
 									if ((boolean)dns.getValue("isfailover"))
 									{
-										log.info("starting old scan 5");
 										leaveFailover(real, dns);
-										log.info("leaving failover old scan");
 									}
 								}
 							}
 							reachable = true;
 							real.setValue("monitorstatuscolor", "GREEN");
 							real.setValue("lastcheckfail", false);
-							log.info("leaving old scan GREEN");
 						}
 					}
 					else 
 					{
-						log.info("starting new scan 1");
 						stats = scanStats(stats, real);
-						log.info("starting new scan 2");
  						reachable = true;
 						real.setValue("monitorstatuscolor", "GREEN");
 						real.setValue("lastcheckfail", false);
 						if (real.getValue("isautofailover") != null )
 						{
-							log.info("starting new scan 2");
 							if ((boolean)real.getValue("isautofailover"))
 							{
-								log.info("starting new scan 3");
 								if ((boolean)dns.getValue("isfailover"))
 								{
-									log.info("starting new scan 4");
 									leaveFailover(real, dns);
-									log.info("starting new scan 5");
 								}
 							}
 						}
@@ -578,16 +567,13 @@ public class SiteManager implements CatalogEnabled
 						real.setValue("lastcheckfail", true);
 					}
 					
-					log.info("before set errortype");
 					setErrorType(disk, memory, heap, cpu, reachable, false/*
 																			 * swap
 																	 */, real);
-					log.info("after set errortype");
 					if (real.getValue("isautofailover") != null )
 					{
 						if ((boolean)real.getValue("isautofailover"))
 						{
-							log.info("is failover = true & error");
 
 							if ((boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
 							{
@@ -602,15 +588,12 @@ public class SiteManager implements CatalogEnabled
 						}
 						else
 						{
-							log.info("is failover = false & error");
 							if ((boolean)real.getValue("lastcheckfail") && clusterColor.compareTo("GREEN") == 0)
 							{
-								log.info("is failover = true & error YELLOw");
 								real.setValue("monitorstatuscolor", "YELLOW");
 							}
 							else if (clusterColor.compareTo("YELLOW") == 0)
 							{
-								log.info("is failover = true & error RED");
 								real.setValue("monitorstatuscolor", "RED");
 							}
 						}
@@ -650,24 +633,18 @@ public class SiteManager implements CatalogEnabled
 					//
 					//				}
 	
-					log.info("after building data report");
 					real = buildData(real, diskSpace, stats, memory, cpu, heap, disk);
 	
-					log.info("after building data report");
-
 					if (memory || heap || cpu || disk)
 					{
-						log.info("entering hardware error");
 						setErrorType(disk, memory, heap, cpu, reachable, false/*
 																				 * swap
 																				 */, real);
-						log.info("hardware error set");
 						String clusterColor = (String)real.getValue("monitorstatuscolor");
 
 						if (clusterColor.compareTo("GREEN") == 0)
 						{
 							real.setValue("monitorstatuscolor", "RED");
-							log.info("hardware error set RED color");
 						}
 						throw new OpenEditException("Hardware overload");
 					}
@@ -677,9 +654,7 @@ public class SiteManager implements CatalogEnabled
 				{
 					if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
 					{
-						log.info("to send resolve");
 						sendResolved(real, inArchive, dates);
-						log.info("sent resolve");
 					}
 				}
 				real.setValue("monitoringstatus", "ok");
@@ -695,11 +670,8 @@ public class SiteManager implements CatalogEnabled
 					{
 						if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
 						{
-							log.info("before building email");
 							buildEmail(real, inArchive);
-							log.info("afterbuilding email");
 							json = buildPushNotification(real, json);
-							log.info("after building notif");
 							pushNotification = true;
 						}
 					}
@@ -707,12 +679,17 @@ public class SiteManager implements CatalogEnabled
 				real.setProperty("lastchecked", dates);
 				if (pushNotification && json != null)
 				{
-					log.info("before sending notif");
-					sendPushNotification(json);
-					log.info("after sending notif");
+					try
+					{
+						sendPushNotification(json);
+					}
+					catch (Exception enotif)
+					{
+						log.error("Error sending slack notification" + real.get("name"), enotif);
+					}
 				}
-				sites.saveData(real, null);
 			}
+		sites.saveData(real, null);
 		log.info("scan complete");
 		}
 	}
