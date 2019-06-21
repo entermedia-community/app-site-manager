@@ -565,6 +565,12 @@ public class SiteManager implements CatalogEnabled
 					real.setValue("lastcheckfail", true);
 					String clusterColor = (String)real.getValue("monitorstatuscolor");
 					
+					if (clusterColor == null)
+					{
+						real.setValue("monitorstatuscolor", "GREEN");
+						sites.saveData(real, null);
+						clusterColor = (String)real.getValue("monitorstatuscolor");
+					}
 					if (clusterColor.compareTo("GREEN") == 0)
 					{
 						real.setValue("lastcheckfail", true);
@@ -644,6 +650,12 @@ public class SiteManager implements CatalogEnabled
 																				 * swap
 																				 */, real);
 						String clusterColor = (String)real.getValue("monitorstatuscolor");
+						if (clusterColor == null)
+						{
+							real.setValue("monitorstatuscolor", "GREEN");
+							sites.saveData(real, null);
+							clusterColor = (String)real.getValue("monitorstatuscolor");
+						}
 
 						if (clusterColor.compareTo("GREEN") == 0)
 						{
@@ -667,7 +679,7 @@ public class SiteManager implements CatalogEnabled
 			{
 				log.error("Error checking " + real.get("name"), e);
 				real.setProperty("monitoringstatus", "error");
-				if (real.get("monitorstatuscolor").compareTo("RED") == 0)
+				if (real.get("monitorstatuscolor") != null && real.get("monitorstatuscolor").compareTo("RED") == 0)
 				{
 					if (!Boolean.parseBoolean(real.get("mailsent")))
 					{
