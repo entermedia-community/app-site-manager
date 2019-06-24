@@ -16,8 +16,7 @@ public void init()
     String notifyemail = "cristobal@entermediadb.org";
 	String clientemail = user.getEmail();
 
-
-/*	
+	
 	String clientform = context.getSessionValue("clientform");
 	if (clientform != null) {
 		context.putSessionValue("clientform", null);
@@ -26,7 +25,7 @@ public void init()
 		context.putPageValue("errormsg", "Invalid Submission. Please  <a href='./createsite.html'>try again</a>.");
 		return;
 	}
-*/
+
 	String organizationid = context.getRequestParameter("collectionid");  //collectionid
 	String instanceurl = context.getRequestParameter("organization_url");
 	String instancename = context.getRequestParameter("instancename");

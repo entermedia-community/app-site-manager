@@ -12,31 +12,44 @@
 	#set( $instances = $mediaarchive.query("entermedia_instances").match("librarycollection", $organization.id).search() )
 		#if ($instances)
 			<div class="emdata">
-		    <table class="table table-stripped table-hover">
+		    <table class="table table-striped table-hover">
 		        <thead>
 		            <tr class="tableheader">
 		                <th>Instance Name</th>
 		                <th>Status</th>
 						<th>Created</th>
+						<th>Expires</th>
 		                <th>URL</th>
 		            </tr>
 		        </thead>
 				#foreach($hit in $instances)
+					#if ($hit.instance_status == "active")
+						#set($instancescount = $instancescount+1)
+					#end
 					<tr>
 			            <td>$hit.name</td>
-						<td>$hit.instance_status	</td>
-			            <td>$!hit.datestart</td>
-			            <td>$hit.instanceurl</td>
+						<td style="text-align: center;">$hit.instance_status	</td>
+			            <td style="text-align: center;">#if($!hit.datestart) $context.getDate($!hit.datestart) #end</td>
+						<td style="text-align: center;">#if($!hit.dateend) $context.getDate($!hit.dateend) #end</td>
+			            <td>
+							#if ($hit.instanceurl)
+								<a href="https://$hit.instanceurl" style="text-decoration: underline" targe="_blank">https://$hit.instanceurl</a>
+							#else
+								$hit.instanceprefix
+							#end
+						</td>
 			        </tr>
-				#set($instancescount = $instancescount+1)
+				
 				#end
 		    </table>
 	    	</div>
 		#end
 #end
- 
-<a href="/entermediadb/app/site/sitedeployer/createsite.html" class="btn btn-secondary btn-sm">[[Deploy Site]]</a>
 
+##only 2 instances per client for now
+ #if ($instancescount < 2)
+<a href="/entermediadb/app/site/sitedeployer/createsite.html" class="btn btn-secondary btn-sm">[[Deploy Site]]</a>
+#end
 
 
 
