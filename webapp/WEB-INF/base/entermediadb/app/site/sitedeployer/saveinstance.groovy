@@ -58,7 +58,7 @@ public void init()
 		newinstance.setValue("librarycollection", organizationid);
 		newinstance.setValue("instance_status", "pending");
 		newinstance.setValue("name", instancename); //Needs validation?
-		newinstance.setValue("instanceurl", selected_url);
+		newinstance.setValue("instanceprefix", selected_url);
 		newinstance.setValue("istrial", true);
 		
 		instancesearcher.saveData(newinstance);
@@ -109,7 +109,7 @@ public void init()
 					Exec exec = moduleManager.getBean("exec");
 					ExecResult done = exec.runExec("setupclient", command); //Todo: Need to move this script here?
 					log.info("Exec: " + done.getStandardOut());
-					if (done.getStandardOut() != null) {
+					
 						
 						String fullURL = selected_url + "." + server.serverurl;
 						
@@ -191,7 +191,7 @@ public void init()
 						context.putPageValue("from", notifyemail);
 						context.putPageValue("subject", "Welcome to EnterMediaDB ");
 						sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
-					}
+					
 				
 					}
 					catch(Exception e){

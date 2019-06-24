@@ -18,13 +18,10 @@ public void init()
 
 	String instanceurl = context.getRequestParameter("organization_url");
 	
-	Searcher clientsearcher = searcherManager.getSearcher(catalogid, "trial_clients");
-
-	SearchQuery cquery = clientsearcher.createSearchQuery();
-	HitTracker seats = clientsearcher.search(cquery);
-	Collection hits = clientsearcher.query().match("instanceurl",instanceurl).search()
-
-	if (hits) {
+	
+	HitTracker instances = mediaarchive.query("entermedia_instances").match("instanceprefix", instanceurl).search();
+	
+	if (instances.size()) {
 		context.putPageValue("result","false");
 	}
 	else {

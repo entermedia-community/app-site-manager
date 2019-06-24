@@ -22,7 +22,7 @@
       <language id="en"><![CDATA[SourcePath]]></language> 
     </name> 
   </property>  
-  <property id="instanceid" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" listid="entermedia_intances" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+  <property id="instanceid" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" listid="entermedia_instances" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
     <name> 
       <language id="en"><![CDATA[Instance Id]]></language> 
     </name> 

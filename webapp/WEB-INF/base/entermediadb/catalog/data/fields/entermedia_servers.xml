@@ -32,11 +32,7 @@
       <language id="en"><![CDATA[serverurl]]></language> 
     </name> 
   </property>  
-  <property id="serverrealname" index="true" editable="true" stored="true">New 
-    <name> 
-      <language id="en"><![CDATA[Server Real Name]]></language> 
-    </name> 
-  </property>  
+
   <property id="sshname" index="true" editable="true" stored="true">New 
     <name> 
       <language id="en"><![CDATA[sshname]]></language> 

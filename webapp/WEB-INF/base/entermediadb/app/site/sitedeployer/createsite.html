@@ -1,7 +1,6 @@
 <h1>Create an EnterMediaDb Instance</h1>
 
 
-##TODO: Change to susbribers logic?
 ##Search collections this user is teammeber
 #set($selectedUser = $user)
 #set( $organizations = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selectedUser.getId()).exact("ontheteam","true").search() )
@@ -9,12 +8,8 @@
 #if(!$organizations)
 	Register a <a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog">new organization here</a>.
 #else
-	
-
-
 
 <form action="./createsitefinish.html" method="post" id="createsiteform">
-
 <div class="card card-login mx-auto mt-5">
   <div class="card-header">
   <strong>[[Customize your Instance]]</strong>
@@ -30,9 +25,10 @@
 				data-placeholder="[[Search Collectives]]"
 				data-url="$apphome/collective/channel/"
 			>
-			#set( $collectives = $mediaarchive.query("librarycollection").search() )
-			#foreach( $collective in $collectives )
-				<option value="$collective.getId()">#esc($collective.name)</option>
+			#foreach( $orghit in $organizations )
+				#set($organization  = $mediaarchive.getCachedData("librarycollection", $orghit.collectionid) )
+				
+				<option value="$organization.getId()">#esc($organization.name)</option>
 			#end
 		   </select>
 			</div>
@@ -87,12 +83,22 @@
 				<div class="col-sm-6">
 			<div class="form-group">
 				<label for="user">[[Select a Region to deploy your trial instance]]</label>
+				
 				<select class="form-control" name="region" required data-msg="[[Please select a region]].">
-				<option value="eu-west">[[Europe - West]]</option>
-				<option value="us-east" selected="selected">[[USA - East]]</option>
-				<option value="us-west">[[USA - West]]</option>
-				<option value="as-center">[[Asia - Singapore]]</option>
+				#set( $servers = $mediaarchive.query("entermedia_servers").search() )
+				#if ($servers)
+					#foreach( $server in $servers )
+						#set( $seats = $mediaarchive.query("entermedia_seats").match("entermedia_servers", $server.getId()).match("seatstatus", "false").search() )
+						#if ($seats && $seats.size() <= $server.maxinstance)
+							<option value="$server.server_region">$server.server_region</option>
+						#end
+					#end
+				#end
 				</select>
+				
+				
+				
+				
 			</div>
 		</div>
 	</div>
@@ -129,21 +135,11 @@ var rf = function()
 	niceURI = $("#instancename").val().toLowerCase().replace(/[^a-zA-Z0-9-_]/g, '');
 	$("#organization_url").val(niceURI.substring(0, 24));
 	
-	/*$.ajax({
-        url: "verifyurl.html",
-        data: {
-            'organization_url' : $('#organization_url').val()
-        },
-        success: function(data) {
-            if (data=='exists') {
-				
-			}
-        },
-        error: function(data){
-            //error
-        }
-    });*/
+
 }
+jQuery.validator.addMethod("subdomainvalid", function(value, element) {
+	return this.optional(element) || /^[a-zA-Z0-9\-]+$/i.test(value);
+}, "Only Alphanumeric with no spaces please");
 
 jQuery(document).ready(function() 
 { 
@@ -151,9 +147,9 @@ jQuery(document).ready(function()
 	{
 		rf();
 	});
-	$("#clientsubdomain").on("keyup",function()
+	$("#organization_url").on("keyup",function()
 	{
-		//rf();
+		//rfv();
 	});
 
 	
@@ -162,7 +158,8 @@ jQuery(document).ready(function()
 	  rules: {
 		organization_url: {
 		  required: true,
-		  maxlength: 25,
+		  maxlength: 15,
+		 subdomainvalid: true,
 		  remote: "verifyurl.html"
 		},
 		hiddenRecaptcha: {
