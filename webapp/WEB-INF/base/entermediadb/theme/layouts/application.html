@@ -20,6 +20,8 @@
 	    <link rel="stylesheet" type="text/css" href="$home$style" />
     #end
 
+
+
     
 	<link rel="icon" href="/entermediadb/theme/images/em-favicon.ico" />
 </head>
@@ -41,7 +43,11 @@
 	
 	</div>
 
-	$pages.include("/entermediadb/GA.html");	
+	$pages.include("/entermediadb/GA.html")
+	
+	#if($content.GAtrakingcode)
+		$pages.include("/entermediadb/${content.GAtrakingcode}")
+	#end 	
 	</body>
 </html>
 
