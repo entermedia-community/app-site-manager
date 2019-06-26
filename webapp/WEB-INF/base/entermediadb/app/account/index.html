@@ -1,4 +1,18 @@
 #set($selectedUser = $user)
+
+##Verify if user was tracked
+#set ($usertracked = $selectedUser.getValue("gatracked"))
+#if(!$usertracked)
+	#set( $usersearcher = $mediaarchive.getSearcher("user") )
+	$!user.setValue("gatracked", "true")
+	$!usersearcher.saveData($user,null)
+
+	$content.setValue("GAtrakingcode", "GA-conversionuser.html")
+#else
+	$content.setValue("GAtrakingcode", "")
+#end
+
+
 <h1>[[Control Panel]]</h1>
 
 
