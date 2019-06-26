@@ -55,6 +55,7 @@ public void init()
 		Searcher instancesearcher = searcherManager.getSearcher(catalogid, "entermedia_instances");
 		Data newinstance = instancesearcher.createNewData();
 		newinstance.setValue("librarycollection", organizationid);
+		newinstance.setValue("owner", user.getId());
 		newinstance.setValue("instance_status", "pending");
 		newinstance.setValue("name", instancename); //Needs validation?
 		newinstance.setValue("instanceprefix", selected_url);
