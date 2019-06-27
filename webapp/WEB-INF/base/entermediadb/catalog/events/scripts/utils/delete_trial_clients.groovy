@@ -20,37 +20,39 @@ public void init()
          MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 
         //Search Clients with End Date = Today
-        Searcher clientsearcher = mediaArchive .getSearcher("entermedia_clients");
+        Searcher instanceSearcher = mediaArchive .getSearcher("entermedia_instances");
 
-        Calendar now = Calendar.getInstance();
-        now.add(Calendar.DAY_OF_YEAR, -15);
+        Calendar limit = Calendar.getInstance();
+        limit.add(Calendar.DAY_OF_YEAR, -15);
 
 
-        Collection expiredClients = clientsearcher.query().exact("trialstatus","expired").and().before("dateend", now.getTime()).search();
-        log.info("Found "+expiredClients.size()+" sites to delete.");
+        Collection expiredInstances = instanceSearcher.query().exact("instance_status","disabled").and().before("dateend", limit.getTime()).search();
+        log.info("Found "+expiredInstances.size()+" sites to delete.");
 
-        expiredClients.each{
+        for (Iterator instanceIterator = expiredInstances.iterator(); instanceIterator.hasNext();)
+		{
                 //Get The Client
-                Data client = clientsearcher.searchById(it.id);
+                Data instance = instanceSearcher.loadData(instanceIterator.next());
+				log.info("Disabling: "+instance.name+" -> "+instance.dateend);
 
                 //Get Server Info
                 Searcher servers = mediaArchive .getSearcher("entermedia_servers");
-                Data server = servers.query().exact("id", client.server).searchOne()
+                Data server = servers.query().exact("id", instance.entermedia_servers).searchOne();
                 if (server) {
-                        log.info("Deleting client: "+client.name+", instance: "+client.instanceurl+" on server "+server.name);
+                        log.info("Deleting instance: "+instance.name+",  on server "+server.name);
 
                         List<String> command = new ArrayList<String>();
                         command.add(server.sshname); //server name
-                        command.add(client.instanceurl);  //client url
+                        command.add(instance.instanceprefix);  //client url
 
                         Exec exec = moduleManager.getBean("exec");
                         ExecResult done = exec.runExec("removeclient", command);
                         //log.info("Exec: " + done.getStandardOut());
 
                         //Set Status Deleted to Client
-                        client.setProperty("trialstatus","deleted");
+                        instance.setProperty("instance_status","deleted");
                         //client.setProperty("server","");
-                        clientsearcher.saveData(client, null);
+                        instanceSearcher.saveData(instance, null);
                 }
         }
 }

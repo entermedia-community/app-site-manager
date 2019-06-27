@@ -43,7 +43,7 @@ public void init()
 				{
                 //Get Server Info
                 Searcher servers = mediaArchive.getSearcher("entermedia_servers");
-                Data server = servers.query().exact("id", seat.entermedia_servers).searchOne()
+                Data server = servers.query().exact("id", seat.entermedia_servers).searchOne();
                 if (server) {
                         List<String> command = new ArrayList<String>();
                         command.add(server.name); //server name
