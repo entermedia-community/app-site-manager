@@ -47,12 +47,12 @@ public void init()
                 if (server) {
                         List<String> command = new ArrayList<String>();
                         command.add(server.name); //server name
-                        command.add(instance.instanceurl);  //client url
+                        command.add(instance.instanceprefix);  //client url
                         command.add(String.valueOf(seat.nodeid));  //client nodeid
 
                         Exec exec = moduleManager.getBean("exec");
                         ExecResult done = exec.runExec("disableclient", command);
-                        //log.info("Exec: " + done.getStandardOut());
+                        log.info("Exec: " + done.getStandardOut());
 
                         seat.setValue("instanceid","");
                         seat.setValue("seatstatus","false");

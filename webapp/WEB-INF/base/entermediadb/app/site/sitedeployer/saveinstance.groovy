@@ -114,56 +114,14 @@ public void init()
 						seat.setValue("instanceid", newinstance.getId());
 						seat.setValue("seatstatus", "true");
 						mediaarchive.saveData("entermedia_seats", seat);
-						
-						
-						
-						/*
-						Data client = mediaarchive.query("client").match("name", organization).searchOne();
-						Data group = null;
-						if ( client == null )
-						{
-							log.info("Client not found, creating new client and group");
-							client = addNewClient();
-							group = addNewGroup();
-							Searcher userSearcher = searcherManager.getSearcher(catalogid, "user");
-							
-							Collection groups = (Collection)user.getValues("groups");
-							if (groups == null)
-							{
-								groups = new ArrayList<Data>();
-							}
-				
-							groups.add(group.getId());
-							user.setValue("groups", groups);
-							userSearcher.saveData(user, null);
-						}
-		                else {
-		                    //Account exists, send error message to let them know
-							group = mediaarchive.query("group").match("name", organization).searchOne();
-		                }
-					
-		
-		                //Add Site to Monitoring
-						Data monitor = addNewMonitor(server, "http://" + fullURL, client.id);
-		
-														
-		
-						
-						Collection instances = (Collection)trialclient.getValues("instances");
-						if (instances == null)
-						{
-							instances = new ArrayList<Data>();
-						}
-						instances.add(newinstance.getId());
-						log.info("instanceid " + newinstance.getId());
-						trialclient.setValue("instances", instances);
-						clientsearcher.saveData(trialclient);
-						*/
-						
+
 						context.putPageValue("userurl",fullURL);
-						//context.putPageValue("client_name", organization);
+						context.putPageValue("client_name", organization);
 						context.putPageValue("newuser", "admin");
 						context.putPageValue("newpassword", "admin");
+						
+						//Add Site to Monitoring
+						Data monitor = addNewMonitor(newinstance);
 						
 		                //Send Notification to us
 						context.putPageValue("from", clientemail);
@@ -195,84 +153,25 @@ public void init()
 
 protected Data addNewMonitor(Data instance)
 {
-	Searcher monitorsearcher = searcherManager.getSearcher(catalogid, "em_instance_monitor");
+	Searcher monitorsearcher = searcherManager.getSearcher(catalogid, "entermedia_instances_monitor");
 	//TODO: set userid into client table
 	Data newmonitor = monitorsearcher.createNewData();
 
 	newmonitor.setValue("instanceid", instance.getId());
-	newmonitor.setValue("serverid", instance..entermedia_servers);
+	newmonitor.setValue("serverid", instance.entermedia_servers);
 	newmonitor.setValue("isssl", "false");
 	
 	newmonitor.setValue("diskmaxusage", 95); //Need to parametrize differently
 	newmonitor.setValue("memmaxusage", 200);
+	
+	newmonitor.setValue("admin_login", "admin");
+	newmonitor.setValue("admin_pass", "admin");
 	
 	newmonitor.setValue("monitoringenable", true);
 	
 	newmonitor.setValue("notifyemail", "help@entermediadb.org");  //not need it custom?
 	monitorsearcher.saveData(newmonitor,null);
 	return newmonitor;
-}
-
-protected Data addNewClient()
-{
-	Searcher clientsearcher = searcherManager.getSearcher(catalogid, "client");
-	//TODO: set userid into client table
-	Data newclient = clientsearcher.createNewData();
-
-	newclient.setValue("name",context.getRequestParameter("organization"));
-	newclient.setValue("timezone",context.getRequestParameter("timezone"));
-
-	clientsearcher.saveData(newclient,null);
-	return newclient;
-}
-
-protected Data addNewGroup()
-{
-	Searcher groupsearcher = searcherManager.getSearcher(catalogid, "group");
-	Data group = groupsearcher.createNewData();
-	group.setValue("id", context.getRequestParameter("organization"));
-	group.setValue("name", context.getRequestParameter("organization"));
-	groupsearcher.saveData(group,null);
-	return group;
-}
-
-protected void addNewCollection(String url, String trialclient, String monitoredsite, String group)
-{
-	Searcher collectionsearcher = searcherManager.getSearcher(catalogid, "librarycollection");
-	//TODO: set userid into client table
-	Data newcollection = collectionsearcher.createNewData();
-
-	Data library = mediaarchive.query("library").match("name", context.getRequestParameter("organization")).searchOne();
-	
-	if (library == null)
-	{
-		Searcher librarysearcher = searcherManager.getSearcher(catalogid, "library");
-		library = librarysearcher.createNewData();
-		
-		library.setValue("name", context.getRequestParameter("organization"));
-		library.setValue("owner", user.getId());
-		library.setValue("viewgroups", group);
-		librarysearcher.saveData(library,null);
-	}
-	
-	
-	newcollection.setValue("name", url);
-	newcollection.setValue("library", library.getId());
-	newcollection.setValue("timezone", context.getRequestParameter("timezone"));
-	newcollection.setValue("owner", user.getId());
-	newcollection.setValue("websitelink", "http://" + url);
-	newcollection.setValue("isTrial", true);
-	newcollection.setValue("startdate", new Date());
-	newcollection.setValue("trial_clients", trialclient);
-	newcollection.setValue("monitoredsites", monitoredsite);
-	newcollection.setValue("startdate", new Date());
-	newcollection.setValue("creationdate", new Date());
-	newcollection.setValue("collectiontype", 1);
-	newcollection.setValue("contactemail", context.getRequestParameter("email"));
-	
-	//TODO: deal with permissions (public based on group?)
-	
-	collectionsearcher.saveData(newcollection,null);
 }
 
 

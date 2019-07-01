@@ -6,12 +6,7 @@
       <language id="en">Instance</language> 
     </name> 
   </property> 
-  
-  <property id="librarycollection" required="true" index="true" stored="true" editable="true"  type="list" viewtype="autocomplete" listid="librarycollection" datatype="list" >Library 
-    <name> 
-      <language id="en"><![CDATA[Organization]]></language>  
-    </name> 
-  </property>  
+    
   <property id="server" index="true" editable="true" stored="true" sortable="true" internalfield="false" isbadge="false" required="false" multilanguage="false" autocreatefromexif="false" writenametoexif="false" filter="false" highlight="false" deleted="false" keyword="false"> 
     <name>
       <language id="de"><![CDATA[Server-IP]]></language>
