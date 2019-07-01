@@ -6,12 +6,7 @@
       <language id="en">Instance</language> 
     </name> 
   </property> 
-
-  <property id="last_checked" index="true" stored="true" internalfield="false" isbadge="false" required="false" multilanguage="false" autocreatefromexif="false" writenametoexif="false" datatype="date" editable="false" filter="false" keyword="false"> 
-    <name> 
-      <language id="en"><![CDATA[Last Checked]]></language> 
-    </name> 
-  </property>  
+  
   <property id="librarycollection" required="true" index="true" stored="true" editable="true"  type="list" viewtype="autocomplete" listid="librarycollection" datatype="list" >Library 
     <name> 
       <language id="en"><![CDATA[Organization]]></language>  
@@ -167,7 +162,7 @@
       <language id="fr"><![CDATA[Chemin d&#39;accès d&#39;origine]]></language> 
     </name> 
   </property>  
-  <property id="monitoringstatus" index="true" internalfield="false" datatype="list" editable="true" stored="true" searchtype="monitoredsitesspeedcheckLog" viewtype="tageditor" rendertype="tageditor"> 
+  <property id="monitoringstatus" index="true" internalfield="false" datatype="list" editable="true" stored="true" searchtype="monitoredsites" viewtype="tageditor" rendertype="tageditor"> 
     <name> 
       <language id="en"><![CDATA[Monitoring Status]]></language> 
     </name> 
@@ -323,9 +318,17 @@
     </name> 
   </property>  
     
-  <property id="serverid" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" multilanguage="false" listid="monitoredsites_servers" highlight="false" deleted="false" autocreatefromexif="false" writenametoexif="false" filter="false" datatype="list" keyword="false"> 
+  <property id="serverid" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" multilanguage="false" listid="entermedia_servers" highlight="false" deleted="false" autocreatefromexif="false" writenametoexif="false" filter="false" datatype="list" keyword="false"> 
     <name> 
       <language id="en"><![CDATA[Server]]></language> 
     </name> 
   </property> 
+  
+  
+   <property id="monitoredsitesdns" index="true"  editable="true" stored="true" filter="true" datatype="list" viewtype="list" listid="monitoredsitesdns">New 
+   <name>
+     <language id="en"><![CDATA[DNS Record]]></language>
+   </name>
+  </property>  
+  <property id="isautofailover" index="true" editable="true" keyword="true" type="boolean">Auto Failover</property>
 </properties>
