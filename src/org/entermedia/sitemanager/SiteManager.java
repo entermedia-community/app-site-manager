@@ -174,7 +174,7 @@ public class SiteManager implements CatalogEnabled
 				Integer maxmemkusage = (Integer) inReal.getValue("memmaxusage");
 				//CPU
 				//HEAP
-
+				
 				put("MEMORY", maxmemkusage);
 				put("DISK", maxdiskusage);
 				//				put("CPU", maxcpukusage);
@@ -507,7 +507,15 @@ public class SiteManager implements CatalogEnabled
 			String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
 			ServerStats stats = new ServerStats();
 
+			
+			if ((Integer)real.getValue("diskmaxusage") == null || ((Integer)real.getValue("diskmaxusage") != null && (Integer)real.getValue("diskmaxusage") == 0))
+			{
+				real.setValue("diskmaxusage", 95);
+				sites.saveData(real, null);
+			}
+
 			Map<String, Integer> map = getUsageMaxByClient(real);
+
 			try
 			{
 				boolean disk = false;
@@ -563,7 +571,8 @@ public class SiteManager implements CatalogEnabled
 				}
 				catch (Exception e)
 				{
-					log.error("Connection failed on " + real.get("name"), e);
+					//Too much logs
+					//log.error("Connection failed on " + real.get("name"), e);
 				}
 				if (!reachable)
 				{
@@ -683,12 +692,12 @@ public class SiteManager implements CatalogEnabled
 			}
 			catch (Exception e)
 			{
-				log.error("Error checking " + real.get("name"), e);
 				real.setProperty("monitoringstatus", "error");
 				if (real.get("monitorstatuscolor") != null && real.get("monitorstatuscolor").compareTo("RED") == 0)
 				{
 					if (!Boolean.parseBoolean(real.get("mailsent")))
 					{
+						log.error("Error checking " + real.get("name"), e);
 						if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
 						{
 							buildEmail(real, inArchive);
@@ -697,8 +706,8 @@ public class SiteManager implements CatalogEnabled
 						}
 					}
 				}
-				real.setProperty("lastchecked", dates);
 			}
+		real.setProperty("lastchecked", dates);
 		sites.saveData(real, null);
 		}
 		if (pushNotification && json != null)
