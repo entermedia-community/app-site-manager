@@ -491,7 +491,6 @@ public class SiteManager implements CatalogEnabled
 			MultiValued real = (MultiValued) sites.loadData(it);
 			if (!real.getBoolean("monitoringenable"))
 			{
-				log.info(real.getName() + " not enabled");
 				continue;
 			}
 
@@ -521,18 +520,14 @@ public class SiteManager implements CatalogEnabled
 				{
 					if (isold == true)
 					{
-						log.info("old site");
 						if (scanOldSite(real) != null)
 						{
 							if (real.getValue("isautofailover") != null )
 							{
-								log.info("old - failover1");
 								if ((boolean)real.getValue("isautofailover"))
 								{
-									log.info("old - failover2");
 									if ((boolean)dns.getValue("isfailover"))
 									{
-										log.info("old - failover3");
 										leaveFailover(real, dns);
 									}
 								}
@@ -544,21 +539,16 @@ public class SiteManager implements CatalogEnabled
 					}
 					else 
 					{
-						log.info("new site - "+ real.get("name"));
 						stats = scanStats(stats, real);
-						log.info("new site - reachable true");
  						reachable = true;
 						real.setValue("monitorstatuscolor", "GREEN");
 						real.setValue("lastcheckfail", false);
 						if (real.getValue("isautofailover") != null )
 						{
-							log.info("new site - failvoer1");
 							if ((boolean)real.getValue("isautofailover"))
 							{
-								log.info("new site - failvoer2");
 								if ((boolean)dns.getValue("isfailover"))
 								{
-									log.info("new site - failvoer3");
 									leaveFailover(real, dns);
 								}
 							}
@@ -567,7 +557,8 @@ public class SiteManager implements CatalogEnabled
 				}
 				catch (Exception e)
 				{
-					log.error("Connection failed on " + real.get("name"), e);
+					//Too much logs
+					//log.error("Connection failed on " + real.get("name"), e);
 				}
 				if (!reachable)
 				{
@@ -687,12 +678,12 @@ public class SiteManager implements CatalogEnabled
 			}
 			catch (Exception e)
 			{
-				log.error("Error checking " + real.get("name"), e);
 				real.setProperty("monitoringstatus", "error");
 				if (real.get("monitorstatuscolor") != null && real.get("monitorstatuscolor").compareTo("RED") == 0)
 				{
 					if (!Boolean.parseBoolean(real.get("mailsent")))
 					{
+						log.error("Error checking " + real.get("name"), e);
 						if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
 						{
 							buildEmail(real, inArchive);
@@ -701,8 +692,8 @@ public class SiteManager implements CatalogEnabled
 						}
 					}
 				}
-				real.setProperty("lastchecked", dates);
 			}
+		real.setProperty("lastchecked", dates);
 		sites.saveData(real, null);
 		}
 		if (pushNotification && json != null)
