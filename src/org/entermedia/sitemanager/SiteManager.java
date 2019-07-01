@@ -174,7 +174,7 @@ public class SiteManager implements CatalogEnabled
 				Integer maxmemkusage = (Integer) inReal.getValue("memmaxusage");
 				//CPU
 				//HEAP
-
+				
 				put("MEMORY", maxmemkusage);
 				put("DISK", maxdiskusage);
 				//				put("CPU", maxcpukusage);
@@ -501,7 +501,15 @@ public class SiteManager implements CatalogEnabled
 			String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
 			ServerStats stats = new ServerStats();
 
+			
+			if ((Integer)real.getValue("diskmaxusage") == null || ((Integer)real.getValue("diskmaxusage") != null && (Integer)real.getValue("diskmaxusage") == 0))
+			{
+				real.setValue("diskmaxusage", 95);
+				sites.saveData(real, null);
+			}
+
 			Map<String, Integer> map = getUsageMaxByClient(real);
+
 			try
 			{
 				boolean disk = false;
