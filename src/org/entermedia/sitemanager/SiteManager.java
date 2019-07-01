@@ -491,6 +491,7 @@ public class SiteManager implements CatalogEnabled
 			MultiValued real = (MultiValued) sites.loadData(it);
 			if (!real.getBoolean("monitoringenable"))
 			{
+				log.info(real.getName() + " not enabled");
 				continue;
 			}
 
@@ -520,14 +521,18 @@ public class SiteManager implements CatalogEnabled
 				{
 					if (isold == true)
 					{
+						log.info("old site");
 						if (scanOldSite(real) != null)
 						{
 							if (real.getValue("isautofailover") != null )
 							{
+								log.info("old - failover1");
 								if ((boolean)real.getValue("isautofailover"))
 								{
+									log.info("old - failover2");
 									if ((boolean)dns.getValue("isfailover"))
 									{
+										log.info("old - failover3");
 										leaveFailover(real, dns);
 									}
 								}
@@ -539,16 +544,21 @@ public class SiteManager implements CatalogEnabled
 					}
 					else 
 					{
+						log.info("new site - "+ real.get("name"));
 						stats = scanStats(stats, real);
+						log.info("new site - reachable true");
  						reachable = true;
 						real.setValue("monitorstatuscolor", "GREEN");
 						real.setValue("lastcheckfail", false);
 						if (real.getValue("isautofailover") != null )
 						{
+							log.info("new site - failvoer1");
 							if ((boolean)real.getValue("isautofailover"))
 							{
+								log.info("new site - failvoer2");
 								if ((boolean)dns.getValue("isfailover"))
 								{
+									log.info("new site - failvoer3");
 									leaveFailover(real, dns);
 								}
 							}
