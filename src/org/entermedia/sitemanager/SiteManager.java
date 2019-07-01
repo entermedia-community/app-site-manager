@@ -87,7 +87,7 @@ public class SiteManager implements CatalogEnabled
 
 	}
 
-	private JSONObject buildPushNotification(MultiValued inReal, JSONObject json)
+	private JSONObject buildPushNotification(Data inInstance, MultiValued inReal, JSONObject json)
 	{
 		if (json == null)
 		{
@@ -98,7 +98,7 @@ public class SiteManager implements CatalogEnabled
 			json.put("text", "<!channel> Monitor Alert: ");
 		}
 
-		String message = "\n" + "" + inReal.get("name") + " at " + inReal.get("server") + " - " + inReal.get("url") + ": ";
+		String message = "\n" + "" + inInstance.get("name") + " at " + inInstance.get("entermedia_servers") + " - " + inInstance.get("instanceurl") + ": ";
 		if (!(boolean)inReal.getValue("isreachable"))
 		{
 			message += ". Health checks failed two consecutive time on, the instance might be down, please review it ASAP.";
@@ -235,21 +235,21 @@ public class SiteManager implements CatalogEnabled
 		return inReal;
 	}
 
-	private String buildURL(Data inReal, String fileURL)
+	private String buildURL(Data inInstance, String inCatalog,  String fileURL)
 	{
-		if (inReal.get("url") == null)
+		if (inInstance.get("instanceurl") == null)
 		{
 			throw new OpenEditException("Instance's URL or catalog missing");
 		}
-		String dns = inReal.get("url");
+		String dns = inInstance.get("instanceurl");
 		if (dns.endsWith("/"))
 		{ 
-			inReal.setProperty("url", dns.substring(0, (dns.length() - 1)));
+			inInstance.setProperty("url", dns.substring(0, (dns.length() - 1)));
 		}
-		return inReal.get("url") + "/" + inReal.get("catalog") + fileURL;
+		return inInstance.get("url") + "/" + inCatalog + fileURL;
 	}
 
-	private DiskSpace scanDisks(MultiValued inReal, int inPercent)
+	private DiskSpace scanDisks(Data inInstance, Data inReal, int inPercent)
 	{
 		ArrayList<DiskPartition> partitions = new ArrayList<DiskPartition>();
 		DiskSpace diskSpace = new DiskSpace(partitions);
@@ -259,7 +259,7 @@ public class SiteManager implements CatalogEnabled
 			ObjectMapper mapper = new ObjectMapper();
 			Downloader downloader = new Downloader();
 
-			String jsonString = downloader.downloadToString(buildURL(inReal, "/mediadb/services/system/systemstatus.json"));
+			String jsonString = downloader.downloadToString(buildURL(inInstance, inReal.get("catalog"), "/mediadb/services/system/systemstatus.json"));
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
 			JSONArray results = (JSONArray) json.get("partitions");
@@ -285,12 +285,19 @@ public class SiteManager implements CatalogEnabled
 
 	public void scanSoftwareVersions(MediaArchive inArchive)
 	{
-		Searcher sites = inArchive.getSearcher("monitoredsites");
+		Searcher sites = inArchive.getSearcher("entermedia_sites_monitor");
 		Collection<Data> sitestomonitor = sites.query().all().search();
 
 		for (Data it : sitestomonitor)
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
+			
+			//Get Instance Data
+			Searcher instances = inArchive.getSearcher("entermedia_instances_monitored");
+			Data instance = instances.query().exact("id", real.get("instanceid")).searchOne();
+			if (instance == null) {
+				continue;
+			}
 
 			if (real.get("monitoringstatus") != null && real.get("monitoringstatus").compareTo("ok") == 0)
 			{
@@ -299,7 +306,7 @@ public class SiteManager implements CatalogEnabled
 					ObjectMapper mapper = new ObjectMapper();
 					Downloader downloader = new Downloader();
 
-					String jsonString = downloader.downloadToString(buildURL(real, "/mediadb/services/system/softwareversions.json"));
+					String jsonString = downloader.downloadToString(buildURL(instance, real.get("catalog"), "/mediadb/services/system/softwareversions.json"));
 					JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
 					JSONArray results = (JSONArray) json.get("results");
@@ -324,7 +331,7 @@ public class SiteManager implements CatalogEnabled
 		}
 	}
 	
-	private ServerStats scanStats(ServerStats stats, MultiValued inReal)
+	private ServerStats scanStats(MultiValued inReal, Data inInstance, ServerStats stats)
 	{
 		ArrayList<ServerStat> statList = new ArrayList<ServerStat>();
 
@@ -333,8 +340,8 @@ public class SiteManager implements CatalogEnabled
 			ObjectMapper mapper = new ObjectMapper();
 			Downloader downloader = new Downloader();
 
-			String fullurl = buildURL(inReal, "/mediadb/services/system/systemstatus.json");
-			String jsonString = downloader.downloadToString(buildURL(inReal, "/mediadb/services/system/systemstatus.json"));
+			String jsonUrl = buildURL(inInstance, inReal.get("catalog"), "/mediadb/services/system/systemstatus.json");
+			String jsonString = downloader.downloadToString(jsonUrl);
 
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
@@ -347,7 +354,7 @@ public class SiteManager implements CatalogEnabled
 				statList.add(stat);
 			}
 			stats.build(statList);
-			inReal.setValue("fullurl", fullurl);
+			inReal.setValue("fullurl", jsonUrl);
 		}
 		catch (Exception e)
 		{
@@ -356,16 +363,16 @@ public class SiteManager implements CatalogEnabled
 		return stats;
 	}
 
-	private boolean checkServerStatus(MultiValued inReal)
+	private boolean checkServerStatus(MultiValued inReal, Data inInstance)
 	{
 		try
 		{
 			Downloader downloader = new Downloader();
 
-			String jsonString = downloader.downloadToString(buildURL(inReal, "/mediadb/services/system/systemstatus.json"));
-			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
+			String jsonUrl = downloader.downloadToString(buildURL(inInstance, inReal.get("catalog"), "/mediadb/services/system/systemstatus.json"));
+			JSONObject jsonString = (JSONObject) new JSONParser().parse(jsonUrl);
 
-			JSONObject results = (JSONObject) json.get("response");
+			JSONObject results = (JSONObject) jsonString.get("response");
 
 			if (results.get("status") != null && results.get("status").equals("ok"))
 			{
@@ -439,14 +446,14 @@ public class SiteManager implements CatalogEnabled
 		return httpClient;
 	}
 	
-	private Long scanOldSite(MultiValued inReal)
+	private Long scanOldSite(MultiValued inReal, Data inInstance)
 	{
 		HttpRequestBuilder builder = new HttpRequestBuilder();
 
 		HttpPost postMethod = null;
 		try
 		{
-			String fullpath = buildURL(inReal, "/emshare/index.html");
+			String fullpath = buildURL(inInstance, inReal.get("catalog"), "/emshare/index.html");
 			postMethod = new HttpPost(fullpath);
 
 			HashMap<String, String> props = new HashMap<String, String>();
@@ -493,17 +500,22 @@ public class SiteManager implements CatalogEnabled
 			{
 				continue;
 			}
-			//Get Instace Data
+			
+			//Get Instance Data
 			Searcher instances = inArchive.getSearcher("entermedia_instances_monitored");
-			Collection<Data> instance = instances.query().exact("id", real.getValue("instanceid")).searchOne();
+			Data instance = instances.query().exact("id", real.get("instanceid")).searchOne();
 			if (instance != null) {
 				//Use instance to get URL and Name ----TODO
+				String realurl = instance.get("instanceurl");
 			}
-
+			else {
+				continue;
+			}
+			
+			
+			//DNS
 			Data dns = (Data) getDnsSearcher().searchById((String)real.getValue("monitoredsitesdns"));
-			
 			//TODO: if DNS = nul create one
-			
 			String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
 			ServerStats stats = new ServerStats();
 
@@ -534,7 +546,7 @@ public class SiteManager implements CatalogEnabled
 				{
 					if (isold == true)
 					{
-						if (scanOldSite(real) != null)
+						if (scanOldSite(real, instance) != null)
 						{
 							if (real.getValue("isautofailover") != null )
 							{
@@ -553,7 +565,7 @@ public class SiteManager implements CatalogEnabled
 					}
 					else 
 					{
-						stats = scanStats(stats, real);
+						stats = scanStats(real, instance, stats);
  						reachable = true;
 						real.setValue("monitorstatuscolor", "GREEN");
 						real.setValue("lastcheckfail", false);
@@ -625,7 +637,7 @@ public class SiteManager implements CatalogEnabled
 					throw new OpenEditException("Server unreachable");
 				}
 
-				if (!checkServerStatus(real))
+				if (!checkServerStatus(real, instance))
 				{
 					setErrorType(disk, memory, heap, cpu, reachable, false/*
 																			 * swap
@@ -638,7 +650,7 @@ public class SiteManager implements CatalogEnabled
 
 				if (!isold)
 				{
-					DiskSpace diskSpace = scanDisks(real, map.get("DISK"));
+					DiskSpace diskSpace = scanDisks(instance, real, map.get("DISK"));
 					disk = diskSpace.isOnePartitionOverloaded();
 	
 					
@@ -701,7 +713,7 @@ public class SiteManager implements CatalogEnabled
 						if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
 						{
 							buildEmail(real, inArchive);
-							json = buildPushNotification(real, json);
+							json = buildPushNotification(instance, real, json);
 							pushNotification = true;
 						}
 					}
