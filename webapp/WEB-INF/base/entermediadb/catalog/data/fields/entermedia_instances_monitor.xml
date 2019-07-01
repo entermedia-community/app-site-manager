@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="instanceid" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" multilanguage="false" listid="entermedia_instances" highlight="false" deleted="false" autocreatefromexif="false" writenametoexif="false" filter="false" datatype="list" keyword="false"> 
+    <name> 
+      <language id="en">Instance</language> 
+    </name> 
+  </property> 
+
+  <property id="last_checked" index="true" stored="true" internalfield="false" isbadge="false" required="false" multilanguage="false" autocreatefromexif="false" writenametoexif="false" datatype="date" editable="false" filter="false" keyword="false"> 
+    <name> 
+      <language id="en"><![CDATA[Last Checked]]></language> 
+    </name> 
+  </property>  
+  <property id="librarycollection" required="true" index="true" stored="true" editable="true"  type="list" viewtype="autocomplete" listid="librarycollection" datatype="list" >Library 
+    <name> 
+      <language id="en"><![CDATA[Organization]]></language>  
+    </name> 
+  </property>  
+  <property id="server" index="true" editable="true" stored="true" sortable="true" internalfield="false" isbadge="false" required="false" multilanguage="false" autocreatefromexif="false" writenametoexif="false" filter="false" highlight="false" deleted="false" keyword="false"> 
+    <name>
+      <language id="de"><![CDATA[Server-IP]]></language>
+      <language id="en"><![CDATA[Custom Server]]></language>
+      <language id="es"><![CDATA[Servidor IP]]></language>
+      <language id="fr"><![CDATA[IP du serveur]]></language>
+    </name>
+  </property>  
+  <property id="node" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[node]]></language> 
+    </name> 
+  </property>  
+  <property id="admin_login" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" autocreatefromexif="false" keyword="false" writenametoexif="false"> 
+    <name> 
+      <language id="en"><![CDATA[Admin login]]></language> 
+    </name> 
+  </property>  
+  <property id="admin_pass" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" autocreatefromexif="false" keyword="false" writenametoexif="false"> 
+    <name> 
+      <language id="en"><![CDATA[Admin pass]]></language> 
+    </name> 
+  </property>  
+  <property id="docker" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[docker]]></language> 
+    </name> 
+  </property>  
+  <property id="https" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[https]]></language> 
+    </name> 
+  </property>  
+  <property id="isreachable" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[isreachable]]></language> 
+    </name> 
+  </property>  
+  <property id="servermemory" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[servermemory]]></language> 
+    </name> 
+  </property>  
+  <property id="serverprocesscpu" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[serverprocesscpu]]></language> 
+    </name> 
+  </property>  
+  <property id="serverswapfree" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[serverswapfree]]></language> 
+    </name> 
+  </property>  
+  <property id="partitions" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[partitions]]></language> 
+    </name> 
+  </property>  
+  <property id="ismemory" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[ismemory]]></language> 
+    </name> 
+  </property>  
+  <property id="isheap" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[isheap]]></language> 
+    </name> 
+  </property>  
+  <property id="serverswaptotal" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[serverswaptotal]]></language> 
+    </name> 
+  </property>  
+  <property id="serversystemcpu" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[serversystemcpu]]></language> 
+    </name> 
+  </property>  
+  <property id="iscpu" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[iscpu]]></language> 
+    </name> 
+  </property>  
+  <property id="isdisk" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[isdisk]]></language> 
+    </name> 
+  </property>  
+  <property id="errorcount" index="true" filter="false" editable="false" stored="true" sortable="true" keyword="false"> 
+    <name> 
+      <language id="de"><![CDATA[Fehleranzahl]]></language>  
+      <language id="en"><![CDATA[Error Count]]></language>  
+      <language id="es"><![CDATA[Error Count]]></language>  
+      <language id="fr"><![CDATA[Nombre d&#39;erreur]]></language> 
+    </name> 
+  </property>  
+  <property id="nodisk" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[nodisk]]></language> 
+    </name> 
+  </property>  
+  <property id="isssl" index="true" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="boolean" rendertype="boolean" required="false" multilanguage="false" deleted="false" autocreatefromexif="false" writenametoexif="false" filter="false" keyword="false"> 
+    <name> 
+      <language id="en"><![CDATA[Is SSL]]></language> 
+    </name> 
+  </property>  
+  <property id="expirationdate" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[expirationdate]]></language> 
+    </name> 
+  </property>  
+  <property id="daystoexpiration" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[daystoexpiration]]></language> 
+    </name> 
+  </property>  
+  <property id="lastchecked" index="true" internalfield="false" editable="true" isbadge="false" viewtype="datetime" sortable="true" rendertype="datetime" required="false" filter="false" multilanguage="false" datatype="date" stored="true" searchtype="monitoredsites" autocreatefromexif="false" keyword="false" writenametoexif="false"> 
+    <name> 
+      <language id="en"><![CDATA[Last Checked]]></language> 
+    </name> 
+  </property>  
+  <property id="totalassets" index="true" internalfield="false" editable="false" isbadge="false" required="false" filter="false" multilanguage="false" datatype="number" autocreatefromexif="false" keyword="true" writenametoexif="false"> 
+    <name> 
+      <language id="en"><![CDATA[Assset Count]]></language> 
+    </name> 
+  </property>  
+  <property id="id" index="true" filter="false" internalfield="true" editable="true" stored="true" sortable="true" keyword="false"> 
+    <name> 
+      <language id="de"><![CDATA[Id]]></language>  
+      <language id="en"><![CDATA[Id]]></language>  
+      <language id="es"><![CDATA[Id]]></language>  
+      <language id="fr"><![CDATA[Id]]></language> 
+    </name> 
+  </property>  
+  <property id="name" index="true" multilanguage="true" filter="false" editable="true" stored="true" sortable="true" keyword="false"> 
+    <name> 
+      <language id="de"><![CDATA[Identität]]></language>  
+      <language id="en"><![CDATA[Name]]></language>  
+      <language id="es"><![CDATA[Nombre]]></language>  
+      <language id="fr"><![CDATA[Identité]]></language> 
+    </name> 
+  </property>  
+  <property id="sourcepath" index="true" internalfield="false" editable="false" stored="true" sortable="true"> 
+    <name> 
+      <language id="de"><![CDATA[Source-Pfad]]></language>  
+      <language id="en"><![CDATA[Source Path]]></language>  
+      <language id="es"><![CDATA[Ruta de origen]]></language>  
+      <language id="fr"><![CDATA[Chemin d&#39;accès d&#39;origine]]></language> 
+    </name> 
+  </property>  
+  <property id="monitoringstatus" index="true" internalfield="false" datatype="list" editable="true" stored="true" searchtype="monitoredsitesspeedcheckLog" viewtype="tageditor" rendertype="tageditor"> 
+    <name> 
+      <language id="en"><![CDATA[Monitoring Status]]></language> 
+    </name> 
+  </property>  
+  <property id="notifyemail" index="true" internalfield="false" editable="true" stored="true" searchtype="monitoredsitesspeedcheckLog"> 
+    <name> 
+      <language id="en"><![CDATA[Emails to Notify on Error]]></language> 
+    </name> 
+  </property>  
+  <property id="mailsent" index="true" internalfield="false" datatype="boolean" editable="true" stored="true" searchtype="monitoredsitesspeedcheckLog"> 
+    <name> 
+      <language id="en"><![CDATA[Emails Sent]]></language> 
+    </name> 
+  </property>  
+  <property id="servermemoryfree" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Server Memory Free]]></language> 
+    </name> 
+  </property>  
+  <property id="servermemorytotal" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Server Memory Total]]></language> 
+    </name> 
+  </property>  
+  <property id="cpuload" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[cpuload]]></language> 
+    </name> 
+  </property>  
+  <property id="heapusedpercent" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Heap Used Percentage]]></language> 
+    </name> 
+  </property>  
+  <property id="heapused" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[heapused]]></language> 
+    </name> 
+  </property>  
+  <property id="disktotal" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Disk Space Total]]></language> 
+    </name> 
+  </property>  
+  <property id="diskfree" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Disk Space Free]]></language> 
+    </name> 
+  </property>  
+  <property id="diskavailable" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Disk Space Available]]></language> 
+    </name> 
+  </property>  
+  <property id="diskmaxusage" index="true" datatype="number" editable="true" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Maximum Disk Usage]]></language> 
+    </name> 
+  </property>  
+  <property id="memmaxusage" index="true" datatype="number" editable="true" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Maximum Memory Usage]]></language> 
+    </name> 
+  </property>  
+  <property id="version_docker" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Docker's version]]></language> 
+    </name> 
+  </property>  
+  <property id="version_imagemagick" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[ImageMagick's version]]></language> 
+    </name> 
+  </property>  
+  <property id="version_ffmpeg" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[FFMPEG's version]]></language> 
+    </name> 
+  </property>  
+  <property id="version_ghostscript" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Ghost Script's version]]></language> 
+    </name> 
+  </property>  
+  <property id="version_soffice" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[SOffice's version]]></language> 
+    </name> 
+  </property>  
+  <property id="alertcount" index="true" datatype="number" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Error count]]></language> 
+    </name> 
+  </property>  
+  <property id="sslstatus" index="true" internalfield="false" datatype="list" editable="false" stored="true" searchtype="monitoredsitesspeedcheckLog" viewtype="tageditor" rendertype="tageditor"> 
+    <name> 
+      <language id="en"><![CDATA[SSL Status]]></language> 
+    </name> 
+  </property>  
+  <property id="alerttype" index="true" internalfield="false" datatype="list" editable="false" stored="true" searchtype="monitoredsitesspeedcheckLog" viewtype="tageditor" rendertype="tageditor"> 
+    <name> 
+      <language id="en"><![CDATA[Error type]]></language> 
+    </name> 
+  </property>  
+  <property id="executiontime" index="true" datatype="number" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Homepage speed test]]></language> 
+    </name> 
+  </property>  
+  <property id="loadaverage" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[CPU Load Average]]></language> 
+    </name> 
+  </property>  
+  <property id="entermediadbkey" index="true" editable="true" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Entermedia.key]]></language> 
+    </name> 
+  </property>  
+  <property id="catalog" index="true" editable="true" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Catalog]]></language> 
+    </name> 
+  </property>  
+  <property id="isold" index="true" datatype="boolean" editable="true" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Old monitoring tool]]></language> 
+    </name> 
+  </property>  
+  <property id="clusterhealth" index="true" editable="false" viewtype="tageditor" rendertype="tageditor" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Cluster health status]]></language> 
+    </name> 
+  </property>  
+  <property id="diskpartitionsusage" index="true" datatype="multi" editable="true" viewtype="tageditor" rendertype="tageditor" keyword="false"> 
+    <name> 
+      <language id="en"><![CDATA[Disk partitions usage]]></language> 
+    </name> 
+  </property>  
+  <property id="monitoringenable" index="true" internalfield="false" datatype="boolean" editable="true" stored="true" searchtype="monitoredsitesspeedcheckLog"> 
+    <name> 
+      <language id="en"><![CDATA[Enable]]></language> 
+    </name> 
+  </property>  
+  <property id="instructions" index="true" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[Instructions]]></language> 
+    </name> 
+  </property>  
+  <property id="monitorstatuscolor" index="true" deleted="false" editable="true" stored="true"> 
+    <name> 
+      <language id="en"><![CDATA[monitorstatuscolor]]></language> 
+    </name> 
+  </property>  
+    
+  <property id="serverid" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" multilanguage="false" listid="monitoredsites_servers" highlight="false" deleted="false" autocreatefromexif="false" writenametoexif="false" filter="false" datatype="list" keyword="false"> 
+    <name> 
+      <language id="en"><![CDATA[Server]]></language> 
+    </name> 
+  </property> 
+</properties>

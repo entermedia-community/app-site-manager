@@ -34,23 +34,10 @@ public void init()
 	String region = context.getRequestParameter("region");
 	
 	if (organizationid && region) {
-
-/*		
-		Searcher clientsearcher = searcherManager.getSearcher(catalogid, "entermedia_clients");
-		Data newclient = clientsearcher.createNewData();
-		newclient.setValue("userid", user.getId());
-		newclient.setValue("name", organization);
-		newclient.setValue("clientemail",email);
-		newclient.setValue("clientcategory", organization_type);
-		newclient.setValue("timezone", timezone);
-
-		clientsearcher.saveData(newclient,null);
-*/
 		
 		//Create Valid URL
 		String selected_url = instanceurl.toLowerCase();
 		context.putPageValue("selected_url", selected_url);
-		//----context.putPageValue("organization", organization);
 				
 		Searcher instancesearcher = searcherManager.getSearcher(catalogid, "entermedia_instances");
 		Data newinstance = instancesearcher.createNewData();
@@ -58,6 +45,7 @@ public void init()
 		newinstance.setValue("owner", user.getId());
 		newinstance.setValue("instance_status", "pending");
 		newinstance.setValue("name", instancename); //Needs validation?
+		context.putPageValue("instancename", instancename);
 		newinstance.setValue("instanceprefix", selected_url);
 		newinstance.setValue("istrial", true);
 		
@@ -158,11 +146,7 @@ public void init()
 		                //Add Site to Monitoring
 						Data monitor = addNewMonitor(server, "http://" + fullURL, client.id);
 		
-						//Add New Collection
-						//addNewCollection(fullURL, newclient.id, monitor.id, group.id);
-		
-						
-										
+														
 		
 						
 						Collection instances = (Collection)trialclient.getValues("instances");
@@ -209,21 +193,22 @@ public void init()
 	}
 }
 
-protected Data addNewMonitor(Data server, String url, String client)
+protected Data addNewMonitor(Data instance)
 {
-	Searcher monitorsearcher = searcherManager.getSearcher(catalogid, "monitoredsites");
+	Searcher monitorsearcher = searcherManager.getSearcher(catalogid, "em_instance_monitor");
 	//TODO: set userid into client table
 	Data newmonitor = monitorsearcher.createNewData();
 
-	newmonitor.setValue("name",context.getRequestParameter("organization"));
-	newmonitor.setValue("notifyemail",context.getRequestParameter("email"));
-	newmonitor.setValue("server", server.name);
+	newmonitor.setValue("instanceid", instance.getId());
+	newmonitor.setValue("serverid", instance..entermedia_servers);
 	newmonitor.setValue("isssl", "false");
-	newmonitor.setValue("url", url);
-	newmonitor.setValue("diskmaxusage", 95);
+	
+	newmonitor.setValue("diskmaxusage", 95); //Need to parametrize differently
 	newmonitor.setValue("memmaxusage", 200);
+	
 	newmonitor.setValue("monitoringenable", true);
-	newmonitor.setValue("clientid", client);	
+	
+	newmonitor.setValue("notifyemail", "help@entermediadb.org");  //not need it custom?
 	monitorsearcher.saveData(newmonitor,null);
 	return newmonitor;
 }

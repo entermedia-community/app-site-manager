@@ -480,8 +480,8 @@ public class SiteManager implements CatalogEnabled
 	
 	public synchronized void scan(MediaArchive inArchive)
 	{
-		log.info("starting scan");
-		Searcher sites = inArchive.getSearcher("monitoredsites");
+		log.info("Starting scan");
+		Searcher sites = inArchive.getSearcher("entermedia_instances_monitored");
 		Collection<Data> sitestomonitor = sites.query().all().search();
 		JSONObject json = null;
 		boolean pushNotification = false;
@@ -492,6 +492,12 @@ public class SiteManager implements CatalogEnabled
 			if (!real.getBoolean("monitoringenable"))
 			{
 				continue;
+			}
+			//Get Instace Data
+			Searcher instances = inArchive.getSearcher("entermedia_instances_monitored");
+			Collection<Data> instance = instances.query().exact("id", real.getValue("instanceid")).searchOne();
+			if (instance != null) {
+				//Use instance to get URL and Name ----TODO
 			}
 
 			Data dns = (Data) getDnsSearcher().searchById((String)real.getValue("monitoredsitesdns"));
