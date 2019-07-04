@@ -99,7 +99,7 @@ public void init()
 					log.info("Exec: " + done.getStandardOut());
 					
 						
-						String fullURL = selected_url + "." + server.serverurl;
+						String fullURL = "https://" + selected_url + "." + server.serverurl;
 						
 						newinstance.setValue("instanceurl", fullURL);
 						newinstance.setValue("instance_status", "active");
@@ -116,7 +116,7 @@ public void init()
 						mediaarchive.saveData("entermedia_seats", seat);
 
 						context.putPageValue("userurl",fullURL);
-						context.putPageValue("client_name", organization);
+						//context.putPageValue("client_name", organization);
 						context.putPageValue("newuser", "admin");
 						context.putPageValue("newpassword", "admin");
 						
@@ -125,7 +125,7 @@ public void init()
 						
 		                //Send Notification to us
 						context.putPageValue("from", clientemail);
-						context.putPageValue("subject", "New Activation - http://" + fullURL);
+						context.putPageValue("subject", "New Activation - " + fullURL);
 						sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");
 						
 						

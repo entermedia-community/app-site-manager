@@ -19,13 +19,13 @@ $errormsg
 <div id="loaded" style="display:none; padding-top:40px;">
 	#if($userurl)
 		<h2 style="color:#5BA14F; margin-bottom:30px;">[[Your Media Database is ready]]!</h2>
-		<p>[[Your instance URL]]: <strong>https://${userurl}/</strong><br>
+		<p>[[Your instance URL]]: <strong>${userurl}</strong><br>
 		[[Username]]: <strong>admin</strong><br>
 		[[Password]]: <strong>admin</strong></p>
-		<form action="http://${userurl}/assets/emshare/authentication/login.html" method="post">
+		<form action="${userurl}/assets/emshare2/authentication/login.html" method="post">
 			<input type="hidden" name="accountname" value="admin" />
 			<input type="hidden" name="password" value="admin" />
-			<input type="hidden" name="loginokpage" value="/assets/emshare/" />
+			<input type="hidden" name="loginokpage" value="/assets/emshare2/" />
 			  <button id="senddata" type="submit" class="btn btn-primary">
 			    [[Go To Your EnterMedia Instance]]
 			  </button>

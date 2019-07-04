@@ -237,16 +237,17 @@ public class SiteManager implements CatalogEnabled
 
 	private String buildURL(Data inInstance, String inCatalog,  String fileURL)
 	{
-		if (inInstance.get("instanceurl") == null)
+		String instanceUrl = inInstance.get("instanceurl"); 
+		if ( instanceUrl== null)
 		{
 			throw new OpenEditException("Instance's URL or catalog missing");
 		}
-		String dns = inInstance.get("instanceurl");
+		String dns = instanceUrl;
 		if (dns.endsWith("/"))
 		{ 
-			inInstance.setProperty("url", dns.substring(0, (dns.length() - 1)));
+			inInstance.setProperty("instanceurl", dns.substring(0, (dns.length() - 1)));
 		}
-		return inInstance.get("url") + "/" + inCatalog + fileURL;
+		return instanceUrl + "/" + inCatalog + fileURL;
 	}
 
 	private DiskSpace scanDisks(Data inInstance, Data inReal, int inPercent)
@@ -354,7 +355,7 @@ public class SiteManager implements CatalogEnabled
 				statList.add(stat);
 			}
 			stats.build(statList);
-			inReal.setValue("fullurl", jsonUrl);
+			//inReal.setValue("fullurl", jsonUrl);
 		}
 		catch (Exception e)
 		{
@@ -580,7 +581,7 @@ public class SiteManager implements CatalogEnabled
 				catch (Exception e)
 				{
 					//Too much logs
-					//log.error("Connection failed on " + real.get("name"), e);
+					log.error("Connection failed on " + real.get("name"), e);
 				}
 				if (!reachable)
 				{
