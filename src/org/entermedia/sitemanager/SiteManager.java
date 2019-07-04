@@ -60,31 +60,39 @@ public class SiteManager implements CatalogEnabled
 	private HttpClient fieldHttpClient;
 
 	
-	private void sendResolved(MultiValued inReal, MediaArchive inArchive, String inDates)
+	private void sendEmailResolved(MultiValued inReal, MediaArchive inArchive, String inDates)
 	{
-		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-resolve.html";
-		WebEmail templatemail = inArchive.createSystemEmail(inReal.get("notifyemail"), templatePage);
-
-		templatemail.setSubject("[EM][" + inReal.get("name") + "] error resolved");
-		Map<String, Object> objects = new HashMap<String, Object>();
-		objects.put("monitored", inReal);
-		objects.put("dates", inDates);
-		templatemail.send(objects);
-		inReal.setProperty("mailsent", "false");
-		inReal.setValue("alertcount", 0);
+		String notifyemail = "help@entermediadb.org";  //TODO: Get it from catalogsetting?
+		if (inReal.get("notifyemail") != null && !inReal.get("notifyemail").isEmpty()) {
+			notifyemail = inReal.get("notifyemail"); 
+		}
+			String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-resolve.html";
+			WebEmail templatemail = inArchive.createSystemEmail(notifyemail, templatePage);
+	
+			templatemail.setSubject("[EM][" + inReal.get("name") + "] error resolved");
+			Map<String, Object> objects = new HashMap<String, Object>();
+			objects.put("monitored", inReal);
+			objects.put("dates", inDates);
+			templatemail.send(objects);
+			inReal.setProperty("mailsent", "false");
+			inReal.setValue("alertcount", 0);
 	}
 
-	private void buildEmail(MultiValued inReal, MediaArchive inArchive)
+	private void sendEmailError(MultiValued inReal, MediaArchive inArchive)
 	{
+		String notifyemail = "help@entermediadb.org"; //TODO: Get it from catalogsetting?
+		if (inReal.get("notifyemail") != null && !inReal.get("notifyemail").isEmpty()) {
+			notifyemail = inReal.get("notifyemail"); 
+		}
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-error.html";
-		WebEmail templatemail = inArchive.createSystemEmail(inReal.get("notifyemail"), templatePage);
+		WebEmail templatemail = inArchive.createSystemEmail(notifyemail, templatePage);
 
 		templatemail.setSubject("[EM][" + inReal.get("name") + "] error detected");
 		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
 		templatemail.send(objects);
 		inReal.setProperty("mailsent", "true");
-
+		
 	}
 
 	private JSONObject buildPushNotification(Data inInstance, MultiValued inReal, JSONObject json)
@@ -691,10 +699,7 @@ public class SiteManager implements CatalogEnabled
 
 				if (real.get("monitoringstatus") != null && real.get("monitoringstatus").compareToIgnoreCase("error") == 0)
 				{
-					if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
-					{
-						sendResolved(real, inArchive, dates);
-					}
+					sendEmailResolved(real, inArchive, dates);		
 				}
 				real.setValue("monitoringstatus", "ok");
 				real.setValue("alerttype",new ArrayList<String>());
@@ -707,12 +712,11 @@ public class SiteManager implements CatalogEnabled
 					if (!Boolean.parseBoolean(real.get("mailsent")))
 					{
 						log.error("Error checking " + real.get("name"), e);
-						if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
-						{
-							buildEmail(real, inArchive);
-							json = buildPushNotification(instance, real, json);
-							pushNotification = true;
-						}
+						sendEmailError(real, inArchive);
+						//TODO: Depending always on mailsent?
+						json = buildPushNotification(instance, real, json);
+						pushNotification = true;
+						
 					}
 				}
 			}

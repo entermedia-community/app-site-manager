@@ -13,7 +13,7 @@ import org.openedit.util.RequestUtils
 public void init() 
 {
 	String catalogid = "entermediadb/catalog";
-    String notifyemail = "cristobal@entermediadb.org";
+    String notifyemail = "help@entermediadb.org";
 	String clientemail = user.getEmail();
 
 	
