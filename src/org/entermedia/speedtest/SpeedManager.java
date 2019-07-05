@@ -22,18 +22,18 @@ public class SpeedManager
 {
 	private static final Log log = LogFactory.getLog(SpeedManager.class);
 
-	private String buildURL(Data inReal, String fileURL)
+	private String buildURL(Data inInstance, Data inReal, String fileURL)
 	{
-		if (inReal.get("url") == null || inReal.get("catalog") == null)
+		if (inInstance.get("instanceurl") == null || inReal.get("catalog") == null)
 		{
 			throw new OpenEditException("Instance's URL or catalog missing");
 		}
-		String dns = inReal.get("url");
+		String dns = inInstance.get("instanceurl");
 		if (dns.endsWith("/"))
 		{
-			inReal.setProperty("url", dns.substring(0, (dns.length() - 1)));
+			inInstance.setProperty("instanceurl", dns.substring(0, (dns.length() - 1)));
 		}
-		return inReal.get("url") + "/" + inReal.get("catalog") + fileURL;
+		return inInstance.get("instanceurl") + "/" + inReal.get("catalog") + fileURL;
 	}
 
 	public HttpClient getClient()
@@ -45,14 +45,14 @@ public class SpeedManager
 		return httpClient;
 	}
 
-	private Long getHomepageSpeed(MultiValued inReal)
+	private Long getHomepageSpeed(Data inInstance, MultiValued inReal)
 	{
 		HttpRequestBuilder builder = new HttpRequestBuilder();
 
 		HttpPost postMethod = null;
 		try
 		{
-			String fullpath = buildURL(inReal, "/emshare/index.html");
+			String fullpath = buildURL(inInstance, inReal, "/emshare/index.html");
 			postMethod = new HttpPost(fullpath);
 
 			HashMap<String, String> props = new HashMap<String, String>();
@@ -86,7 +86,7 @@ public class SpeedManager
 
 	public void checkSpeed(MediaArchive inArchive)
 	{
-		Searcher sites = inArchive.getSearcher("monitoredsites");
+		Searcher sites = inArchive.getSearcher("entermedia_instances_monitor");
 		Collection<Data> sitestomonitor = sites.query().all().search();
 
 		for (Data it : sitestomonitor)
@@ -98,12 +98,19 @@ public class SpeedManager
 				inArchive.fireMediaEvent("monitoredsites", "speedcheck", real.getProperties(), null);
 				continue;
 			}
+			
+			//Get Instance Data
+			Searcher instances = inArchive.getSearcher("entermedia_instances");
+			Data instance = instances.query().exact("id", real.get("instanceid")).searchOne();
+			if (instance == null) {
+				continue;
+			}
 
 			if (real.get("monitoringstatus") != null && real.get("monitoringstatus").compareTo("ok") == 0)
 			{
 				try
 				{
-					Long elapsedTime = getHomepageSpeed(real);
+					Long elapsedTime = getHomepageSpeed(instance, real);
 
 					if (elapsedTime != null)
 					{
