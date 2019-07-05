@@ -62,25 +62,31 @@ public class SiteManager implements CatalogEnabled
 	
 	private void sendEmailResolved(MultiValued inReal, MediaArchive inArchive, String inDates)
 	{
-		String notifyemail = "help@entermediadb.org";  //TODO: Get it from catalogsetting?
+		String notifyemail = "help@entermediadb.org";
+		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
+			notifyemail = inArchive.getCatalogSettingValue("monitor_notify_email");
+		}
 		if (inReal.get("notifyemail") != null && !inReal.get("notifyemail").isEmpty()) {
 			notifyemail = inReal.get("notifyemail"); 
 		}
-			String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-resolve.html";
-			WebEmail templatemail = inArchive.createSystemEmail(notifyemail, templatePage);
-	
-			templatemail.setSubject("[EM][" + inReal.get("name") + "] error resolved");
-			Map<String, Object> objects = new HashMap<String, Object>();
-			objects.put("monitored", inReal);
-			objects.put("dates", inDates);
-			templatemail.send(objects);
-			inReal.setProperty("mailsent", "false");
-			inReal.setValue("alertcount", 0);
+		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-resolve.html";
+		WebEmail templatemail = inArchive.createSystemEmail(notifyemail, templatePage);
+
+		templatemail.setSubject("[EM][" + inReal.get("name") + "] error resolved");
+		Map<String, Object> objects = new HashMap<String, Object>();
+		objects.put("monitored", inReal);
+		objects.put("dates", inDates);
+		templatemail.send(objects);
+		inReal.setProperty("mailsent", "false");
+		inReal.setValue("alertcount", 0);
 	}
 
 	private void sendEmailError(MultiValued inReal, MediaArchive inArchive)
 	{
-		String notifyemail = "help@entermediadb.org"; //TODO: Get it from catalogsetting?
+		String notifyemail = "help@entermediadb.org"; 
+		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
+			notifyemail = inArchive.getCatalogSettingValue("monitor_notify_email");
+		}
 		if (inReal.get("notifyemail") != null && !inReal.get("notifyemail").isEmpty()) {
 			notifyemail = inReal.get("notifyemail"); 
 		}

@@ -35,7 +35,10 @@ public class SSLManager
 
 	private void sendEmailError(Data inReal, MediaArchive inArchive)
 	{
-		String notifyemail = "help@entermediadb.org";  //TODO: Get it from catalogsetting?
+		String notifyemail = "help@entermediadb.org";  
+		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
+			notifyemail = inArchive.getCatalogSettingValue("monitor_notify_email");
+		}
 		if (inReal.get("notifyemail") != null && !inReal.get("notifyemail").isEmpty()) {
 			notifyemail = inReal.get("notifyemail"); 
 		}
