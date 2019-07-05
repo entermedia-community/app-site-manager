@@ -33,10 +33,14 @@ public class SSLManager
 	private static final Log log = LogFactory.getLog(SSLManager.class);
 	private int DAYS_BEFORE_EXPIRATION = 10;
 
-	private void buildEmail(Data inReal, MediaArchive inArchive)
+	private void sendEmailError(Data inReal, MediaArchive inArchive)
 	{
+		String notifyemail = "help@entermediadb.org";  //TODO: Get it from catalogsetting?
+		if (inReal.get("notifyemail") != null && !inReal.get("notifyemail").isEmpty()) {
+			notifyemail = inReal.get("notifyemail"); 
+		}
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-error.html";
-		WebEmail templatemail = inArchive.createSystemEmail(inReal.get("notifyemail"), templatePage);
+		WebEmail templatemail = inArchive.createSystemEmail(notifyemail, templatePage);
 
 		if (inReal.get("sslstatus") != null)
 		{
@@ -61,19 +65,19 @@ public class SSLManager
 
 	}
 
-	private String buildURL(Data inReal)
+	private String buildURL(Data inInstance)
 	{
-		String dns = inReal.get("url");
+		String dns = inInstance.get("instanceurl");
 		if (dns.endsWith("/"))
 		{
-			inReal.setProperty("url", dns.substring(0, (dns.length() - 1)));
+			inInstance.setProperty("instanceurl", dns.substring(0, (dns.length() - 1)));
 		}
-		return inReal.get("url");
+		return inInstance.get("instanceurl");
 	}
 
 	public void checkExpirationDate(MediaArchive inArchive)
 	{
-		Searcher sites = inArchive.getSearcher("monitoredsites");
+		Searcher sites = inArchive.getSearcher("entermedia_instances_monitor");
 		Collection<Data> sitestomonitor = sites.query().all().search();
 		Date today = DateStorageUtil.getStorageUtil().getToday(); 
 
@@ -81,12 +85,19 @@ public class SSLManager
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
 			URL url = null;
-
+			
 			if (!real.getBoolean("monitoringenable"))
 			{
 				continue;
 			}
-
+			
+			//Get Instance Data
+			Searcher instances = inArchive.getSearcher("entermedia_instances");
+			Data instance = instances.query().exact("id", real.get("instanceid")).searchOne();
+			if (instance == null) {
+				continue;
+			}
+			
 			try
 			{
 				SSLContext ctx = SSLContext.getInstance("TLS");
@@ -95,9 +106,9 @@ public class SSLManager
 
 				SSLContext.setDefault(ctx);
 
-				if (real.get("url") != null && real.get("url").startsWith("https"))
+				if (instance.get("instanceurl") != null && instance.get("instanceurl").startsWith("https"))
 				{
-					url = new URL(buildURL(real));
+					url = new URL(buildURL(instance));
 					HttpsURLConnection conn = null;
 					try 
 					{
@@ -150,10 +161,7 @@ public class SSLManager
 			{
 				log.error("Cant' check SSL certificate", e);
 				real.setValue("isssl", true);
-				if (real.get("notifyemail") != null && !real.get("notifyemail").isEmpty())
-				{
-					buildEmail(real, inArchive);
-				}
+				sendEmailError(real, inArchive);
 			}
 			sites.saveData(real, null);
 		}
