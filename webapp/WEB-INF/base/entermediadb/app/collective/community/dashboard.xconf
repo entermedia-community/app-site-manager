@@ -1,0 +1,6 @@
+<page>
+	<property name="section">account</property>
+	<layout>/entermediadb/theme/layouts/application.html</layout>
+	
+	<inner-layout></inner-layout>
+</page>
