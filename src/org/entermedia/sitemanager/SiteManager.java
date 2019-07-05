@@ -60,7 +60,7 @@ public class SiteManager implements CatalogEnabled
 	private HttpClient fieldHttpClient;
 
 	
-	private void sendEmailResolved(MultiValued inReal, MediaArchive inArchive, String inDates)
+	private void sendEmailResolved(Data inInstance, MultiValued inReal, MediaArchive inArchive, String inDates)
 	{
 		String notifyemail = "help@entermediadb.org";
 		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
@@ -72,16 +72,17 @@ public class SiteManager implements CatalogEnabled
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-resolve.html";
 		WebEmail templatemail = inArchive.createSystemEmail(notifyemail, templatePage);
 
-		templatemail.setSubject("[EM][" + inReal.get("name") + "] error resolved");
+		templatemail.setSubject("[EM][" + inInstance.get("name") + "] error resolved");
 		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
+		objects.put("instance", inInstance);
 		objects.put("dates", inDates);
 		templatemail.send(objects);
 		inReal.setProperty("mailsent", "false");
 		inReal.setValue("alertcount", 0);
 	}
 
-	private void sendEmailError(MultiValued inReal, MediaArchive inArchive)
+	private void sendEmailError(Data inInstance, MultiValued inReal, MediaArchive inArchive)
 	{
 		String notifyemail = "help@entermediadb.org"; 
 		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
@@ -93,9 +94,10 @@ public class SiteManager implements CatalogEnabled
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-error.html";
 		WebEmail templatemail = inArchive.createSystemEmail(notifyemail, templatePage);
 
-		templatemail.setSubject("[EM][" + inReal.get("name") + "] error detected");
+		templatemail.setSubject("[EM][" + inInstance.get("name") + "] error detected!");
 		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
+		objects.put("instance", inInstance);
 		templatemail.send(objects);
 		inReal.setProperty("mailsent", "true");
 		
@@ -349,15 +351,13 @@ public class SiteManager implements CatalogEnabled
 	private ServerStats scanStats(MultiValued inReal, Data inInstance, ServerStats stats)
 	{
 		ArrayList<ServerStat> statList = new ArrayList<ServerStat>();
+		ObjectMapper mapper = new ObjectMapper();
+		Downloader downloader = new Downloader();
 
+		String jsonUrl = buildURL(inInstance, inReal.get("catalog"), "/mediadb/services/system/systemstatus.json");
 		try
 		{
-			ObjectMapper mapper = new ObjectMapper();
-			Downloader downloader = new Downloader();
-
-			String jsonUrl = buildURL(inInstance, inReal.get("catalog"), "/mediadb/services/system/systemstatus.json");
 			String jsonString = downloader.downloadToString(jsonUrl);
-
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
 			JSONArray results = (JSONArray) json.get("stats");
@@ -373,7 +373,9 @@ public class SiteManager implements CatalogEnabled
 		}
 		catch (Exception e)
 		{
-			throw new OpenEditException(e);
+			//throw new OpenEditException(e);
+			log.error("Cant' get to " + jsonUrl);
+			return null;
 		}
 		return stats;
 	}
@@ -576,17 +578,20 @@ public class SiteManager implements CatalogEnabled
 					}
 					else 
 					{
+						reachable = false;
 						stats = scanStats(real, instance, stats);
- 						reachable = true;
-						real.setValue("monitorstatuscolor", "GREEN");
-						real.setValue("lastcheckfail", false);
-						if (real.getValue("isautofailover") != null )
-						{
-							if ((boolean)real.getValue("isautofailover"))
+						if (stats != null) {
+	 						reachable = true;
+							real.setValue("monitorstatuscolor", "GREEN");
+							real.setValue("lastcheckfail", false);
+							if (real.getValue("isautofailover") != null )
 							{
-								if ((boolean)dns.getValue("isfailover"))
+								if ((boolean)real.getValue("isautofailover"))
 								{
-									leaveFailover(real, dns);
+									if ((boolean)dns.getValue("isfailover"))
+									{
+										leaveFailover(real, dns);
+									}
 								}
 							}
 						}
@@ -705,7 +710,7 @@ public class SiteManager implements CatalogEnabled
 
 				if (real.get("monitoringstatus") != null && real.get("monitoringstatus").compareToIgnoreCase("error") == 0)
 				{
-					sendEmailResolved(real, inArchive, dates);		
+					sendEmailResolved(instance, real, inArchive, dates);		
 				}
 				real.setValue("monitoringstatus", "ok");
 				real.setValue("alerttype",new ArrayList<String>());
@@ -717,8 +722,8 @@ public class SiteManager implements CatalogEnabled
 				{
 					if (!Boolean.parseBoolean(real.get("mailsent")))
 					{
-						log.error("Error checking " + real.get("name"), e);
-						sendEmailError(real, inArchive);
+						log.error("Error checking " + instance.get("name"), e);
+						sendEmailError(instance, real, inArchive);
 						//TODO: Depending always on mailsent?
 						json = buildPushNotification(instance, real, json);
 						pushNotification = true;
