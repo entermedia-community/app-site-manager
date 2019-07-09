@@ -14,5 +14,5 @@
 
   <style id="custom-css" href="/entermediadb/theme/css/agency.cssX"/>
   <style id="custom-acss" href="/entermediadb/theme/css/em_custom.cssX"/>
-  <layout/>
+  <inner-layout/>
 </page>

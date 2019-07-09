@@ -10,9 +10,6 @@
   <property name="isfullscreen">true</property>
   <property name="section">account</property>
   
-  <inner-layout />
-
-
-  
+  <inner-layout>/entermediadb/theme/layouts/application.html</inner-layout>
 
 </page>

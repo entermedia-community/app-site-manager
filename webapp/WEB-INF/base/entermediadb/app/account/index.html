@@ -18,65 +18,73 @@
 
 ##Search collections this user is teammeber
 #set( $organizations = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selectedUser.getId()).exact("ontheteam","true").search() )
-#set($instancescount = 0)
-#foreach( $orghit in $organizations )
-	#set($organization  = $mediaarchive.getCachedData("librarycollection", $orghit.collectionid) )
-	<h3>$organization.name</h3>
-	##Search instances in these organizations
-	#set( $instances = $mediaarchive.query("entermedia_instances").match("librarycollection", $organization.id).search() )
-		#if ($instances)
-			<div class="emdata">
-		    <table class="table table-striped table-hover">
-		        <thead>
-		            <tr class="tableheader">
-		                <th>Instance Name</th>
-		                <th>Status</th>
-						<th>Created</th>
-						<th>Expires</th>
-		                <th>URL</th>
-		            </tr>
-		        </thead>
-				#foreach($hit in $instances)
-					#if ($hit.instance_status == "active")
-						#set($instancescount = $instancescount+1)
+
+#if (!$organizations)
+
+	<p><a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Create a Site]]">Create a site</a></p>
+
+#else
+
+	#set($instancescount = 0)
+	#foreach( $orghit in $organizations )
+		#set($organization  = $mediaarchive.getCachedData("librarycollection", $orghit.collectionid) )
+		<h3><a href="$apphome/collective/community/index.html?collectionid=$organization.id">$organization.name</a></h3>
+		##Search instances in these organizations
+		#set( $instances = $mediaarchive.query("entermedia_instances").match("librarycollection", $organization.id).search() )
+			#if ($instances)
+				<div class="emdata">
+			    <table class="table table-striped table-hover">
+			        <thead>
+			            <tr class="tableheader">
+			                <th>Instance Name</th>
+			                <th>Status</th>
+							<th>Created</th>
+							<th>Expires</th>
+			                <th>URL</th>
+			            </tr>
+			        </thead>
+					#foreach($hit in $instances)
+						#if ($hit.instance_status == "active")
+							#set($instancescount = $instancescount+1)
+						#end
+						<tr>
+				            <td>$hit.name</td>
+							<td style="text-align: center;">$hit.instance_status	</td>
+				            <td style="text-align: center;">#if($!hit.datestart) $context.getDate($!hit.datestart) #end</td>
+							<td style="text-align: center;">#if($!hit.dateend) $context.getDate($!hit.dateend) #end</td>
+				            <td>
+								#if ($hit.instanceurl)
+									<a href="https://$hit.instanceurl" style="text-decoration: underline" targe="_blank">$hit.instanceurl</a>
+								#else
+									$hit.instanceprefix
+								#end
+							</td>
+				        </tr>
+					
 					#end
-					<tr>
-			            <td>$hit.name</td>
-						<td style="text-align: center;">$hit.instance_status	</td>
-			            <td style="text-align: center;">#if($!hit.datestart) $context.getDate($!hit.datestart) #end</td>
-						<td style="text-align: center;">#if($!hit.dateend) $context.getDate($!hit.dateend) #end</td>
-			            <td>
-							#if ($hit.instanceurl)
-								<a href="https://$hit.instanceurl" style="text-decoration: underline" targe="_blank">https://$hit.instanceurl</a>
-							#else
-								$hit.instanceprefix
-							#end
-						</td>
-			        </tr>
-				
-				#end
-		    </table>
-	    	</div>
-		#end
+			    </table>
+		    	</div>
+			#end
+	#end
+	
+	##only 2 instances per client for now
+	 #if ($instancescount < 2)
+	<a href="/entermediadb/app/site/sitedeployer/createsite.html?organizationid=$organization.id" class="btn btn-secondary btn-sm">[[Deploy Site]]</a>
+	#end
+	
+	
+	<hr>
+	
+	<div> 
+	
+	<h2>[[Support]]</h2>
+	<p>Chat with one of our respresentatives.</p>
+	$pages.include("/entermediadb/app/collective/community/chatarea.html", $context)
+	
+	##<p><a href="" class="btn btn-sm btn-secondary">[[Create Ticket]]</a></p>
+	<p>Feel free to email us at: <a href="mailto:help@entermediadb.org">help@entermediadb.org</a> to know more about our Support Plans.</p>
+	
+	</div>
+
 #end
-
-##only 2 instances per client for now
- #if ($instancescount < 2)
-<a href="/entermediadb/app/site/sitedeployer/createsite.html" class="btn btn-secondary btn-sm">[[Deploy Site]]</a>
-#end
-
-
-<hr>
-
-<div> 
-
-<h2>[[Support]]</h2>
-<p>Chat with one of our respresentatives.</p>
-$pages.include("/entermediadb/app/collective/community/chatarea.html", $context)
-
-##<p><a href="" class="btn btn-sm btn-secondary">[[Create Ticket]]</a></p>
-<p>Feel free to email us at: <a href="mailto:help@entermediadb.org">help@entermediadb.org</a> to know more about our Support Plans.</p>
-
-</div>
-
 

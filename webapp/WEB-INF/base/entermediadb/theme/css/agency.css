@@ -1775,16 +1775,10 @@ padding:20px 60px;
 
 
 	
-.chatterbox {
-	min-width:300px;
-	min-height: 300px;
-    background-color: #f2f2f2;
-	border:1px solid #ddd;	
-	height: 300px;
+.collectivelayout{
+	height: 100%;
 }
 
-.chatterbox-messages {
-	height: calc(100% - 40px)!important;
-}
 
+.collectivelayout { margin-top:70px; }
 

@@ -11,7 +11,7 @@
     <boolean value="true"/>
   </permission>
   
-  	<layout>/entermediadb/theme/layouts/application.html</layout>
+  	<inner-layout>/entermediadb/theme/layouts/application.html</inner-layout>
 	
-	<inner-layout/>
+	
 </page>
