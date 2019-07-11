@@ -53,7 +53,7 @@
 							<td style="text-align: center;">#if($!hit.dateend) $context.getDate($!hit.dateend) #end</td>
 				            <td>
 								#if ($hit.instanceurl)
-									<a href="https://$hit.instanceurl" style="text-decoration: underline" targe="_blank">$hit.instanceurl</a>
+									<a href="$hit.instanceurl" style="text-decoration: underline" targe="_blank">$hit.instanceurl</a>
 								#else
 									$hit.instanceprefix
 								#end
@@ -68,7 +68,7 @@
 	
 	##only 2 instances per client for now
 	 #if ($instancescount < 2)
-	<a href="/entermediadb/app/site/sitedeployer/createsite.html?organizationid=$organization.id" class="btn btn-secondary btn-sm">[[Deploy Site]]</a>
+	<a href="/entermediadb/app/site/sitedeployer/createsite.html?organizationid=$organization.id" class="btn btn-secondary btn-sm">[[Deploy Instance]]</a>
 	#end
 	
 	

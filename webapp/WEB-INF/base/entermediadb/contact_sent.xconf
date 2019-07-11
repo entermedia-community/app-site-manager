@@ -6,6 +6,6 @@
 	<property name="to">help@entermediadb.org</property>
 	<property name="from">noreply@entermediadb.org</property>
 	
-	<layout>/entermediadb/theme/layouts/application.html</layout>
-        <inner-layout/>
+	<inner-layout>/entermediadb/theme/layouts/application.html</inner-layout>
+    
 </page>

@@ -2,6 +2,7 @@ import org.entermediadb.email.PostMail
 import org.entermediadb.email.TemplateWebEmail
 import org.openedit.*
 import org.openedit.data.Searcher
+import org.openedit.data.BaseSearcher
 import org.openedit.users.*
 import org.openedit.util.DateStorageUtil
 import org.openedit.hittracker.*
@@ -12,6 +13,7 @@ import org.openedit.util.RequestUtils
 
 public void init() 
 {
+		
 	String catalogid = "entermediadb/catalog";
     String notifyemail = "help@entermediadb.org";
 	String clientemail = user.getEmail();
@@ -116,7 +118,13 @@ public void init()
 						mediaarchive.saveData("entermedia_seats", seat);
 
 						context.putPageValue("userurl",fullURL);
-						//context.putPageValue("client_name", organization);
+						
+						BaseSearcher collectionsearcher = mediaarchive.getSearcher("librarycollection");
+						Data collection = collectionsearcher.searchByField("id", organizationid);
+						if (collection) {
+							context.putPageValue("organization", collection.getValue("name"));
+						}
+						
 						context.putPageValue("newuser", "admin");
 						context.putPageValue("newpassword", "admin");
 						
