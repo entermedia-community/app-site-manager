@@ -11,5 +11,5 @@
   <permission name="view">
     <group id="administrators"/>
   </permission>
-  <inner-layout/>
+  
 </page>
