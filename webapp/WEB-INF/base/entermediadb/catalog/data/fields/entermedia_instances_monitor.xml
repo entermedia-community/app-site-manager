@@ -43,7 +43,7 @@
   </property>  
   <property id="serverswapfree" index="true" editable="true" stored="true"> 
     <name> 
-      <language id="en"><![CDATA[Server SWap]]></language> 
+      <language id="en"><![CDATA[Server Swap]]></language> 
     </name> 
   </property>  
   <property id="partitions" index="true" editable="true" stored="true"> 
