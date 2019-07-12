@@ -1,14 +1,19 @@
 <div class="container applicationcontent">
-#set( $collectionid = "generalsupportchat")
-#set( $channelid = $context.getRequestParameter("channelid"))
-
-##set( $searcher = $mediaarchive.getSearcher("collectiveproject") )
+#set( $collectionid = $context.getRequestParameter("collectionid"))
+#set( $topicid = $context.getRequestParameter("topicid"))
 
 
-#if($channelid)
-	#set( $currenttopic = $searcher.query().match("parentcollectionid",$collectiveid).exact("id",$topicid).searchOne() )
+
+#if ($collectionid)
+	#set( $searcher = $mediaarchive.getSearcher("librarycollection") )
+	#set( $currentcollection = $searcher.query().exact("id",$collectionid).searchOne() )
+#end
+
+#set( $searcher = $mediaarchive.getSearcher("collectiveproject") )
+#if($topicid)
+	#set( $currenttopic = $searcher.query().match("parentcollectionid",$collectionid).exact("id",$topicid).searchOne() )
 #else
-	#set( $currenttopic = $searcher.query().match("parentcollectionid",$collectiveid).match("teamproject","false").searchOne() )
+	#set( $currenttopic = $searcher.query().match("parentcollectionid",$collectionid).match("teamproject","false").searchOne() )
 #end
 
 
@@ -24,7 +29,7 @@ $context.putPageValue("currenttopic", $currenttopic)
  <div class="col-lg-3 collaborate-sidebar">
 
 
-	##$pages.include("$apphome/collective/community/projectlist.html", $context)
+	$pages.include("$apphome/collective/community/collectionlist.html", $context)
 
 	
 	<div class="collaborate-content" >
@@ -35,7 +40,7 @@ $context.putPageValue("currenttopic", $currenttopic)
  </div>
 	<div class="collaborate-channel col h-100">
 		<div class="collaborate-channel-header">
-			<div class="channel-name float-left">$currenttopic</div>
+			<div class="channel-name float-left">$currentcollection - $currenttopic</div>
 			<div class="channel-actions float-right"><a href=""><i class="fas fa-cog"></i></a></div>	
 		</div>
 	
@@ -55,9 +60,7 @@ $context.putPageValue("currenttopic", $currenttopic)
 </div>
 
 </div>	
- <div class="col-lg-4 ">
-
- </div>
+ 
 </div>
 </div>
 
