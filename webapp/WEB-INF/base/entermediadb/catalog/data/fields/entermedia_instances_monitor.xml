@@ -33,22 +33,22 @@
   </property>  
   <property id="servermemory" index="true" editable="true" stored="true"> 
     <name> 
-      <language id="en"><![CDATA[servermemory]]></language> 
+      <language id="en"><![CDATA[Server Memory]]></language> 
     </name> 
   </property>  
   <property id="serverprocesscpu" index="true" editable="true" stored="true"> 
     <name> 
-      <language id="en"><![CDATA[serverprocesscpu]]></language> 
+      <language id="en"><![CDATA[Server CPU]]></language> 
     </name> 
   </property>  
   <property id="serverswapfree" index="true" editable="true" stored="true"> 
     <name> 
-      <language id="en"><![CDATA[serverswapfree]]></language> 
+      <language id="en"><![CDATA[Server SWap]]></language> 
     </name> 
   </property>  
   <property id="partitions" index="true" editable="true" stored="true"> 
     <name> 
-      <language id="en"><![CDATA[partitions]]></language> 
+      <language id="en"><![CDATA[Partitions]]></language> 
     </name> 
   </property>  
   <property id="ismemory" index="true" editable="true" stored="true"> 
@@ -63,12 +63,12 @@
   </property>  
   <property id="serverswaptotal" index="true" editable="true" stored="true"> 
     <name> 
-      <language id="en"><![CDATA[serverswaptotal]]></language> 
+      <language id="en"><![CDATA[Server Swap Total]]></language> 
     </name> 
   </property>  
   <property id="serversystemcpu" index="true" editable="true" stored="true"> 
     <name> 
-      <language id="en"><![CDATA[serversystemcpu]]></language> 
+      <language id="en"><![CDATA[Server System CPU]]></language> 
     </name> 
   </property>  
   <property id="iscpu" index="true" editable="true" stored="true"> 
@@ -83,10 +83,9 @@
   </property>  
   <property id="errorcount" index="true" filter="false" editable="false" stored="true" sortable="true" keyword="false"> 
     <name> 
-      <language id="de"><![CDATA[Fehleranzahl]]></language>  
+  
       <language id="en"><![CDATA[Error Count]]></language>  
-      <language id="es"><![CDATA[Error Count]]></language>  
-      <language id="fr"><![CDATA[Nombre d&#39;erreur]]></language> 
+
     </name> 
   </property>  
   <property id="nodisk" index="true" editable="true" stored="true"> 
@@ -101,12 +100,12 @@
   </property>  
   <property id="expirationdate" index="true" editable="true" stored="true"> 
     <name> 
-      <language id="en"><![CDATA[expirationdate]]></language> 
+      <language id="en"><![CDATA[SSL Expiration]]></language> 
     </name> 
   </property>  
   <property id="daystoexpiration" index="true" editable="true" stored="true"> 
     <name> 
-      <language id="en"><![CDATA[daystoexpiration]]></language> 
+      <language id="en"><![CDATA[SSL Days to Expire]]></language> 
     </name> 
   </property>  
   <property id="lastchecked" index="true" internalfield="false" editable="true" isbadge="false" viewtype="datetime" sortable="true" rendertype="datetime" required="false" filter="false" multilanguage="false" datatype="date" stored="true" searchtype="monitoredsites" autocreatefromexif="false" keyword="false" writenametoexif="false"> 
@@ -121,18 +120,14 @@
   </property>  
   <property id="id" index="true" filter="false" internalfield="true" editable="true" stored="true" sortable="true" keyword="false"> 
     <name> 
-      <language id="de"><![CDATA[Id]]></language>  
+  
       <language id="en"><![CDATA[Id]]></language>  
-      <language id="es"><![CDATA[Id]]></language>  
-      <language id="fr"><![CDATA[Id]]></language> 
+
     </name> 
   </property>  
-  <property id="name" index="true" multilanguage="true" filter="false" editable="true" stored="true" sortable="true" keyword="false"> 
+  <property id="name" index="true" multilanguage="false" filter="false" editable="true" stored="true" sortable="true" keyword="false"> 
     <name> 
-      <language id="de"><![CDATA[Identität]]></language>  
       <language id="en"><![CDATA[Name]]></language>  
-      <language id="es"><![CDATA[Nombre]]></language>  
-      <language id="fr"><![CDATA[Identité]]></language> 
     </name> 
   </property>  
   <property id="sourcepath" index="true" internalfield="false" editable="false" stored="true" sortable="true"> 
@@ -168,15 +163,19 @@
       <language id="en"><![CDATA[Server Memory Total]]></language> 
     </name> 
   </property>  
-  <property id="cpuload" index="true" editable="true" keyword="false" type="number" datatype="multi">CPU Load</property>  
+  <property id="cpuload" index="true" editable="true" keyword="false" type="number" datatype="multi">
+     <name> 
+      <language id="en"><![CDATA[CPU Load]]></language> 
+    </name> 
+  </property>  
   <property id="heapusedpercent" index="true" editable="false" keyword="true"> 
     <name> 
-      <language id="en"><![CDATA[Heap Used Percentage]]></language> 
+      <language id="en"><![CDATA[Server Heap Used Percentage]]></language> 
     </name> 
   </property>  
   <property id="heapused" index="true" editable="true" stored="true"> 
     <name> 
-      <language id="en"><![CDATA[heapused]]></language> 
+      <language id="en"><![CDATA[Server Heap Used]]></language> 
     </name> 
   </property>  
   <property id="disktotal" index="true" editable="false" keyword="true"> 
@@ -231,7 +230,7 @@
   </property>  
   <property id="alertcount" index="true" datatype="number" editable="false" keyword="true"> 
     <name> 
-      <language id="en"><![CDATA[Error count]]></language> 
+      <language id="en"><![CDATA[Alert count]]></language> 
     </name> 
   </property>  
   <property id="sslstatus" index="true" internalfield="false" datatype="list" editable="false" stored="true" searchtype="monitoredsitesspeedcheckLog" viewtype="tageditor" rendertype="tageditor"> 
@@ -246,7 +245,7 @@
   </property>  
   <property id="executiontime" index="true" datatype="number" editable="false" keyword="true"> 
     <name> 
-      <language id="en"><![CDATA[Homepage speed test]]></language> 
+      <language id="en"><![CDATA[Homepage speed]]></language> 
     </name> 
   </property>  
   <property id="loadaverage" index="true" editable="false" keyword="true"> 
@@ -291,7 +290,7 @@
   </property>  
   <property id="monitorstatuscolor" index="true" deleted="false" editable="true" stored="true"> 
     <name> 
-      <language id="en"><![CDATA[monitorstatuscolor]]></language> 
+      <language id="en"><![CDATA[Status Color]]></language> 
     </name> 
   </property>  
       
