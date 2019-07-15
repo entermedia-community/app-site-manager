@@ -26,9 +26,9 @@
       <language id="en"><![CDATA[https]]></language> 
     </name> 
   </property>  
-  <property id="isreachable" index="true" editable="true" stored="true"> 
+  <property id="isreachable" index="true" editable="true" stored="true" type="boolean"> 
     <name> 
-      <language id="en"><![CDATA[isreachable]]></language> 
+      <language id="en"><![CDATA[Reachable]]></language> 
     </name> 
   </property>  
   <property id="servermemory" index="true" editable="true" stored="true"> 
@@ -93,7 +93,7 @@
       <language id="en"><![CDATA[nodisk]]></language> 
     </name> 
   </property>  
-  <property id="isssl" index="true" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="boolean" rendertype="boolean" required="false" multilanguage="false" deleted="false" autocreatefromexif="false" writenametoexif="false" filter="false" keyword="false"> 
+  <property id="isssl" index="true" editable="true" stored="true" internalfield="false" isbadge="false" type="boolean" required="false" multilanguage="false" deleted="false" autocreatefromexif="false" writenametoexif="false" filter="false" keyword="false"> 
     <name> 
       <language id="en"><![CDATA[Is SSL]]></language> 
     </name> 
@@ -148,7 +148,7 @@
       <language id="en"><![CDATA[Emails to Notify on Error]]></language> 
     </name> 
   </property>  
-  <property id="mailsent" index="true" internalfield="false" datatype="boolean" editable="true" stored="true" searchtype="monitoredsitesspeedcheckLog"> 
+  <property id="mailsent" index="true" internalfield="false" type="boolean" editable="true" stored="true" searchtype="monitoredsitesspeedcheckLog"> 
     <name> 
       <language id="en"><![CDATA[Emails Sent]]></language> 
     </name> 
@@ -280,7 +280,7 @@
   </property>  
   <property id="monitoringenable" index="true" internalfield="false" datatype="boolean" editable="true" stored="true" searchtype="monitoredsitesspeedcheckLog"> 
     <name> 
-      <language id="en"><![CDATA[Enable]]></language> 
+      <language id="en"><![CDATA[Enabled]]></language> 
     </name> 
   </property>  
   <property id="instructions" index="true" editable="true" stored="true"> 
@@ -288,7 +288,7 @@
       <language id="en"><![CDATA[Instructions]]></language> 
     </name> 
   </property>  
-  <property id="monitorstatuscolor" index="true" deleted="false" editable="true" stored="true"> 
+  <property id="monitorstatuscolor" index="true" deleted="false" editable="true" stored="true" viewtype="tageditor"> 
     <name> 
       <language id="en"><![CDATA[Status Color]]></language> 
     </name> 

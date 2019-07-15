@@ -1,0 +1,10 @@
+.custom-monitoringstatus-error,
+.custom-monitorstatuscolor-RED {
+	background-color:rgb(164, 0, 0);
+	color:#fff!important;
+}
+
+.tablecell-monitorstatuscolor,
+.tablecell-monitoringstatus {
+	text-align:center;
+}

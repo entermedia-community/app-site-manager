@@ -15,4 +15,5 @@
   <style id="custom-css" href="/entermediadb/theme/css/agency.cssX"/>
   <style id="custom-acss" href="/entermediadb/theme/css/em_custom.cssX"/>
   
+  <style id="custom-monitorcss" href="/${applicationid}/theme/styles/monitor.css"/>
 </page>
