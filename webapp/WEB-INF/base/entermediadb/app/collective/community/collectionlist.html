@@ -11,7 +11,7 @@
 		#else
 			#set( $alltopics = $searcher.query().match("parentcollectionid",$collection.id).exact("teamproject","false").sort("name").search($context) )
 		#end
-		<div class="collaborate-content collaborate-channels" >
+		<div class="chat-channels" >
 		<h3>$collection.name</h3>
 		
 		#if( $subs.isEmpty()) 
@@ -20,7 +20,7 @@
 			<ul class="">
 			  #foreach( $hit in $alltopics)
 			     <li class="#if($currenttopic.getId()==$hit.getId()) current #end">
-				<a href="$apphome/collective/community/dashboard.html?collectionid=$collectionid&topic=$hit.getId()">
+				<a href="$apphome/collective/community/dashboard.html?collectionid=$collection.id&topic=$hit.getId()">
 				 
 				$hit.name</a></li>
 			  #end
