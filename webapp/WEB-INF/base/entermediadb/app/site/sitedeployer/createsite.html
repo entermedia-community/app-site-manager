@@ -57,28 +57,25 @@
 					</div>
 		
 				</div>
-						<div class="col-sm-6">
-					<div class="form-group">
-						<label for="user">[[Select a Region to deploy your trial instance]]</label>
-						
-						<select class="form-control" name="region" required data-msg="[[Please select a region]].">
-						#set( $servers = $mediaarchive.query("entermedia_servers").search() )
-						#if ($servers)
-							#foreach( $server in $servers )
-								#set( $seats = $mediaarchive.query("entermedia_seats").match("entermedia_servers", $server.getId()).match("seatstatus", "false").search() )
-								#if ($seats && $seats.size() <= $server.maxinstance)
-									<option value="$server.server_region">$server.server_region</option>
-								#end
-							#end
-						#end
-						</select>
-						
-						
-						
-						
-					</div>
-				</div>
-			</div>
+##				<div class="col-sm-6">
+##					<div class="form-group">
+##						<label for="user">[[Select a Region to deploy your trial instance]]</label>
+##						
+##						<select class="form-control" name="region" required data-msg="[[Please select a region]].">
+##						#set( $servers = $mediaarchive.query("entermedia_servers").search() )
+##						#if ($servers)
+##							#foreach( $server in $servers )
+##								#set( $seats = $mediaarchive.query("entermedia_seats").match("entermedia_servers", $server.getId()).match("seatstatus", "false").search() )
+##								#if ($seats && $seats.size() <= $server.maxinstance)
+##									<option value="$server.server_region">$server.server_region</option>
+##								#end
+##							#end
+##						#end
+##						</select>
+##					</div>
+##				</div>
+	
+		</div>
 			
 		<!-- 	<div class="row">
 				<div class="col-sm-6" style="padding-bottom:15px;">

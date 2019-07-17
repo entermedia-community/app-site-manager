@@ -24,7 +24,7 @@ public void init()
 		context.putSessionValue("clientform", null);
 	}
 	else {
-		context.putPageValue("errormsg", "Invalid Submission. Please  <a href='./createsite.html'>try again</a>.");
+		context.putPageValue("errorcode", "1");
 		return;
 	}
 
@@ -32,10 +32,10 @@ public void init()
 	String instanceurl = context.getRequestParameter("organization_url");
 	String instancename = context.getRequestParameter("instancename");
 	String organization_type = context.getRequestParameter("organization_type");
-	String timezone = context.getRequestParameter("timezone");
-	String region = context.getRequestParameter("region");
+	//String timezone = context.getRequestParameter("timezone");
+	//String region = context.getRequestParameter("region");
 	
-	if (organizationid && region) {
+	if (organizationid) {
 		
 		//Create Valid URL
 		String selected_url = instanceurl.toLowerCase();
@@ -54,9 +54,9 @@ public void init()
 		instancesearcher.saveData(newinstance);
 		
 		//Search Server by Region
-		log.info("- Checking region " + region);
+		//log.info("- Checking region " + region);
 		
- 		HitTracker servers = mediaarchive.query("entermedia_servers").match("server_region", region).search();
+ 		HitTracker servers = mediaarchive.query("entermedia_servers").match("allownewinstances", "true").search();
 		Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
 
 		Data seat = null;
@@ -78,7 +78,7 @@ public void init()
 		
 			if (seat == null) {
 				log.info("No seats available. Max: "+server.maxinstance);
-				context.putPageValue("errormsg","<h1>Ups!</h1><p>No Demo sites available for now. Please contact <a href='mailto:help@entermediadb.org'>EnterMedia Support Team</a>.</p>");
+				context.putPageValue("errorcode","2");
 				
 				//Send Email Notify No Seats
 				context.putPageValue("from", clientemail);
@@ -152,7 +152,7 @@ public void init()
 			}
 			else {
 				log.info("No servers available.");
-				context.putPageValue("errormsg","<h1>Ups!</h1><p>No Demo sites available for now. Please contact <a href='mailto:help@entermediadb.org'>EnterMedia Support Team</a>.</p>");
+				context.putPageValue("errorcode","3");
 				
 			}
 		

@@ -46,6 +46,13 @@
       <language id="fr"><![CDATA[Region]]></language>
     </name>
   </property>  
+  
+  <property id="allownewinstances" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="boolean" viewtype="boolean" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[Allow new instances]]></language> 
+    </name> 
+  </property>  
+  
   <property id="maxinstance" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" deleted="false" datatype="number" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
     <name> 
       <language id="en"><![CDATA[maxinstance]]></language> 

@@ -1,7 +1,14 @@
-#if( $errormsg )
-
-$errormsg
-
+#set($organizationid = $context.getRequestParameter("collectionid"))
+#if( $errorcode )
+	#if($errorcode=="1")
+		<h1>Error on submit</h1>
+		Invalid Submission. Please  <a href='./createsite.html?organizationid=$!organizationid' style="text-decoration:underline">try again</a>
+	#end
+	#if($errorcode=="2" || $errorcode=="3" )
+		<h1>New Instance Delayed!</h1>
+		<p>Sorry, we are currently experiencing high demand for New Instances. We will deploy your instance and will let you know when is ready.</p> 
+		<p>Please contact the EnterMedia Support Team at <a href='mailto:help@entermediadb.org' style="text-decoration:underline" >help@entermediadb.org</a> if you are in a hurry.</p>
+	#end
 #else
 
 <h1 class="text-center">[[Deploying Instance]]</h1>
