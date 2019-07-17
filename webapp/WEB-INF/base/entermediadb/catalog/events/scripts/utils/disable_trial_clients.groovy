@@ -65,6 +65,14 @@ public void init()
             //Set Status Expired to Client
             instance.setProperty("instance_status","disabled");
             instanceSearcher.saveData(instance, null);
+			
+			//Disable Monitoring
+			Searcher monitorsearcher = mediaArchive.getSearcher("entermedia_instances_monitor");
+			Data instancemonitor = monitorsearcher.query().match("instanceid", instance.id).searchOne();
+			if (instancemonitor) {
+				instancemonitor.setValue("monitoringenable","false");
+				monitorsearcher.saveData(instancemonitor, null);
+			}
             
             //Email Client
 			if (instance.owner)
