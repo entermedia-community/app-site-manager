@@ -5,6 +5,8 @@
 	<property name="subject">Contact From EnterMediadb.org</property>
 	<property name="to">help@entermediadb.org</property>
 	<property name="from">noreply@entermediadb.org</property>
+	<property name="thankspage">/entermediadb/thankyou.html</property>
+	
 	
 	<inner-layout>/entermediadb/theme/layouts/application.html</inner-layout>
     
