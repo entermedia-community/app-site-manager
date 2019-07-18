@@ -11,10 +11,7 @@
   </property>  
   <property id="name" index="true" stored="true" editable="true"  multilanguage="false"  > 
     <name> 
-      <language id="de"><![CDATA[Kollektion]]></language>  
-      <language id="en"><![CDATA[Collections]]></language>  
-      <language id="es"><![CDATA[Colección]]></language>  
-      <language id="fr"><![CDATA[Collection]]></language> 
+      <language id="en"><![CDATA[Project Name]]></language>  
     </name> 
   </property>  
   

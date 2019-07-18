@@ -1,44 +1,31 @@
-#set($organizationid = $context.getRequestParameter("collectionid"))
+
 
 #set($collectivesection = $content.collectivesection)
 <div class="navbar-container">
 <ul class="navbar-collective">
+	#if( $caneditcollection)
+	<li class="nav-item #if($collectivesection == "instances") active #end">
+		<a href="$apphome/collective/sites/index.html?collectionid=${librarycol.id}" class="nav-link">Instances</a>
+	</li>
+	
+	<li id="tasks"  class="nav-item #if($collectivesection == "tasks") active #end">
+		<a class="nav-link" href="$apphome/collective/goals/search/index.html?collectionid=${librarycol.id}" >
+		[[Support]] </a>
+	</li>
 	
 	<li id="community"  class="nav-item #if($collectivesection == "community") active #end">
 		<a class="nav-link" href="$apphome/collective/community/index.html?collectionid=${librarycol.id}" >
 		
 		[[Chat]] </a>
 	</li>
-		#if( $caneditcollection)
-	<li id="tasks"  class="nav-item #if($collectivesection == "tasks") active #end">
-		<a class="nav-link" href="$apphome/collective/goals/search/index.html?collectionid=${librarycol.id}" >
-		[[Tickets]] </a>
-	</li>
-	#end
-	#if($caneditcollection)
-	<li id="media"  class="nav-item  #if($collectivesection == "media") active #end">
-		<a class="nav-link" href="$apphome/collective/projects/index.html?collectionid=${librarycol.id}" >
-		
-		[[Archive]] </a>
-	</li>
+	##<li id="media"  class="nav-item  #if($collectivesection == "media") active #end">
+	##	<a class="nav-link" href="$apphome/collective/projects/index.html?collectionid=${librarycol.id}" >
+	##	[[Archive]] </a>
+	##</li>
 	#end
 	
-	##Search instances in these organizations
-	#set( $instances = $mediaarchive.query("entermedia_instances").match("librarycollection", $organizationid).search() )
-	<li>
-		<a href="" class="nav-link dropdown-toggle"data-toggle="dropdown">Instances</a>
-		<div class="dropdown-menu">
-			#if ($instances.size()<2)
-			<a class="dropdown-item" href="/entermediadb/app/site/sitedeployer/createsite.html?organizationid=$organizationid">[[Deploy New Instance]]</a>
-			#end
-			#if($instances)
-				#foreach($hit in $instances)
-					<a class="dropdown-item" href="#if ($hit.instance_status=='active')$hit.instanceurl#end" target="_blank">$hit.name ($hit.instance_status)</a>
-				#end
-			#end
-		</div>
-		
-	</li>
+	
+	
 	
 
 </ul>

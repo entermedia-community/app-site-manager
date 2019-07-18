@@ -7,7 +7,7 @@
 #end	
 #if( !$found)
 <div class="suscribe-title">
-[[Join the Organization]]
+[[Join the Project]]
 </div>	
 #if ($user && !$found)
 <form name="saveproject" id="saveproject" action="$apphome/collective/channel/subscribers/addsave.html" method="post">
@@ -42,9 +42,6 @@
 
 </div>	
 #else
-<div class="suscribe-title">[[You are subscribed]]</div>
-	 <a href="$apphome/collective/channel/subscribers/unsubscribe.html?id=${found.getId()}&collectionid=$librarycol.getId()" 
-		>[[Un-Subscribe]]</a>
 
 #end
 ##<a href="$apphome/channel/subscribers/addnew.html?collectionid=$librarycol.getId()" class="emdialog btn btn-primary">[[Invite Others]]</a>
@@ -52,9 +49,9 @@
 <div class="suscribers-box">
 <div class="suscribers-box-box">
 	<div class="box-content" style="border-right:1px solid #ddd">
-	<strong>[[Subscribers]]</strong>
-	#set( $subscribers = $mediaarchive.query("librarycollectionusers").exact("collectionid",$collectionid).search($context) )
-	<div class="box-number"><a class="emdialog" data-cancelsubmit="true" title="View Subscribers" href="$apphome/collective/channel/subscribers/subscriberslist.html?collectionid=$librarycol.getId()">$subscribers.size()</a></div>
+	<strong>[[Pending]]</strong>
+	#set( $subscribers = $mediaarchive.query("librarycollectionusers").exact("collectionid",$collectionid).exact("ontheteam",false).search($context) )
+	<div class="box-number"><a class="emdialog" data-cancelsubmit="true" title="View Pending Invites" href="$apphome/collective/channel/subscribers/subscriberslist.html?collectionid=$librarycol.getId()">$subscribers.size()</a></div>
 	</div>
 </div> 
 <div class="suscribers-box-box">
@@ -67,15 +64,9 @@
 </div>  
 <div class="suscribers-box-box">
 	<div class="box-content">
-	<strong>[[Share]]</strong>
+	<strong>[[Invite]]</strong>
 	<div class="box-icons">
-	#if ($librarycol.facebooklink)
-			<a href="https://www.facebook.com/${librarycol.facebooklink}"><i class="fab fa-facebook-f"></i></a>
-		#end
-		#if ($librarycol.socialinstagram)
-			<a href="https://www.facebook.com/${librarycol.instagramlink}"><i class="fab fa-instagram"></i></a>
-		#end
-		<a href=""><i class="fas fa-envelope"></i></a>
+		<a href=""><i class="fas fa-share-alt"></i></a>
 	</div>
 	</div>
 </div>  
@@ -91,7 +82,7 @@
 	
 #end
 <div class="community-area">
-<h3>[[Team]]</h3>
+<h3>[[Project Team]]</h3>
 
 #if( $team.isEmpty()) 
 	<p>[[No Team yet]]</p>

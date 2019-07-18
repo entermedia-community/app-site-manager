@@ -16,7 +16,7 @@
 	
 	#set( $searcher = $mediaarchive.getSearcher("librarycollection") )
 	$context.putPageValue("searcher",$searcher)
-	$context.putPageValue("view", "organization/addnew")
+	$context.putPageValue("view", "project/addnew")
 	
 	$pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
 
