@@ -90,7 +90,7 @@ section h3.section-subheading {
 .btn-primary:active, .btn-primary:focus {
   box-shadow: 0 0 0 0.2rem rgba(254, 209, 55, 0.5) !important;
 }
-
+/*
 .btn-secondary {
   background-color: #62B157!important;
   border-color: #01b34f!important;
@@ -106,7 +106,7 @@ section h3.section-subheading {
 .btn-secondary:active, .btn-secondary:focus {
   box-shadow: 0 0 0 0.2rem rgba(254, 209, 55, 0.5) !important;
 }
-
+*/
 ::-moz-selection {
   background: #fed136;
   text-shadow: none;
