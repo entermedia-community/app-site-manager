@@ -32,10 +32,10 @@ public void init()
 	String instanceurl = context.getRequestParameter("organization_url");
 	String instancename = context.getRequestParameter("instancename");
 	String organization_type = context.getRequestParameter("organization_type");
-	//String timezone = context.getRequestParameter("timezone");
-	//String region = context.getRequestParameter("region");
+	String timezone = context.getRequestParameter("timezone");
+	String region = context.getRequestParameter("region");
 	
-	if (organizationid) {
+	if (organizationid && region) {
 		
 		//Create Valid URL
 		String selected_url = instanceurl.toLowerCase();
@@ -54,9 +54,9 @@ public void init()
 		instancesearcher.saveData(newinstance);
 		
 		//Search Server by Region
-		//log.info("- Checking region " + region);
+		log.info("- Checking region " + region);
 		
- 		HitTracker servers = mediaarchive.query("entermedia_servers").match("allownewinstances", "true").search();
+ 		HitTracker servers = mediaarchive.query("entermedia_servers").match("server_region", region).search();
 		Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
 
 		Data seat = null;
