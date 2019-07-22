@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties> 
+  <property id="name"/>  
+  <property id="details" viewtype="textarea"/>
+  <property id="goaltrackercolumn" blankoption="false" />  
+  <property id="userlikes" />
+  <property id="tickettype" />
+  <property id="projectstatus"  defaultvalue="open"/>
+  <property id="ticketlevel" defaultvalue="1"/>
+  
+</properties>

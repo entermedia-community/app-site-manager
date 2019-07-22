@@ -49,28 +49,15 @@ $context.putPageValue("view", "projectgoal/addnew")
 #if( $userlikes )
 <input type="hidden" name="field" value="userlikes" />
 <input type="hidden" name="userlikes.value" value="$userlikes" />
+#else
+<input type="hidden" name="field" value="userlikes" />
+<input type="hidden" name="userlikes.value" value="$user.id" />
+
 #end
 
 #if( $caneditcollection )
 $pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
 
-<div class="form-group row">
-    <label for="exampleTextarea" class="col-2 col-form-label">[[Topic]]</label>
-    <div class="col-10">
-<div class="emfield-list">
-	<input type="hidden" value="goaltrackercolumn" name="field">
-	<div id="listdetail_project" class="listdetailpicker">
-	<select id="list-project" data-placeholder=" " name="goaltrackercolumn.value" class="listdropdown choose-select detail-select form-control autosubmited " listid="project" data-listid="project" data-searchtype="$searchtype" onchange="if( typeof updatelisteners == 'function' )updatelisteners('site/catalog','$searchtype','','project');">
-	#set( $projects = $mediaarchive.query("collectiveproject").match("parentcollectionid",$librarycol.getId()).sort("name").search())
-	#foreach( $project in $projects)
-		<option value="$project.getId()" #if( $data.goaltrackercolumn == $project.getId() ) selected #end>$project</option>
-	#end
-   </select>
-	##<a class="emdialog addnewitem" href="/site/app/views/settings/lists/datamanager/edit/inline.html?searchtype=project&update=list-project" title="Add New Project" data-hidefooter="true">+ New Project</a>
-</div>
-</div>
-    </div>
-    </div>
 
 #set( $fullscreen = $context.getRequestParameter("fullscreen"))
 #if( $fullscreen == "true")

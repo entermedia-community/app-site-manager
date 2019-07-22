@@ -79,9 +79,9 @@
   </property>  
 
   <property id="goaltrackercolumn" index="true" stored="true" editable="true" type="list" 
-  	listid="siteproject" viewtype="list"  datatype="list" foreignkeyid="parentcollectionid" > 
+  	listid="collectiveproject" viewtype="collectionproject" searchcomponent="collectionproject" datatype="list" foreignkeyid="parentcollectionid" > 
     <name> 
-      <language id="en"><![CDATA[Site Project]]></language>  
+      <language id="en"><![CDATA[Topic]]></language>  
     </name> 
   </property>  
 
@@ -92,9 +92,10 @@
     </name>
   </property> 
 
-  <property id="userlikes" filter="true"  editable="true" index="true" stored="true" viewtype="multiselect" indextype="not_analyzed" >
+  <property id="userlikes" filter="true"  editable="true" index="true" stored="true" type="list"
+  listid="librarycollectionusers" viewtype="teammembers" searchcomponent="teammembers" datatype="list"  foreignkeyid="collectionid" >
     <name>
-      <language id="en"><![CDATA[User Likes]]></language>
+      <language id="en"><![CDATA[Staff]]></language>
     </name>
   </property> 
 
