@@ -1,8 +1,10 @@
+#set($collectionid = $context.getRequestParameter("collectionid"))
+
 <div class=" h-100"  style="max-height: calc(100% - 290px); width:100%;" >
 <div class="row h-100" >
 <div class="col">
 <div class="maincontent h-100">
-#set($collectionid = $context.getRequestParameter("collectionid"))
+
 <h2>EnterMediaDb [[Instances]]</h2>
 ##Search instances in these organizations
 		#set( $instances = $mediaarchive.query("entermedia_instances").match("librarycollection", $collectionid).search() )
@@ -41,8 +43,9 @@
 			    </table>
 		    	</div>
 			#end
-			
+	#if( $caneditcollection )
 	<a href="/entermediadb/app/site/sitedeployer/createsite.html?organizationid=$collectionid" class="btn btn-secondary btn-sm">[[Deploy New Instance]]</a>
+	#end
 </div>	
 </div>
  <div class="col-lg-4 ">

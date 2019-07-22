@@ -12,4 +12,8 @@
   
   <inner-layout>/entermediadb/theme/layouts/application.html</inner-layout>
 
+        <permission name="view">
+                <userprofile property="view" equals="true" />
+        </permission>
+
 </page>
