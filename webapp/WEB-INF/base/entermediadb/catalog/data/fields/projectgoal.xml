@@ -92,8 +92,8 @@
     </name>
   </property> 
 
-  <property id="userlikes" filter="true"  editable="true" index="true" stored="true" type="list"
-  listid="librarycollectionusers" viewtype="teammembers" searchcomponent="teammembers" datatype="list"  foreignkeyid="collectionid" >
+  <property id="userlikes" filter="true"  editable="true" index="true" stored="true" type="list" datatype="list"
+  listid="librarycollectionusers" viewtype="teammembers" searchcomponent="teammembers"   foreignkeyid="collectionid" >
     <name>
       <language id="en"><![CDATA[Staff]]></language>
     </name>

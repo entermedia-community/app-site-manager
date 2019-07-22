@@ -23,14 +23,7 @@
 		#set($organization  = $mediaarchive.getCachedData("librarycollection", $orghit.collectionid) )
 		
 		<h3><a href="$apphome/collective/sites/index.html?collectionid=$organization.id"><i class="fas fa-sitemap"></i> $organization.name</a></h3>
-		
-	
-	
-	
-
-	
-
-#end
+	#end
 	<div style="padding:20px 0;">
 	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">Add a Project</a></div>
 
