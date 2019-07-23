@@ -15,11 +15,35 @@
 
 
 
+	#if($canviewsettings)
+	<div id="" style="margin:20px 0;">
+
+				<select  id="collectivesearch2" 
+					name="collectionid" 
+					class="form-control autosubmitlink" 
+					data-placeholder="[[Search Collectives]]"
+					data-url="$apphome/collective/sites/index.html?collectionid="
+				>
+				<option></option>
+				#set( $collectives = $mediaarchive.query("librarycollection").search() )
+				#foreach( $collective in $collectives )
+					<option value="$collective.getId()">#esc($collective.name)</option>
+				#end
+			   </select>
+
+	</div>
+#end
+
+
+
 <div class="sidebar-box">
     <div class="sidebar-box-header">
-        [[Projects]]        
+        [[Team Projects]]        
     </div>
     <div class="sidebar-box-content">
+
+
+
 	#set($selectedproject = $librarycol.getId())
 ##Search collections this user is teammeber
 #set( $organizations = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selectedUser.getId()).exact("ontheteam","true").search() )

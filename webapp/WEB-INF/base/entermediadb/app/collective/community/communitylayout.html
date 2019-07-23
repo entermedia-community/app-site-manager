@@ -52,13 +52,14 @@ $context.putPageValue("currenttopic", $currenttopic)
 		</div>
 	
   			
-		<div class="chatterbox h-100" 
+		<div class="chatterbox h-100"
+		id="chatterbox" 
 		data-collectionid="$collectiveid" 
-		 
 		data-channel="${currenttopic.getId()}" 
-		data-channeltype="community" 
+		data-channeltype="support" 
 		data-user="${user.id}" 
-		data-catalogid="${catalogid}">
+		data-catalogid="${catalogid}"
+		data-notifylink="$apphome/collective/community/chatadded.html">
 		</div>
 		
 	
