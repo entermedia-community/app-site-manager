@@ -78,7 +78,7 @@
     </name> 
   </property>  
 
-  <property id="goaltrackercolumn" index="true" stored="true" editable="true" type="list" 
+  <property id="goaltrackercolumn" index="true" stored="true" editable="true"  
   	listid="collectiveproject" viewtype="collectionproject" searchcomponent="collectionproject" datatype="list" foreignkeyid="parentcollectionid" > 
     <name> 
       <language id="en"><![CDATA[Topic]]></language>  
@@ -92,7 +92,7 @@
     </name>
   </property> 
 
-  <property id="userlikes" filter="true"  editable="true" index="true" stored="true" type="list" datatype="list"
+  <property id="userlikes" filter="true"  editable="true" index="true" stored="true" datatype="multi"
   listid="librarycollectionusers" viewtype="teammembers" searchcomponent="teammembers"   foreignkeyid="collectionid" >
     <name>
       <language id="en"><![CDATA[Staff]]></language>
