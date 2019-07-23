@@ -2,7 +2,7 @@
 <ul>
 #foreach($data in $hits)
 
-<li #if($active == $data.id) style="font-weight:bold;background:#eee;" #end><a href="$sitehome/$data.sourcepath">$data.post_title</a></li>
+<li #if($active == $data.id) style="font-weight:bold;background:#eee;" #end><a href="$sitelink/$data.sourcepath">$data.post_title</a></li>
 
 #end
 </ul>

@@ -6,7 +6,7 @@
 
 <div #if($active == $data.id) style="font-weight:bold;background:#eee;" #end>
 
-<h2><a href="$sitehome/$data.sourcepath">$data.post_title</a></h2>
+<h2><a href="$sitelink/$data.sourcepath">$data.post_title</a></h2>
 
 <div class="oe-editable" id="edit-data.id" data-dataid="$data.id" data-field="maincontent"           data-searchtype="postdata" data-viewtype="html">
 
@@ -15,7 +15,7 @@ $data.maincontent
 </div>
 
 #if( $user.oe_edit_mode == "postedit" )
-<a href="${sitehome}/emshare2/views/modules/postdata/edit/edit.html?id=${data.id}&viewid=postdatageneral&viewpath=postdata/postdatageneral&searchtype=postdata&detailsreadonly=false&preview=true">edit</a>
+<a href="${sitelink}/emshare2/views/modules/postdata/edit/edit.html?id=${data.id}&viewid=postdatageneral&viewpath=postdata/postdatageneral&searchtype=postdata&detailsreadonly=false&preview=true">edit</a>
 #end
 
 

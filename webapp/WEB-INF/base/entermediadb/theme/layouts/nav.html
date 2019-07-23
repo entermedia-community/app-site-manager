@@ -4,7 +4,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-shrink" id="mainNav">
 
       <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="/">
+        <a class="navbar-brand js-scroll-trigger" href="$sitelink">
 		<img src="/entermediadb/theme/img/entermedia_database.png" class="img-fluid" />
 		</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,18 +17,18 @@
               <a class="nav-link js-scroll-trigger #if($postdata.sourcepath=="home/") active #end" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="product/support.html") active #end" href="/product/support.html">Support</a>
+              <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="product/support.html") active #end" href="$sitelink/product/support.html">Support</a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath.toString().contains("knowledge/")) active #end" href="/knowledge/10/index.html">Knowledge Base</a>
+              <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath.toString().contains("knowledge/")) active #end" href="$sitelink/knowledge/10/index.html">Knowledge Base</a>
             </li>
 
             <li class="nav-item">
-                    <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="cloud-hosted-dam/") active #end" href="/cloud-hosted-dam/">Cloud Hosting</a>
+                    <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="cloud-hosted-dam/") active #end" href="$sitelink/cloud-hosted-dam/">Cloud Hosting</a>
             </li>
 	  ##  <li class="nav-item">
-           ##   <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="community/") active #end" href="/community/index.html">Community</a>
+           ##   <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="community/") active #end" href="$sitelink/community/index.html">Community</a>
            ## </li>
 	
         #if( $user )
@@ -38,14 +38,14 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link #if($content.section == "authentication") active #end" href="/entermediadb/app/authentication/logout.html">[[Log Out]]</a>
+              <a class="nav-link #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/logout.html">[[Log Out]]</a>
             </li>
             #else
             <li class="nav-item ">
-              <a class="nav-link #if($content.section == "authentication") active #end" href="/entermediadb/app/authentication/login.html">[[Login]]</a>
+              <a class="nav-link #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/login.html">[[Login]]</a>
             </li>
 	    <li class="nav-item">
-              <a class="btn btn-secondary btn-sm" href="/entermediadb/app/site/sitedeployer/createaccount.html">Free Account</a>
+              <a class="btn btn-secondary btn-sm" href="$sitelink/app/site/sitedeployer/createaccount.html">Free Account</a>
             </li>
             #end
 
