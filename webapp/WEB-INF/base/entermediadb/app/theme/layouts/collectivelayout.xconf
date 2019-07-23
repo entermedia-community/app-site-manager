@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-	<inner-layout>/entermediadb/theme/layouts/application.html</inner-layout> 
+	<inner-layout>/entermediadb/app/account/memberlayout.html</inner-layout> 
 </page>

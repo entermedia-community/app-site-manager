@@ -12,18 +12,4 @@
 	$content.setValue("GAtrakingcode", "")
 #end
 
-
-
-##Search collections this user is teammeber
-#set( $organizations = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selectedUser.getId()).exact("ontheteam","true").search() )
-<h1>[[Projects]]</h1>
-
-	#set($instancescount = 0)
-	#foreach( $orghit in $organizations )
-		#set($organization  = $mediaarchive.getCachedData("librarycollection", $orghit.collectionid) )
-		
-		<h3><a href="$apphome/collective/sites/index.html?collectionid=$organization.id"><i class="fas fa-sitemap"></i> $organization.name</a></h3>
-	#end
-	<div style="padding:20px 0;">
-	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">Add a Project</a></div>
-
+$pages.include("$apphome/account/activity/index.html",$context)

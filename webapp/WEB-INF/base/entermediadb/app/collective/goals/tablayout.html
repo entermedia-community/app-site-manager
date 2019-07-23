@@ -3,6 +3,9 @@
 
 <div id="collectiontoplevel" data-collectionid='$librarycol.getId()' data-catalogid='$catalogid'	class="goal-tabs">
 		<ul class="ui-tabs-nav nav emtabs" data-defaulttab="${content.goalfolder}tab" data-targetdiv="goals-tab-content" >
+		  <li class=#if($goalssection == "activity") emtabselected #end>
+	 		$pages.include("$apphome/collective/goals/activity/link.html")
+		 </li>
 		  <li class=""><a  id="searchtab" data-alwaysreloadpage="true" 
 		  	href="$apphome/collective/goals/search/index.html?collectionid=${librarycol.getId()}" >[[Open Tickets]]</a></li>
 		 ## <li class=""><a  id="prioritiestab" data-alwaysreloadpage="true" 
@@ -13,9 +16,7 @@
   		 ##<li class=""><a  id="hourstab"  data-alwaysreloadpage="true"  
 		 ## href="$apphome/collective/goals/hours/index.html?collectionid=${librarycol.getId()}" >[[Time]]</a></li>
 	     
- 		 <li class=#if($goalssection == "activity") emtabselected #end>
-	 		$pages.include("$apphome/collective/goals/activity/link.html")
-		 </li>
+
 		
 		</ul>
 		#if( $caneditcollection )
