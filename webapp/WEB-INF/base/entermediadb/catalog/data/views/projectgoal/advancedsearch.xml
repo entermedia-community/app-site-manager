@@ -3,4 +3,6 @@
 <properties> 
   <property id="name"/>  
   <property id="projectstatus"  viewtype="multiselect"/>  
+  <property id="userlikes" />
+  <property id="goaltrackercolumn" />
 </properties>

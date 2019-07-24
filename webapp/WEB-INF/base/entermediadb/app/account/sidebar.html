@@ -25,7 +25,7 @@
 					data-url="$apphome/collective/sites/index.html?collectionid="
 				>
 				<option></option>
-				#set( $collectives = $mediaarchive.query("librarycollection").search() )
+				#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").search() )
 				#foreach( $collective in $collectives )
 					<option value="$collective.getId()">#esc($collective.name)</option>
 				#end

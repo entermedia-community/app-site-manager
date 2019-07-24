@@ -6,10 +6,7 @@
 	#set( $found = $searcher.query().exact("followeruser",$user.getId()).exact("collectionid",$collectionid).searchOne() )
 #end	
 #if( !$found)
-<div class="suscribe-title">
-[[Join the Project]]
-</div>	
-#if ($user && !$found)
+#if ($canviewsettings && !$found)
 <form name="saveproject" id="saveproject" action="$apphome/collective/channel/subscribers/addsave.html" method="post">
 <input type="hidden" name="save" value="true" />
 <input type="hidden" name="field" value="followeruser" />
@@ -19,7 +16,8 @@
 <input type="hidden" name="field" value="collectionid" />
 <input type="hidden" name="collectionid.value" value="$collectionid" />
 <input type="hidden" name="collectionid" value="$collectionid" />
-<input type="submit" class="btn suscribe-btn" value="[[Subscribe]]" />
+<input type="hidden" name="ontheteam" value="true" />
+<input type="submit" class="btn btn-success" value="[[Join the Team]]" />
 </form>
 #else
 #set($loginok = "$apphome/collective/channel/$collectionid/")
@@ -34,9 +32,7 @@
 	   		#if($librarycol.joincollectivetext) 
 				$!librarycol.joincollectivetext
 			#else
-			<p>
-			[[Meet our team & Community and become a co-creator, sponsor or influencer]]
-			</p> 
+			 
 			#end
 			</div>
 

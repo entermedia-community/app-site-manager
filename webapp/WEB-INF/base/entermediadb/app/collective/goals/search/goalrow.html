@@ -16,7 +16,7 @@
 		    	<div style="font-weight:bold;" >	 
 		    	 $goal.name
 		    	 </div> 
-			<span class="headersubtext">$!mediaarchive.getData("tickettype",$goal.tickettype) added $!goal.getAge() ago - by $!mediaarchive.getUser($goal.owner).getAnonNickName()</span>
+			<span class="headersubtext">$!mediaarchive.getData("tickettype",$goal.tickettype) [[added]] $!goal.getAge() [[ago]] - [[by]] $!mediaarchive.getUser($goal.owner).getAnonNickName()</span>
 			</a>
     			$pages.include("$apphome/collective/goals/like.html",$context)
 				#if($goal.projectstatus != "completed")
@@ -53,20 +53,20 @@
 					#end	
 					$task</a>
 			#end
-			##<a class="emdialog"
-			##	title="Add Tasks"
-			##	data-cancelsubmit="true"
-			##	data-parameterdata="categoryvalues"
-			##	data-width="1000" 
-			##	data-collectionid="$librarycol.getId()"
-			##	data-categoryid="$!selectedcat.getId()"
-			##	data-hitssessionid="$!{goalhits.getSessionId()}"
-			##	data-goalfolder="$content.goalfolder" ##tabs
-			##	data-pickone="true"
-			##	data-goalid="$goal.id"
-			##	data-action="$apphome/collective/goals/actions/search/categorypicked.html"
-			##	href="$apphome/collective/goals/actions/search/searchcategory.html?targetdiv=goal${goal.id}&clearselection=&detailid=category-exact"
-			##	 ><i class="fas fa-plus-circle"></i> $points</a>
+			<a class="emdialog"
+				title="Add Tasks"
+				data-cancelsubmit="true"
+				data-parameterdata="categoryvalues"
+				data-width="1000" 
+				data-collectionid="$librarycol.getId()"
+				data-categoryid="$!selectedcat.getId()"
+				data-hitssessionid="$!{goalhits.getSessionId()}"
+				data-goalfolder="$content.goalfolder" ##tabs
+				data-pickone="true"
+				data-goalid="$goal.id"
+				data-action="$apphome/collective/goals/actions/search/categorypicked.html"
+				href="$apphome/collective/goals/actions/search/searchcategory.html?targetdiv=goal${goal.id}&clearselection=&detailid=category-exact"
+				 ><i class="fas fa-plus-circle"></i> $points</a>
 			</div>
 		</div>
 		
