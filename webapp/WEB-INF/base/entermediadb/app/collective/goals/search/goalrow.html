@@ -35,9 +35,11 @@
 			#set($points = 0)
 			#foreach($task in $tasks)
 				#set( $tree =  $mediaarchive.getCategory($task.projectdepartment))
-				#set( $c = $tree.getInt("goalpoints") )
-				#if( $c == 0)#set( $c = 10)#end
-				#set($points = $points + $c)
+				#if($tree)
+					#set( $c = $tree.getInt("goalpoints") )
+					#if( $c == 0)#set( $c = 10)#end
+					#set($points = $points + $c)
+				#end
     			#set( $edittask = "$apphome/collective/goals/task/taskedit.html?id=${task.id}&collectionid=$librarycol.getId()")
 				<a href="$edittask"
 					data-focuson="$task.id"
@@ -53,6 +55,7 @@
 					#end	
 					$task</a>
 			#end
+			#if($canviewsettings)
 			<a class="emdialog"
 				title="Add Tasks"
 				data-cancelsubmit="true"
@@ -67,6 +70,11 @@
 				data-action="$apphome/collective/goals/actions/search/categorypicked.html"
 				href="$apphome/collective/goals/actions/search/searchcategory.html?targetdiv=goal${goal.id}&clearselection=&detailid=category-exact"
 				 ><i class="fas fa-plus-circle"></i> $points</a>
+			#else
+				$points
+			#end
+			
+			
 			</div>
 		</div>
 		

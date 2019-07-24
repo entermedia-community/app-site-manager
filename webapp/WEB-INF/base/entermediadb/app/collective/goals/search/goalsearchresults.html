@@ -2,9 +2,6 @@
 #set( $allprojects = $mediaarchive.getSearcher("collectiveproject").query().match("parentcollectionid",$librarycol.getId()).sort("name").search($context) )
 #set( $projectid = $context.getRequestParameter("projectid"))
 
-#if(!$projectids)
-#set( $projectids = $userprofile.getValues("goaltrackercolumns") )
-#end
 
 #if( $projects.isEmpty() )
 	[[Create a new Topic to get started]]

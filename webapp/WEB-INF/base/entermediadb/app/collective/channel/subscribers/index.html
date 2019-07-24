@@ -1,13 +1,16 @@
 #set($collectionid = $librarycol.getId())
 
-<div class="suscribe-area">
+<div class="suscribe-area" id="suscriberform">
 #if( $user )
 	#set( $searcher = $mediaarchive.getSearcher("librarycollectionusers") )
 	#set( $found = $searcher.query().exact("followeruser",$user.getId()).exact("collectionid",$collectionid).searchOne() )
 #end	
 #if( !$found)
 #if ($canviewsettings && !$found)
-<form name="saveproject" id="saveproject" action="$apphome/collective/channel/subscribers/addsave.html" method="post">
+<form name="saveproject" class="ajaxform" id="saveproject" action="$apphome/collective/channel/subscribers/addsave.html" method="post"
+data-targetdiv="suscriberform"
+>
+<input type="hidden" name="oemaxlevel" value="1" />
 <input type="hidden" name="save" value="true" />
 <input type="hidden" name="field" value="followeruser" />
 <input type="hidden" name="followeruser.value" value="$user.getId()" />
