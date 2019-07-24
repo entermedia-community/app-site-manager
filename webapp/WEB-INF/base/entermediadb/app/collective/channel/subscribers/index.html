@@ -6,26 +6,25 @@
 	#set( $found = $searcher.query().exact("followeruser",$user.getId()).exact("collectionid",$collectionid).searchOne() )
 #end	
 #if( !$found)
-#if ($canviewsettings && !$found)
-<form name="saveproject" class="ajaxform" id="saveproject" action="$apphome/collective/channel/subscribers/addsave.html" method="post"
-data-targetdiv="suscriberform"
->
-<input type="hidden" name="oemaxlevel" value="1" />
-<input type="hidden" name="save" value="true" />
-<input type="hidden" name="field" value="followeruser" />
-<input type="hidden" name="followeruser.value" value="$user.getId()" />
-<input type="hidden" name="field" value="addeddate" />
-<input type="hidden" name="addeddate.value" value="$storeddate" />
-<input type="hidden" name="field" value="collectionid" />
-<input type="hidden" name="collectionid.value" value="$collectionid" />
-<input type="hidden" name="collectionid" value="$collectionid" />
-<input type="hidden" name="field" value="ontheteam" />
-<input type="hidden" name="ontheteam.value" value="true" />
-<input type="submit" class="btn btn-success" value="[[Join the Team]]" />
-</form>
-#else
-#set($loginok = "$apphome/collective/channel/$collectionid/")
-<a href="$apphome/authentication/login.html?loginokpage=$!loginok" class="btn suscribe-btn">[[Login to Subscribe]]</a>
+#if ($user && !$found)
+	<form name="saveproject" class="ajaxform" id="saveproject" action="$apphome/collective/channel/subscribers/addsave.html" method="post"
+	data-targetdiv="suscriberform"
+	>
+	<input type="hidden" name="oemaxlevel" value="1" />
+	<input type="hidden" name="save" value="true" />
+	<input type="hidden" name="field" value="followeruser" />
+	<input type="hidden" name="followeruser.value" value="$user.getId()" />
+	<input type="hidden" name="field" value="addeddate" />
+	<input type="hidden" name="addeddate.value" value="$storeddate" />
+	<input type="hidden" name="field" value="collectionid" />
+	<input type="hidden" name="collectionid.value" value="$collectionid" />
+	<input type="hidden" name="collectionid" value="$collectionid" />
+	#if ($canviewsettings)
+		<input type="hidden" name="field" value="ontheteam" />
+		<input type="hidden" name="ontheteam.value" value="true" />
+	#end
+	<input type="submit" class="btn btn-success" value="[[Join the Team]]" />
+	</form>
 #end
 <div class="suscribe-headline">
 	#if( $caneditcollection)
