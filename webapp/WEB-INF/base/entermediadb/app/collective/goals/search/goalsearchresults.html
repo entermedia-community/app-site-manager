@@ -12,18 +12,6 @@
 
 #if( $caneditcollection)
 <div class="goals-header-actions">
-    #if(!$allprojects.isEmpty() )
-	    <a href="" class=" btn-toolbar dropdown-toggle" data-toggle="dropdown">[[Topics]]</a>
-	    <div class="dropdown-menu">
-	    <a class="dropdown-item" href="#">[[Open Topics]]</a>
-	    #foreach( $project in $allprojects )
-	    	<a class="dropdown-item" href="openproject.html?collectionid=$librarycol.getId()&profilepreference=goaltrackercolumns&profilepreference.value=$project.id">$project.name</a>
-	    #end
-	    </div>
-		#if($caneditcollection)
-			<a href="$apphome/collective/projects/addnew.html?collectionid=$librarycol.getId()&collectionroot=collective/goals/search/index.html" class="btn-toolbar  emdialog" title="[[Add a Topic]]"><i class="fas fa-plus"></i></a>
-		#end
-    #end
  	<a class="btn btn-success emdialog" 
  	title="[[New Ticket]]" 
  	data-width="900"
@@ -54,8 +42,7 @@
 
 #if(!$project) $projectid missing #end
 	$!project.name	( $!hits.size() ) 
-	<a class="goals-column-header-close" href="closeproject.html?collectionid=$librarycol.getId()&profilepreference=goaltrackercolumns&profilepreference.value=$project.id"><i class="fas fa-times"></i></a>
-	<div class="clearfix"></div>
+	
 </div>
 
 <ul class="projectgoals ui-sortable"
