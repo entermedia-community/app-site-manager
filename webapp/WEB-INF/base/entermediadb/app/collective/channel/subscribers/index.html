@@ -22,8 +22,11 @@
 	#if ($canviewsettings)
 		<input type="hidden" name="field" value="ontheteam" />
 		<input type="hidden" name="ontheteam.value" value="true" />
+		<input type="submit" class="btn btn-success" value="[[Join the Team]]" />
+	#else
+		<input type="submit" class="btn btn-success" value="[[Request Access]]" />
 	#end
-	<input type="submit" class="btn btn-success" value="[[Join the Team]]" />
+	
 	</form>
 #end
 <div class="suscribe-headline">

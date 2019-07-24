@@ -1,3 +1,4 @@
+#if($caneditcollection)
 #set($goalssection = $content.goalssection)
 #if( $librarycol )
 
@@ -36,5 +37,11 @@
 #else
 
 $pages.includeContent()
+
+#end
+
+#else
+
+$pages.include("$apphome/collective/channel/subscribers/index.html")
 
 #end
