@@ -1815,3 +1815,7 @@ padding:20px 60px;
     text-decoration: none;
     border-radius: 5px;
 }
+
+.emdatafield { 
+	font-weight: bold;
+}
