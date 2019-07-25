@@ -24,13 +24,15 @@
 	$context.putPageValue("goal",$goal)
 	<td >
 	#set( $project= $!mediaarchive.getData("librarycollection",$goal.collectionid) )
-	<a href="$apphome/collective/sites/index.html?collectionid=$activity.collectionid">
+	<a href="$apphome/collective/collective/goals/priorities/index.html?collectionid=$activity.collectionid"
+	style="text-decoration:underline;" >
 	$!project
 	</a>
 	</td>
 	<td >
 	#set( $project= $!mediaarchive.getData("collectiveproject",$goal.goaltrackercolumn) )
-	<a href="$apphome/collective/goals/search/search.html?collectionid=$activity.collectionid&field=goaltrackercolumn&operation=matches&goaltrackercolumn.value=$project.id">
+	<a href="$apphome/collective/goals/search/search.html?collectionid=$activity.collectionid&field=goaltrackercolumn&operation=matches&goaltrackercolumn.value=$project.id" 
+	style="text-decoration:underline;" >
 	$!project
 	</a>
 	</td>
@@ -53,7 +55,7 @@
 	
 	<td class="text-right" >
 		<span class="headersubtext">
-			[[Added]] $!mediaarchive.getData("tickettype",$goal.tickettype) $!goal.getAge() [[ago]] <br> [[by]] $!mediaarchive.getUser($goal.owner).getAnonNickName()
+			$!mediaarchive.getData("tickettype",$goal.tickettype) $!goal.getAge() [[ago]] [[by]] $!mediaarchive.getUser($goal.owner).getAnonNickName()
 		</span><br>
 		<span class="headersubtext">
 			[[Modified on]] $context.getDateTime($activity.getValue("date")) <br>[[by]] $!mediaarchive.getUser($activity.editedbyid).getAnonNickName()
