@@ -1629,7 +1629,9 @@ background-color: #fff;
 box-shadow:2px 2px 6px 0 rgba(0,0,0,0.4);
     padding:10px 30px;
 }
-
+.account-sidebar .select2-container {
+	z-index:200!important;
+	}
 .sidebar-box {
     border:1px solid #e6e6e6;
 background-color: #fff;
