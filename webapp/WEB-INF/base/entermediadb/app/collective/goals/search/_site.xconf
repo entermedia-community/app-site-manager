@@ -1,6 +1,0 @@
-<page>
-	<!-- Tickets filters permissions -->
-	<permission name="viewfilterprojectstatus">
-		<boolean value="false" />
-	</permission>
-</page>
