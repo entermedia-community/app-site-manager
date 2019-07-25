@@ -13,26 +13,34 @@
 
 </div>
 
-
-
 	#if($canviewsettings)
-	<div id="" style="margin:20px 0;">
-
-				<select  id="collectivesearch2" 
-					name="collectionid" 
-					class="form-control autosubmitlink" 
-					data-placeholder="[[Search Collectives]]"
-					data-url="$apphome/collective/goals/search/index.html?collectionid="
-				>
-				<option></option>
-				#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").search() )
-				#foreach( $collective in $collectives )
-					<option value="$collective.getId()">#esc($collective.name)</option>
-				#end
-			   </select>
-
-	</div>
-	#end
+<div class="sidebar-box">
+    <div class="sidebar-box-header">
+        [[Agent]]        
+    </div>
+    <div class="sidebar-box-content">
+		<p><a href="$apphome/agent/index.html?collectionid=*"><i class="far fa-file-alt"></i> [[Calendar]]</a></p>
+		<p><a href="$apphome/agent/report.html?collectionid=*"><i class="far fa-file-alt"></i> [[Completed]]</a></p>
+		
+		<div id="" style="margin:20px 0;">
+	
+					<select  id="collectivesearch2" 
+						name="collectionid" 
+						class="form-control autosubmitlink" 
+						data-placeholder="[[Search Collectives]]"
+						data-url="$apphome/collective/goals/search/index.html?collectionid="
+					>
+					<option></option>
+					#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").search() )
+					#foreach( $collective in $collectives )
+						<option value="$collective.getId()">#esc($collective.name)</option>
+					#end
+				   </select>
+	
+		</div>
+    </div>
+</div>
+#end
 
 
 
@@ -57,6 +65,8 @@
 	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">Add a Project</a></div>
     </div>
 </div>
+
+
 
 
 

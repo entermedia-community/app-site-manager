@@ -1,3 +1,4 @@
+#if($librarycol)
 #set($collectionid = $librarycol.getId())
 
 <div class="suscribe-area" id="suscriberform">
@@ -124,4 +125,5 @@
 #set( $donations = $mediaarchive.query("transaction").exact("collectionid",$collectionid).sort("paymentdate").search($context) )
 
 </div>
-        
+#end        
+
