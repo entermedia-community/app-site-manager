@@ -10,6 +10,9 @@
   <entermedia_instance_status id="disabled"> 
     <name><![CDATA[Disabled]]></name> 
   </entermedia_instance_status>  
+  <entermedia_instance_status id="todisable"> 
+    <name><![CDATA[Make Disable]]></name> 
+  </entermedia_instance_status>
   <entermedia_instance_status id="deleted">
     <name><![CDATA[Deleted]]></name>
   </entermedia_instance_status>

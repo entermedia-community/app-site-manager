@@ -28,6 +28,10 @@ public void init()
         Collection expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status", "active").before("dateend", today).search();
         log.info("Found "+ expiredInstances.size() +" sites to disable.");
 		
+		if (!expiredInstances.size()) {
+			expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status", "todisable").search();
+		}
+		
 		for (Iterator instanceIterator = expiredInstances.iterator(); instanceIterator.hasNext();)
 		{
             //Get The Instance
