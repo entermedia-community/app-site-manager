@@ -1,6 +1,6 @@
 #set($organizationid = $context.getRequestParameter("organizationid"))
 
-<h1>Create an EnterMediaDb Instance</h1>
+<h1>[[Deploy an]] EnterMediaDb [[Server]]</h1>
 
 #if($organizationid)
 	#set($selectedUser = $user)
@@ -11,7 +11,7 @@
 		<form action="./createsitefinish.html" method="post" id="createsiteform">
 		<div class="card card-login mx-auto mt-5">
 		  <div class="card-header">
-		  <strong>[[Customize your Instance]]</strong>
+		  <strong>[[Customize your Server]]</strong>
 		  </div>
 		  <div class="card-body">
 			
@@ -59,7 +59,7 @@
 				</div>
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="user">[[Select a Region to deploy your trial instance]]</label>
+						<label for="user">[[Select a Region to deploy your trial server]]</label>
 						
 						<select class="form-control" name="region" required data-msg="[[Please select a region]].">
 						#set( $servers = $mediaarchive.query("entermedia_servers").search() )

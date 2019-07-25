@@ -5,7 +5,7 @@
 <div class="col">
 <div class="maincontent h-100">
 
-<h2>EnterMediaDb [[Instances]]</h2>
+<h2>EnterMediaDb [[Servers]]</h2>
 ##Search instances in these organizations
 		#set( $instances = $mediaarchive.query("entermedia_instances").match("librarycollection", $collectionid).search() )
 			#if ($instances)
@@ -13,9 +13,9 @@
 			    <table class="table table-striped">
 			        <thead>
 			            <tr class="tableheader">
-			                <th>Instance Name</th>
-			                <th>Status</th>
-							<th>Created</th>
+			                <th>[[Server Name]]</th>
+			                <th>[[Status]]</th>
+							<th>[[Created]]</th>
 							
 			                <th>URL</th>
 							
@@ -44,7 +44,7 @@
 		    	</div>
 			#end
 	#if( $caneditcollection )
-	<a href="/entermediadb/app/site/sitedeployer/createsite.html?organizationid=$collectionid" class="btn btn-secondary btn-sm">[[Deploy New Instance]]</a>
+	<a href="/entermediadb/app/site/sitedeployer/createsite.html?organizationid=$collectionid" class="btn btn-secondary btn-sm">[[Deploy New Server]]</a>
 	#end
 </div>	
 </div>
