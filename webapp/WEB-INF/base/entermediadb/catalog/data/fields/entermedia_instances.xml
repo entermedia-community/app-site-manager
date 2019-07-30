@@ -19,7 +19,7 @@
   </property>  
     <property id="librarycollection" required="true" index="true" stored="true" editable="true"  type="list" viewtype="autocomplete" listid="librarycollection" datatype="list" >Library 
     <name> 
-      <language id="en"><![CDATA[Organization]]></language>  
+      <language id="en"><![CDATA[Project]]></language>  
     </name> 
   </property>  
   <property id="owner" index="true" viewtype="user" type="list" listcatalogid="system" listid="user" filter="true"  keyword="true" stored="true" editable="true" >Owner 
@@ -48,17 +48,17 @@
   </property>  
   <property id="istrial" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="boolean" viewtype="boolean" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
     <name> 
-      <language id="en"><![CDATA[Is Trial Site]]></language> 
+      <language id="en"><![CDATA[Trial Site]]></language> 
     </name> 
   </property>  
-    <property id="instanceurl" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <property id="instanceurl" index="true" editable="true" rendertype="url" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" keyword="false"> 
     <name> 
       <language id="en"><![CDATA[Instance URL]]></language> 
     </name> 
   </property>
   <property id="instanceprefix" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
     <name> 
-      <language id="en"><![CDATA[Instance URL Prefix]]></language> 
+      <language id="en"><![CDATA[URL Prefix]]></language> 
     </name> 
   </property>  
   <property id="entermedia_servers" listid="entermedia_servers" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
