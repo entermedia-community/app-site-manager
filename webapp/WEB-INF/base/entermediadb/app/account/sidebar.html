@@ -19,8 +19,8 @@
         [[Agent]]        
     </div>
     <div class="sidebar-box-content">
-		<p><a href="$apphome/agent/index.html?collectionid=*&goaltrackerstaff=*"><i class="far fa-file-alt"></i> [[Calendar]]</a></p>
-		<p><a href="$apphome/agent/report.html?collectionid=*&goaltrackerstaff=*"><i class="far fa-file-alt"></i> [[Completed]]</a></p>
+		<p><a href="$sitelink/app/agent/index.html?collectionid=*&goaltrackerstaff=*"><i class="far fa-file-alt"></i> [[Calendar]]</a></p>
+		<p><a href="$sitelink/app/agent/report.html?collectionid=*&goaltrackerstaff=*"><i class="far fa-file-alt"></i> [[Completed]]</a></p>
 		
 		<div id="" style="margin:20px 0;">
 	
@@ -58,8 +58,9 @@
 	#set($instancescount = 0)
 	#foreach( $orghit in $organizations )
 		#set($organization  = $mediaarchive.getCachedData("librarycollection", $orghit.collectionid) )
-		
+		#if ($organization)
 		<p><a href="$sitelink/app/collective/goals/priorities/index.html?collectionid=$organization.id&goaltrackerstaff=*" class="#if($selectedproject==$organization.id) active #end"><i class="fas fa-sitemap"></i> $organization.name</a></p>
+		#end
 	#end
 	<div style="padding:20px 0;">
 	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">Add a Project</a></div>
