@@ -1821,3 +1821,10 @@ padding:20px 60px;
 .emdatafield { 
 	font-weight: bold;
 }
+
+
+.tageditor-monitoringstatus.tageditor-red,
+.tageditor-monitoringstatus.tageditor-error {
+	background-color: #dc3545!important;
+	color:#fff!important;
+}

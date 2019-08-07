@@ -33,7 +33,7 @@ public class SSLManager
 	private static final Log log = LogFactory.getLog(SSLManager.class);
 	private int DAYS_BEFORE_EXPIRATION = 10;
 
-	private void sendEmailError(Data inReal, MediaArchive inArchive)
+	private void sendEmailError(Data inInstance, Data inReal, MediaArchive inArchive)
 	{
 		String notifyemail = "help@entermediadb.org";  
 		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
@@ -49,20 +49,21 @@ public class SSLManager
 		{
 			if (inReal.get("sslstatus").compareTo("torenew") == 0)
 			{
-				templatemail.setSubject("[EM][" + inReal.get("name") + "][SSL][EXPIRATION] error detected");
+				templatemail.setSubject("[EM][" + inInstance.get("name") + "][SSL][EXPIRATION] error detected");
 			}
 			else if (inReal.get("sslstatus").compareTo("expired") == 0)
 			{
-				templatemail.setSubject("[EM][" + inReal.get("name") + "][SSL][EXPIRED] error detected");
+				templatemail.setSubject("[EM][" + inInstance.get("name") + "][SSL][EXPIRED] error detected");
 			}
 			else
 			{
-				templatemail.setSubject("[EM][" + inReal.get("name") + "][SSL] error detected");
+				templatemail.setSubject("[EM][" + inInstance.get("name") + "][SSL] error detected");
 			}
 		}
 
 		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
+		objects.put("instance", inInstance);
 		templatemail.send(objects);
 		inReal.setProperty("mailsent", "true");
 
@@ -164,7 +165,7 @@ public class SSLManager
 			{
 				log.error("Cant' check SSL certificate", e);
 				real.setValue("isssl", true);
-				sendEmailError(real, inArchive);
+				sendEmailError(instance, real, inArchive);
 			}
 			sites.saveData(real, null);
 		}
