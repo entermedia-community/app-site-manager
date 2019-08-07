@@ -1823,8 +1823,12 @@ padding:20px 60px;
 }
 
 
-.tageditor-monitoringstatus.tageditor-red,
-.tageditor-monitoringstatus.tageditor-error {
+.tageditor-monitorstatuscolor.tageditor-red,
+.tageditor-monitoringstatus.tageditor-error,
+.tageditor-sslstatus.tageditor-error {
 	background-color: #dc3545!important;
 	color:#fff!important;
 }
+
+
+
