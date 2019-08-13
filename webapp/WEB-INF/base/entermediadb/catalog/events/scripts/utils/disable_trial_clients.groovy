@@ -26,11 +26,13 @@ public void init()
 
         Date today = new Date();
         Collection expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status", "active").before("dateend", today).search();
-        log.info("Found "+ expiredInstances.size() +" sites to disable.");
+        
 		
 		if (!expiredInstances.size()) {
 			expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status", "todisable").search();
 		}
+		
+		log.info("Found "+ expiredInstances.size() +" sites to disable.");
 		
 		for (Iterator instanceIterator = expiredInstances.iterator(); instanceIterator.hasNext();)
 		{

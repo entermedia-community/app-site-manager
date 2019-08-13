@@ -16,4 +16,7 @@
   <entermedia_instance_status id="deleted">
     <name><![CDATA[Deleted]]></name>
   </entermedia_instance_status>
+  <entermedia_instance_status id="todelete"> 
+    <name><![CDATA[Delete Now]]></name> 
+  </entermedia_instance_status>
 </entermedia_instance_statuss>

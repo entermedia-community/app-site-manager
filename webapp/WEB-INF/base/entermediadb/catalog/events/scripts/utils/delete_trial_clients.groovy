@@ -26,6 +26,12 @@ public void init()
         limit.add(Calendar.DAY_OF_YEAR, -15);
 
         Collection expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status","disabled").and().before("dateend", limit.getTime()).search();
+		
+		
+		if (!expiredInstances.size()) {
+			expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status", "todelete").search();
+		}
+
         log.info("Found "+expiredInstances.size()+" sites to delete.");
 
         for (Iterator instanceIterator = expiredInstances.iterator(); instanceIterator.hasNext();)
