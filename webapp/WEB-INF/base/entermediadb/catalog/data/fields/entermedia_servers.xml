@@ -63,12 +63,12 @@
       <language id="en"><![CDATA[datacenter]]></language>
     </name>
   </property> 
-    <property id="serverip">New 
+    <property id="serverip" multilanguage="false" editable="true"> 
     <name> 
       <language id="en"><![CDATA[Server IP]]></language> 
     </name> 
   </property>
-    <property id="notes">New 
+    <property id="notes" multilanguage="false" editable="true"> 
     <name> 
       <language id="en"><![CDATA[Notes]]></language> 
     </name> 
