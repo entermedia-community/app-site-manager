@@ -301,4 +301,14 @@
    </name>
   </property>  
   <property id="isautofailover" index="true" editable="true" keyword="true" type="boolean">Auto Failover</property>
+ 
+	<property id="instanceurl" index="true" editable="false" stored="true" internalfield="false" isbadge="false" required="false" multilanguage="false" highlight="false" deleted="false" rendermask="${instanceid:entermedia_instances.instanceurl}" autocreatefromexif="false" writenametoexif="false" filter="false" keyword="false" viewtype="url" rendertype="url"> 
+    <name>
+      <language id="en"><![CDATA[Instance URL]]></language>
+    </name>
+  </property> 
+
+  
 </properties>
+
+
