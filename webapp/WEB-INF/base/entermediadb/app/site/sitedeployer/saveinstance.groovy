@@ -166,6 +166,7 @@ protected Data addNewMonitor(Data instance)
 	Data newmonitor = monitorsearcher.createNewData();
 
 	newmonitor.setValue("instanceid", instance.getId());
+	newmonitor.setValue("name", instance.getName()); 
 	newmonitor.setValue("serverid", instance.entermedia_servers);
 	newmonitor.setValue("isssl", "false");
 	

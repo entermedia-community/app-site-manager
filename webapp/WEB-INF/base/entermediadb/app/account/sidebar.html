@@ -52,12 +52,10 @@
         [[Team Projects]]        
     </div>
     <div class="sidebar-box-content">
-
-
-
 	#set($selectedproject = $librarycol.getId())
-##Search collections this user is teammeber
-#set( $organizations = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selectedUser.getId()).exact("ontheteam","true").search() )
+	##Search collections this user is teammeber
+	#set( $organizations = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selectedUser.getId()).exact("ontheteam","true").search() )
+	
 	#set($instancescount = 0)
 	#foreach( $orghit in $organizations )
 		#set($organization  = $mediaarchive.getCachedData("librarycollection", $orghit.collectionid) )
@@ -66,7 +64,7 @@
 		#end
 	#end
 	<div style="padding:20px 0;">
-	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">Add a Project</a></div>
+	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">[[Add a Project]]</a></div>
     </div>
 </div>
 

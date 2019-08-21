@@ -12,4 +12,24 @@
 	$content.setValue("GAtrakingcode", "")
 #end
 
-$pages.include("$apphome/account/activity/index.html",$context)
+
+#Check for projects or Activity if not button to create instance.
+
+#set( $organizations = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selectedUser.getId()).exact("ontheteam","true").search() )
+#if ($organizations.isEmpty())
+	<div style="padding:20px 0;">
+		<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">[[Add a Project]]</a></div>
+    </div>
+#else if ($organizations.size() == 1)
+	#set($collection = $organizations.get(0))
+	#set( $instances = $mediaarchive.query("entermedia_instances").match("librarycollection", $collection.getId()).search() )
+	#if ($instances.isEmpty())
+	<a href="/entermediadb/app/site/sitedeployer/createsite.html?organizationid=$collection.getId()" class="btn btn-secondary btn-sm">[[Deploy New Server]]</a>
+	#end
+#end
+
+#set( $activity = $mediaarchive.query("statuschanges").exact("userid", $user.getId()).sort("dateDown").search() )
+#if ($activity.size() > 0)
+	$pages.include("$apphome/account/activity/index.html",$context)
+#end
+
