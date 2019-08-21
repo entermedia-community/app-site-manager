@@ -1,0 +1,8 @@
+<page>
+	<property name="section">account</property>
+	<property name="fullwidth">true</property>
+	
+	<inner-layout>/${applicationid}/account/memberlayout.html</inner-layout>
+	
+	
+</page>
