@@ -21,7 +21,7 @@
 		<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">[[Add a Project]]</a></div>
     
 	</div>
-#else if ($organizations.size() == 1)
+#elseif ($organizations.size() == 1)
 	#set($collection = $organizations.get(0))
 	#set( $instances = $mediaarchive.query("entermedia_instances").match("librarycollection", $collection.getId()).search() )
 	#if ($instances.isEmpty())

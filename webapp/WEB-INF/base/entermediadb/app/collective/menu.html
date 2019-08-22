@@ -5,11 +5,11 @@
 <ul class="navbar-collective">
 	#if( $caneditcollection)
 	<li id="tasks"  class="nav-item #if($collectivesection == "tasks") active #end">
-		<a class="nav-link" href="$apphome/collective/goals/priorities/index.html?collectionid=${librarycol.id}&goaltrackerstaff=*" >
+		<a class="nav-link" href="$applink/collective/goals/priorities/index.html?collectionid=${librarycol.id}&goaltrackerstaff=*" >
 		[[Tickets]] </a>
 	</li>
 	<li id="community"  class="nav-item #if($collectivesection == "community") active #end">
-		<a class="nav-link" href="$apphome/collective/community/index.html?collectionid=${librarycol.id}" >
+		<a class="nav-link" href="$applink/collective/community/index.html?collectionid=${librarycol.id}" >
 		
 		[[Chat]] </a>
 	</li>
@@ -17,25 +17,21 @@
 	
 	
 	<li class="nav-item #if($collectivesection == "instances") active #end">
-		<a href="$apphome/collective/sites/index.html?collectionid=${librarycol.id}" class="nav-link">[[Servers]]</a>
+		<a href="$applink/collective/sites/index.html?collectionid=${librarycol.id}" class="nav-link">[[Servers]]</a>
 	</li>
 	
 	
-	<li class="nav-item #if($collectivesection == "invoices") active #end">
-		<a href="$apphome/collective/billing/index.html?collectionid=${librarycol.id}" class="nav-link">[[Billing]]</a>
-	</li>
+	##<li class="nav-item #if($collectivesection == "invoices") active #end">
+	##	<a href="$applink/collective/billing/index.html?collectionid=${librarycol.id}" class="nav-link">[[Billing]]</a>
+	##</li>
 
 	
 	
 	##<li id="media"  class="nav-item  #if($collectivesection == "media") active #end">
-	##	<a class="nav-link" href="$apphome/collective/projects/index.html?collectionid=${librarycol.id}" >
+	##	<a class="nav-link" href="$applink/collective/projects/index.html?collectionid=${librarycol.id}" >
 	##	[[Archive]] </a>
 	##</li>
 	#end
-	
-	
-	
-	
-
 </ul>
 </div>
+
