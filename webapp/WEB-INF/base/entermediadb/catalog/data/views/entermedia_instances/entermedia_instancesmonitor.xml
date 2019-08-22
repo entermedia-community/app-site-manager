@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <property id="monitoringenabled"/>
+  <property id="catalog"/>
+  <property id="monitoringstatus"/>  
+  <property id="lastchecked"/>  
+  <property id="alerttype"/>  
+  <property id="totalassets"/>  
+</root>

@@ -246,7 +246,6 @@ public class SiteManager implements CatalogEnabled
 		inReal.setProperty("ismemory", String.valueOf(inMemory));
 		inReal.setProperty("iscpu", String.valueOf(inCpu));
 		inReal.setProperty("isheap", String.valueOf(inHeap));
-
 		inReal.setProperty("isdisk", String.valueOf(inDisk));
 		return inReal;
 	}
@@ -504,20 +503,16 @@ public class SiteManager implements CatalogEnabled
 	
 	public synchronized void scan(MediaArchive inArchive)
 	{
-		log.info("Starting scan");
+		log.info("Starting monitor scan");
 		Searcher sites = inArchive.getSearcher("entermedia_instances_monitor");
-		Collection<Data> sitestomonitor = sites.query().all().search();
+		Collection<Data> sitestomonitor = sites.query().exact("monitoringenable", "true").search();
 		JSONObject json = null;
 		boolean pushNotification = false;
 		
 		for (Data it : sitestomonitor)
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
-			if (!real.getBoolean("monitoringenable"))
-			{
-				continue;
-			}
-			
+		
 			//Get Instance Data
 			Searcher instances = inArchive.getSearcher("entermedia_instances");
 			Data instance = instances.query().exact("id", real.get("instanceid")).searchOne();
@@ -525,37 +520,37 @@ public class SiteManager implements CatalogEnabled
 				continue;
 			}
 			
-			
 			//DNS
 			Data dns = (Data) getDnsSearcher().searchById((String)real.getValue("monitoredsitesdns"));
 			//TODO: if DNS = nul create one
 			String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
 			ServerStats stats = new ServerStats();
 
-			
+			//Defaults
 			if ((Integer)real.getValue("diskmaxusage") == null || ((Integer)real.getValue("diskmaxusage") != null && (Integer)real.getValue("diskmaxusage") == 0))
 			{
 				real.setValue("diskmaxusage", 95);
 				sites.saveData(real, null);
 			}
+			if (real.get("catalog") == null)
+			{
+				real.setValue("catalog", "assets");
+				sites.saveData(real, null);
+			}
+			boolean isold;
+			isold = real.getBoolean("isold");
+			
+			boolean disk = false;
+			boolean memory = false;
+			boolean heap = false;
+			boolean cpu = false;
+			boolean reachable = false;
 
 			Map<String, Integer> map = getUsageMaxByClient(real);
 
 			try
 			{
-				boolean disk = false;
-				boolean memory = false;
-				boolean heap = false;
-				boolean cpu = false;
-				boolean reachable = false;
-				boolean isold;
-
-				if (real.get("catalog") == null)
-				{
-					real.setValue("catalog", "assets");
-				}
-				isold = real.getBoolean("isold");
-				try
+				try    //Why to Trys?
 				{
 					if (isold == true)
 					{
@@ -578,7 +573,6 @@ public class SiteManager implements CatalogEnabled
 					}
 					else 
 					{
-						reachable = false;
 						stats = scanStats(real, instance, stats);
 						if (stats != null) {
 	 						reachable = true;
@@ -619,9 +613,9 @@ public class SiteManager implements CatalogEnabled
 						real.setValue("lastcheckfail", true);
 					}
 					
-					setErrorType(disk, memory, heap, cpu, reachable, false/*
-																			 * swap
-																	 */, real);
+					//setErrorType(disk, memory, heap, cpu, reachable, false, swap, real);
+					setErrorType(disk, memory, heap, cpu, reachable, false, real);
+					
 					if (real.getValue("isautofailover") != null )
 					{
 						if ((boolean)real.getValue("isautofailover"))
@@ -655,9 +649,8 @@ public class SiteManager implements CatalogEnabled
 
 				if (!checkServerStatus(real, instance))
 				{
-					setErrorType(disk, memory, heap, cpu, reachable, false/*
-																			 * swap
-																			 */, real);
+					//setErrorType(disk, memory, heap, cpu, reachable, false, real);
+					setErrorType(disk, memory, heap, cpu, reachable, false, real);
 					throw new OpenEditException("Server returns invalid status");
 				}
 
@@ -689,9 +682,8 @@ public class SiteManager implements CatalogEnabled
 	
 					if (memory || heap || cpu || disk)
 					{
-						setErrorType(disk, memory, heap, cpu, reachable, false/*
-																				 * swap
-																				 */, real);
+						//setErrorType(disk, memory, heap, cpu, reachable, false, swap, real);  //Why is being call 3 times?
+						setErrorType(disk, memory, heap, cpu, reachable, false, real);
 						String clusterColor = (String)real.getValue("monitorstatuscolor");
 						if (clusterColor == null)
 						{
@@ -733,6 +725,8 @@ public class SiteManager implements CatalogEnabled
 			}
 		real.setProperty("lastchecked", dates);
 		sites.saveData(real, null);
+		instance.setValue("monitoringstatus", real.getValue("monitoringstatus"));
+		instances.saveData(instance, null);
 		}
 		if (pushNotification && json != null)
 		{

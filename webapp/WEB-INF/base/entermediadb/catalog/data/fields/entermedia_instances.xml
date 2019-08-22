@@ -65,5 +65,10 @@
     <name> 
       <language id="en"><![CDATA[Server]]></language> 
     </name> 
-  </property>  
+  </property>
+    <property id="monitoringstatus" index="true" internalfield="false" datatype="list" editable="true" stored="true" searchtype="monitoredsites" viewtype="tageditor" rendertype="tageditor"> 
+    <name> 
+      <language id="en"><![CDATA[Monitoring Status]]></language> 
+    </name> 
+  </property>    
  </properties>
