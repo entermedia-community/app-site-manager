@@ -23,10 +23,11 @@
 	</div>
 #elseif ($organizations.size() == 1)
 	#set($collection = $organizations.get(0))
-	#set( $instances = $mediaarchive.query("entermedia_instances").match("librarycollection", $collection.getId()).search() )
-	#if ($instances.isEmpty())
+	#set($collectionid = $collection.collectionid)
+	#set( $instances = $mediaarchive.query("entermedia_instances").match("librarycollection", $collectionid).search() )
+	#if ($collectionid && $instances.isEmpty())
 	<div class="maincontent" style="padding:40px; text-align: center">
-	<a href="/entermediadb/app/site/sitedeployer/createsite.html?organizationid=$collection.getId()" class="btn btn-secondary btn-sm">[[Deploy New Server]]</a>
+	<a href="/entermediadb/app/site/sitedeployer/createsite.html?organizationid=$collectionid" class="btn btn-secondary btn-sm">[[Deploy New Server]]</a>
 	</div>
 	#end
 #end
