@@ -12,7 +12,7 @@
 	<input type="hidden" name="owner.value" value="$user.getId()" />
 	
 	
-	<input type="hidden" name="collectionroot" value="account/index.html" />
+	<input type="hidden" name="collectionroot" value="$applink/account/index.html" />
 	
 	#set( $searcher = $mediaarchive.getSearcher("librarycollection") )
 	$context.putPageValue("searcher",$searcher)

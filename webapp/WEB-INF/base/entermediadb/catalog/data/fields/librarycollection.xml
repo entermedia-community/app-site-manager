@@ -240,4 +240,11 @@
       <language id="en"><![CDATA[Trial Site]]></language>  
     </name> 
   </property>  
+  
+  
+    <property id="chatparentid" index="true" stored="true" type="list" listid="chatterbox" > 
+    <name> 
+      <language id="en"><![CDATA[Chat Parent]]></language>  
+    </name> 
+  </property>
 </properties>

@@ -1,6 +1,0 @@
-<page>
-		
-	<path-action name="TaskModule.chatEvent" />
-	<property name="virtual">true</property>
-	<inner-layout />
-</page>

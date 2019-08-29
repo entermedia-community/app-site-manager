@@ -33,12 +33,12 @@
     </name> 
   </property>  
 
-  <property id="sshname" index="true" editable="true" stored="true">New 
+  <property id="sshname" index="true" editable="true" stored="true"> 
     <name> 
       <language id="en"><![CDATA[sshname]]></language> 
     </name> 
   </property>  
-  <property id="server_region" index="true" listchild="country" editable="true" stored="true" filter="true" datatype="list" viewtype="list">New 
+  <property id="server_region" index="true" listchild="country" editable="true" stored="true" filter="true" datatype="list" viewtype="list"> 
     <name>
       <language id="de"><![CDATA[Region]]></language>
       <language id="en"><![CDATA[Region]]></language>
@@ -63,12 +63,12 @@
       <language id="en"><![CDATA[datacenter]]></language>
     </name>
   </property> 
-    <property id="serverip" multilanguage="false" editable="true"> 
+    <property id="serverip" index="true" editable="true" stored="true"> 
     <name> 
       <language id="en"><![CDATA[Server IP]]></language> 
     </name> 
   </property>
-    <property id="notes" multilanguage="false" editable="true"> 
+    <property id="notes" index="true" editable="true" stored="true"> 
     <name> 
       <language id="en"><![CDATA[Notes]]></language> 
     </name> 
