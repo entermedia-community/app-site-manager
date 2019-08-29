@@ -32,7 +32,7 @@
 	#end
 #end
 
-#set( $activity = $mediaarchive.query("statuschanges").exact("userid", $user.getId()).sort("dateDown").search() )
+#set( $activity = $mediaarchive.query("statuschanges").exact("userid", $user.getId()).exact("notified","false").search() )
 #if ($activity.size() > 0)
 	$pages.include("$apphome/account/activity/index.html",$context)
 #end
