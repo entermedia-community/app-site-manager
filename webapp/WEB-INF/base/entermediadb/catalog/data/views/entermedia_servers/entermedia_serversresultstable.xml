@@ -1,0 +1,6 @@
+<root>
+  <property id="name"/>
+  <property id="serverip"/>
+  <property id="datacenter"/>
+  <property id="server_region"/>
+</root>

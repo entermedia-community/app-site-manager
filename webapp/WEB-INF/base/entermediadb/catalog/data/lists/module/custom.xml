@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <root> 
- 
-  <property id="monitoredsites" href="/views/modules/monitoredsites/index.html">Monitored Sites</property>
+   <data id="entermedia_instances_monitor"> 
+    <name><![CDATA[Monitor]]></name> 
+  </data>  
+  <data id="entermedia_instances"> 
+    <name><![CDATA[Instances]]></name> 
+  </data> 
+  <data id="entermedia_seats" recordstatus="deleted" mastereditclusterid="entermediadb-cluster" recordmodificationdate="2019-06-14T18:01:27.568Z"> 
+    <name><![CDATA[Entermedia Seats]]></name> 
+  </data> 
+    <data id="entermedia_servers">
+    <name><![CDATA[Servers]]></name>
+  </data>  
+  
+  
+  
 </root>

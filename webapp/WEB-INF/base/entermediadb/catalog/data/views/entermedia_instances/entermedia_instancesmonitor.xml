@@ -6,5 +6,7 @@
   <property id="monitoringstatus"/>  
   <property id="lastchecked"/>  
   <property id="alerttype"/>  
-  <property id="totalassets"/>  
+  <property id="totalassets"/>
+  <property id="executiontime"/>
+    <property id="sslstatus"/>
 </root>

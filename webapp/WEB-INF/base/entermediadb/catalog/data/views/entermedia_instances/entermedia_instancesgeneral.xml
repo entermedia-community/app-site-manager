@@ -2,11 +2,15 @@
 
 <root> 
   <property id="name"/>  
-  <property id="instance_status"/>  
+  <property id="instance_status"/>
+  <property id="monitoringstatus"/>  
   <property id="librarycollection"/> 
   <property id="owner"/> 
-  <property id="istrial"/>  
+  <property id="istrial"/>
+  <property id="datestart"/>
+  <property id="dateend"/>    
   <property id="entermedia_servers"/>  
   <property id="instanceurl"/> 
-  <property id="monitoringstatus"/>
+  
+  <property id="Notes"/>
 </root>
