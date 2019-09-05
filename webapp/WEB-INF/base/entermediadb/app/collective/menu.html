@@ -24,11 +24,11 @@
 		<a href="$applink/collective/sites/index.html?collectionid=${librarycol.id}" class="nav-link">[[Servers]]</a>
 	</li>
 	
-	
-	##<li class="nav-item #if($collectivesection == "invoices") active #end">
-	##	<a href="$applink/collective/billing/index.html?collectionid=${librarycol.id}" class="nav-link">[[Billing]]</a>
-	##</li>
-
+	#if(1==2)
+	<li class="nav-item #if($collectivesection == "billing") active #end">
+		<a href="$applink/collective/billing/index.html?collectionid=${librarycol.id}" class="nav-link">[[Billing]]</a>
+	</li>
+	#end
 	
 	
 	##<li id="media"  class="nav-item  #if($collectivesection == "media") active #end">
