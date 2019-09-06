@@ -8,13 +8,16 @@
  <div class="container">
  <div class="row">
         <div class="col-9 post-content" >
-#if($postdata.post_title)
-<h2>$postdata.post_title</h2>
-#end
-  <div class="oe-editable" id="edit-$postdata.id" data-dataid="$postdata.id" data-field="maincontent"   	data-searchtype="postdata" data-viewtype="html">
- 		$postdata.maincontent
+	#if($postdata.post_title)
+		$content.setValue("meta_title", "$postdata.post_title - EnterMediaDB")
+		$content.setValue("meta_canonical", "$siteRoot/$postdata.sourcepath")
 
-  </div>
+		<h2>$postdata.post_title</h2>
+	#end
+  		<div class="oe-editable" id="edit-$postdata.id" data-dataid="$postdata.id" data-field="maincontent"   	data-searchtype="postdata" data-viewtype="html">
+	 		$postdata.maincontent
+
+  		</div>
 #if( $user.oe_edit_mode == "postedit" )
 <p>
 <a href="${sitelink}/emshare2/views/modules/postdata/edit/edit.html?id=${postdata.id}&viewid=postdatageneral&viewpath=postdata/postdatageneral&searchtype=postdata&detailsreadonly=false&preview=true">[edit post]</a></p>

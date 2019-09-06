@@ -5,11 +5,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	#set($meta_title = $postdata.getValue("post_title"))
+	#set($meta_title = $content.getValue("meta_title"))
+	#if(!$meta_title)
+		#set($meta_title = $postdata.getValue("post_title"))
+	#end
 	#if(!$meta_title)
 		#set($meta_title = "EnterMedia Open-source Digital Asset Managment")
 	#end
 	<title>$meta_title</title>
+	
+	#set($meta_canonical = $content.getValue("meta_canonical"))
+	#if($meta_canonical)
+		<link rel="canonical" href="$meta_canonical" />
+	#end
     
     
     #foreach( $script in $content.getScriptPaths() )
@@ -19,9 +27,6 @@
     #foreach( $style in $content.getStylePaths() )
 	    <link rel="stylesheet" type="text/css" href="$home$style" />
     #end
-
-
-
     
 	<link rel="icon" href="/entermediadb/theme/images/em-favicon.ico" />
 </head>

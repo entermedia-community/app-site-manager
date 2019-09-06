@@ -13,5 +13,5 @@
   <path-action name="PostModule.loadPost"/>
 
   <path-action alltypes="true" name="MediaArchiveModule.getMediaArchive"/>
-<property name="isfullscreen">true</property>
+  <property name="isfullscreen">true</property>
 </page>
