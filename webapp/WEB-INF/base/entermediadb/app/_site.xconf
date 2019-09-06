@@ -5,6 +5,10 @@
   <property name="catalogid">entermediadb/catalog</property>
   <property name="applicationid">entermediadb/app</property>
   <property name="siteid">entermediadb</property>
+  
+  <property name="login-path">/app/authentication/login.html</property>
+  
+  
   <path-action name="MediaArchiveModule.loadApplicationId"/>
   
   <property name="isfullscreen">true</property>
