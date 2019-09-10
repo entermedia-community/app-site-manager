@@ -1,10 +1,10 @@
 #set( $version = $content.project )
 <div class="sidebar-box">
-<h2><a class="sidebar-category" data-toggle="collapse" data-target="#collapseVersions" aria-expanded="false" href="#">Versions <i class="fa fa-caret-down"></i></a></h2>
-<div class="collapse" id="collapseVersions">
+<h2>Versions</h2>
+<div class="" id="collapseVersions">
 <ul>
-<li> <a class="" targetdiv="resultsheader" href="$sitelink/knowledge/10/index.html" >Version 10</a></li>
-<li>  <a class="" targetdiv="resultsheader" href="$sitelink/knowledge/9/index.html">Version 9</a></li>
+<li> <a class="" targetdiv="resultsheader" href="$sitelink/knowledge/10/index.html" >EnterMedia Version 10</a></li>
+<li>  <a class="" targetdiv="resultsheader" href="$sitelink/knowledge/9/index.html">EnterMedia Version 9</a></li>
 </ul>
 </div>
 </div>
@@ -20,7 +20,9 @@
 #set( $active = $postdata.getId() )
 #foreach($data in $hits)
 
-<li #if($active == $data.id) class="knowledge-current" #end><a href="$sitelink/$data.sourcepath">$data.post_title</a></li>
+<li #if($active == $data.id) class="knowledge-current" #end>
+	<a href="$sitelink/$data.sourcepath" title="Knowledge Base: $data.post_title">$data.post_title</a>
+</li>
 
 #end
 </ul>
