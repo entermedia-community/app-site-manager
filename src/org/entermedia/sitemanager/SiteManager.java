@@ -728,17 +728,17 @@ public class SiteManager implements CatalogEnabled
 		instance.setValue("monitoringstatus", real.getValue("monitoringstatus"));
 		instances.saveData(instance, null);
 		}
-		if (pushNotification && json != null)
-		{
-			try
-			{
-				sendPushNotification(json);
-			}
-			catch (Exception e)
-			{
-				log.error("Error sending slack notification", e);
-			}
-		}
+//		if (pushNotification && json != null)
+//		{
+//			try
+//			{
+//				sendPushNotification(json);
+//			}
+//			catch (Exception e)
+//			{
+//				log.error("Error sending slack notification", e);
+//			}
+//		}
 		log.info("scan complete");
 	}
 	
