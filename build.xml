@@ -106,7 +106,7 @@
 			
 			<zipfileset dir="${deployDir}/builds/" includes="${branch}${appname}-${version}.jar" prefix="lib"/>
 			<zipfileset dir="${webapp}/WEB-INF/base/entermediadb" prefix="base/entermediadb" />
-			
+			<zipfileset dir="${etc}" includes="install.xml"/>			
 		</zip>
   </target>
 	    

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." default="default" name="upgrade">
+
+  <target name="default" depends="clean, update-dependencies, unwar, upgrade"/>
+   
+    <property name="appname" value="${ant.project.name}"/>
+    <property name="org" value="eInnovation, inc."/>
+    <property name="webinf" location="WEB-INF"/>
+    <property name="src" location="${webinf}/src"/>
+    <property name="lib" location="${webinf}/lib"/>
+    <property name="resources" location="resources"/>
+    <property name="build" location="./tmp/oe_upgrade"/>
+    <property name="wardir" location="${build}/wartmp"/>
+    <property name="dockerwebapp" location="/opt/entermediadb/webapp"/>
+    <property name="dockerlib" location="${dockerwebapp}/WEB-INF/lib"/>
+    
+
+	<!-- 
+		========================================================================
+		Anthill build server properties.  These properties will be passed in
+		by anthill when this script is executed on the build server.
+		
+			- "version" is set by the version adapter
+			- "deployDir" is set by anthill.publish.dir
+		========================================================================
+	--> 
+  	<property name="version"  value="dev"/>
+  	<property name="deployDir" location="deploy"/>
+  	
+  	<!-- A convenience variable for documentation output -->
+  	<property name="versionDir" location="${deployDir}/${version}"/>
+  	<property name="versionedApp" value="${appname}-${version}"/>
+
+  <target name="clean">
+  </target>
+  
+	
+	<target name="update-dependencies" depends="clean">
+		<mkdir dir="${build}"/>
+
+		<get src="http://dev.entermediasoftware.com/jenkins/job/@BRANCH@extension-openedit/lastSuccessfulBuild/artifact/deploy/extension-openedit.zip" dest="${build}/openedit.zip" />	
+	  
+  </target>
+    
+  <target name="unwar">
+  	<mkdir dir="${build}/unpacked"/>
+    <unzip dest="${build}/unpacked" src="${build}/openedit.zip" />
+  </target>
+  
+  <target name="upgrade">
+  	<echo>Delete old open edit libs</echo>
+    <delete>
+      <fileset dir="./lib" includes="@BRANCH@extension-openedit**.jar"/>
+    </delete>
+  	
+    <copy todir="./lib" overwrite="false" preservelastmodified="true">
+      <fileset file="${build}/unpacked/lib/@BRANCH@extension-openedit*.jar"/>
+    </copy>
+
+    <delete failonerror="false">
+      <fileset dir="../WEB-INF/base/system/components/openedit/"/>
+    </delete>
+
+    <delete failonerror="false">
+       <fileset dir="../WEB-INF/base/openedit/"/>
+     </delete>
+     <copy todir="../WEB-INF/base/openedit" preservelastmodified="true">
+       <fileset dir="${build}/unpacked/base/openedit"/>
+     </copy>
+
+  	
+    <delete dir="${build}"/>
+    
+  </target>
+  
+  <target name="extend">
+  	<echo>Reinstall plugin(s)</echo>
+    <delete>
+      <fileset file="${dockerlib}/app-site-manager**.jar"/>
+      <fileset file="${dockerlib}/openedit-money**.jar"/>
+      <fileset file="${dockerlib}/stripe-java**.jar"/>
+    </delete>
+  	
+    <copy todir="${dockerlib}" overwrite="false" preservelastmodified="true">
+      <fileset file="${basedir}/lib/app-site-manager**.jar"/>
+      <fileset file="${basedir}/lib/openedit-money**.jar"/>
+      <fileset file="${basedir}/lib/stripe-java**.jar"/>
+    </copy>
+
+  	<!-- <delete dir="${build}"/> -->
+    
+  </target>
+
+  
+ 
+</project>
