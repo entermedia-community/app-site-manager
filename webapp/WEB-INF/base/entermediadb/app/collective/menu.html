@@ -1,5 +1,3 @@
-
-
 #set($collectivesection = $content.collectivesection)
 <div class="navbar-container">
 <ul class="navbar-collective">
@@ -24,10 +22,13 @@
 		<a href="$applink/collective/sites/index.html?collectionid=${librarycol.id}" class="nav-link">[[Servers]]</a>
 	</li>
 	
-	#if(1==2)
+	#if($mediaarchive.getCatalogSettingValue("isbillingenabled") == "true")
+	
 	<li class="nav-item #if($collectivesection == "billing") active #end">
-		<a href="$applink/collective/billing/index.html?collectionid=${librarycol.id}" class="nav-link">[[Billing]]</a>
+		<a href="$applink/collective/services/index.html?collectionid=${librarycol.id}" class="nav-link">[[Services]]</a>
 	</li>
+
+
 	#end
 	
 	
