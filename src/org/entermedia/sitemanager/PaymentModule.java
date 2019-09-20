@@ -1,9 +1,13 @@
 package org.entermedia.sitemanager;
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,6 +22,7 @@ import org.openedit.WebPageRequest;
 import org.openedit.data.Searcher;
 import org.openedit.data.SearcherManager;
 import org.openedit.hittracker.HitTracker;
+import org.openedit.money.Money;
 import org.openedit.users.User;
 
 public class PaymentModule extends BaseMediaModule {
@@ -81,7 +86,8 @@ public class PaymentModule extends BaseMediaModule {
 		Data payment = payments.createNewData();
 		payments.updateData(inReq, inReq.getRequestParameters("field"), payment);
 		
-		getOrderProcessor().process(archive, inReq.getUser(), payment,  token);
+		boolean success = getOrderProcessor().process(archive, inReq.getUser(), payment,  token);
+		if(success) {
 		payment.setValue("paymentdate", new Date());
 		payment.setValue("userid", inReq.getUserName());
 		String frequency = inReq.findValue("frequency");
@@ -96,13 +102,111 @@ public class PaymentModule extends BaseMediaModule {
 			plans.saveData(plan);
 			payment.setValue("paymentplan", plan.getId());
 		}
-		payments.saveData(payment);
+		
+		String invoicepayment = inReq.findValue("invoicepayment");
+		if(invoicepayment == "true") {
+			Data invoice = loadCurrentCart(inReq);
+			invoice.setValue("paymentstatus", "paid");
+			invoice.setValue("paymentdate", new Date());
+			invoice.setValue("owner", inReq.getUserName());
+			invoice.setValue("transaction", payment.getId());
 
+			archive.saveData("collectioninvoice", invoice);
+			inReq.removeSessionValue("current-cart");
+		}
+		
+		
+		
+		
+		
+		payments.saveData(payment);
+		}
 		
 	}
 	
 	
 	
+	
+	
+	
+	
+	
+	public Data loadCurrentCart(WebPageRequest inReq) {
+		MediaArchive archive = getMediaArchive(inReq);
+		Searcher invoicesearcher = archive.getSearcher("collectioninvoice");
+		Data invoice = (Data) inReq.getSessionValue("current-cart");
+		if(invoice == null) {
+			invoice = invoicesearcher.createNewData();
+			inReq.putSessionValue("current-cart", invoice);
+		}
+		Money invoicetotal = getInvoiceTotal(archive, invoice);
+		inReq.putPageValue("invoicetotal", invoicetotal);
+		
+		return invoice;
+		
+	}
+	
+	
+	
+	
+	
+	public void addProductsToInvoice(WebPageRequest inReq) {
+		MediaArchive archive = getMediaArchive(inReq);
+
+		Data invoice = loadCurrentCart(inReq);
+		
+		String[] ids = inReq.getRequestParameters("productid");
+		
+		
+		
+		List products = (List) invoice.getObjects("productlist");
+		if(products == null) {
+			products = new ArrayList();
+			invoice.setValue("productlist", products);
+		}
+		for (String id : ids)
+		{
+			HashMap codemap = new HashMap();
+			codemap.put("productid", id);
+			String quantity = inReq.getRequestParameter(id + ".quantity");
+			if(quantity == null) {
+				quantity = "1";
+			}
+			codemap.put("quantity", quantity);
+			products.add(codemap);
+		}
+		
+		
+		Money invoicetotal = getInvoiceTotal(archive, invoice);
+		inReq.putPageValue("invoicetotal", invoicetotal);
+		
+		
+	}
+	
+	
+	public Money getInvoiceTotal(MediaArchive inArchive, Data invoice) {
+		Money money = new Money();
+		
+		
+		List products = (List) invoice.getObjects("productlist");
+		if(products == null) {
+			return money;
+		}
+		for (Iterator iterator = products.iterator(); iterator.hasNext();)
+		{
+			Map productinfo = (Map) iterator.next();
+			String productid = (String) productinfo.get("productid");			
+			Data product = inArchive.getData("collectiveproduct", productid);
+			String pricestring = product.get("productprice");
+			if(pricestring != null) {
+				money = money.add(pricestring);
+			}
+			//Need to do quantity multiplication
+		}
+		
+		return money;
+		
+	}
 	
 	public void processRecurringPayments(WebPageRequest inReq) {
 		

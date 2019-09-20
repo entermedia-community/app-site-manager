@@ -37,7 +37,7 @@ public class StripePaymentProcessor
 	
 
 
-	protected void process(MediaArchive inArchive, User inUser, Data payment,  String inToken) 
+	protected boolean process(MediaArchive inArchive, User inUser, Data payment,  String inToken) 
 	{
 		log.info("processing order with Stripe");
 		
@@ -90,6 +90,7 @@ public class StripePaymentProcessor
 			
 			
 			Charge c = Charge.create(chargeParams);
+			if(c.getPaid()) {
 			String balancetransaction = c.getBalanceTransaction();
 			BalanceTransaction balance = BalanceTransaction.retrieve(balancetransaction);
 			long fee = balance.getFee();
@@ -111,6 +112,10 @@ public class StripePaymentProcessor
 			float net = (float) balance.getNet() / 100;
 			payment.setProperty("net", String.valueOf(net));
 			payment.setProperty("stripechargeid", c.getId());
+			return true;
+			} else {
+				return false;
+			}
 		}
 
 		catch (Exception e)
