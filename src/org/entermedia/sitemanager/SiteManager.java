@@ -359,7 +359,8 @@ public class SiteManager implements CatalogEnabled
 			String jsonString = downloader.downloadToString(jsonUrl);
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
-			JSONArray results = (JSONArray) json.get("stats");
+			// No longer trying to gather OS hardware usage expect for disk usage.
+/*			JSONArray results = (JSONArray) json.get("stats");
 			for (Object statObj : results.toArray())
 			{
 				JSONObject statJSON = (JSONObject) statObj;
@@ -368,7 +369,7 @@ public class SiteManager implements CatalogEnabled
 				statList.add(stat);
 			}
 			stats.build(statList);
-			//inReal.setValue("fullurl", jsonUrl);
+*/			//inReal.setValue("fullurl", jsonUrl);
 		}
 		catch (Exception e)
 		{

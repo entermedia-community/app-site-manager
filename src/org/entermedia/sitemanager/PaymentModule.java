@@ -120,7 +120,10 @@ public class PaymentModule extends BaseMediaModule
 		invoice.setValue("paymentstatus", "invoiced");
 		invoice.setValue("paymentdate", new Date());
 		invoice.setValue("owner", inReq.getUserName());
+		String collectionid = inReq.findValue("collectionid");
+		invoice.setValue("collectionid", collectionid);
 		archive.saveData("collectioninvoice", invoice);
+
 		inReq.removeSessionValue("current-cart");
 	}
 
