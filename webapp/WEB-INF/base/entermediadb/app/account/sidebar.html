@@ -34,7 +34,7 @@
 						data-url="$sitelink/app/collective/community/index.html?goaltrackerstaff=*&collectionid="
 					>
 					<option></option>
-					#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").search() )
+					#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").sort("name").search() )
 					#foreach( $collective in $collectives )
 						<option value="$collective.getId()">#esc($collective.name)</option>
 					#end
@@ -54,14 +54,14 @@
     <div class="sidebar-box-content">
 	#set($selectedproject = $librarycol.getId())
 	##Search collections this user is teammeber
-	#set( $organizations = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selectedUser.getId()).exact("ontheteam","true").search() )
-	
-	#set($instancescount = 0)
-	#foreach( $orghit in $organizations )
-		#set($organization  = $mediaarchive.getCachedData("librarycollection", $orghit.collectionid) )
-		#if ($organization)
-		<p><a href="$sitelink/app/collective/community/index.html?collectionid=$organization.id&goaltrackerstaff=*" class="#if($selectedproject==$organization.id) active #end"><i class="fas fa-sitemap"></i> $organization.name</a></p>
-		#end
+	#set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selectedUser.getId()).exact("ontheteam","true").search() )
+	#set($oids = [])
+	#foreach( $ohit in $organizationsuser )
+		#set($x = $oids.add($ohit.collectionid))
+	#end
+	#set( $organizations = $mediaarchive.query("librarycollection").ids($oids).sort("name").search() )
+	#foreach( $ohit in $organizations )
+		<p><a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" class="#if($selectedproject==$ohit.id) active #end"><i class="fas fa-sitemap"></i> $ohit.name</a></p>
 	#end
 	<div style="padding:20px 0;">
 	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">[[Add a Project]]</a></div>
