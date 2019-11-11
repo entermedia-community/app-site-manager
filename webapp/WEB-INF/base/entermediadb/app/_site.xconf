@@ -7,17 +7,16 @@
   <property name="siteid">entermediadb</property>
   
   <property name="login-path">/app/authentication/login.html</property>
-  
-  
+    
   <path-action name="MediaArchiveModule.loadApplicationId"/>
   
   <property name="isfullscreen">true</property>
   <property name="section">account</property>
   
-  <inner-layout>/entermediadb/theme/layouts/application.html</inner-layout>
+	<inner-layout>/entermediadb/theme/layouts/application.html</inner-layout>
 
-        <permission name="view">
-                <userprofile property="view" equals="true" />
-        </permission>
+	<permission name="view">
+	        <userprofile property="view" equals="true" />
+	</permission>
 
 </page>
