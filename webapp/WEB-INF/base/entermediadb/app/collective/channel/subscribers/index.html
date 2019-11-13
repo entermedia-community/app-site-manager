@@ -1,7 +1,7 @@
 #if($librarycol)
 #set($collectionid = $librarycol.getId())
-
-<div class="suscribe-area" id="suscriberform">
+<div id="suscriberssidebar">
+<div class="suscribe-area">
 #if( $user )
 	#set( $searcher = $mediaarchive.getSearcher("librarycollectionusers") )
 	#set( $found = $searcher.query().exact("followeruser",$user.getId()).exact("collectionid",$collectionid).searchOne() )
@@ -120,8 +120,15 @@
 	</div>
   #end
 	</div>
-	<a href="$applink/collective/channel/subscribers/addnew.html?collectionid=${collectionid}" class="emdialog primary" title="[[Add User to Project]]">
-	<i class="fas fa-plus"></i> [[Add User]]</a>
+	#if( $caneditcollection)
+	<a href="$applink/collective/channel/subscribers/addnew.html?collectionid=${collectionid}" class="emdialog btn btn-sm btn-light" title="[[Add New User to Project]]">
+	<i class="fas fa-plus"></i> [[Add New User]]
+	</a>
+	
+	<a href="$applink/collective/channel/subscribers/usersearch.html?collectionid=${collectionid}" class="emdialog  btn btn-sm btn-light" title="[[Search Existing User]]">
+	<i class="fas fa-search"></i> [[Search Existing User]]
+	</a>
+	#end
 #end
 
 #set( $donations = $mediaarchive.query("transaction").exact("collectionid",$collectionid).sort("paymentdate").search($context) )
@@ -134,4 +141,5 @@
 <h3>[[Billing]]</h3>
 		<a href="$applink/collective/billing/index.html?collectionid=${librarycol.id}" class="">[[Billing HIstory]]</a>
 
+</div>
 </div>
