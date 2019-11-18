@@ -39,6 +39,7 @@
 		<mkdir dir="${build}"/>
 
 		<get src="http://dev.entermediasoftware.com/jenkins/job/@BRANCH@extension-openedit/lastSuccessfulBuild/artifact/deploy/extension-openedit.zip" dest="${build}/openedit.zip" />	
+		<get src="http://dev.entermediasoftware.com/jenkins/job/app-site-manager/lastSuccessfulBuild/artifact/deploy/app-site-manager.zip" dest="/media/services/extensions/app-site-manager.zip" />	
 	  
   </target>
     
