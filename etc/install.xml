@@ -38,36 +38,38 @@
 	<target name="update-dependencies" depends="clean">
 		<mkdir dir="${build}"/>
 
-		<get src="http://dev.entermediasoftware.com/jenkins/job/@BRANCH@extension-openedit/lastSuccessfulBuild/artifact/deploy/extension-openedit.zip" dest="${build}/openedit.zip" />	
-		<get src="http://dev.entermediasoftware.com/jenkins/job/app-site-manager/lastSuccessfulBuild/artifact/deploy/app-site-manager.zip" dest="/media/services/extensions/app-site-manager.zip" />	
-	  
+		<!--<get src="http://dev.entermediasoftware.com/jenkins/job/@BRANCH@extension-openedit/lastSuccessfulBuild/artifact/deploy/extension-openedit.zip" dest="${build}/openedit.zip" />-->	
+		<get src="http://dev.entermediasoftware.com/jenkins/job/app-site-manager/lastSuccessfulBuild/artifact/deploy/app-site-manager.zip" dest="${build}/app-site-manager.zip" />
   </target>
     
   <target name="unwar">
   	<mkdir dir="${build}/unpacked"/>
-    <unzip dest="${build}/unpacked" src="${build}/openedit.zip" />
+  	<!--<unzip dest="${build}/unpacked" src="${build}/openedit.zip" />-->
+    <unzip dest="${build}/unpacked" src="${build}/app-site-manager.zip" />
   </target>
   
   <target name="upgrade">
   	<echo>Delete old open edit libs</echo>
     <delete>
-      <fileset dir="./lib" includes="@BRANCH@extension-openedit**.jar"/>
+        <!--<fileset dir="./lib" includes="@BRANCH@extension-openedit**.jar"/>-->
+        <fileset dir="./lib" includes="app-site-manager**.jar"/>
     </delete>
   	
     <copy todir="./lib" overwrite="false" preservelastmodified="true">
-      <fileset file="${build}/unpacked/lib/@BRANCH@extension-openedit*.jar"/>
+        <!--<fileset file="${build}/unpacked/lib/@BRANCH@extension-openedit*.jar"/>-->
+        <fileset file="${build}/unpacked/lib/app-site-manager*.jar"/>
     </copy>
 
-    <delete failonerror="false">
+    <!--<delete failonerror="false">
       <fileset dir="../WEB-INF/base/system/components/openedit/"/>
-    </delete>
+    </delete>-->
 
-    <delete failonerror="false">
+    <!--<delete failonerror="false">
        <fileset dir="../WEB-INF/base/openedit/"/>
      </delete>
      <copy todir="../WEB-INF/base/openedit" preservelastmodified="true">
        <fileset dir="${build}/unpacked/base/openedit"/>
-     </copy>
+     </copy>-->
 
   	
     <delete dir="${build}"/>
@@ -94,7 +96,4 @@
       <fileset file="${basedir}/lib/stripe-java**.jar"/>
     </copy>
   </target>
-
-  
- 
 </project>
