@@ -22,11 +22,5 @@
   
   <style id="results" href="/${applicationid}/theme/styles/pages/results.css"/>
   <script id="results" src="/${applicationid}/components/javascript/results.js"/>
-  
-<!--  <style id="select2-css-theme" href="/entermediadb/app/components/javascript/select2/css/select2-bootstrap4.css"/>  -->
-
-<!-- App Customs -->
-  <style id="custom-css" href="/entermediadb/theme/css/agency.css"/>
-  <style id="custom-acss" href="/entermediadb/theme/css/em_custom.css"/>
 
 </page>

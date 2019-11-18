@@ -32,28 +32,33 @@
 </head>
 
 <body  showadmintoolbar="$canshowadmintoolbar"  id="page-top">
-<div id="application" data-home="$home" data-apphome="$apphome" data-themeprefix="/${applicationid}/theme" data-browserlanguage="$!{browserlanguage}" data-mediadbappid="$!mediaarchive.getMediaDbId()" data-catalogid="$content.catalogid" data-editmode='$!user.get("oe_edit_mode")'>
+<div id="application" 
+	data-home="$home" 
+	data-apphome="$apphome" 
+	data-themeprefix="/${applicationid}/theme" 
+	data-browserlanguage="$!{browserlanguage}" 
+	data-mediadbappid="$!mediaarchive.getMediaDbId()" 
+	data-catalogid="$content.catalogid" 
+	data-editmode='$!user.get("oe_edit_mode")'>
 
-	$pages.include("/entermediadb/theme/layouts/nav.html")
+	$pages.include("/entermediadb/theme/layouts/navigation.html")
+	 
+	<div id="applicationcontent" class="applicationcontent">
+			$pages.include("$apphome/components/sidebars/user/index.html")
+		<div class="account-content">
+            $pages.includeContent()
+        </div>
+    </div>
 	
-	#if( $content.isfullscreen )
-  		   $pages.includeContent()
-	#else
-		<div id="applicationcontent" class="applicationcontent">
-            <div class="container">
-                $pages.includeContent()
-             </div>
-         </div>
-		#end
 	
-	</div>
+</div>
 
-	$pages.include("/entermediadb/GA.html")
-	
-	#if($content.GAtrakingcode)
-		$pages.include("/entermediadb/${content.GAtrakingcode}")
-	#end 	
-	</body>
+$pages.include("/entermediadb/GA.html")
+
+#if($content.GAtrakingcode)
+	$pages.include("/entermediadb/${content.GAtrakingcode}")
+#end 	
+</body>
 </html>
 
 

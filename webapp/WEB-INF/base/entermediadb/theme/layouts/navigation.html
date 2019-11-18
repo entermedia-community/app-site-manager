@@ -31,10 +31,10 @@
            ##   <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="community/") active #end" href="$sitelink/community/index.html">[[Community]]</a>
            ## </li>
 	
-        #if( $user )
-			
-            <li class="nav-item " >
-			$pages.include("/entermediadb/app/account/activity/link.html")
+       	  #if( $user )
+		  	<li class="nav-item " >
+		  		<a class="nav-link #if($content.section == "userprofile") active #end" href="$sitelink/app/users/$user.getId()/index.html">[[Account]]</a>
+				## $pages.include("/entermediadb/app/account/activity/link.html")
             </li>
 
             <li class="nav-item">
