@@ -44,8 +44,9 @@
 	$pages.include("/entermediadb/theme/layouts/navigation.html")
 	 
 	<div id="applicationcontent" class="applicationcontent">
+		#if($user)
 			$pages.include("$apphome/components/sidebars/user/index.html")
-		
+		#end
             $pages.includeContent()
     </div>
 	
