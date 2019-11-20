@@ -51,7 +51,7 @@ section {
 }
 
 section#introduction {
-  padding:140px 0 50px;
+  padding:60px 0 50px;
 }
 section#introduction iframe {
  border:0 none;
@@ -1722,7 +1722,7 @@ color:#fff;
 	padding:30px; 
 	}
 .support-header-out, .cloudhosting-header-out {
-	margin-top:70px;
+	margin-top:0px;
 	}
 .support-header, .cloudhosting-header {
 	padding:90px;
