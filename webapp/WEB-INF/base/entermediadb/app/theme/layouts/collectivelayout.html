@@ -1,0 +1,25 @@
+#set($collectionid = $librarycol.getId())
+#set($fullwidth = $content.fullwidth)
+<div class="container#if($fullwidth)-fluid#end collectivelayout">
+	<div class="row justify-content-md-center">
+		<div class="col">
+		<div class="collectivebanner #if($fullwidth)collectivebanner-fullwidth#end text-center">
+			#set($homelink = "$apphome/collective/community/index.html?collectionid=$librarycol.getId()")
+				<a class="collectivelogo"  href="$homelink">
+				$!librarycol.name
+				</a>
+			
+				#if($canviewsettings)
+					<span style="padding-left:20px;">
+					<a class="emdialog" data-allwaysloadpage="true" href="$applink/collective/edit/editcollective.html?collectionid=$librarycol.getId()" title="[[Project Settings]]">
+					<i class="fas fa-cog"></i></a>
+					</span>
+				#end
+			$pages.include("$apphome/collective/menu.html", $context)
+		</div>
+	</div>
+</div>
+
+$pages.includeContent()	
+
+</div>

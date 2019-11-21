@@ -1574,7 +1574,7 @@ padding:20px;
 
 
 .applicationcontent {
-	height: 100%;
+	height: calc(100% - 70px);
 	position: relative;
 }
 
@@ -1607,7 +1607,7 @@ padding:20px;
     margin-left:285px;
     margin-right:10px;
     padding-top:30px;
-	height: calc(100% - 100px);
+	height: calc(100% - 20px);
 } 
 .account-content h1 {
     padding: 0 0 10px;
