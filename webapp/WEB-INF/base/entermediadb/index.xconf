@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-
- <property name="siteid">entermediadb</property>
- <property name="applicationid">entermediadb/home</property>
+ <property name="applicationid">${siteid}/home</property>
  <property name="catalogid">entermediadb/catalog</property>
  <property name="postsourcepath">home/index.html</property>
  <property name="isfullscreen">true</property>
