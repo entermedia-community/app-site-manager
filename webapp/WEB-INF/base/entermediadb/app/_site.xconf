@@ -6,7 +6,7 @@
   <property name="catalogid">entermediadb/catalog</property>
   <property name="applicationid">entermediadb/app</property>
 
-  <property name="login-path">/app/authentication/login.html</property>
+  <property name="login-path">/${applicationid}/authentication/login.html</property>
     
   <path-action name="MediaArchiveModule.loadApplicationId"/>
   
@@ -21,8 +21,8 @@
   <style id="app-css" href="/${applicationid}/theme/styles/theme.css"/>
   <style id="collective-css" href="/${applicationid}/theme/css/collectives.css"/>
 <!-- App Customs -->
-  <style id="custom-css" href="/entermediadb/theme/css/agency.css"/>
-  <style id="custom-acss" href="/entermediadb/theme/css/em_custom.css"/>
+  <style id="custom-css" href="/${applicationid}/theme/css/agency.css"/>
+  <style id="custom-acss" href="/${applicationid}/theme/css/em_custom.css"/>
 
 
 </page>

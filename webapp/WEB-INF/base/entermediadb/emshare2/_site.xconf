@@ -6,14 +6,14 @@
   <property name="themeid">AWbWJexlphjazaFScnJO</property>
   <property name="fallbackdirectory">/WEB-INF/base/emshare2</property>
   <property name="themeprefix">/${applicationid}/theme</property>
-  <property name="applicationid">entermediadb/emshare2</property>
+  <property name="applicationid">${siteid}/emshare2</property>
   <property name="title">EM Share 2 Beta</property>
   <permission name="view">
     <group id="administrators"/>
   </permission>
 
-  <style id="custom-css" href="/entermediadb/theme/css/agency.cssX"/>
-  <style id="custom-acss" href="/entermediadb/theme/css/em_custom.cssX"/>
+  <style id="custom-css" href="/${applicationid}/theme/css/agency.cssX"/>
+  <style id="custom-acss" href="/${applicationid}/theme/css/em_custom.cssX"/>
   
   <style id="custom-monitorcss" href="/${applicationid}/theme/styles/monitor.css"/>
 </page>

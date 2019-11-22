@@ -4,7 +4,7 @@
   <property name="siteid">entermediadb</property>
   <property name="catalogid">entermediadb/catalog</property>
   <property name="applicationid">entermediadb</property>
-  <inner-layout>${siteid}/theme/layouts/application.html</inner-layout>
+  <inner-layout>${applicationid}/theme/layouts/application.html</inner-layout>
   
   <path-action name="MediaArchiveModule.loadApplicationId" />
 
