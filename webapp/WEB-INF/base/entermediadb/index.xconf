@@ -6,6 +6,6 @@
  <property name="postsourcepath">home/index.html</property>
  <property name="isfullscreen">true</property>
 
- <path-action name="MediaArchiveModule.loadApplicationId" />
+ <!-- <path-action name="MediaArchiveModule.loadApplicationId" /> -->
  <path-action name="PostModule.loadPost"/>
 </page>

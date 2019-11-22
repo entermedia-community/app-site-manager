@@ -5,6 +5,8 @@
   <property name="catalogid">entermediadb/catalog</property>
   <property name="applicationid">entermediadb</property>
   <inner-layout>${siteid}/theme/layouts/application.html</inner-layout>
+  
+  <path-action name="MediaArchiveModule.loadApplicationId" />
 
   <script id="jquery" src="/entermediadb/app/components/javascript/jquery-3.3.1.min.js"/>
   <script id="jquery-ui" src="/entermediadb/app/components/javascript/jquery-ui-1.11.4.min.js"/>
@@ -23,7 +25,7 @@
   <style id="results" href="/${applicationid}/theme/styles/pages/results.css"/>
   <script id="results" src="/${applicationid}/components/javascript/results.js"/>
   
-    <style id="custom-css" href="/entermediadb/theme/css/agency.css"/>
+  <style id="custom-css" href="/entermediadb/theme/css/agency.css"/>
   <style id="custom-acss" href="/entermediadb/theme/css/em_custom.css"/>
 
 </page>
