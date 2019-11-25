@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
+  <path-action name="MediaArchiveModule.loadApplicationId" />
   <property name="siteid">entermediadb</property>
   <property name="catalogid">entermediadb/catalog</property>
-  <property name="applicationid">entermediadb</property>
-  <inner-layout>${applicationid}/theme/layouts/application.html</inner-layout>
+  <property name="applicationid">entermediadb/app</property>
+  <inner-layout>/${siteid}/theme/layouts/application.html</inner-layout>
   
-  <path-action name="MediaArchiveModule.loadApplicationId" />
+  
 
   <script id="jquery" src="/${siteid}/app/components/javascript/jquery-3.3.1.min.js"/>
   <script id="jquery-ui" src="/${siteid}/app/components/javascript/jquery-ui-1.11.4.min.js"/>

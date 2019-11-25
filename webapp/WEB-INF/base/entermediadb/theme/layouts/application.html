@@ -33,6 +33,7 @@
 
 <body  showadmintoolbar="$canshowadmintoolbar"  id="page-top">
 <div id="application" 
+	class="entermediadbapp"
 	data-home="$home" 
 	data-apphome="$apphome" 
 	data-themeprefix="/${applicationid}/theme" 
@@ -41,12 +42,9 @@
 	data-catalogid="$content.catalogid" 
 	data-editmode='$!user.get("oe_edit_mode")'>
 
-	$pages.include("/entermediadb/theme/layouts/navigation.html")
+	$pages.include("${sitelink}/theme/layouts/navigation.html")
 	 
-	<div id="applicationcontent" class="applicationcontent">
-		#if($user)
-			$pages.include("$apphome/components/sidebars/user/index.html")
-		#end
+	<div id="applicationcontent" class="entermediadbcontent">
             $pages.includeContent()
     </div>
 	

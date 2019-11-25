@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-  <property name="fallbackdirectory">/WEB-INF/base/emfrontend2</property>
   <property name="virtual">true</property>
-  <!-- <property name="catalogid">entermediadb/catalog</property>  -->
-  <property name="applicationid">${siteid}/product</property>
-  <inner-layout>/${applicationid}/layout.html</inner-layout>
+  <inner-layout>/${siteid}/product/layout.html</inner-layout>
   <path-action name="PostModule.loadPost"/>
 </page>
