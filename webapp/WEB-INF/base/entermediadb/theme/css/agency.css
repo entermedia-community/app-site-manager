@@ -1577,6 +1577,9 @@ padding:20px;
 	height: calc(100% - 70px);
 	position: relative;
 }
+.applicationcontent.inapp {
+	height: 100%;
+}
 
 .applicationcontent h1 {
     margin:20px 0;
@@ -1608,7 +1611,12 @@ padding:20px;
     margin-right:10px;
     padding-top:30px;
 	height: calc(100% - 20px);
-} 
+}
+.inapp .account-content {
+	margin:0;
+	padding:0;
+	height: 100%;
+}
 .account-content h1 {
     padding: 0 0 10px;
     margin:0 0 15px;
