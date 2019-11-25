@@ -1,16 +1,8 @@
 body {
-  overflow-x: hidden;
- font-size: .9rem; 
- font-family: 'Open Sans', sans-serif;
-}
-body{
-  max-width:100%;
+  font-family: 'Open Sans', sans-serif;
 }
 .navbar{
   max-width:100%;
-}
-p {
-  line-height: 1.75;
 }
 
 a {
@@ -1573,132 +1565,7 @@ padding:20px;
 .note { font-size: .8em;}
 
 
-.applicationcontent {
-	height: calc(100% - 70px);
-	position: relative;
-}
-.applicationcontent.inapp {
-	height: 100%;
-}
 
-.applicationcontent h1 {
-    margin:20px 0;
-}
-
-.account-nav {
-    border-bottom: 2px solid #666;
-}
-.account-nav a.navlink {
-    display: inline-block;
-    line-height: 1.8;
-    padding:5px 6px;
-    color:#999;
-    text-decoration: none;
-}
-
-.account-nav a.navlink:hover {
-    color:#333;
-}
-
-.account-sidebar {
-    width:250px;
-    position:absolute;
-    margin-top:30px;
-    box-shadow:2px 2px 6px 0 rgba(0,0,0,0.4);
-}
-.account-content {
-    margin-left:285px;
-    margin-right:10px;
-    padding-top:30px;
-	height: calc(100% - 20px);
-}
-.inapp .account-content {
-	margin:0;
-	padding:0;
-	height: 100%;
-}
-.account-content h1 {
-    padding: 0 0 10px;
-    margin:0 0 15px;
-}
-
-.account-content h3 i {
-	font-size:.85em;
-	}
-
-.maincontent {
-	border:1px solid #e6e6e6;
-	background-color: #fff;
-    box-shadow:2px 2px 6px 0 rgba(0,0,0,0.4);
-    padding:10px 30px;
-    min-height: 100%;
-}
-.account-sidebar .select2-container {
-	z-index:200!important;
-	}
-.sidebar-box {
-    margin:0px 0px 0px;
-    background-color: #fff;
-    z-index: 20;
-    padding-bottom:40px;
- }
-.sidebar-box-header {
-    background-color: #f5f5f5;
-    border-bottom:1px solid #e0e0e0;
-    font-size: 1.1rem;
-    line-height: 2;
-    padding:0 20px;
-}
-
-.sidebar-box-support .sidebar-box-header  {
-	   border-top: 8px solid #419D50;
-}
-
-.sidebar-box-content {
-    padding:10px;
-}
-
-.sidebar-opentickets {
-	margin: 0 0 10px;
-	padding: 0;
-	list-style: none;
-}
-.sidebar-opentickets li {
-	display:block;
-	margin-bottom: 5px;
-	padding:3px;
-}
-.sidebar-opentickets li:hover {
-	background-color: rgb(0,0,0,0.1);
-}
-
-
-.sidebar-list a {
-    padding: 9px 10px 8px 20px;
-}
-
-.sidebar-toggler {
-	display:inline-block;
-	position:absolute;
-	right:0;
-	width:32px;
-	padding:0 10px;
-	line-height: 36px;
-	background-color: #e0e0e0;
-}
-.sidebar-toggler:hover {
-	background-color: #d0d0d0;
-}
-
-
-.oauthproviderbtn {
-    margin-bottom: 15px;
-	text-align:center;
-}
-
-.oauthproviderbtn img {
-	width:190px;
-}
 
 .knowledgebar {
 background-color:#73B658;
@@ -1848,18 +1715,6 @@ padding:20px 60px;
 .video-js {
 	background-color:#fff;
 }
-
-.profile-username {
-	padding-top:25px;
-}
-
-.profile-userimage {
-	margin-bottom:20px;
-}
-.profileeditimage {
-	margin-top:5px;
-}
-
 
 
 @media (max-width: 767px) {
