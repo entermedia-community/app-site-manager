@@ -3,7 +3,9 @@
 
   <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	
+	#set($siteid = $content.siteid)
 
 	#set($meta_title = $content.getValue("meta_title"))
 	#if(!$meta_title)
@@ -28,7 +30,7 @@
 	    <link rel="stylesheet" type="text/css" href="$home$style" />
     #end
     
-	<link rel="icon" href="/entermediadb/theme/images/em-favicon.ico" />
+	<link rel="icon" href="/${siteid}/theme/images/em-favicon.ico" />
 </head>
 
 <body  showadmintoolbar="$canshowadmintoolbar"  id="page-top">
@@ -36,13 +38,15 @@
 	class="entermediadbapp"
 	data-home="$home" 
 	data-apphome="$apphome" 
-	data-themeprefix="/${applicationid}/theme" 
+	data-themeprefix="/${siteid}/theme" 
 	data-browserlanguage="$!{browserlanguage}" 
 	data-mediadbappid="$!mediaarchive.getMediaDbId()" 
 	data-catalogid="$content.catalogid" 
 	data-editmode='$!user.get("oe_edit_mode")'>
+	
+	
 
-	$pages.include("${sitelink}/theme/layouts/navigation.html")
+	$pages.include("/${siteid}/theme/layouts/navigation.html")
 	 
 	<div id="applicationcontent" class="entermediadbcontent">
             $pages.includeContent()
@@ -51,10 +55,10 @@
 	
 </div>
 
-$pages.include("/entermediadb/GA.html")
+$pages.include("/${siteid}/GA.html")
 
 #if($content.GAtrakingcode)
-	$pages.include("/entermediadb/${content.GAtrakingcode}")
+	$pages.include("/${siteid}/${content.GAtrakingcode}")
 #end 	
 </body>
 </html>
