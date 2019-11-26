@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	
 	#set($siteid = $content.siteid)
+	$context.putPageValue("siteid", $siteid)
 
 	#set($meta_title = $content.getValue("meta_title"))
 	#if(!$meta_title)
