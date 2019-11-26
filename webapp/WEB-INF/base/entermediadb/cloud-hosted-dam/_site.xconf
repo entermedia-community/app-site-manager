@@ -3,6 +3,7 @@
 <page>
   <property name="virtual">true</property>
   <property name="isfullscreen">true</property>
+  <property name="applicationid">${siteid}/cloud-hosted-dam</property>
   <inner-layout>/${siteid}/cloud-hosted-dam/layout.html</inner-layout>
   <path-action name="PostModule.loadPost"/>
 </page>
