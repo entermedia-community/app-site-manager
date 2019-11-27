@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<page>
-  <property name="virtual">true</property>
-  <property name="isfullscreen">true</property>
-  <inner-layout>/${siteid}/product/layout.html</inner-layout>
-  <path-action name="PostModule.loadPost"/>
-</page>

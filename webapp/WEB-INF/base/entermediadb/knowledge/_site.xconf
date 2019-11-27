@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
+
+	<!-- Need it for saving -->
+  	<property name="fallbackdirectory">/WEB-INF/base/emfrontend2</property>
+  	<property name="applicationid">${siteid}/knowledge</property> 
+  	
   <property name="section">knowledge</property>
   <property name="virtual">true</property>
   <property name="isfullscreen">true</property>
-  
-  <property name="applicationid">${siteid}/knowledge</property>
   <inner-layout>/${siteid}/knowledge/layout.html</inner-layout>
-
   
   <path-action name="PostModule.loadPost"/>
   <path-action alltypes="true" name="MediaArchiveModule.getMediaArchive"/>
