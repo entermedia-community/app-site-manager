@@ -3,7 +3,7 @@
 <page>
   <property name="catalogid">entermediadb/catalog</property>
   <property name="themeid">emsharedefault</property>
-  <property name="fallbackdirectory">/WEB-INF/base/mediadb</property>
+  <property name="fallbackdirectory">/WEB-INF/base/eminstitute/mediadb</property>
   <property name="appmodule">asset</property>
   <property name="applicationid">entermediadb/mediadb</property>
   <property name="title">Site Manager</property>

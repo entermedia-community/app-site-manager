@@ -17,12 +17,4 @@
 	   <userprofile property="view" equals="true" />
   </permission>
 
-
-  <style id="app-css" href="/${applicationid}/theme/styles/theme.css"/>
-  <style id="collective-css" href="/${applicationid}/theme/css/collectives.css"/>
-<!-- App Customs -->
-  <style id="custom-css" href="/${applicationid}/theme/css/agency.css"/>
-  <style id="custom-acss" href="/${applicationid}/theme/css/em_custom.css"/>
-
-
 </page>
