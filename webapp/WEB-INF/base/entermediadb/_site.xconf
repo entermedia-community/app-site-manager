@@ -16,7 +16,7 @@
   <script id="jquery-validate" src="/${siteid}/app/components/javascript/jquery.validation/jquery.validate.js"/>
   <script id="boostrap" src="/${siteid}/app/components/javascript/bootstrap/4/js/bootstrap.bundle.min.js" />
   <script id="bootstrap-popper" src="/${siteid}/app/components/javascript/bootstrap/4/js/popper.min.js" />
-  <style id="bootstap" href="/${siteid}/app/components/javascript/bootstrap/4/css/bootstrap.min.css" />
+  <style id="bootstrap" href="/${siteid}/app/components/javascript/bootstrap/4/css/bootstrap.min.css" />
   <style id="fontsawesome" href="/${siteid}/app/components/javascript/bootstrap/fonts/css/fontawesome-all.min.css" />
   <script id="openedit" src="/openedit/components/javascript/openedit.js"/>
   <script id="select2" src="/${siteid}/app/components/javascript/select2/js/select2.full.js"/>
