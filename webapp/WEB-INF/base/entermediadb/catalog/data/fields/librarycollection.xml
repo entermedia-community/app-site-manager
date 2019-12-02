@@ -90,6 +90,12 @@
       <language id="fr"><![CDATA[Visibilité]]></language> 
     </name> 
   </property>  
+  <property id="collectiontype" index="true" stored="true" editable="true" type="list" viewtype="list"  datatype="list"  > 
+    <name> 
+      <language id="en"><![CDATA[Collection Type]]></language>  
+    </name> 
+  </property>  
+
 
 
   <property id="projectstatus" index="true" stored="true" editable="true" type="list" viewtype="list"  datatype="list"  >Project Status 
