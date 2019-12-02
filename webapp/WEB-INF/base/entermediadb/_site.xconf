@@ -14,7 +14,7 @@
   <script id="jquery-form" src="/${siteid}/app/components/javascript/jquery.form.js"/>
   <script id="jquery-liveajax" src="/${siteid}/app/components/javascript/liveajax/liveajax.js"/>
   <script id="jquery-validate" src="/${siteid}/app/components/javascript/jquery.validation/jquery.validate.js"/>
-  <script id="boostrap" src="/${siteid}/app/components/javascript/bootstrap/4/js/bootstrap.bundle.min.js" />
+  <script id="bootstrap" src="/${siteid}/app/components/javascript/bootstrap/4/js/bootstrap.bundle.min.js" />
   <script id="bootstrap-popper" src="/${siteid}/app/components/javascript/bootstrap/4/js/popper.min.js" />
   <style id="bootstrap" href="/${siteid}/app/components/javascript/bootstrap/4/css/bootstrap.min.css" />
   <style id="fontsawesome" href="/${siteid}/app/components/javascript/bootstrap/fonts/css/fontawesome-all.min.css" />
