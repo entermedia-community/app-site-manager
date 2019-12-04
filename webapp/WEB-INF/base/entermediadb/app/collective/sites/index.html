@@ -17,7 +17,8 @@
 			                <th>[[Status]]</th>
 							<th>[[Created]]</th>
 							
-			                <th>URL</th>
+			                <th>[[URL]]</th>
+			                <th>[[Actions]]</th>
 							
 			            </tr>
 			        </thead>
@@ -35,6 +36,23 @@
 									<a href="$hit.instanceurl" style="text-decoration: underline" targe="_blank">$hit.instanceurl</a>
 								#else
 									$hit.instanceprefix
+								#end
+							</td>
+							<td>
+								##Auto Login to emshare2 
+								#set($instancemonitor = $mediaarchive.query("entermedia_instances_monitor").match("instanceid", $hit.id).searchOne())
+								#if($instancemonitor)
+									#if($hit.instanceurl && $instancemonitor.catalog && $instancemonitor.entermediadbkey)
+										#set($instancefullurl = "${hit.instanceurl}/$instancemonitor.catalog/emshare2/index.html")
+										<form method="post" action="$instancefullurl" class="float-left" target="_blank">
+										<input type="hidden" name="entermedia.key" value="$instancemonitor.entermediadbkey" />
+										<input type="submit"class="btn btn-xs btn-primary" value="[[Login]]" />
+										</form>
+									#end
+								#end
+								##Monitor - Only Admins
+								#if($canviewsettings)
+									&nbsp;<a href="$home/emshare2/views/modules/entermedia_instances/edit/edit.html?id=${hit.id}&viewid=entermedia_instancesgeneral&viewpath=entermedia_instances/entermedia_instancesgeneral&searchtype=entermedia_instances&detailsreadonly=false&preview=true"  class="btn btn-xs btn-primary">[[Monitor]]</a>
 								#end
 							</td>
 				        </tr>
