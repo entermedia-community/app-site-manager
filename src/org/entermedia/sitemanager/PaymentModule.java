@@ -152,7 +152,7 @@ public class PaymentModule extends BaseMediaModule
 
 		String[] ids = inReq.getRequestParameters("productid");
 
-		List products = (List) invoice.getObjects("productlist");
+		List products = (List) invoice.getValues("productlist");
 		if (products == null)
 		{
 			products = new ArrayList();
@@ -180,7 +180,7 @@ public class PaymentModule extends BaseMediaModule
 	{
 		Money money = new Money();
 
-		List products = (List) invoice.getObjects("productlist");
+		List products = (List) invoice.getValues("productlist");
 		if (products == null)
 		{
 			return money;
