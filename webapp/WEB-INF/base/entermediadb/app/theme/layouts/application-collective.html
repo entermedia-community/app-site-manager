@@ -39,10 +39,11 @@
 		$pages.include("/${apphome}/theme/layouts/navigation.html")
 	#end
 	<div id="applicationcontent" class="applicationcontent applicationcollective #if($browser.inApp()) inapp #end">
+		#set( $usersidebarhidden = $userprofile.get("usersidebarhidden"))
 		#if(!$browser.inApp())
 			$pages.include("$apphome/components/sidebars/user/index.html")
 		#end
-		<div class="account-content">
+		<div class="account-content #if($usersidebarhidden && $usersidebarhidden != 'false') account-content-fullwidth #end">
             $pages.includeContent()
         </div>
     </div>
