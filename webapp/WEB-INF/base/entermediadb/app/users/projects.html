@@ -14,7 +14,7 @@
 	$content.setValue("GAtrakingcode", "")
 #end
 
-#set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selectedUser.getId()).exact("ontheteam","true").search() )
+#set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selecteduser.getId()).exact("ontheteam","true").search() )
 #set($oids = [])
 #foreach( $ohit in $organizationsuser )
 	#set($x = $oids.add($ohit.collectionid))
