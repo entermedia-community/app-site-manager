@@ -74,13 +74,13 @@ section h3.section-subheading {
 }
 
 .btn-primary {
-  background-color: #fed136;
-  border-color: #fed136;
+  background-color: #28a745;
+  border-color: #28a745;
 }
 
 .btn-primary:active, .btn-primary:focus, .btn-primary:hover {
-  background-color: #fec810 !important;
-  border-color: #fec810 !important;
+  background-color: #218838 !important;
+  border-color: #1e7e34 !important;
   color: white;
 }
 

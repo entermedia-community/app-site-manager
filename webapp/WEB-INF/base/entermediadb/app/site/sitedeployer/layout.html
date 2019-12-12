@@ -1,3 +1,11 @@
-<div class="container applicationcontent">
-	$pages.includeContent()
+#set($collectionid = $context.getRequestParameter("collectionid"))
+$context.putPageValue("collectionid", $collectionid)
+<div class=" h-100"  style="max-height: calc(100% - 290px); width:100%;" >
+<div class="row no-gutters h-100" >
+	<div class="col">
+		<div class="maincontent h-100">
+			$pages.includeContent()
+		</div>
+	</div>
+</div>
 </div>

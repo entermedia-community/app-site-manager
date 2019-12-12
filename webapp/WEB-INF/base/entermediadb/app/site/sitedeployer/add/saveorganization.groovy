@@ -1,6 +1,7 @@
 import org.entermediadb.asset.MediaArchive
 import org.entermediadb.location.Position
 import org.entermediadb.projects.*
+import org.entermediadb.websocket.chat.ChatManager
 import org.openedit.Data
 
 import org.openedit.data.BaseSearcher
@@ -45,16 +46,45 @@ public void init()
 	librarycolusersearcher.saveData(librarycolusers);
 	//--
 	
+	//First Create General Topic
+	Searcher topics = mediaArchive.getSearcher("collectiveproject");
+	Data topic = topics.createNewData();
+	topic.setValue("name", "General");
+	topic.setValue("parentcollectionid", collectionid);
+	topics.saveData(topic);
+	//--
+	
+	//Notify first project only
+	Data collectionexists = librarycolusersearcher.query().exact("followeruser", user.getId()).searchOne();
+	if (collectionexists != null) {
+		String notifyuser = "168";  //Jay
+		
+		//Add Agent to Team
+		librarycolusers = null;
+		librarycolusers = librarycolusersearcher.createNewData();
+		librarycolusers.setValue("collectionid", collectionid);
+		librarycolusers.setValue("followeruser", notifyuser);
+		librarycolusers.setValue("ontheteam","true");
+		librarycolusersearcher.saveData(librarycolusers);
+		//--
+		
+		//Send Welcome Chat
+		Searcher chats = mediaArchive.getSearcher("chatterbox");
+		Data chat = chats.createNewData();
+		chat.setValue("date", new Date());
+		chat.setValue("message", "Welcome to EnterMedia! My name is Jay and I'm here as your personal support agent. If you have any questions, I'm your man. Is there anything I can help you with?");
+		chat.setValue("user", notifyuser);
+		chat.setValue("channel", topic.getId());
+		chats.saveData(chat);
+		//--
+
+		ChatManager chatmanager = (ChatManager) mediaArchive.getModuleManager().getBean(mediaArchive.getCatalogId(), "chatManager");
+		chatmanager.updateChatTopicLastModified(topic.getId());
+	}
 	mediaArchive.getProjectManager().getRootCategory(mediaArchive, collection);
-	
-	
-	BaseSearcher colectivesearcher = mediaArchive.getSearcher("collectiveproject");
-	Data newproject = colectivesearcher.createNewData();
-	newproject.setName("General");
-	newproject.setValue("parentcollectionid", collection.getId());
-	colectivesearcher.saveData( newproject );
-	
-	
 }
 
 init();
+
+
+

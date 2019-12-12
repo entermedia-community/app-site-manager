@@ -2,4 +2,6 @@
 		
 	<property name="fullwidth">true</property>
 	<property name="collectivesection">instances</property>
+	
+	<path-action name="ChatModule.getChatManager"/>
 </page>

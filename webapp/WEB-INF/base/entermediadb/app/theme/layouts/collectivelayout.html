@@ -1,9 +1,15 @@
 #set($collectionid = $librarycol.getId())
+#if(!$collectionid)
+	#set($collectionid = $context.getRequestParameter("organizationid"))
+	#if($collectionid)
+		#set( $librarycol = $mediaarchive.query("librarycollection").exact("id",$collectionid).searchOne() )
+	#end
+#end
 #set($fullwidth = $content.fullwidth)
 <div class="collectivelayout">
 	<div class="row justify-content-md-center">
 		<div class="col">
-			#set($homelink = "$apphome/collective/community/index.html?collectionid=$librarycol.getId()")
+			#set($homelink = "$apphome/collective/community/index.html?collectionid=$collectionid")
 			#if ($librarycol.assetbanner)
 				#set( $banner= $mediaarchive.getAsset($librarycol.assetbanner) )
 			#end

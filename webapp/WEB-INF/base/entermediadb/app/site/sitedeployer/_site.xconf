@@ -11,8 +11,16 @@
   <path-action name="SessionValue.loadSessionVariable" bean="moduleManager" allowduplicates="true" />
   <path-action bean="userManager" name="PageValue.loadPageVariable" allowduplicates="true" />
  
+  <property name="collectivesection">instances</property>
   
   <inner-layout>/${applicationid}/site/sitedeployer/layout.html</inner-layout>
   
+  
+  <permission name="editcollection">
+	<or>
+		<action name="ProjectModule.canEditCollection" />
+		<action name="ProjectModule.isOnTeam" />			
+	</or>
+</permission>
   
 </page>

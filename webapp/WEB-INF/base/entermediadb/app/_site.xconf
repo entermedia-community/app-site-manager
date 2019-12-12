@@ -11,8 +11,7 @@
   <path-action name="MediaArchiveModule.loadApplicationId"/>
   
   <property name="isfullscreen">true</property>
-  <property name="section">account</property>
-  
+    
   <!-- App Custom -->
   <style id="custom-css" href="/${siteid}/theme/css/agency.css"/>
   <style id="custom-acss" href="/${siteid}/theme/css/em_custom.css"/>
