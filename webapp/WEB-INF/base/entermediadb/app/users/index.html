@@ -32,32 +32,38 @@
 					#end
 			</div>
 			#if($canedituserinfo)
-			<form id="uploaddata" 
-				name="wizard" 
-				method="post" 
-				enctype="multipart/form-data"
-				action="$apphome/users/uploadsave.html" 
-				>
-				<input type="hidden" name="userid" value="$selecteduser.getId()" />
-				<input type="hidden" name="sourcepath" value="userprofiles/$selecteduser.getId()/" />
-				<input id="upload_field" name="file" type="file" style="position:absolute; top:-1000px;" >
-			</form>
-			<script>
-				$('#upload_field').change(function() {
-				  $('#uploaddata').submit();
-				});
-			</script>
+				<form id="uploaddata" 
+					name="wizard" 
+					method="post" 
+					enctype="multipart/form-data"
+					action="$apphome/users/uploadsave.html" 
+					>
+					<input type="hidden" name="userid" value="$selecteduser.getId()" />
+					<input type="hidden" name="sourcepath" value="userprofiles/$selecteduser.getId()/" />
+					<input id="upload_field" name="file" type="file" style="position:absolute; top:-1000px;" >
+				</form>
+				<script>
+					$('#upload_field').change(function() {
+					  $('#uploaddata').submit();
+					});
+				</script>
 			#end
 			<div class="text-center">
 			<h4>$selecteduser.getAnonNickName()</h4>
 			<i class="far fa-envelope"></i> $selecteduser.email
-			#if($canedituserinfo)
-			<div style="margin-top:10px;"> 
+			
+			<div style="margin-top:10px;">
+				#if($canviewsettings || $canedituserinfo) 
 				<a href="$apphome/users/edit/edit.html?userid=$selecteduser.getId()" class="emdialog btn btn-sm btn-light ">
 				<i class="fas fa-edit"></i> [[Edit]]
 				</a>
+							
+				<a class="btn btn-sm btn-light ajax" targetdiv="passwordsent" href="$apphome/views/myaccount/sendresetpassword.html?username=$selecteduser.id&oemaxlevel=1">Send Password Reset</a>
+				<div id="passwordsent"></div>
+				#end
 			</div>
-			#end
+			
+			
 			</div>
 		</div>
 	
