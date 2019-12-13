@@ -21,6 +21,8 @@
 	#if($meta_canonical)
 		<link rel="canonical" href="$meta_canonical" />
 	#end
+	
+	$pages.include("/${applicationid}/collective/opengraphmetadata.html", $context)
     
     
     #foreach( $script in $content.getScriptPaths() )
