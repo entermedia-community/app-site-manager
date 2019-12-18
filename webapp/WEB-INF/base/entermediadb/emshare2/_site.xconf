@@ -4,7 +4,7 @@
 
   <property name="catalogid">entermediadb/catalog</property>
   <property name="themeid">AWbWJexlphjazaFScnJO</property>
-  <property name="fallbackdirectory">/WEB-INF/base/emshare2</property>
+  <property name="fallbackdirectory">/WEB-INF/base/eminstitute/emshare2</property>
   <property name="themeprefix">/${applicationid}/theme</property>
   <property name="applicationid">${siteid}/emshare2</property>
   <property name="title">EM Share 2 Beta</property>
@@ -12,8 +12,12 @@
     <group id="administrators"/>
   </permission>
 
-  <style id="custom-css" href="/${applicationid}/theme/css/agency.cssX"/>
-  <style id="custom-acss" href="/${applicationid}/theme/css/em_custom.cssX"/>
+  
+  <style id="eminstitute-css" href=""/>
+  <script id="eminstitute-js" src=""/>
+  <style id="custom-css" href=""/>
+  <style id="custom-acss" href=""/>
+  
   
   <style id="custom-monitorcss" href="/${applicationid}/theme/styles/monitor.css"/>
 </page>

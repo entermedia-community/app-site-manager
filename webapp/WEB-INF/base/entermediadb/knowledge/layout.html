@@ -12,15 +12,16 @@
 		$content.setValue("meta_title", "$postdata.post_title - EnterMediaDB")
 		$content.setValue("meta_canonical", "$siteRoot/$postdata.sourcepath")
 
-		<h2>$postdata.post_title</h2>
+		<h1>$postdata.post_title</h1>
 	#end
   		<div class="oe-editable" id="edit-$postdata.id" data-dataid="$postdata.id" data-field="maincontent"   	data-searchtype="postdata" data-viewtype="html">
 	 		$postdata.maincontent
 
   		</div>
 #if( $user.oe_edit_mode == "postedit" )
-<p>
-<a href="${sitelink}/emshare2/views/modules/postdata/edit/edit.html?id=${postdata.id}&viewid=postdatageneral&viewpath=postdata/postdatageneral&searchtype=postdata&detailsreadonly=false&preview=true">[edit post]</a></p>
+<div class="editpostbtn">
+<a href="${sitelink}/emshare2/views/modules/postdata/edit/edit.html?id=${postdata.id}&viewid=postdatageneral&viewpath=postdata/postdatageneral&searchtype=postdata&detailsreadonly=false&preview=true" class="btn btn-xs btn-light">[edit post]</a>
+</div>
 #end
 
 
