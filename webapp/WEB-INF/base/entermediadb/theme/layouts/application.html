@@ -4,10 +4,8 @@
   <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	
 	#set($siteid = $content.siteid)
 	$context.putPageValue("siteid", $siteid)
-
 	#set($meta_title = $content.getValue("meta_title"))
 	#if(!$meta_title)
 		#set($meta_title = $postdata.getValue("post_title"))
@@ -15,6 +13,15 @@
 	#if(!$meta_title)
 		#set($meta_title = "EnterMedia Open-source Digital Asset Managment")
 	#end
+	#if ($content.section == "knowledge")
+		#if($content.project == "project9")
+			#set($meta_title = "$!meta_title - Knowledge Base - EnterMedia 9")
+		#else
+			#set($meta_title = "$!meta_title - Knowledge Base - EnterMedia 10")
+		#end
+	#end
+	
+
 	<title>$meta_title</title>
 	
 	$pages.include("/${siteid}/app/collective/opengraphmetadata.html", $context)
