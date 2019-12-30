@@ -17,11 +17,6 @@
 	#end
 	<title>$meta_title</title>
 	
-	#set($meta_canonical = $content.getValue("meta_canonical"))
-	#if($meta_canonical)
-		<link rel="canonical" href="$meta_canonical" />
-	#end
-	
 	$pages.include("/${siteid}/app/collective/opengraphmetadata.html", $context)
     
     
