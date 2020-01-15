@@ -1,0 +1,6 @@
+<page>
+    <path-action name="Script.run">
+		<script>/${applicationid}/site/sitedeployer/add/verifyproject.groovy</script>
+	</path-action>
+	<inner-layout/>
+</page>

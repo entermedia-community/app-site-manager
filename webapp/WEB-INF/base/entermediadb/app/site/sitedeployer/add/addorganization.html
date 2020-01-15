@@ -9,11 +9,37 @@
 	
 	<input type="hidden" name="collectionroot" value="$sitelink/app/collective/sites/index.html" />
 	
-	#set( $searcher = $mediaarchive.getSearcher("librarycollection") )
-	$context.putPageValue("searcher",$searcher)
-	$context.putPageValue("view", "project/addnew")
+##	#set( $searcher = $mediaarchive.getSearcher("librarycollection") )
+##	$context.putPageValue("searcher",$searcher)
+##	$context.putPageValue("view", "project/addnew")
 	
-	$pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
-  
+##	$pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
+	<div class="form-group">
+	<input type="hidden" name="field" value="name" />
+	<input type="text" name="name.value" id="name.value" value="" class="form-control" />
+  	</div>
 </form>
 
+
+<script>
+$("#saveproject").validate({
+  rules: {
+	"name\.value": {
+	  required: true,
+	  minlength: 3,
+	  maxlength: 20,
+	  remote: "$sitelink/app/site/sitedeployer/add/verifyproject.html"
+	}
+  },
+  messages: {
+	"name\.value": {
+	  remote: "That Project Name is already taken, please try different one."
+	}
+  },
+  errorElement: "div",
+  errorClass: "errormsg",
+  errorPlacement: function(error, element) {
+	  error.appendTo( element.closest(".form-group").parent() );
+	}
+});
+</script>
