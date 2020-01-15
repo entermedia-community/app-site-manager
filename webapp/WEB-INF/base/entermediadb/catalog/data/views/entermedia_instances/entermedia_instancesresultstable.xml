@@ -3,7 +3,8 @@
 <root> 
   <property id="name"/>  
   <property id="instance_status"/>  
-  <property id="librarycollection"/>  
+  <property id="librarycollection"/>
+  <property id="owner"/>    
   <property id="istrial"/>  
   <property id="entermedia_servers"/>  
   <property id="instanceurl"/> 
