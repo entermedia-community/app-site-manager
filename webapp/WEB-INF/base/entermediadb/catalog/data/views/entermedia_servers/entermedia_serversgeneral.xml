@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<root> 
+  <property id="name"/>  
+  <property id="server_region"/>  
+  <property id="serverip"/>  
+  <property id="datacenter"/>  
+  <property id="dockersubnet"/>  
+  <property id="maxinstance"/>  
+  <property id="serverurl"/>  
+  <property id="sshname"/>  
+  <property id="notes"/>
+</root>
