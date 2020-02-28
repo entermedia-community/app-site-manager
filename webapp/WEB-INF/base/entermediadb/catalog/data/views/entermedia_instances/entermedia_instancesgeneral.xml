@@ -11,7 +11,7 @@
   <property id="dateend"/>    
   <property id="entermedia_servers"/> 
   <property id="instanceurl"/> 
-  <property id="plugins"/>
+  <property id="instanceplugins"/>
   <property id="inbackuppc"/>
   
   <property id="notes"/>
