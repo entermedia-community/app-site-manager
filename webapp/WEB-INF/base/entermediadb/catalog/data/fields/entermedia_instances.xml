@@ -75,5 +75,35 @@
     <name> 
       <language id="en"><![CDATA[Notes]]></language> 
     </name> 
+  </property>
+    <property id="googletokenkey" index="true" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[Google Token Key]]></language> 
+    </name> 
   </property>   
+    <property id="sync_notes" index="true" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="textarea" rendertype="textarea" required="false" filter="false" multilanguage="false" highlight="false" deleted="false" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name> 
+      <language id="en"><![CDATA[Sync Notes]]></language> 
+    </name> 
+  </property> 
+    <property id="inbackuppc" index="true" editable="true" stored="true" internalfield="false" isbadge="false" viewtype="boolean" rendertype="boolean" required="false" filter="false" multilanguage="false" highlight="false" deleted="false" datatype="boolean" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name> 
+      <language id="en"><![CDATA[Enabled in Backuppc]]></language> 
+    </name> 
+  </property> 
+  <property id="synctargetdate" index="true" editable="true" stored="true" deleted="true">New 
+    <name> 
+      <language id="en"><![CDATA[Sync Target Date]]></language> 
+    </name> 
+  </property>  
+  <property id="syncpriority" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" highlight="false" deleted="false" datatype="number" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name> 
+      <language id="en"><![CDATA[Sync Priority]]></language> 
+    </name> 
+  </property>
  </properties>
+     <property id="instanceplugins" index="true" editable="true" stored="true">New 
+    <name> 
+      <language id="en"><![CDATA[Plugins]]></language> 
+    </name> 
+  </property>   

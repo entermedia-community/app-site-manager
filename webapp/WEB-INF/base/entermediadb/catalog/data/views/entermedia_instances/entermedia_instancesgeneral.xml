@@ -9,10 +9,11 @@
   <property id="istrial"/>
   <property id="datestart"/>
   <property id="dateend"/>    
-  <property id="entermedia_servers"/>  
+  <property id="entermedia_servers"/> 
   <property id="instanceurl"/> 
-  <property id="notes"/>
-  <property id="sync_notes"/>
+  <property id="plugins"/>
+  <property id="inbackuppc"/>
   
   <property id="notes"/>
+  <property id="sync_notes"/>
 </root>
