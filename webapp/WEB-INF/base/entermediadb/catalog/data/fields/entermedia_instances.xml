@@ -101,9 +101,10 @@
       <language id="en"><![CDATA[Sync Priority]]></language> 
     </name> 
   </property>
- </properties>
+ 
      <property id="instanceplugins" index="true" editable="true" stored="true">New 
     <name> 
       <language id="en"><![CDATA[Plugins]]></language> 
     </name> 
   </property>   
+</properties>
