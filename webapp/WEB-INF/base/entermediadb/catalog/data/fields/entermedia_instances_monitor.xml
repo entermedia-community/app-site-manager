@@ -307,6 +307,11 @@
       <language id="en"><![CDATA[Instance URL]]></language>
     </name>
   </property> 
+  <property id="serverid" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" listid="monitoredsites_servers" filter="false" highlight="false" deleted="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New
+    <name>
+      <language id="en"><![CDATA[Server]]></language>
+    </name>
+  </property>
 
   
 </properties>
