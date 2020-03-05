@@ -11,6 +11,13 @@
 	#end
 #end
 
+<style>
+
+	#sidebar-wrapper{
+	 overflow-y: auto;
+	}
+
+</style>
 
 <div class="sidebar-box">
     <div class="sidebar-box-header">
@@ -56,6 +63,7 @@
 </div>
 
 
+
 <div class="sidebar-box">
     <div class="sidebar-box-header">
         [[Projects]]        
@@ -86,7 +94,7 @@
 	#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
 	
 	<ul class="sidebar-list">
-		#foreach( $ohit in $organizations.getPageOfHits() )
+		#foreach( $ohit in $organizations )
 			<li class="#if($selectedproject==$ohit.id) current #end">
 				<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" >
 				<i class="fas fa-sitemap"></i> $ohit.name
