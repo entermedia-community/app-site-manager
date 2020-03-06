@@ -1,0 +1,79 @@
+<div class=" h-100"  style="max-height: calc(100% - 290px); width:100%;" >
+<div class="row no-gutters h-100" >
+<div class="col">
+<div class="maincontent h-100">
+<h3>Active [[Servers]]</h3>
+	##Search instances in these organizations
+	#set( $instances = $mediaarchive.query("entermedia_instances").match("instance_status", "active").sort("monitoringstatus").sort("name").search() )
+	#if ($instances)
+		<div class="emdata">
+	    <table class="table table-striped">
+	        <thead>
+	            <tr class="tableheader">
+	                <th>[[Server Name]]</th>
+	                <th>[[Status]]</th>
+					<th>[[Last Checked]]</th>
+	                <th>[[URL]]</th>
+					<th>[[Links]]</th>
+	            </tr>
+	        </thead>
+			#foreach($hit in $instances)
+				#if ($hit.instance_status == "active")
+					#set($instancescount = $instancescount+1)
+				#end
+				#set( $instancemonitor = $mediaarchive.query("entermedia_instances_monitor").exact("instanceid", $hit.getId() ).searchOne() )	 
+
+				<tr>
+		            <td>$hit.name</td>
+					<td style="text-align: center;">
+					#if($hit.monitoringstatus == "error")
+						#if( $instancemonitor )
+							$instancemonitor.alerttype 
+						#end
+						Error
+					#else
+						$hit.monitoringstatus
+					#end
+					
+					</td>
+		            <td style="text-align: left;">$context.getDateTime($instancemonitor.lastchecked)</td>
+					
+		            <td>
+						#if ($hit.instanceurl)
+							<a href="$hit.instanceurl" style="text-decoration: underline" targe="_blank">$hit.instanceurl</a>
+						#else
+							$hit.instanceprefix
+						#end
+					</td>
+					<td>
+						##Auto Login to emshare2 
+						#if($hit.instanceurl && $instancemonitor.catalog && $instancemonitor.entermediadbkey)
+							#set($instancefullurl = "${hit.instanceurl}/$instancemonitor.catalog/emshare2/index.html")
+							<form method="post" action="$instancefullurl" class="float-left" target="_blank">
+							<input type="hidden" name="entermedia.key" value="$instancemonitor.entermediadbkey" />
+							<input type="submit"class="btn btn-xs btn-primary" value="[[View Site]]" />
+							</form> 
+						#end
+						##Monitor - Only Admins
+						<a href="$home$sitelink/emshare2/views/modules/entermedia_instances/edit/edit.html?id=${hit.id}&viewid=entermedia_instancesgeneral&viewpath=entermedia_instances/entermedia_instancesgeneral&searchtype=entermedia_instances&detailsreadonly=false&preview=true"  class="btn btn-xs btn-primary">[[View Data]]</a>
+					</td>
+		        </tr>
+			
+			#end
+	    </table>
+    	</div>
+	#end
+	#if( $caneditcollection )
+	<a href="/entermediadb/app/site/sitedeployer/createsite.html?collectionid=$collectionid" class="btn btn-primary btn-sm">[[Deploy New Server]]</a>
+	#end
+</div>	
+</div>
+ <div class="col-lg-3" style="max-width:350px;">
+	<div class="collective-sidebar">
+		$pages.include("$apphome/collective/channel/subscribers/index.html", $context)
+	</div>
+ </div>
+</div>		
+
+</div>
+			
