@@ -98,7 +98,7 @@ public void init()
 					
 					Exec exec = moduleManager.getBean("exec");
 					ExecResult done = exec.runExec("setupclient", command); //Todo: Need to move this script here?
-					log.info("Exec: " + done.getStandardOut());
+					log.info("Deploying Trial Site " + selected_url + " at " + server.sshname);
 					
 						
 						String fullURL = "https://" + selected_url + "." + server.serverurl;

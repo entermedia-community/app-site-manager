@@ -95,7 +95,7 @@
 					</div>
 				</div>
 				<div class="col-sm-6">
-					
+					<div id="deploywarning" style="display:none; padding-left:10px;"><em>[[Please be patient, we will start deploying your instance now...]]</em></div>
 				</div>
 			</div>
 		   
@@ -162,6 +162,7 @@
 			$("#senddata").on("click", function() 
 			{
 			 	$(this).toggleClass('active');
+			 	$("#deploywarning").show();
 			 	var postData = $(this).serializeArray();
 			    var formURL = $(this).attr("action");
 			    jQuery.ajax(
