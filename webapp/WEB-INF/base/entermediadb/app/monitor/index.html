@@ -14,6 +14,7 @@
 	                <th>[[Status]]</th>
 					<th>[[Last Checked]]</th>
 	                <th>[[URL]]</th>
+	                <th>[[Server]]</th>
 					<th>[[Links]]</th>
 	            </tr>
 	        </thead>
@@ -46,12 +47,15 @@
 						#end
 					</td>
 					<td>
+					$mediaarchive.getData("entermedia_servers",$hit.entermedia_servers)
+					</td>
+					<td>
 						##Auto Login to emshare2 
 						#if($hit.instanceurl && $instancemonitor.catalog && $instancemonitor.entermediadbkey)
 							#set($instancefullurl = "${hit.instanceurl}/$instancemonitor.catalog/emshare2/index.html")
 							<form method="post" action="$instancefullurl" class="float-left" target="_blank">
 							<input type="hidden" name="entermedia.key" value="$instancemonitor.entermediadbkey" />
-							<input type="submit"class="btn btn-xs btn-primary" value="[[View Site]]" />
+							<input type="submit"class="btn btn-xs btn-info" value="[[View Site]]" />
 							</form> 
 						#end
 						##Monitor - Only Admins
