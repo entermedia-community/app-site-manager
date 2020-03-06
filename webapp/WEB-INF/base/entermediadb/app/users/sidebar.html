@@ -62,7 +62,7 @@
     <div class="sidebar-box-header">
         [[Projects]]        
     </div>
-    <div class="sidebar-box-content" style="padding:0;">
+    <div class="sidebar-box-content" style="padding:0; overflow-y:auto;">
     	#if($canviewsettings)
     		<div style="padding:5px 15px;">
 			<select  id="collectivesearch2" 
@@ -87,7 +87,7 @@
 	
 	#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
 	
-	<ul class="sidebar-list">
+	<ul class="sidebar-list" >
 		#foreach( $ohit in $organizations )
 			<li class="#if($selectedproject==$ohit.id) current #end">
 				<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" >
