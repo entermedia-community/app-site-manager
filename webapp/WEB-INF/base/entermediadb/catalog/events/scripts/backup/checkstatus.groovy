@@ -56,13 +56,16 @@ public void init(){
 	HitTracker sitestomonitor = archive.getList("monitoredsites");
 	Searcher sites = archive.getSearcher("monitoredsites");
 	
+	// for each site monitored set those values
 	sitestomonitor.each{
 		Data real= archive.getData("monitoredsites", it.id);
 		String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
 		String baseurl = "${real.url}/entermedia/services/rest/systemstatus.xml";
 		
+		//Map usage max by client
 		Map<String, Integer> map = getUsageMaxByClient();
 		try {
+			//create boolean variables for memory, disk, heap, and cpu
 			boolean memory = false;
 			boolean disk = false;
 			boolean heap = false;
