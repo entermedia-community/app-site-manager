@@ -186,7 +186,7 @@ public class SiteManager implements CatalogEnabled
 //
 //	}
 	
-	//Sends mobile push notification for errors. Called in "sendErrorNotification()" found at the bottom of this page.
+	//Sends mobile push notification for errors. Called in "sendErrorNotification()" found at the top of this page.
 	private void sendEMPushNotification(MediaArchive mediaArchive,Data instanceData, MultiValued monitorData)
 	{
 		GoogleManager manager = (GoogleManager)mediaArchive.getBean("googleManager");
