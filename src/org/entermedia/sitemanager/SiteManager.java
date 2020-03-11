@@ -28,6 +28,7 @@ import org.entermedia.serverstats.ServerStats;
 import org.entermedia.softwareversions.SoftwareVersion;
 import org.entermediadb.asset.MediaArchive;
 import org.entermediadb.email.WebEmail;
+import org.entermediadb.google.GoogleManager;
 import org.entermediadb.modules.update.Downloader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -82,7 +83,7 @@ public class SiteManager implements CatalogEnabled
 		inReal.setValue("alertcount", 0);
 	}
 
-	private void sendEmailError(Data inInstance, MultiValued inReal, MediaArchive inArchive)
+	private void sendErrorNotification(Data inInstance, MultiValued inReal, MediaArchive inArchive)
 	{
 		String notifyemail = "help@entermediadb.org"; 
 		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
@@ -101,33 +102,117 @@ public class SiteManager implements CatalogEnabled
 		templatemail.send(objects);
 		inReal.setProperty("mailsent", "true");
 		
+		//sends mobile push notifications for server errors.
+		sendEMPushNotification(inArchive,inInstance,inReal);
+		
 	}
 
-	private JSONObject buildPushNotification(Data inInstance, MultiValued inReal, JSONObject json)
-	{
-		if (json == null)
-		{
-			json = new JSONObject();
-			json.put("channel", "emergency_monitor");
-			json.put("as_user", false);
-			json.put("username", "csbotkey");
-			json.put("text", "<!channel> Monitor Alert: ");
-		}
+//	private JSONObject buildPushNotification(Data inInstance, MultiValued inReal, JSONObject json)
+//	{
+//		if (json == null)
+//		{
+//			json = new JSONObject();
+//			json.put("channel", "emergency_monitor");
+//			json.put("as_user", false);
+//			json.put("username", "csbotkey");
+//			json.put("text", "<!channel> Monitor Alert: ");
+//		}
+//
+//		String message = "\n" + "" + inInstance.get("name") + " at " + inInstance.get("entermedia_servers") + " - " + inInstance.get("instanceurl") + ": ";
+//		if (!(boolean)inReal.getValue("isreachable"))
+//		{
+//			message += ". Health checks failed two consecutive time on, the instance might be down, please review it ASAP.";
+//		}
+//		if ((boolean)inReal.getValue("isssl"))
+//		{
+//			switch (inReal.get("sslstatus"))
+//			{
+//			case "torenew":
+//				message += " The instance's SSL certificate will expires in " + inReal.get("daystoexpiration") + " 	days" + ".";
+//				break;
+//			case "expired":
+//				message += " The instance's SSL certificate has expired on " + inReal.get("expirationdate") + ".";
+//				break;
+//			case "error":
+//				message += " Can't retrieve any SSL certificate for the following instance.";
+//				break;
+//			default:
+//				break;
+//			}
+//		}
+//		if (inReal.get("isdisk") != null && inReal.get("isdisk").compareTo("true") == 0)
+//		{
+//			message += " One or more disk partition is running out of space.";
+//		}
+//		json.put("text", (String)json.get("text") + message);
+//		return json;
+//		return message;
+//	}
 
-		String message = "\n" + "" + inInstance.get("name") + " at " + inInstance.get("entermedia_servers") + " - " + inInstance.get("instanceurl") + ": ";
-		if (!(boolean)inReal.getValue("isreachable"))
+//	private void sendPushNotification(JSONObject json)
+//	{
+//		String url = "https://slack.com/api/chat.postMessage";
+//		String token = getMediaArchive().getCatalogSettingValue("slack_api_key");
+//
+//		try
+//		{
+//			if (token == null || token != null && token.isEmpty())
+//			{
+//				throw new Exception("No Slack user token set in catalogsettings");
+//			}
+//			HttpPost httpMethod = new HttpPost(url);
+//			httpMethod.setHeader("Authorization", "Bearer " + token);
+//			httpMethod.setEntity(new StringEntity(json.toString(), "UTF-8"));
+//			
+//			httpMethod.setHeader("Content-Type", "application/json; charset=utf-8");
+//
+//			log.info("before call slack API");
+//			
+////			HttpResponse response = getHttpConnection().getSharedClient().execute((HttpUriRequest) httpMethod);
+//			HttpResponse response = getHttpClient().execute((HttpUriRequest) httpMethod);
+//			
+//			log.info("aftercall slack API");
+//			StatusLine sl = response.getStatusLine();
+//
+//			if (sl.getStatusCode() != 200)
+//			{
+//				throw new Exception("Can't send push notification: status code " + sl.getStatusCode());
+//			}
+//		}
+//		catch (Exception e)
+//		{
+//			log.error("Error sending push notification", e);
+//		}
+//
+//	}
+	
+	//Sends mobile push notification for errors. Called in "sendErrorNotification()" found at the top of this page.
+	private void sendEMPushNotification(MediaArchive mediaArchive,Data instanceData, MultiValued monitorData)
+	{
+		GoogleManager manager = (GoogleManager)mediaArchive.getBean("googleManager");
+		
+		//Create variables
+		String collectionid = instanceData.get("librarycollection");
+		String name = instanceData.get("name");
+		String url = instanceData.get("instanceurl");
+		String inst_status = instanceData.get("instance_status");
+		String mon_status = instanceData.get("monitoringstatus");
+//
+		//Create error message with variable and string concatination
+		String message = "\n" + "" + name + " at " + instanceData.get("entermedia_servers") + " - " + url + ": ";
+		if (!(boolean)monitorData.getValue("isreachable"))
 		{
 			message += ". Health checks failed two consecutive time on, the instance might be down, please review it ASAP.";
 		}
-		if ((boolean)inReal.getValue("isssl"))
+		if ((boolean)monitorData.getValue("isssl"))
 		{
-			switch (inReal.get("sslstatus"))
+			switch (monitorData.get("sslstatus"))
 			{
 			case "torenew":
-				message += " The instance's SSL certificate will expires in " + inReal.get("daystoexpiration") + " 	days" + ".";
+				message += " The instance's SSL certificate will expires in " + monitorData.get("daystoexpiration") + " 	days" + ".";
 				break;
 			case "expired":
-				message += " The instance's SSL certificate has expired on " + inReal.get("expirationdate") + ".";
+				message += " The instance's SSL certificate has expired on " + monitorData.get("expirationdate") + ".";
 				break;
 			case "error":
 				message += " Can't retrieve any SSL certificate for the following instance.";
@@ -136,50 +221,27 @@ public class SiteManager implements CatalogEnabled
 				break;
 			}
 		}
-		if (inReal.get("isdisk") != null && inReal.get("isdisk").compareTo("true") == 0)
+		
+		String isdisk = monitorData.get("isdisk");
+		if (isdisk != null && isdisk.compareTo("true") == 0)
 		{
 			message += " One or more disk partition is running out of space.";
 		}
-		json.put("text", (String)json.get("text") + message);
-		return json;
+		//Create extra Map to pass important into notifyTopic
+		Map extra = new HashMap();
+//		extra.put("collectionid", collectionid);
+		extra.put("instanceurl", url);
+		extra.put("instancename", name);
+		extra.put("instancestatus", inst_status);
+		extra.put("monitoringstatus", mon_status);
+		
+		
+		//Pass all required information into notifyTopic function
+		manager.notifyTopic(collectionid,null,name,message,extra);
+		
+		
 	}
-
-	private void sendPushNotification(JSONObject json)
-	{
-		String url = "https://slack.com/api/chat.postMessage";
-		String token = getMediaArchive().getCatalogSettingValue("slack_api_key");
-
-		try
-		{
-			if (token == null || token != null && token.isEmpty())
-			{
-				throw new Exception("No Slack user token set in catalogsettings");
-			}
-			HttpPost httpMethod = new HttpPost(url);
-			httpMethod.setHeader("Authorization", "Bearer " + token);
-			httpMethod.setEntity(new StringEntity(json.toString(), "UTF-8"));
-			
-			httpMethod.setHeader("Content-Type", "application/json; charset=utf-8");
-
-			log.info("before call slack API");
-			
-//			HttpResponse response = getHttpConnection().getSharedClient().execute((HttpUriRequest) httpMethod);
-			HttpResponse response = getHttpClient().execute((HttpUriRequest) httpMethod);
-			
-			log.info("aftercall slack API");
-			StatusLine sl = response.getStatusLine();
-
-			if (sl.getStatusCode() != 200)
-			{
-				throw new Exception("Can't send push notification: status code " + sl.getStatusCode());
-			}
-		}
-		catch (Exception e)
-		{
-			log.error("Error sending push notification", e);
-		}
-
-	}
+	
 	
 	private Map<String, Integer> getUsageMaxByClient(final Data inReal)
 	{
@@ -716,10 +778,10 @@ public class SiteManager implements CatalogEnabled
 					if (!Boolean.parseBoolean(real.get("mailsent")))
 					{
 						log.error("Error checking " + instance.get("name"), e);
-						sendEmailError(instance, real, inArchive);
+						sendErrorNotification(instance, real, inArchive);
 						//TODO: Depending always on mailsent?
-						json = buildPushNotification(instance, real, json);
-						pushNotification = true;
+//						json = buildEMPushNotification(instance, real, json);
+//						pushNotification = true;
 						
 					}
 				}
