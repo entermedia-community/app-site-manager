@@ -29,13 +29,13 @@
 					<td style="text-align: center;">
 					#if($hit.monitoringstatus == "error")
 						#if( $instancemonitor )
-							$instancemonitor.alerttype 
+							<a class="btn btn-danger btn-sm">
+								$instancemonitor.alerttype Error
+							</a> 
 						#end
-						Error
 					#else
-						$hit.monitoringstatus
+							$hit.monitoringstatus
 					#end
-					
 					</td>
 		            <td style="text-align: left;">$context.getDateTime($instancemonitor.lastchecked)</td>
 					
