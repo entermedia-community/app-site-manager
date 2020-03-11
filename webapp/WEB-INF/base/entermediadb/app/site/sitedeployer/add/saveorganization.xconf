@@ -7,8 +7,6 @@
 		<script>/${applicationid}/site/sitedeployer/add/saveorganization.groovy</script>
 	</path-action>
 	
-	 <path-action name="ProjectModule.redirectToCollectionRoot">
-		
-	</path-action>
+	 <path-action name="ProjectModule.redirectToCollectionRoot" />
 	
 </page>
