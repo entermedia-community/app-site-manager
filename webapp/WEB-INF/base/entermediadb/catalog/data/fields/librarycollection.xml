@@ -96,16 +96,6 @@
     </name> 
   </property>  
 
-
-
-  <property id="projectstatus" index="true" stored="true" editable="true" type="list" viewtype="list"  datatype="list"  >Project Status 
-    <name> 
-      <language id="de"><![CDATA[Projekt-Status]]></language>  
-      <language id="en"><![CDATA[Project Status]]></language>  
-      <language id="es"><![CDATA[Estado del proyecto]]></language>  
-      <language id="fr"><![CDATA[Etat du projet]]></language> 
-    </name> 
-  </property>
   <property id="projecttype" index="true" stored="true" editable="true" type="list" viewtype="list"  datatype="list"  >Project Type 
     <name> 
       <language id="de"><![CDATA[Projekttyp]]></language>  
@@ -277,4 +267,9 @@
       <language id="en"><![CDATA[Chat Parent]]></language>  
     </name> 
   </property>
+    <property id="organizationstatus" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" highlight="false" deleted="false" datatype="list" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+    <name>
+      <language id="en"><![CDATA[Status]]></language>
+    </name>
+  </property> 
 </properties>
