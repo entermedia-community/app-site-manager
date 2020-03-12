@@ -83,7 +83,7 @@
 	#set($selectedproject = $librarycol.getId())
 
 	#if($userprojectsids)
-	#set( $organizations = $mediaarchive.query("librarycollection").ids($userprojectsids).enduser(true).sort("name").search() )
+	#set( $organizations = $mediaarchive.query("librarycollection").exact("organizationstatus","active").ids($userprojectsids).enduser(true).sort("name").search() )
 	
 	#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
 	
