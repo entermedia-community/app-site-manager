@@ -14,7 +14,7 @@
 	$content.setValue("GAtrakingcode", "")
 #end
 
-#set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selecteduser.getId()).exact("organizationstatus","active").exact("ontheteam","true").search() )
+#set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selecteduser.getId()).exact("ontheteam","true").hitsPerPage(200).search() )
 #set($oids = [])
 #foreach( $ohit in $organizationsuser )
 	#set($x = $oids.add($ohit.collectionid))
@@ -45,7 +45,7 @@
 #end
 
 	#if($oids)
-		#set( $organizations = $mediaarchive.query("librarycollection").ids($oids).sort("name").search($context) )
+		#set( $organizations = $mediaarchive.query("librarycollection").exact("organizationstatus","active").ids($oids).sort("name").hitsPerPage(200).search($context) )
 		#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
 		#foreach( $ohit in $organizations )
 			#set($link = false)
@@ -67,19 +67,22 @@
 	<div class="clearfix"></div>
 </div>
 
-#set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selecteduser.getId()).addNot("organizationstatus","active").exact("ontheteam","true").search() )
+#set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selecteduser.getId()).exact("ontheteam","true").hitsPerPage(200).search() )
 #set($doids = [])
 #foreach( $dohit in $organizationsuser )
-	#set($x = $doids.add($ohit.collectionid))
+	#set($x = $doids.add($dohit.collectionid))
 #end
 #if($doids)
-		#set( $organizations = $mediaarchive.query("librarycollection").ids($doids).sort("name").search($context) )
+<hr>
+<h3>[[Closed/Disabled Projects]]</h3>
+		#set( $organizations = $mediaarchive.query("librarycollection").ids($doids).orgroup("organizationstatus","disabled|closed").sort("name").hitsPerPage(200).search($context) )
 		#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
 		#foreach( $ohit in $organizations )
 			<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" 
 				class="project-title #if($selectedproject==$ohit.id) active #end">
 			$ohit.name
 			#if( $modcollections.contains($ohit.getId())) * #end
+			($ohit.organizationstatus)
 			</a><br>
 			
 			
