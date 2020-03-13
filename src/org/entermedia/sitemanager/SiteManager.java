@@ -11,25 +11,22 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.entermedia.autofailover.AutoFailoverManager;
 import org.entermedia.diskpartitions.DiskPartition;
 import org.entermedia.diskpartitions.DiskSpace;
-import org.entermedia.serverstats.ServerStat;
 import org.entermedia.serverstats.ServerStats;
 import org.entermedia.softwareversions.SoftwareVersion;
 import org.entermediadb.asset.MediaArchive;
 import org.entermediadb.email.WebEmail;
 import org.entermediadb.google.GoogleManager;
 import org.entermediadb.modules.update.Downloader;
+import org.entermediadb.net.HttpSharedConnection;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -41,7 +38,6 @@ import org.openedit.OpenEditException;
 import org.openedit.data.Searcher;
 import org.openedit.util.DateStorageUtil;
 import org.openedit.util.HttpRequestBuilder;
-import org.openedit.util.HttpSharedConnection;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -61,7 +57,7 @@ public class SiteManager implements CatalogEnabled
 	private HttpClient fieldHttpClient;
 
 	
-	private void sendEmailResolved(Data inInstance, MultiValued inReal, MediaArchive inArchive, String inDates)
+	private void sendEmailResolved(Data inInstance, MultiValued inReal, MediaArchive inArchive)
 	{
 		String notifyemail = "help@entermediadb.org";
 		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
@@ -77,7 +73,7 @@ public class SiteManager implements CatalogEnabled
 		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
 		objects.put("instance", inInstance);
-		objects.put("dates", inDates);
+		objects.put("dates", DateStorageUtil.getStorageUtil().getTodayForStorage());
 		templatemail.send(objects);
 		inReal.setProperty("mailsent", "false");
 		inReal.setValue("alertcount", 0);
@@ -327,39 +323,39 @@ public class SiteManager implements CatalogEnabled
 		return instanceUrl + "/" + inCatalog + fileURL;
 	}
 
-	private DiskSpace scanDisks(Data inInstance, Data inReal, int inPercent)
-	{
-		ArrayList<DiskPartition> partitions = new ArrayList<DiskPartition>();
-		DiskSpace diskSpace = new DiskSpace(partitions);
-
-		try
-		{
-			ObjectMapper mapper = new ObjectMapper();
-			Downloader downloader = new Downloader();
-
-			String jsonString = downloader.downloadToString(buildURL(inInstance, inReal.get("catalog"), "/mediadb/services/system/systemstatus.json"));
-			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
-
-			JSONArray results = (JSONArray) json.get("partitions");
-			for (Object partitionObj : results.toArray())
-			{
-
-				JSONObject partition = (JSONObject) partitionObj;
-				DiskPartition diskPartiton = mapper.readValue(partition.toJSONString(), DiskPartition.class);
-
-				diskPartiton.isOverloaded(inPercent);
-
-				partitions.add(diskPartiton);
-
-			}
-		}
-		catch (Exception e)
-		{
-			throw new OpenEditException(e);
-		}
-		diskSpace.setPartitions(partitions);
-		return diskSpace;
-	}
+//	private DiskSpace scanDisks(Data inInstance, Data inReal, int inPercent)
+//	{
+//		ArrayList<DiskPartition> partitions = new ArrayList<DiskPartition>();
+//		DiskSpace diskSpace = new DiskSpace(partitions);
+//
+//		try
+//		{
+//			ObjectMapper mapper = new ObjectMapper();
+//			Downloader downloader = new Downloader();
+//
+//			String jsonString = downloader.downloadToString(buildURL(inInstance, inReal.get("catalog"), "/mediadb/services/system/systemstatus.json"));
+//			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
+//
+//			JSONArray results = (JSONArray) json.get("partitions");
+//			for (Object partitionObj : results.toArray())
+//			{
+//
+//				JSONObject partition = (JSONObject) partitionObj;
+//				DiskPartition diskPartiton = mapper.readValue(partition.toJSONString(), DiskPartition.class);
+//
+//				diskPartiton.isOverloaded(inPercent);
+//
+//				partitions.add(diskPartiton);
+//
+//			}
+//		}
+//		catch (Exception e)
+//		{
+//			throw new OpenEditException(e);
+//		}
+//		diskSpace.setPartitions(partitions);
+//		return diskSpace;
+//	}
 
 	public void scanSoftwareVersions(MediaArchive inArchive)
 	{
@@ -409,11 +405,13 @@ public class SiteManager implements CatalogEnabled
 		}
 	}
 	
-	private ServerStats scanStats(MultiValued inReal, Data inInstance, ServerStats stats)
+	protected ServerStats scanStats(MultiValued inReal, Data inInstance)
 	{
-		ArrayList<ServerStat> statList = new ArrayList<ServerStat>();
+		ServerStats stats = new ServerStats();
+
 		ObjectMapper mapper = new ObjectMapper();
 		Downloader downloader = new Downloader();
+		stats.setReachable(true);
 
 		String jsonUrl = buildURL(inInstance, inReal.get("catalog"), "/mediadb/services/system/systemstatus.json");
 		try
@@ -421,27 +419,48 @@ public class SiteManager implements CatalogEnabled
 			String jsonString = downloader.downloadToString(jsonUrl);
 			JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
-			// No longer trying to gather OS hardware usage expect for disk usage.
-/*			JSONArray results = (JSONArray) json.get("stats");
-			for (Object statObj : results.toArray())
-			{
-				JSONObject statJSON = (JSONObject) statObj;
+			JSONObject response = (JSONObject) json.get("response");
 
-				ServerStat stat = mapper.readValue(statJSON.toJSONString(), ServerStat.class);
-				statList.add(stat);
+			if (response.get("status") != null && response.get("status").equals("ok"))
+			{
+				
+				ArrayList<DiskPartition> partitions = new ArrayList<DiskPartition>();
+				DiskSpace diskSpace = new DiskSpace();
+
+				try
+				{
+					JSONArray results = (JSONArray) json.get("partitions");
+					for (Object partitionObj : results.toArray())
+					{
+						JSONObject partition = (JSONObject) partitionObj;
+						DiskPartition diskPartiton = mapper.readValue(partition.toJSONString(), DiskPartition.class);
+						diskPartiton.isOverloaded(98);
+						partitions.add(diskPartiton);
+					}
+				}
+				catch (Exception e)
+				{
+					throw new OpenEditException(e);
+				}
+				diskSpace.setPartitions(partitions);
+				stats.setDiskSpace(diskSpace);
+				
 			}
-			stats.build(statList);
-*/			//inReal.setValue("fullurl", jsonUrl);
+			else
+			{
+				stats.setReachable(false);
+			}
+
 		}
 		catch (Exception e)
 		{
 			//throw new OpenEditException(e);
 			log.error("Cant' get to " + jsonUrl);
-			return null;
+			stats.setReachable(false);
 		}
 		return stats;
 	}
-
+/*
 	private boolean checkServerStatus(MultiValued inReal, Data inInstance)
 	{
 		try
@@ -464,8 +483,8 @@ public class SiteManager implements CatalogEnabled
 		}
 		return false;
 	}
-
-	private void setErrorType(boolean disk, boolean memory, boolean heap, boolean cpu, boolean reachable, boolean swap, MultiValued inReal)
+*/
+	private void setErrorType(ServerStats inStats, MultiValued inReal)
 	{
 		if (inReal == null)
 		{
@@ -473,30 +492,30 @@ public class SiteManager implements CatalogEnabled
 		}
 
 		ArrayList<String> list = new ArrayList<String>();
-		if (disk)
-		{
-			list.add("disk");
-		}
-		if (memory)
-		{
-			list.add("memory");
-		}
-		if (heap)
-		{
-			list.add("heap");
-		}
-		if (cpu)
-		{
-			list.add("cpu");
-		}
-		if (!reachable)
+//		if (disk)
+//		{
+//			list.add("disk");
+//		}
+//		if (memory)
+//		{
+//			list.add("memory");
+//		}
+//		if (heap)
+//		{
+//			list.add("heap");
+//		}
+//		if (cpu)
+//		{
+//			list.add("cpu");
+//		}
+		if (!inStats.isReachable())
 		{
 			list.add("reachable");
 		}
-		if (swap)
-		{
-			list.add("swap");
-		}
+//		if (swap)
+//		{
+//			list.add("swap");
+//		}
 		inReal.setValue("alerttype", list);
 	}
 
@@ -524,7 +543,7 @@ public class SiteManager implements CatalogEnabled
 
 		return httpClient;
 	}
-	
+	/*
 	private Long scanOldSite(MultiValued inReal, Data inInstance)
 	{
 		HttpRequestBuilder builder = new HttpRequestBuilder();
@@ -562,16 +581,15 @@ public class SiteManager implements CatalogEnabled
 			throw new OpenEditException(e.getMessage(), e);
 		}
 		return null;
-	}
+		*/
+//	}
 	
 	public synchronized void scan(MediaArchive inArchive)
 	{
 		log.info("Starting monitor scan");
 		Searcher sites = inArchive.getSearcher("entermedia_instances_monitor");
 		Collection<Data> sitestomonitor = sites.query().exact("monitoringenable", "true").search();
-		JSONObject json = null;
-		boolean pushNotification = false;
-		
+
 		for (Data it : sitestomonitor)
 		{
 			MultiValued real = (MultiValued) sites.loadData(it);
@@ -583,254 +601,70 @@ public class SiteManager implements CatalogEnabled
 				continue;
 			}
 			
-			//DNS
-			Data dns = (Data) getDnsSearcher().searchById((String)real.getValue("monitoredsitesdns"));
-			//TODO: if DNS = nul create one
 			String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
-			ServerStats stats = new ServerStats();
 
-			//Defaults
-			if ((Integer)real.getValue("diskmaxusage") == null || ((Integer)real.getValue("diskmaxusage") != null && (Integer)real.getValue("diskmaxusage") == 0))
-			{
-				real.setValue("diskmaxusage", 95);
-				sites.saveData(real, null);
-			}
 			if (real.get("catalog") == null)
 			{
 				real.setValue("catalog", "assets");
 				sites.saveData(real, null);
 			}
-			boolean isold;
-			isold = real.getBoolean("isold");
-			
-			boolean disk = false;
-			boolean memory = false;
-			boolean heap = false;
-			boolean cpu = false;
-			boolean reachable = false;
 
-			Map<String, Integer> map = getUsageMaxByClient(real);
-
-			try
+			ServerStats stats = scanStats(real, instance);
+			if (stats.isError()) 
 			{
-				try    //Why to Trys?
-				{
-					if (isold == true)
-					{
-						if (scanOldSite(real, instance) != null)
-						{
-							if (real.getValue("isautofailover") != null )
-							{
-								if ((boolean)real.getValue("isautofailover"))
-								{
-									if ((boolean)dns.getValue("isfailover"))
-									{
-										leaveFailover(real, dns);
-									}
-								}
-							}
-							reachable = true;
-							real.setValue("monitorstatuscolor", "GREEN");
-							real.setValue("lastcheckfail", false);
-						}
-					}
-					else 
-					{
-						stats = scanStats(real, instance, stats);
-						if (stats != null) {
-	 						reachable = true;
-							real.setValue("monitorstatuscolor", "GREEN");
-							real.setValue("lastcheckfail", false);
-							if (real.getValue("isautofailover") != null )
-							{
-								if ((boolean)real.getValue("isautofailover"))
-								{
-									if ((boolean)dns.getValue("isfailover"))
-									{
-										leaveFailover(real, dns);
-									}
-								}
-							}
-						}
-					}	
-				}
-				catch (Exception e)
-				{
-					//Too much logs
-					log.error("Connection failed on " + real.get("name"), e);
-				}
-				if (!reachable)
-				{
-					real.setValue("isreachable", false);
-					real.setValue("lastcheckfail", true);
-					String clusterColor = (String)real.getValue("monitorstatuscolor");
-					
-					if (clusterColor == null)
-					{
-						real.setValue("monitorstatuscolor", "GREEN");
-						sites.saveData(real, null);
-						clusterColor = (String)real.getValue("monitorstatuscolor");
-					}
-					if (clusterColor.compareTo("GREEN") == 0)
-					{
-						real.setValue("lastcheckfail", true);
-					}
-					
-					//setErrorType(disk, memory, heap, cpu, reachable, false, swap, real);
-					setErrorType(disk, memory, heap, cpu, reachable, false, real);
-					
-					if (real.getValue("isautofailover") != null )
-					{
-						if ((boolean)real.getValue("isautofailover"))
-						{
-
-							if ((boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
-							{
-								// go failover
-								enterFailover(real, dns, false);	
-							}	
-							else if (!(boolean)real.getValue("lastcheckfail") && !(boolean)dns.getValue("isfailover"))
-							{
-								// prep failover
-								enterFailover(real, dns, true);
-							}
-						}
-						else
-						{
-							if ((boolean)real.getValue("lastcheckfail") && clusterColor.compareTo("GREEN") == 0)
-							{
-								real.setValue("monitorstatuscolor", "YELLOW");
-							}
-							else if (clusterColor.compareTo("YELLOW") == 0)
-							{
-								real.setValue("monitorstatuscolor", "RED");
-							}
-						}
-					}
-					throw new OpenEditException("Server unreachable");
-				}
-
-				if (!checkServerStatus(real, instance))
-				{
-					//setErrorType(disk, memory, heap, cpu, reachable, false, real);
-					setErrorType(disk, memory, heap, cpu, reachable, false, real);
-					throw new OpenEditException("Server returns invalid status");
-				}
-
-				//TODO Calculate mem usage average over the past X Hour/minutes
-				//memory = isOverloaded((Long)stats.getMemoryfree(), (Long)stats.getMemorytotal(), map.get("MEMORY"), false);
-
-				if (!isold)
-				{
-					DiskSpace diskSpace = scanDisks(instance, real, map.get("DISK"));
-					disk = diskSpace.isOnePartitionOverloaded();
-	
-					
-					if (disk == true)
-					{
-						real.setValue("partitions", diskSpace.getPartitions());
-					}
-	
-					//				if (parser.getHeappercent() != null)
-					//				{
-					//					heap = new Double(stats.getHeappercent()) >= 90 ? true : false;
-					//				}
-					//				if (stats.getCpu() != null)
-					//				{
-					//					cpu = new Double(stats.getCpu()) >= 90 ? true : false;
-					//
-					//				}
-	
-					real = buildData(real, diskSpace, stats, memory, cpu, heap, disk);
-	
-					if (memory || heap || cpu || disk)
-					{
-						//setErrorType(disk, memory, heap, cpu, reachable, false, swap, real);  //Why is being call 3 times?
-						setErrorType(disk, memory, heap, cpu, reachable, false, real);
-						String clusterColor = (String)real.getValue("monitorstatuscolor");
-						if (clusterColor == null)
-						{
-							real.setValue("monitorstatuscolor", "GREEN");
-							sites.saveData(real, null);
-							clusterColor = (String)real.getValue("monitorstatuscolor");
-						}
-
-						if (clusterColor.compareTo("GREEN") == 0)
-						{
-							real.setValue("monitorstatuscolor", "RED");
-						}
-						throw new OpenEditException("Hardware overload");
-					}
-				}
-
-				if (real.get("monitoringstatus") != null && real.get("monitoringstatus").compareToIgnoreCase("error") == 0)
-				{
-					sendEmailResolved(instance, real, inArchive, dates);		
-				}
-				real.setValue("monitoringstatus", "ok");
-				real.setValue("alerttype",new ArrayList<String>());
+				real.setValue("isreachable", false);
+				real.setValue("lastcheckfail", true);
+				real.setValue("monitorstatuscolor", "RED");
+				setErrorType(stats,real);
+				sites.saveData(real, null);
+				enterFailover(real, instance, inArchive);	
 			}
-			catch (Exception e)
+			else
 			{
-				real.setProperty("monitoringstatus", "error");
-				if (real.get("monitorstatuscolor") != null && real.get("monitorstatuscolor").compareTo("RED") == 0)
-				{
-					if (!Boolean.parseBoolean(real.get("mailsent")))
-					{
-						log.error("Error checking " + instance.get("name"), e);
-						sendErrorNotification(instance, real, inArchive);
-						//TODO: Depending always on mailsent?
-//						json = buildEMPushNotification(instance, real, json);
-//						pushNotification = true;
-						
-					}
-				}
+				real.setValue("monitorstatuscolor", "GREEN");
+				real.setValue("lastcheckfail", false);
+				real.setValue("isreachable", true);
+				sites.saveData(real, null);
+				leaveFailover(real, instance, inArchive);
 			}
-		real.setProperty("lastchecked", dates);
-		sites.saveData(real, null);
-		instance.setValue("monitoringstatus", real.getValue("monitoringstatus"));
-		instances.saveData(instance, null);
+
+			real.setProperty("lastchecked", dates);
+			sites.saveData(real, null);
+			instance.setValue("monitoringstatus", real.getValue("monitoringstatus"));
+			instances.saveData(instance, null);
 		}
-//		if (pushNotification && json != null)
-//		{
-//			try
-//			{
-//				sendPushNotification(json);
-//			}
-//			catch (Exception e)
-//			{
-//				log.error("Error sending slack notification", e);
-//			}
-//		}
 		log.info("scan complete");
 	}
 	
-	private void enterFailover(MultiValued real, Data dns, boolean isPrep)
-	{
-		AutoFailoverManager dnsManager = getAutoFailoverManager();
 
-		if (isPrep)
+	private void enterFailover(MultiValued inReal, Data inInstance, MediaArchive inArchive)
+	{
+		sendErrorNotification(inInstance, inReal, inArchive);
+		inReal.setValue("monitoringstatus", "error");
+		inReal.setValue("lastcheckfail", true);
+		
+		if (inReal.getBoolean("isautofailover") )
 		{
-			// preparing to failover, lowering TTL 
-			real.setValue("lastcheckfail", true);
-			dnsManager.updateRecord(dns.get("name"), (int)dns.getValue("failoverttl"));
-		}
-		else 
-		{
-			// failover, TTL low, set failover url
-			real.setValue("lastcheckfail", true);
-			dns.setValue("isfailover", true);
-			dnsManager.updateRecord(dns.get("name"), dns.get("failovercontent"));
-		}
+			AutoFailoverManager dnsManager = getAutoFailoverManager();
+			String failovercname = inReal.get("failovercname");
+			dnsManager.updateRecord(inReal, failovercname);
+		}	
 	}
 
-	private void leaveFailover(MultiValued real, Data dns)
+	private void leaveFailover(MultiValued inReal, Data inInstance, MediaArchive inArchive)
 	{
-		AutoFailoverManager dnsManager = getAutoFailoverManager();
-
-		real.setValue("lastcheckfail", false);
-		dns.setValue("isfailover", false);
-		dnsManager.updateRecord(dns.get("name"), dns.get("originalcontent"), Integer.parseInt((String)dns.getValue("originalttl")));
+		//Send email
+		sendEmailResolved(inInstance, inReal, inArchive);		
+		inReal.setValue("monitoringstatus", "ok");
+		inReal.setValue("alerttype",new ArrayList<String>());
+		inReal.setValue("lastcheckfail", false);
+		
+		if (inReal.getBoolean("isautofailover") )
+		{
+			AutoFailoverManager dnsManager = getAutoFailoverManager();
+			String primary = inReal.get("primarycname");
+			dnsManager.updateRecord(inReal, primary);
+		}	
 	}
 
 	public String getCatalogId()

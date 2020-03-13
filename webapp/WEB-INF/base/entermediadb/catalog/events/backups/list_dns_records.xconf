@@ -5,7 +5,6 @@
 
 <path-action name="AutoFailoverModule.getDNSRecords">
 </path-action>
-  	<property name="period">30d</property>
   
 <property name="virtual">true</property>
 </page>

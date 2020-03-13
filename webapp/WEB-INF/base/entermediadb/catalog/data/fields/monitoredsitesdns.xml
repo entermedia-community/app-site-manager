@@ -52,8 +52,8 @@
       <language id="en"><![CDATA[Region]]></language>
     </name>
   </property>  
-  <property id="originalcontent" index="true" editable="true" keyword="true">Original Content</property>
-  <property id="failovercontent" index="true" editable="true" keyword="true">Failover Content</property>
+  <property id="primarycname" index="true" editable="true" keyword="true">Primary CNAME</property>
+  <property id="failovercname" index="true" editable="true" keyword="true">Failover CNAME</property>
   <property id="originalttl" index="true" editable="true" keyword="true" type="number">Original TTL</property>
   <property id="failoverttl" index="true" editable="true" keyword="true" type="number">Failover TTL</property>
   <property id="isfailover" index="true" type="boolean" stored="true" editable="true" searchtype="monitoredsitesdns" internalfield="false">Is Failover</property>

@@ -6,9 +6,8 @@ public class DiskSpace
 {
 	ArrayList<DiskPartition> partitions;
 
-	public DiskSpace(ArrayList<DiskPartition> inPartitions)
+	public DiskSpace()
 	{
-		partitions = inPartitions;
 	}
 	
 	public boolean isOnePartitionOverloaded()
