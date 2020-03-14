@@ -614,18 +614,24 @@ public class SiteManager implements CatalogEnabled
 			{
 				real.setValue("isreachable", false);
 				real.setValue("lastcheckfail", true);
-				real.setValue("monitorstatuscolor", "RED");
-				setErrorType(stats,real);
-				sites.saveData(real, null);
-				enterFailover(real, instance, inArchive);	
+				if( !"RED".equals( real.get("monitorstatuscolor") ) )
+				{
+					real.setValue("monitorstatuscolor", "RED");
+					setErrorType(stats,real);
+					sites.saveData(real, null);
+					enterFailover(real, instance, inArchive);	
+				}	
 			}
 			else
 			{
-				real.setValue("monitorstatuscolor", "GREEN");
-				real.setValue("lastcheckfail", false);
-				real.setValue("isreachable", true);
-				sites.saveData(real, null);
-				leaveFailover(real, instance, inArchive);
+				if( !"GREEN".equals( real.get("monitorstatuscolor") ) )
+				{
+					real.setValue("monitorstatuscolor", "GREEN");
+					real.setValue("lastcheckfail", false);
+					real.setValue("isreachable", true);
+					sites.saveData(real, null);
+					leaveFailover(real, instance, inArchive);
+				}
 			}
 
 			real.setProperty("lastchecked", dates);
