@@ -592,56 +592,78 @@ public class SiteManager implements CatalogEnabled
 
 		for (Data it : sitestomonitor)
 		{
-			MultiValued real = (MultiValued) sites.loadData(it);
-		
-			//Get Instance Data
-			Searcher instances = inArchive.getSearcher("entermedia_instances");
-			Data instance = instances.query().exact("id", real.get("instanceid")).searchOne();
-			if (instance == null) {
-				continue;
-			}
-			
-			String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
-
-			if (real.get("catalog") == null)
+			try
 			{
-				real.setValue("catalog", "assets");
-				sites.saveData(real, null);
+				scanSite(inArchive,it);
 			}
-
-			ServerStats stats = scanStats(real, instance);
-			if (stats.isError()) 
+			catch( Throwable ex)
 			{
-				real.setValue("isreachable", false);
-				real.setValue("lastcheckfail", true);
-				if( !"RED".equals( real.get("monitorstatuscolor") ) )
-				{
-					real.setValue("monitorstatuscolor", "RED");
-					setErrorType(stats,real);
-					sites.saveData(real, null);
-					enterFailover(real, instance, inArchive);	
-				}	
+				log.error("Could not scan site " + it ,ex);
 			}
-			else
-			{
-				if( !"GREEN".equals( real.get("monitorstatuscolor") ) )
-				{
-					real.setValue("monitorstatuscolor", "GREEN");
-					real.setValue("lastcheckfail", false);
-					real.setValue("isreachable", true);
-					sites.saveData(real, null);
-					leaveFailover(real, instance, inArchive);
-				}
-			}
-
-			real.setProperty("lastchecked", dates);
-			sites.saveData(real, null);
-			instance.setValue("monitoringstatus", real.getValue("monitoringstatus"));
-			instances.saveData(instance, null);
 		}
 		log.info("scan complete");
 	}
 	
+
+	protected void scanSite(MediaArchive inArchive, Data inData)
+	{
+		Searcher sites = inArchive.getSearcher("entermedia_instances_monitor");
+		MultiValued real = (MultiValued) sites.loadData(inData);
+		
+		//Get Instance Data
+		Searcher instances = inArchive.getSearcher("entermedia_instances");
+		String instanceid = real.get("instanceid");
+		if( instanceid == null)
+		{
+			log.error("Instance ID not valid " + real.getId());
+			return;
+		}
+		Data instance = instances.query().exact("id", instanceid ).searchOne();
+		if (instance == null) 
+		{
+			log.error("Instance ID not valid " + real.getId());
+			return;
+		}
+		
+		String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
+
+		if (real.get("catalog") == null)
+		{
+			real.setValue("catalog", "assets");
+			sites.saveData(real, null);
+		}
+
+		ServerStats stats = scanStats(real, instance);
+		if (stats.isError()) 
+		{
+			real.setValue("isreachable", false);
+			real.setValue("lastcheckfail", true);
+			if( !"RED".equals( real.get("monitorstatuscolor") ) )
+			{
+				real.setValue("monitorstatuscolor", "RED");
+				setErrorType(stats,real);
+				sites.saveData(real, null);
+				enterFailover(real, instance, inArchive);	
+			}	
+		}
+		else
+		{
+			if( !"GREEN".equals( real.get("monitorstatuscolor") ) )
+			{
+				real.setValue("monitorstatuscolor", "GREEN");
+				real.setValue("lastcheckfail", false);
+				real.setValue("isreachable", true);
+				sites.saveData(real, null);
+				leaveFailover(real, instance, inArchive);
+			}
+		}
+
+		real.setProperty("lastchecked", dates);
+		sites.saveData(real, null);
+		instance.setValue("monitoringstatus", real.getValue("monitoringstatus"));
+		instances.saveData(instance, null);
+		
+	}
 
 	private void enterFailover(MultiValued inReal, Data inInstance, MediaArchive inArchive)
 	{
