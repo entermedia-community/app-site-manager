@@ -138,6 +138,7 @@ public class AutoFailoverManager implements CatalogEnabled
 		{
 			DnsRecord dnsRecord2 = (DnsRecord) iterator.next();
 			String content = dnsRecord2.getContent();
+			log.info("DNS Checking " + content  + " on record id " + dnsRecord2.getId());
 			if( content != null && (content.equals(inPrimaryCname) ||  content.equals(inFailovercname) ) )
 			{
 				return dnsRecord2.getId();
