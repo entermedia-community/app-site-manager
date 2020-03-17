@@ -204,6 +204,7 @@ public class AutoFailoverManager implements CatalogEnabled
 
 		try
 		{
+			log.info("Setting DNS value: " + url + " with: " + json.toJSONString() );
 			HttpResponse response = getHttpConnection().getSharedClient().execute((HttpUriRequest) httpMethod);
 			StatusLine sl = response.getStatusLine();
 	
