@@ -338,39 +338,52 @@ public class AutoFailoverManager implements CatalogEnabled
 	{
 		try
 		{
-			HttpGet method = null;
+			Collection<DnsRecord> dnsrecords = new ArrayList();
 			
-			   String url = API_ROOT_URL_PROD + "/zones/" + inDomainZone + "/records";
-			   method = new HttpGet(url);
-			   
-			   String apitoken = getMediaArchive().getCatalogSettingValue("site_monitor_prod_token");
+			   String url = API_ROOT_URL_PROD + "/zones/" + inDomainZone + "/records?per_page=100&page=";
 
-			   method.setHeader("Authorization", "Bearer " + apitoken);
-			   method.setHeader("Content-Type", "application/json; charset=utf-8");
+			   int maxpages = 1;
 			   
-			   HttpResponse response = getHttpConnection().getSharedClient().execute(method);
-				StatusLine sl = response.getStatusLine();           
-				if (sl.getStatusCode() != 200)
-				{
-					throw new Exception( method  + " Request failed: status code " + sl.getStatusCode());
-				}
-				else
-				{
-					ObjectMapper mapper = new ObjectMapper();
-				    String responseJSON = EntityUtils.toString(response.getEntity(), "UTF-8");
-				    log.error("Got DNS data back " + responseJSON);
-					JSONObject jsonResponse = (JSONObject) new JSONParser().parse(responseJSON);
-					JSONArray results = (JSONArray) jsonResponse.get("data");
-					Collection<DnsRecord> dnsrecords = new ArrayList();
-					for (Object jsonObj : results.toArray())
+			   for (int i = 0; i < maxpages; i++)
+			   {
+				   log.info("Loading DNS records: " + url+ (i + 1));
+				   HttpGet method = new HttpGet(url + (i + 1));
+				   String apitoken = getMediaArchive().getCatalogSettingValue("site_monitor_prod_token");
+				   method.setHeader("Authorization", "Bearer " + apitoken);
+				   method.setHeader("Content-Type", "application/json; charset=utf-8");
+	
+				   HttpResponse response = getHttpConnection().getSharedClient().execute(method);
+					StatusLine sl = response.getStatusLine();           
+					if (sl.getStatusCode() != 200)
 					{
-
-						JSONObject record = (JSONObject) jsonObj;
-						DnsRecord dnsRecord = mapper.readValue(record.toJSONString(), DnsRecord.class);
-						dnsrecords.add(dnsRecord);							
+						throw new Exception( method  + " Request failed: status code " + sl.getStatusCode());
 					}
-					return dnsrecords;
-				}
+					else
+					{
+						ObjectMapper mapper = new ObjectMapper();
+					    String responseJSON = EntityUtils.toString(response.getEntity(), "UTF-8");
+					    //log.error("Got DNS data back " + responseJSON);
+						JSONObject jsonResponse = (JSONObject) new JSONParser().parse(responseJSON);
+						JSONArray results = (JSONArray) jsonResponse.get("data");
+						for (Object jsonObj : results.toArray())
+						{
+	
+							JSONObject record = (JSONObject) jsonObj;
+							DnsRecord dnsRecord = mapper.readValue(record.toJSONString(), DnsRecord.class);
+							dnsrecords.add(dnsRecord);							
+						}
+						JSONObject pagination = (JSONObject) jsonResponse.get("pagination");
+						if( pagination != null)
+						{
+							Object count = pagination.get("total_pages");
+							if( count != null)
+							{
+								maxpages = Integer.parseInt( count.toString() );
+							}
+						}
+					}
+			   }
+			return dnsrecords;
 		}
 		catch (Exception e) 
 		{
