@@ -358,7 +358,7 @@ public class AutoFailoverManager implements CatalogEnabled
 				{
 					ObjectMapper mapper = new ObjectMapper();
 				    String responseJSON = EntityUtils.toString(response.getEntity(), "UTF-8");
-
+				    log.error("Got DNS data back " + responseJSON);
 					JSONObject jsonResponse = (JSONObject) new JSONParser().parse(responseJSON);
 					JSONArray results = (JSONArray) jsonResponse.get("data");
 					Collection<DnsRecord> dnsrecords = new ArrayList();
