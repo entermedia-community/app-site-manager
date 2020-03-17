@@ -638,9 +638,9 @@ public class SiteManager implements CatalogEnabled
 		{
 			real.setValue("isreachable", false);
 			real.setValue("lastcheckfail", true);
-			if( !"RED".equals( real.get("monitorstatuscolor") ) )
+			if( "ok".equals( real.get("monitoringstatus") ) )
 			{
-				real.setValue("monitorstatuscolor", "RED");
+				real.setValue("monitoringstatus", "error");
 				setErrorType(stats,real);
 				sites.saveData(real, null);
 				enterFailover(real, instance, inArchive);	
@@ -648,11 +648,12 @@ public class SiteManager implements CatalogEnabled
 		}
 		else
 		{
-			if( !"GREEN".equals( real.get("monitorstatuscolor") ) )
+			if( "error".equals( real.get("monitoringstatus") ) )
 			{
-				real.setValue("monitorstatuscolor", "GREEN");
+				real.setValue("monitoringstatus", "ok");
 				real.setValue("lastcheckfail", false);
 				real.setValue("isreachable", true);
+				real.setValue("alerttype",null);
 				sites.saveData(real, null);
 				leaveFailover(real, instance, inArchive);
 			}

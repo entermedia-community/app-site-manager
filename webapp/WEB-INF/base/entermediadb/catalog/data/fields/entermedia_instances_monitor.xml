@@ -137,7 +137,7 @@
       <language id="fr"><![CDATA[Chemin d&#39;accès d&#39;origine]]></language> 
     </name> 
   </property>  
-  <property id="monitoringstatus" index="true" internalfield="false" datatype="list" editable="true" stored="true" searchtype="monitoredsites" viewtype="tageditor" rendertype="tageditor"> 
+  <property id="monitoringstatus" index="true" internalfield="false" datatype="list" editable="true" stored="true" viewtype="tageditor" rendertype="tageditor"> 
     <name> 
       <language id="en"><![CDATA[Monitoring Status]]></language> 
     </name> 
@@ -287,11 +287,7 @@
       <language id="en"><![CDATA[Instructions]]></language> 
     </name> 
   </property>  
-  <property id="monitorstatuscolor" index="true" deleted="false" editable="true" stored="true" viewtype="tageditor"> 
-    <name> 
-      <language id="en"><![CDATA[Status Color]]></language> 
-    </name> 
-  </property>  
+
       
   <property id="lastcheckfail" index="true" type="boolean" stored="true" editable="true" searchtype="monitoredsites" internalfield="false">Last Check Status</property>
   
