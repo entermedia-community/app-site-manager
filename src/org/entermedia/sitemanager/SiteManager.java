@@ -308,9 +308,9 @@ public class SiteManager implements CatalogEnabled
 		return inReal;
 	}
 
-	private String buildURL(Data inInstance, String inCatalog,  String fileURL)
+	private String buildURL(Data inMonitor, String inCatalog,  String fileURL)
 	{
-		String instanceUrl = inInstance.get("instanceurl"); 
+		String instanceUrl = inMonitor.get("primarycname"); 
 		if ( instanceUrl== null)
 		{
 			throw new OpenEditException("Instance's URL or catalog missing");
@@ -318,7 +318,7 @@ public class SiteManager implements CatalogEnabled
 		String dns = instanceUrl;
 		if (dns.endsWith("/"))
 		{ 
-			inInstance.setProperty("instanceurl", dns.substring(0, (dns.length() - 1)));
+			inMonitor.setProperty("primarycname", dns.substring(0, (dns.length() - 1)));
 		}
 		return instanceUrl + "/" + inCatalog + fileURL;
 	}
@@ -380,7 +380,7 @@ public class SiteManager implements CatalogEnabled
 					ObjectMapper mapper = new ObjectMapper();
 					Downloader downloader = new Downloader();
 
-					String jsonString = downloader.downloadToString(buildURL(instance, real.get("catalog"), "/mediadb/services/system/softwareversions.json"));
+					String jsonString = downloader.downloadToString(buildURL(real, real.get("catalog"), "/mediadb/services/system/softwareversions.json"));
 					JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
 
 					JSONArray results = (JSONArray) json.get("results");
@@ -405,7 +405,7 @@ public class SiteManager implements CatalogEnabled
 		}
 	}
 	
-	protected ServerStats scanStats(MultiValued inReal, Data inInstance)
+	protected ServerStats scanStats(MultiValued inMonitor, Data inInstance)
 	{
 		ServerStats stats = new ServerStats();
 
@@ -413,7 +413,7 @@ public class SiteManager implements CatalogEnabled
 		Downloader downloader = new Downloader();
 		stats.setReachable(true);
 
-		String jsonUrl = buildURL(inInstance, inReal.get("catalog"), "/mediadb/services/system/systemstatus.json");
+		String jsonUrl = buildURL(inMonitor, inMonitor.get("catalog"), "/mediadb/services/system/systemstatus.json");
 		try
 		{
 			String jsonString = downloader.downloadToString(jsonUrl);

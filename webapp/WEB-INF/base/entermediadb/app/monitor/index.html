@@ -13,7 +13,8 @@
 	                <th>[[Server Name]]</th>
 	                <th>[[Status]]</th>
 					<th>[[Last Checked]]</th>
-	                <th>[[URL]]</th>
+	                <th>[[Public URL]]</th>
+	                <th>[[Primary CNAME]]</th>
 	                <th>[[Server]]</th>
 					<th>[[Links]]</th>
 	            </tr>
@@ -44,6 +45,11 @@
 							<a href="$hit.instanceurl" style="text-decoration: underline" targe="_blank">$hit.instanceurl</a>
 						#else
 							$hit.instanceprefix
+						#end
+					</td>
+					<td>
+					#if ($instancemonitor.primarycname)
+							<a href="$instancemonitor.primarycname" style="text-decoration: underline" targe="_blank">$instancemonitor.primarycname</a>
 						#end
 					</td>
 					<td>
