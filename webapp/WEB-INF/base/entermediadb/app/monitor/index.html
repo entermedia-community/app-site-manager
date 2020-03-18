@@ -14,7 +14,7 @@
 	                <th>[[Status]]</th>
 					<th>[[Last Checked]]</th>
 	                <th>[[Public URL]]</th>
-	                <th>[[Primary CNAME]]</th>
+	                <!-- <th>[[Primary CNAME]]</th> -->
 	                <th>[[Server]]</th>
 					<th>[[Links]]</th>
 	            </tr>
@@ -47,11 +47,11 @@
 							$hit.instanceprefix
 						#end
 					</td>
-					<td>
+					<!-- <td>
 					#if ($instancemonitor.primarycname)
 							<a href="$instancemonitor.primarycname" style="text-decoration: underline" targe="_blank">$instancemonitor.primarycname</a>
 						#end
-					</td>
+					</td> -->
 					<td>
 					$mediaarchive.getData("entermedia_servers",$hit.entermedia_servers)
 					</td>
