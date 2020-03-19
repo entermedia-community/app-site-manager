@@ -14,8 +14,8 @@
 	                <th>[[Status]]</th>
 					<th>[[Last Checked]]</th>
 	                <th>[[Public URL]]</th>
-	                <th>[[Primary CNAME]]</th>
-	                <th>[[Failover CNAME]]</th>
+	                <th>[[Monitoring URL]]</th>
+	               <!--  <th>[[Failover CNAME]]</th> -->
 	                <th>[[Server]]</th>
 					<th>[[Links]]</th>
 	            </tr>
@@ -54,15 +54,15 @@
 						#end
 					</td>
 					<td>
-					#if ($instancemonitor.primarycname)
-							<a href="$instancemonitor.primarycname" style="text-decoration: underline" targe="_blank">$instancemonitor.primarycname</a>
+					#if ($instancemonitor.monitoringurl)
+							<a href="$instancemonitor.monitoringurl" style="text-decoration: underline" targe="_blank">$instancemonitor.monitoringurl</a>
 						#end
 					</td>
-					<td>
+				<!-- 	<td>
 					#if ($instancemonitor.failovercname)
 							<a href="$instancemonitor.failovercname" style="text-decoration: underline" targe="_blank">$instancemonitor.failovercname</a>
 						#end
-					</td>  
+					</td>  --> 
 					<td>
 					#if ($mediaarchive.getData("entermedia_servers",$hit.entermedia_servers))
 						$mediaarchive.getData("entermedia_servers",$hit.entermedia_servers)

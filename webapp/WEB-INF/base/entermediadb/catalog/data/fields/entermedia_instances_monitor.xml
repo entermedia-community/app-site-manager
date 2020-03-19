@@ -307,6 +307,7 @@
   <property id="parentdomainzone" index="true" editable="true" keyword="true">Parent Domain / Zone</property>
   <property id="primarycname" index="true" editable="true" keyword="true">Primary CNAME</property>
   <property id="failovercname" index="true" editable="true" keyword="true">Failover CNAME</property>
+  <property id="monitoringurl" index="true" editable="true" keyword="true">Monitoring URL</property>
   <property id="monitoredsitesdnsregion" index="true" multilanguage="false" editable="true" stored="true" filter="true" datatype="list" viewtype="multiselect" listid="monitoredsitesdnsregion">New 
     <name>
       <language id="en"><![CDATA[Region]]></language>

@@ -10,11 +10,9 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.entermedia.autofailover.AutoFailoverManager;
@@ -37,7 +35,6 @@ import org.openedit.MultiValued;
 import org.openedit.OpenEditException;
 import org.openedit.data.Searcher;
 import org.openedit.util.DateStorageUtil;
-import org.openedit.util.HttpRequestBuilder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -310,7 +307,7 @@ public class SiteManager implements CatalogEnabled
 
 	private String buildURL(Data inMonitor, String inCatalog,  String fileURL)
 	{
-		String instanceUrl = inMonitor.get("primarycname"); 
+		String instanceUrl = inMonitor.get("monitoringurl"); 
 		if ( instanceUrl== null)
 		{
 			throw new OpenEditException("Instance's URL or catalog missing");
@@ -318,7 +315,7 @@ public class SiteManager implements CatalogEnabled
 		String dns = instanceUrl;
 		if (dns.endsWith("/"))
 		{ 
-			inMonitor.setProperty("primarycname", dns.substring(0, (dns.length() - 1)));
+			inMonitor.setProperty("monitoringurl", dns.substring(0, (dns.length() - 1)));
 		}
 		return instanceUrl + "/" + inCatalog + fileURL;
 	}
