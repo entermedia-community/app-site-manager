@@ -15,6 +15,7 @@
 					<th>[[Last Checked]]</th>
 	                <th>[[Public URL]]</th>
 	                <th>[[Primary CNAME]]</th>
+	                <th>[[Failover CNAME]]</th>
 	                <th>[[Server]]</th>
 					<th>[[Links]]</th>
 	            </tr>
@@ -38,8 +39,13 @@
 							$hit.monitoringstatus
 					#end
 					</td>
-		            <td style="text-align: left;">$context.getDateTime($instancemonitor.lastchecked)</td>
-					
+		            <td style="text-align: left;">
+		            #if ($context.getDateTime($instancemonitor.lastchecked))
+		            	$context.getDateTime($instancemonitor.lastchecked)
+		            #else
+		            	Not enabled
+		            #end
+		            </td>
 		            <td>
 						#if ($hit.instanceurl)
 							<a href="$hit.instanceurl" style="text-decoration: underline" targe="_blank">Site</a>
@@ -51,7 +57,12 @@
 					#if ($instancemonitor.primarycname)
 							<a href="$instancemonitor.primarycname" style="text-decoration: underline" targe="_blank">$instancemonitor.primarycname</a>
 						#end
-					</td> 
+					</td>
+					<td>
+					#if ($instancemonitor.failovercname)
+							<a href="$instancemonitor.failovercname" style="text-decoration: underline" targe="_blank">$instancemonitor.failovercname</a>
+						#end
+					</td>  
 					<td>
 					#if ($mediaarchive.getData("entermedia_servers",$hit.entermedia_servers))
 						$mediaarchive.getData("entermedia_servers",$hit.entermedia_servers)
@@ -82,11 +93,11 @@
 	#end
 </div>	
 </div>
- <div class="col-lg-3" style="max-width:350px;">
+<!--  <div class="col-lg-3" style="max-width:350px;">
 	<div class="collective-sidebar">
 		$pages.include("$apphome/collective/channel/subscribers/index.html", $context)
 	</div>
- </div>
+ </div> -->
 </div>		
 
 </div>
