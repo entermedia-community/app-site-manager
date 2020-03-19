@@ -9,7 +9,7 @@
 #if( !$found)
 #if ($user && !$found)
 	<form name="saveproject" class="ajaxform" id="saveproject" action="$apphome/collective/channel/subscribers/jointeam.html" method="post"
-	data-targetdiv="suscriberform"
+	data-targetdiv="collectivesidebar"
 	>
 	<input type="hidden" name="oemaxlevel" value="1" />
 	<input type="hidden" name="save" value="true" />
@@ -27,7 +27,7 @@
 	#else
 		<input type="submit" class="btn btn-success" value="[[Request Access]]" />
 	#end
-	
+	<div class="ajaxprogress"><img src="$apphome/components/search/images/spinner.gif"/></div>
 	</form>
 #end
 <div class="suscribe-headline">

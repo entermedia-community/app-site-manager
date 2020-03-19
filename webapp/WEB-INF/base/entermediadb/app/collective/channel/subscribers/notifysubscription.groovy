@@ -21,6 +21,12 @@ public void init()
 	String collectionid = context.getRequestParameter("collectionid");  //collectionid
 	String requester = context.getRequestParameter("followeruser.value");
 	
+	String isanAgent = context.getRequestParameter("ontheteam.value");
+	if (isanAgent != null && isanAgent== 'true') {
+		//Do not send notification if requester is an Agent.
+		return;
+	}
+	
 	Data collection = mediaarchive.getData("librarycollection",collectionid);
 
 	//Send Email to the Collection Owner?
