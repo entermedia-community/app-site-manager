@@ -1,5 +1,5 @@
 <div class=" h-100"  style="max-height: calc(100% - 290px); width:100%;" >
-<div class="row no-gutters h-100" >
+<div class="row justify-content-md-center no-gutters h-100" >
 <div class="col">
 <div class="maincontent h-100">
 <h3>Active [[Servers]]</h3>
@@ -13,7 +13,8 @@
 	                <th>[[Server Name]]</th>
 	                <th>[[Status]]</th>
 					<th>[[Last Checked]]</th>
-	                <th>[[URL]]</th>
+	                <th>[[Public URL]]</th>
+	                <th>[[Primary CNAME]]</th>
 	                <th>[[Server]]</th>
 					<th>[[Links]]</th>
 	            </tr>
@@ -41,13 +42,22 @@
 					
 		            <td>
 						#if ($hit.instanceurl)
-							<a href="$hit.instanceurl" style="text-decoration: underline" targe="_blank">$hit.instanceurl</a>
+							<a href="$hit.instanceurl" style="text-decoration: underline" targe="_blank">Site</a>
 						#else
 							$hit.instanceprefix
 						#end
 					</td>
 					<td>
-					$mediaarchive.getData("entermedia_servers",$hit.entermedia_servers)
+					#if ($instancemonitor.primarycname)
+							<a href="$instancemonitor.primarycname" style="text-decoration: underline" targe="_blank">$instancemonitor.primarycname</a>
+						#end
+					</td> 
+					<td>
+					#if ($mediaarchive.getData("entermedia_servers",$hit.entermedia_servers))
+						$mediaarchive.getData("entermedia_servers",$hit.entermedia_servers)
+					#else
+						No Server
+					#end
 					</td>
 					<td>
 						##Auto Login to emshare2 

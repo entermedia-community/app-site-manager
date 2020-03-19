@@ -2,6 +2,8 @@ package org.entermedia.serverstats;
 
 import java.util.ArrayList;
 
+import org.entermedia.diskpartitions.DiskSpace;
+
 public class ServerStats
 {
 	private Object swapSize;
@@ -12,12 +14,37 @@ public class ServerStats
 	private Object processCPU;
 	private Object totalassets;
 	private Object clusterhealth;
+	protected boolean reachable;
+	DiskSpace fieldDiskSpace;
+	public DiskSpace getDiskSpace()
+	{
+		return fieldDiskSpace;
+	}
+
+	public void setDiskSpace(DiskSpace inDiskSpace)
+	{
+		fieldDiskSpace = inDiskSpace;
+	}
+
+	public boolean isReachable()
+	{
+		return reachable;
+	}
+
+	public void setReachable(boolean inReachable)
+	{
+		reachable = inReachable;
+	}
 
 	public ServerStats()
 	{
 
 	}
 
+	public boolean isError()
+	{
+		return !isReachable() ; //TODO: add other logic
+	}
 	public void build(ArrayList<ServerStat> inStats)
 	{
 		for (ServerStat stat : inStats)

@@ -137,7 +137,7 @@
       <language id="fr"><![CDATA[Chemin d&#39;accès d&#39;origine]]></language> 
     </name> 
   </property>  
-  <property id="monitoringstatus" index="true" internalfield="false" datatype="list" editable="true" stored="true" searchtype="monitoredsites" viewtype="tageditor" rendertype="tageditor"> 
+  <property id="monitoringstatus" index="true" internalfield="false" datatype="list" editable="true" stored="true" viewtype="tageditor" rendertype="tageditor"> 
     <name> 
       <language id="en"><![CDATA[Monitoring Status]]></language> 
     </name> 
@@ -287,19 +287,10 @@
       <language id="en"><![CDATA[Instructions]]></language> 
     </name> 
   </property>  
-  <property id="monitorstatuscolor" index="true" deleted="false" editable="true" stored="true" viewtype="tageditor"> 
-    <name> 
-      <language id="en"><![CDATA[Status Color]]></language> 
-    </name> 
-  </property>  
+
       
   <property id="lastcheckfail" index="true" type="boolean" stored="true" editable="true" searchtype="monitoredsites" internalfield="false">Last Check Status</property>
   
-   <property id="monitoredsitesdns" index="true"  editable="true" stored="true" filter="true" datatype="list" viewtype="list" listid="monitoredsitesdns">New 
-   <name>
-     <language id="en"><![CDATA[DNS Record]]></language>
-   </name>
-  </property>  
   <property id="isautofailover" index="true" editable="true" keyword="true" type="boolean">Auto Failover</property>
  
 	<property id="instanceurl" index="true" editable="false" stored="true" internalfield="false" isbadge="false" required="false" multilanguage="false" highlight="false" deleted="false" rendermask="${instanceid:entermedia_instances.instanceurl}" autocreatefromexif="false" writenametoexif="false" filter="false" keyword="false" viewtype="url" rendertype="url"> 
@@ -312,6 +303,15 @@
       <language id="en"><![CDATA[Server]]></language>
     </name>
   </property>
+
+  <property id="parentdomainzone" index="true" editable="true" keyword="true">Parent Domain / Zone</property>
+  <property id="primarycname" index="true" editable="true" keyword="true">Primary CNAME</property>
+  <property id="failovercname" index="true" editable="true" keyword="true">Failover CNAME</property>
+  <property id="monitoredsitesdnsregion" index="true" multilanguage="false" editable="true" stored="true" filter="true" datatype="list" viewtype="multiselect" listid="monitoredsitesdnsregion">New 
+    <name>
+      <language id="en"><![CDATA[Region]]></language>
+    </name>
+  </property>  
 
   
 </properties>

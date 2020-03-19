@@ -196,4 +196,10 @@ public class DnsRecord
 	{
 		
 	}
+
+	public String findRecordId(String inPrimaryCname, String inFailovercname)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

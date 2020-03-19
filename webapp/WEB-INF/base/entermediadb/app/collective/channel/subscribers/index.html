@@ -111,7 +111,7 @@
 		</div>
 	  	<div style="margin-left:38px; height:40px; position:relative;">
 	    <div style="position:relative; top:50%; transform: translateY(-50%);">
-	    	<a href="#esc($userlink)" title="$!followeruser.getAnonNickName()">$!followeruser.getAnonNickName()</a></div> 
+	    	<a href="#esc($userlink)" title="$!followeruser.getAnonNickName()">$!followeruser.getName()</a></div> 
 	   	<div>
 	        </div>
 		<i></i>
@@ -125,12 +125,12 @@
 
 #end
 	#if( $caneditcollection)
-	<a href="$applink/collective/channel/subscribers/addnew.html?collectionid=${collectionid}" class="emdialog btn btn-xs btn-light" title="[[Add New User to Project]]">
+ 	<a href="$applink/collective/channel/subscribers/addnew.html?collectionid=${collectionid}" class="emdialog btn btn-xs btn-light" title="[[Add New User to Project]]">
 	<i class="fas fa-plus"></i> [[New User]]
-	</a>
+	</a> 
 	
 	<a href="$applink/collective/channel/subscribers/usersearch.html?collectionid=${collectionid}" class="emdialog  btn btn-xs btn-light" title="[[Search Existing User]]">
-	<i class="fas fa-search"></i> [[Existing User]]
+	<i class="fas fa-search"></i> [[Add Team Member]]
 	</a>
 	#end
 

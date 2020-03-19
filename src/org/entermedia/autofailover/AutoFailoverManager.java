@@ -1,14 +1,14 @@
 package org.entermedia.autofailover;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpMessage;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
@@ -16,19 +16,18 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
 import org.entermediadb.asset.MediaArchive;
+import org.entermediadb.net.HttpSharedConnection;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.openedit.CatalogEnabled;
 import org.openedit.Data;
 import org.openedit.ModuleManager;
+import org.openedit.MultiValued;
+import org.openedit.OpenEditException;
 import org.openedit.data.Searcher;
-import org.openedit.util.HttpSharedConnection;
 
-import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class AutoFailoverManager implements CatalogEnabled
@@ -41,8 +40,8 @@ public class AutoFailoverManager implements CatalogEnabled
 	private static final int ORIGINAL_TLL = 3600;
 	private static final int FAILOVER_TLL = 60;
 	
-	private static final String API_TOKEN_PROD = "8XY3SwZVtQhd9iF4jTEIGZFS4viIJ2mr";
-	private static final String API_TOKEN_DEV = "anaIuvWCjqlJPDYaq7Z1rTv1mBjZ8HMj";
+//	private static final String API_TOKEN_PROD = "8XY3SwZVtQhd9iF4jTEIGZFS4viIJ2mr";
+//	private static final String API_TOKEN_DEV = "anaIuvWCjqlJPDYaq7Z1rTv1mBjZ8HMj";
 	
 	protected String fieldCatalogId;
 	protected MediaArchive fieldMediaArchive;
@@ -52,80 +51,24 @@ public class AutoFailoverManager implements CatalogEnabled
 	private ObjectMapper fieldMapper;
 	private Searcher dnsSearcher;
 
-	
+
+	public void updateRecord(MultiValued inReal, String inCurrentCName)
+	{
+		String parentdomainzone = inReal.get("parentdomainzone");
+		String primarycname = inReal.get("primarycname");
+		String failovercname = inReal.get("failovercname");
+		
+		updateRecord(parentdomainzone, primarycname, failovercname, inCurrentCName);
+	}
+
 	public void initGeoLatencyRules()
 	{
 		// get UN dnsrecords_DB
 		// fill failover table with priority
 	}
 	
-	public void getList(String zone)
-	{
-		try
-		{
-			HttpGet method = null;
-			
-			   String url = API_ROOT_URL_PROD + "/zones/" + zone + "/records";
-			   method = new HttpGet(url);
-			   
-			   method.setHeader("Authorization", "Bearer " + API_TOKEN_PROD);
-			   method.setHeader("Content-Type", "application/json; charset=utf-8");
-			   
-			   HttpResponse response = getHttpConnection().getSharedClient().execute(method);
-				StatusLine sl = response.getStatusLine();           
-				if (sl.getStatusCode() != 200)
-				{
-					throw new Exception( method  + " Request failed: status code " + sl.getStatusCode());
-				}
-				else
-				{
-					ObjectMapper mapper = new ObjectMapper();
-				    String responseJSON = EntityUtils.toString(response.getEntity(), "UTF-8");
 
-					JSONObject jsonResponse = (JSONObject) new JSONParser().parse(responseJSON);
-					JSONArray results = (JSONArray) jsonResponse.get("data");
-					for (Object jsonObj : results.toArray())
-					{
-
-						JSONObject record = (JSONObject) jsonObj;
-						DnsRecord dnsRecord = mapper.readValue(record.toJSONString(), DnsRecord.class);
-							
-						if (dnsRecord != null)
-						{
-							updateLocalDnsRecord(dnsRecord, null);
-						}
-					}
-				}
-		}
-		catch (Exception e) {
-			log.error("Can't update DNS Record", e);
-		}
-	}
-	
-	public boolean getRecord(String name)
-	{
-		Data dnsRecord = getMediaArchive().query("monitoredsitesdns").match("name", name).searchOne();
-
-		if (dnsRecord != null)
-		{
-			try
-			{
-				String url = API_ROOT_URL_PROD + "/zones/" + dnsRecord.getValue("recordzone") + "/records/" + dnsRecord.getValue("recordid");
-				handleRequest(HttpGet.METHOD_NAME, url, null);
-			}
-			catch (Exception e)
-			{
-				log.error("Can't get DNS Record", e);
-				return false;
-			}
-		}
-		else
-		{
-			log.error("Can't find any matching DNS Record on DB");
-			return false;
-		}
-		return true;
-	}
+	/*
 
 	public boolean updateRecord(String name, String content)
 	{
@@ -141,62 +84,68 @@ public class AutoFailoverManager implements CatalogEnabled
 	{
 		return updateRecord(name, content, null, ttl, null);
 	}
-	
-	public void forceLeaveFailover()
+	*/
+//	public void forceLeaveFailover()
+//	{
+//		Collection<Data> records = getMediaArchive().query("monitoredsitesdns").match("isfailover", "true").search();
+//
+//		if (records != null)
+//		{
+//			for (Data record : records)
+//			{
+//				updateRecord(record.get("name"), record.get("originalcontent"), (Collection<String>)record.getValue("regions"), (int)record.getValue("originalttl"), (int)record.getValue("priority"));
+//			}
+//		}
+//	}
+	public void updateRecord(String parentdomain, String inPrimaryCname, String inFailovercname,String inCurrentCname )//, Collection<String> region, Integer ttl, Integer priority)
 	{
-		Collection<Data> records = getMediaArchive().query("monitoredsitesdns").match("isfailover", "true").search();
+		Long findrecordid = findRecordId(parentdomain,inPrimaryCname,inFailovercname);
+		
+		String url = API_ROOT_URL_PROD + "/zones/" + parentdomain + "/records/" + findrecordid;
 
-		if (records != null)
+		JSONObject json = new JSONObject();
+
+		//json.put("name", "ALIAS");
+		json.put("content", inCurrentCname);
+//				if (region != null)
+//				{
+//					json.put("regions", region);
+//				}
+//				if (ttl != null)
+//				{
+//					json.put("ttl", ttl);
+//				}
+		if(inCurrentCname.equals(inPrimaryCname))
 		{
-			for (Data record : records)
-			{
-				updateRecord(record.get("name"), record.get("originalcontent"), (Collection<String>)record.getValue("regions"), (int)record.getValue("originalttl"), (int)record.getValue("priority"));
-			}
-		}
-	}
-	
-	public boolean updateRecord(String name, String content, Collection<String> region, Integer ttl, Integer priority)
-	{
-		Data dnsRecord = getMediaArchive().query("monitoredsitesdns").match("name", name).searchOne();
-
-		if (dnsRecord != null)
-		{
-			try
-			{
-				String url = API_ROOT_URL_PROD + "/zones/" + dnsRecord.getValue("recordzone") + "/records/" + dnsRecord.getValue("recordid");
-
-				JSONObject json = new JSONObject();
-
-				json.put("name", name);
-				json.put("content", content);
-				if (region != null)
-				{
-					json.put("regions", region);
-				}
-				if (ttl != null)
-				{
-					json.put("ttl", ttl);
-				}
-				if (priority != null)
-				{
-					json.put("priority", priority);
-				}
-				handleRequest(HttpPatch.METHOD_NAME, url, json);
-			}
-			catch (Exception e)
-			{
-				log.error("Can't update DNS Record", e);
-				return false;
-			}
+			json.put("ttl", 600);
 		}
 		else
 		{
-			log.error("Can't find any matching DNS Record on DB");
-			return false;
+			json.put("ttl", 120); //Failover
 		}
-		return true;
+
+		//				if (priority != null)
+//				{
+//					json.put("priority", priority);
+//				}
+		handleRequest(HttpPatch.METHOD_NAME, url, json);
 	}
 
+	public Long findRecordId(String parentdomain, String inPrimaryCname, String inFailovercname)
+	{
+		Collection<DnsRecord> records = getDnsRecords(parentdomain);
+		for (Iterator iterator = records.iterator(); iterator.hasNext();)
+		{
+			DnsRecord dnsRecord2 = (DnsRecord) iterator.next();
+			String content = dnsRecord2.getContent();
+			log.info("DNS Checking " + content  + " on record id " + dnsRecord2.getId());
+			if( content != null && (content.equals(inPrimaryCname) ||  content.equals(inFailovercname) ) )
+			{
+				return dnsRecord2.getId();
+			}
+		}
+		throw new OpenEditException("No such DNS entry found " + parentdomain + " with: " + inPrimaryCname + "|" + inFailovercname);
+	}
 	public boolean createRecord(String name, String type, String zone, String content, Collection<String> region, Integer ttl, Integer priority)
 	{
 		try
@@ -229,18 +178,18 @@ public class AutoFailoverManager implements CatalogEnabled
 		return true;
 	}
 
-	private void handleRequest(String method, String url, JSONObject json) throws IOException, ClientProtocolException, Exception, ParseException, JsonParseException, JsonMappingException
+	protected void handleRequest(String method, String url, JSONObject json)
 	{
 		HttpMessage httpMethod = null;
 		switch (method)
 		{
 		case HttpPatch.METHOD_NAME:
 			httpMethod = new HttpPatch(url);
-			((HttpResponse) httpMethod).setEntity(new StringEntity(json.toString(), "UTF-8"));
+			((HttpPatch)httpMethod).setEntity(new StringEntity(json.toString(), "UTF-8"));
 			break;
 		case HttpPost.METHOD_NAME:
 			httpMethod = new HttpPost(url);
-			((HttpResponse) httpMethod).setEntity(new StringEntity(json.toString(), "UTF-8"));
+			((HttpPost) httpMethod).setEntity(new StringEntity(json.toString(), "UTF-8"));
 			break;
 		case HttpGet.METHOD_NAME:
 			httpMethod = new HttpGet(url);
@@ -249,28 +198,39 @@ public class AutoFailoverManager implements CatalogEnabled
 			break;
 		}
 		
-		httpMethod.setHeader("Authorization", "Bearer " + API_TOKEN_PROD);
+		String apitoken = getMediaArchive().getCatalogSettingValue("site_monitor_prod_token");
+		
+		httpMethod.setHeader("Authorization", "Bearer " + apitoken);
 		httpMethod.setHeader("Content-Type", "application/json; charset=utf-8");
 
-		HttpResponse response = getHttpConnection().getSharedClient().execute((HttpUriRequest) httpMethod);
-		StatusLine sl = response.getStatusLine();
-
-		if (sl.getStatusCode() != 201)
+		try
 		{
-			throw new Exception(method + " Request failed: status code " + sl.getStatusCode());
+			log.info("Setting DNS value: " + url + " with: " + json.toJSONString() );
+			HttpResponse response = getHttpConnection().getSharedClient().execute((HttpUriRequest) httpMethod);
+			StatusLine sl = response.getStatusLine();
+	
+			if (sl.getStatusCode() != 200)
+			{
+				throw new Exception(method + " Request failed: status code " + sl.getStatusCode());
+			}
+			else
+			{
+				String responseJSON = EntityUtils.toString(response.getEntity(), "UTF-8");
+	
+				JSONObject jsonResponse = (JSONObject) new JSONParser().parse(responseJSON);
+				JSONObject result = (JSONObject) jsonResponse.get("data");
+				DnsRecord dnsRecord = getMapper().readValue(result.toJSONString(), DnsRecord.class);
+	
+				//updateLocalDnsRecord(dnsRecord, null);
+			}
 		}
-		else
+		catch( Throwable ex)
 		{
-			String responseJSON = EntityUtils.toString(response.getEntity(), "UTF-8");
-
-			JSONObject jsonResponse = (JSONObject) new JSONParser().parse(responseJSON);
-			JSONObject result = (JSONObject) jsonResponse.get("data");
-			DnsRecord dnsRecord = getMapper().readValue(result.toJSONString(), DnsRecord.class);
-
-			updateLocalDnsRecord(dnsRecord, null);
+			throw new OpenEditException(ex);
 		}
 	}
 
+	/*
 	private void updateLocalDnsRecord(DnsRecord inRemoteDnsRecord, Data inLocalDnsRecord)
 	{
 		if (inLocalDnsRecord == null)
@@ -295,7 +255,7 @@ public class AutoFailoverManager implements CatalogEnabled
 		inLocalDnsRecord.setValue("recordzone", inRemoteDnsRecord.getZoneId());
 		getDnsSearcher().saveData(inLocalDnsRecord);
 	}
-
+	*/
 	public HttpSharedConnection getHttpConnection()
 	{
 		if (httpconnection == null)
@@ -372,6 +332,88 @@ public class AutoFailoverManager implements CatalogEnabled
 	public void setDnsSearcher(Searcher inDnsSearcher)
 	{
 		dnsSearcher = inDnsSearcher;
+	}
+
+	public Collection<DnsRecord> getDnsRecords(String inDomainZone) 
+	{
+		try
+		{
+			Collection<DnsRecord> dnsrecords = new ArrayList();
+			
+			   String url = API_ROOT_URL_PROD + "/zones/" + inDomainZone + "/records?per_page=100&page=";
+
+			   int maxpages = 1;
+			   
+			   for (int i = 0; i < maxpages; i++)
+			   {
+				   log.info("Loading DNS records: " + url+ (i + 1));
+				   HttpGet method = new HttpGet(url + (i + 1));
+				   String apitoken = getMediaArchive().getCatalogSettingValue("site_monitor_prod_token");
+				   method.setHeader("Authorization", "Bearer " + apitoken);
+				   method.setHeader("Content-Type", "application/json; charset=utf-8");
+	
+				   HttpResponse response = getHttpConnection().getSharedClient().execute(method);
+					StatusLine sl = response.getStatusLine();           
+					if (sl.getStatusCode() != 200)
+					{
+						throw new Exception( method  + " Request failed: status code " + sl.getStatusCode());
+					}
+					else
+					{
+						ObjectMapper mapper = new ObjectMapper();
+					    String responseJSON = EntityUtils.toString(response.getEntity(), "UTF-8");
+					    //log.error("Got DNS data back " + responseJSON);
+						JSONObject jsonResponse = (JSONObject) new JSONParser().parse(responseJSON);
+						JSONArray results = (JSONArray) jsonResponse.get("data");
+						for (Object jsonObj : results.toArray())
+						{
+	
+							JSONObject record = (JSONObject) jsonObj;
+							DnsRecord dnsRecord = mapper.readValue(record.toJSONString(), DnsRecord.class);
+							dnsrecords.add(dnsRecord);							
+						}
+						JSONObject pagination = (JSONObject) jsonResponse.get("pagination");
+						if( pagination != null)
+						{
+							Object count = pagination.get("total_pages");
+							if( count != null)
+							{
+								maxpages = Integer.parseInt( count.toString() );
+							}
+						}
+					}
+			   }
+			return dnsrecords;
+		}
+		catch (Exception e) 
+		{
+			throw new OpenEditException("Can't update DNS Record", e);
+		}
+	}
+	
+	public boolean getRecord(String name)
+	{
+		Data dnsRecord = getMediaArchive().query("monitoredsitesdns").match("name", name).searchOne();
+
+		if (dnsRecord != null)
+		{
+			try
+			{
+				String url = API_ROOT_URL_PROD + "/zones/" + dnsRecord.getValue("recordzone") + "/records/" + dnsRecord.getValue("recordid");
+				handleRequest(HttpGet.METHOD_NAME, url, null);
+			}
+			catch (Exception e)
+			{
+				log.error("Can't get DNS Record", e);
+				return false;
+			}
+		}
+		else
+		{
+			log.error("Can't find any matching DNS Record on DB");
+			return false;
+		}
+		return true;
 	}
 
 }
