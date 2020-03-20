@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  	<!-- Need it for saving -->
+  	<property name="fallbackdirectory">/WEB-INF/base/emfrontend2</property>  
+  	<property name="applicationid">${siteid}/product</property>
+  
+  	<property name="virtual">true</property>
+  	<inner-layout>/${siteid}/plugins/layout.html</inner-layout>
+  	<path-action name="PostModule.loadPost"/>
+</page>

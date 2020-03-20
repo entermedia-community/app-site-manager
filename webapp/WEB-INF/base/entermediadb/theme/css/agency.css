@@ -139,19 +139,21 @@ img::-moz-selection {
 
 #mainNav .navbar-nav .nav-item .nav-link.active, 
 #mainNav .navbar-nav .nav-item .nav-link:hover,
-#mainNav .subnav-link:hover  {
+#mainNav .subnav-link:hover,
+#mainNav .dropdown-item:hover .subnav-link  {
   color: #01b34f;
  text-decoration: none;
 }
 
 #mainNav .dropdown-menu {
-	background-color: #151F10;
+	background-color: #484848;
 }
 #mainNav .dropdown-item:focus, 
 #mainNav .dropdown-item:hover {
-	background-color: #151F10;
+	background-color: #282828;
 }
 #mainNav .subnav-link {
+	font-size: .86rem;
 	color:white;
 	text-decoration: none;
 }
@@ -174,7 +176,7 @@ img::-moz-selection {
     transition: all 0.3s;
   }
   #mainNav .navbar-nav .nav-item .nav-link {
-    padding: 1.1em 1em !important;
+    padding: 0.8em 1em 0.8em!important;
   }
   #mainNav.navbar-shrink {
     padding-top: 0;
