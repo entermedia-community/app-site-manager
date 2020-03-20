@@ -137,10 +137,25 @@ img::-moz-selection {
   color: white;
 }
 
-#mainNav .navbar-nav .nav-item .nav-link.active, #mainNav .navbar-nav .nav-item .nav-link:hover {
+#mainNav .navbar-nav .nav-item .nav-link.active, 
+#mainNav .navbar-nav .nav-item .nav-link:hover,
+#mainNav .subnav-link:hover  {
   color: #01b34f;
  text-decoration: none;
 }
+
+#mainNav .dropdown-menu {
+	background-color: #151F10;
+}
+#mainNav .dropdown-item:focus, 
+#mainNav .dropdown-item:hover {
+	background-color: #151F10;
+}
+#mainNav .subnav-link {
+	color:white;
+	text-decoration: none;
+}
+
 
 @media (min-width: 992px) {
   #mainNav {
