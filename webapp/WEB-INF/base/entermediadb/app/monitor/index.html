@@ -4,7 +4,7 @@
 <div class="maincontent h-100">
 <h3>Active [[Servers]]</h3>
 	##Search instances in these organizations
-	#set( $instances = $mediaarchive.query("entermedia_instances_monitor").all().sort("monitoringurl").search() )
+	#set( $instances = $mediaarchive.query("entermedia_instances_monitor").exact("monitoringenable","true").sort("name").search() )
 	#if ($instances)
 		<div class="emdata">
 	    <table class="table table-striped">
@@ -34,6 +34,8 @@
 						<a class="btn btn-danger btn-sm active">
 							$error Error<br></a>
 						#end
+					#else
+						<a class="btn btn-primary btn-sm active">ok</a>
 					#end
 					</td>
 		            <td style="text-align: left;">

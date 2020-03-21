@@ -609,16 +609,19 @@ public class SiteManager implements CatalogEnabled
 		
 		//Get Instance Data
 		Searcher instances = inArchive.getSearcher("entermedia_instances");
+		Data instance = null;
+		
 		String instanceid = real.get("instanceid");
-		if( instanceid == null)
+		if( instanceid != null)
 		{
-			log.error("Instance ID not valid " + real.getId());
-			return;
+			instance = instances.query().exact("id", instanceid ).searchOne();
 		}
-		Data instance = instances.query().exact("id", instanceid ).searchOne();
 		if (instance == null) 
 		{
 			log.error("Instance ID not valid " + real.getId());
+			real.setValue("monitoringstatus", "error");
+			real.setValue("alerttype", "invalidinstance");
+			sites.saveData(real, null);
 			return;
 		}
 		
