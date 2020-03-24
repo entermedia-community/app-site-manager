@@ -49,8 +49,9 @@
 				</script>
 			#end
 			<div class="text-center">
-			<h4>$selecteduser.getAnonNickName()</h4>
-			<i class="far fa-envelope"></i> $selecteduser.email
+			<h4>$!selecteduser.getName()</h4>
+			<i class="far fa-envelope"></i> $selecteduser.email<br>
+			<i class="far fa-user"></i> $selecteduser.getAnonNickName()
 			
 			<div style="margin-top:10px;">
 				#if($canviewsettings || $canedituserinfo) 
