@@ -13,20 +13,15 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav text-uppercase ml-auto">
-            <li class="nav-item">
-              <a class="nav-link  #if($currentpage.contains("community/")) active #end" href="$sitelink/community/index.html?preview=true">[[Community]]</a>
-            </li>
+            
             <li class="nav-item dropdown">
-              <a class="nav-link  dropdown-toggle  #if($currentpage.contains("services/support.html")) active #end" href="#" data-toggle="dropdown">[[Services]]</a>
+              <a class="nav-link  dropdown-toggle  #if($currentpage.contains("services/support.html")) active #end" href="#" data-toggle="dropdown">[[Products]]</a>
               <ul class="dropdown-menu">
     	        	<li class="dropdown-item">
                     	<a class="subnav-link  #if($currentpage.contains("services/")) active #end" href="$sitelink/services/support.html?preview=true">[[Support Plans]]</a>
 	            	</li>
 	            	<li class="dropdown-item">
                     	<a class="subnav-link  #if($currentpage.contains("cloud-hosted-dam/")) active #end" href="$sitelink/cloud-hosted-dam/?preview=true">[[Cloud Hosting]]</a>
-	            	</li>
-	            	<li class="dropdown-item">
-                    	<a class="subnav-link  #if($currentpage.contains("plugins/")) active #end" href="$sitelink/plugins/index.html?preview=true">[[Plugins]]</a>
 	            	</li>
 	            	<li class="dropdown-item">
                     	<a class="subnav-link  #if($currentpage.contains("services/")) active #end" href="$sitelink/services/for-developers.html?preview=true">[[For Developers]]</a>
@@ -49,11 +44,13 @@
               </ul>
             </li>
 
-            
+            <li class="nav-item">
+              <a class="nav-link  #if($currentpage.contains("community/")) active #end" href="$sitelink/community/index.html?preview=true">[[Community]]</a>
+            </li>
 	  	  	
 	
        	  #if( $user )
-		  	<li class="nav-item dropdown" >
+		  	<li class="nav-item nav-last-item dropdown" >
 		  		<a class="nav-link dropdown-toggle #if($content.section == "eminstituteapp") active #end" href="#"  data-toggle="dropdown">[[Account]]</a>
 				<ul class="dropdown-menu">
 					<li class="dropdown-item">
