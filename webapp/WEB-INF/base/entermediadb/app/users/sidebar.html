@@ -62,7 +62,7 @@
     <div class="sidebar-box-header">
         [[My Projects]]        
     </div>
-    <div class="sidebar-box-content" style="padding:0;">
+    <div class="sidebar-box-content" style="padding:0;" id="sidebarboxprojects">
     	#if($canviewsettings)
     		<div style="padding:5px 15px;">
 			<select  id="collectivesearch2" 
@@ -70,6 +70,7 @@
 						class="form-control autosubmitlink" 
 						data-placeholder="[[Search Projects]]"
 						data-url="$sitelink/app/collective/community/index.html?goaltrackerstaff=*&collectionid="
+						data-dropdownparent="sidebarboxprojects"
 					>
 					<option></option>
 					#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").sort("name").search() )
