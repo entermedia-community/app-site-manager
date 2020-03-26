@@ -52,11 +52,12 @@
 		#if($canviewsettings)
 		<li class="#if($content.appsection == "monitor") current #end"><a href="$sitelink/app/monitor/index.html"><i class="fas fa-network-wired"></i> [[Monitor]]</a></li>
 		#end
+		#if($canviewsettings)
+		<li class="#if($content.appsection == "mytasks") current #end"><a href="$sitelink/app/mytasks/index.html?goaltrackerstaff=$user.getId()"><i class="fas fa-hammer"></i> [[My Tasks]]</a></li>
+		#end
 		</ul>
     </div>
 </div>
-
-
 
 <div class="sidebar-box">
     <div class="sidebar-box-header">
