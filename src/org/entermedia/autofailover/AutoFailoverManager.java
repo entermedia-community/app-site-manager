@@ -58,6 +58,9 @@ public class AutoFailoverManager implements CatalogEnabled
 		String primarycname = inReal.get("primarycname");
 		String failovercname = inReal.get("failovercname");
 		
+		log.info(parentdomainzone + " is switching from " + primarycname + " cname to " + failovercname + " cname.");
+		
+		
 		updateRecord(parentdomainzone, primarycname, failovercname, inCurrentCName);
 	}
 
