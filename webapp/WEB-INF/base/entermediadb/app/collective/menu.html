@@ -37,6 +37,13 @@
 	##	[[Archive]] </a>
 	##</li>
 	#end
+	
+	#if($canviewsettings)
+	<li class="nav-item">
+	<a class="nav-link emdialog" data-allwaysloadpage="true" href="$applink/collective/edit/editcollective.html?collectionid=$librarycol.getId()" title="[[Project Settings]]">
+	[[Settings]]</a>
+	</li>
+	#end
 </ul>
 </div>
 
