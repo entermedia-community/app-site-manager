@@ -103,17 +103,19 @@
 	##PENDING
 	#set( $subscribers = $mediaarchive.query("librarycollectionusers").exact("collectionid",$collectionid).exact("ontheteam",false).search($context) )
 	#if($subscribers)
-	<a class="emdialog" data-cancelsubmit="true" title="View Pending Invites" href="$apphome/collective/channel/subscribers/subscriberslist.html?collectionid=$librarycol.getId()">$subscribers.size() [[Requests]]</a>
+	<a class="emdialog" data-cancelsubmit="true" title="View Pending Invites" href="$apphome/collective/channel/subscribers/subscriberslist.html?collectionid=$librarycol.getId()"
+	style="margin-bottom:5px;">
+	<strong><i class="fas fa-user"></i> $subscribers.size() [[Join Requests]]</strong></a>
 	#end	
 	
 	##ACTIONS
 	#if( $caneditcollection)
 	<div class="text-right">
- 	<a href="$applink/collective/channel/subscribers/addnew.html?collectionid=${collectionid}" class="emdialog btn btn-xs btn-light" title="[[Add New User to Project]]">
+ 	<a href="$applink/collective/channel/subscribers/addnew.html?collectionid=${collectionid}" class="emdialog btn btn-xs btn-light" title="[[Add New User to Project]]" style="margin-bottom:5px;">
 	<i class="fas fa-plus"></i> [[New User]]
 	</a> 
 	
-	<a href="$applink/collective/channel/subscribers/usersearch.html?collectionid=${collectionid}" class="emdialog  btn btn-xs btn-light" title="[[Search Existing User]]">
+	<a href="$applink/collective/channel/subscribers/usersearch.html?collectionid=${collectionid}" class="emdialog  btn btn-xs btn-light" title="[[Search Existing User]]"  style="margin-bottom:5px;">
 	<i class="fas fa-search"></i> [[Add Team Member]]
 	</a>
 	</div>
