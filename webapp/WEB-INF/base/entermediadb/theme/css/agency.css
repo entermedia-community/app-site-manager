@@ -1737,48 +1737,6 @@ padding:20px 60px;
 	padding:0;
 	min-height: 44px;
 }
-.collectivebanner {
-	position:relative;
-	margin-bottom:20px;
-}
-.collectivebanner .project-title {
-	font-size:2.2rem;
-	padding:1.2rem 0;
-	text-decoration: none;
-	display:block;
-}
-.collectivebanner .project-title:hover {
-	text-decoration: none;
-
-	}
-.collectivebanner .nav-item {
-	padding: 0 .5rem;
-} 
-.collectivebanner .nav-link {
-	color:#eee;
-	padding:.5rem .2rem .15rem;
-	
-	}
-.collectivebanner .nav-link:hover {
-	color:#fff;
-}
-.navbar-collective .nav-link:hover, .navbar-collective li.active a {
-	border-bottom:1px solid #FFDE59;
-}
-.collectivebanner .project-thumb {
-	position:absolute;
-	bottom:-45px;
-	left:55px;
-	z-index:100;
-	width:135px; 
-	height:135px; 
-	margin:0 auto;
-	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
-    border-radius: 50%;
-	background-position:center center;
-	background-repeat:no-repeat;
-	background-color:#fff;
-}
 
 .goal-tabs {
 	margin-top:30px;
