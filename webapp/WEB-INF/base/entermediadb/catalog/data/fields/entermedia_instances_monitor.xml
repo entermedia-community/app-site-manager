@@ -303,8 +303,8 @@
   <property id="publicdomainname" index="true" editable="true" keyword="true" note="clientname.entermediadb.net">Public Domain 
   	</property>
   <property id="monitoringurl" index="true" editable="true" keyword="true" note="http://client-a44.entermediadb.net">Monitoring URL</property>
-  <property id="primarycname" index="true" editable="true" keyword="true" type="list" listid="entermedia_ip_lookup">Primary IP</property>
-  <property id="failovercname" index="true" editable="true" keyword="true" type="list" listid="entermedia_ip_lookup">Failover IP</property>
+  <property id="primarycname" index="true" editable="true" keyword="true" type="list" listid="entermedia_servers">Primary IP</property>
+  <property id="failovercname" index="true" editable="true" keyword="true" type="list" listid="entermedia_servers">Failover IP</property>
   <property id="monitoredsitesdnsregion" index="true" multilanguage="false" editable="true" stored="true" filter="true" datatype="list" viewtype="multiselect" listid="monitoredsitesdnsregion">New 
     <name>
       <language id="en"><![CDATA[Region]]></language>
