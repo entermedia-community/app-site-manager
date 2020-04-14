@@ -635,29 +635,37 @@ public class SiteManager implements CatalogEnabled
 		}
 
 		ServerStats stats = scanStats(real, instance);
-		if (stats.isError()) 
+		try
 		{
-			real.setValue("isreachable", false);
-			real.setValue("lastcheckfail", true);
-			if( "ok".equals( real.get("monitoringstatus") ) )
+			if (stats.isError()) 
 			{
-				real.setValue("monitoringstatus", "error");
-				setErrorType(stats,real);
-				sites.saveData(real, null);
-				enterFailover(real, instance, inArchive);	
-			}	
-		}
-		else
-		{
-			if( "error".equals( real.get("monitoringstatus") ) )
-			{
-				real.setValue("monitoringstatus", "ok");
-				real.setValue("lastcheckfail", false);
-				real.setValue("isreachable", true);
-				real.setValue("alerttype",null);
-				sites.saveData(real, null);
-				leaveFailover(real, instance, inArchive);
+				real.setValue("isreachable", false);
+				real.setValue("lastcheckfail", true);
+				if( "ok".equals( real.get("monitoringstatus") ) )
+				{
+					real.setValue("monitoringstatus", "error");
+					setErrorType(stats,real);
+					sites.saveData(real, null);
+					enterFailover(real, instance, inArchive);	
+				}	
 			}
+			else
+			{
+				if( "error".equals( real.get("monitoringstatus") ) )
+				{
+					real.setValue("monitoringstatus", "ok");
+					real.setValue("lastcheckfail", false);
+					real.setValue("isreachable", true);
+					real.setValue("alerttype",null);
+					sites.saveData(real, null);
+					leaveFailover(real, instance, inArchive);
+				}
+			}
+		}
+		catch ( Exception ex)
+		{
+			real.addValue("alerttype", ex.getMessage()); //Should not happen
+			sites.saveData(real, null);
 		}
 
 		real.setProperty("lastchecked", dates);

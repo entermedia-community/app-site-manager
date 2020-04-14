@@ -299,8 +299,8 @@
     </name>
   </property>
 
-  <property id="parentdomainzone" index="true" editable="true" keyword="true" note="entermediadb.net">Parent Domain / Zone</property>
-  <property id="publicdomainname" index="true" editable="true" keyword="true" note="clientname.entermediadb.net">The Public Domain 
+  <property id="parentdomainzone" index="true" editable="true" keyword="true" note="entermediadb.net">Parent Domain/Zone</property>
+  <property id="publicdomainname" index="true" editable="true" keyword="true" note="clientname.entermediadb.net">Public Domain 
   	</property>
   <property id="monitoringurl" index="true" editable="true" keyword="true" note="http://client-a44.entermediadb.net">Monitoring URL</property>
   <property id="primarycname" index="true" editable="true" keyword="true" type="list" listid="entermedia_ip_lookup">Primary IP</property>

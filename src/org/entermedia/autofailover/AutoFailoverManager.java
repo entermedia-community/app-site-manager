@@ -121,24 +121,40 @@ public class AutoFailoverManager implements CatalogEnabled
 //				{
 //					json.put("priority", priority);
 //				}
-		handleRequest(HttpPatch.METHOD_NAME, url, json);
+		//handleRequest(HttpPatch.METHOD_NAME, url, json);
 	}
 
-	public Long findRecordId(String parentdomain, String inPublicDomain, String inPrimaryIp, String inSecondaryIp)
+	public Long findRecordId(String parentdomain, String inPublicDomain, String inPrimaryIp, String inSecondaryIp )
 	{
 		Collection<DnsRecord> records = getDnsRecords(parentdomain);
+		String name = null;
+		if(parentdomain.equals(inPublicDomain))
+		{
+			name = "";
+		}
+		else
+		{
+			name = inPublicDomain.substring(0,inPublicDomain.length() - parentdomain.length() -1 ); //remove dot
+		}
 		for (Iterator iterator = records.iterator(); iterator.hasNext();)
 		{
 			DnsRecord dnsRecord2 = (DnsRecord) iterator.next();
 			if( "A".equals(dnsRecord2.getType()))
 			{
-				if( inPublicDomain.equals(dnsRecord2.getName() ) )
+				if( name.equals(dnsRecord2.getName() ) )
 				{
 					String content = dnsRecord2.getContent();
-					log.info("DNS Checking " + content  + " on record id " + dnsRecord2.getId());
-					if( content != null && (content.equals(inPrimaryIp) ||  content.equals(inSecondaryIp) ) )
+					if( content != null )
 					{
-						return dnsRecord2.getId();
+						//log.info("DNS Checking " + content  + " on record id " + dnsRecord2.getId());
+						if( 600 == dnsRecord2.getTtl() && content.equals(inPrimaryIp))
+						{
+							return dnsRecord2.getId();
+						}
+						else if( 120 == dnsRecord2.getTtl() &&  content.equals(inSecondaryIp) ) 
+						{
+							return dnsRecord2.getId();							
+						}
 					}
 				}
 			}
