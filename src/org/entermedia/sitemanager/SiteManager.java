@@ -187,7 +187,7 @@ public class SiteManager implements CatalogEnabled
 		//Create variables
 		String collectionid = instanceData.get("librarycollection");
 		String name = instanceData.get("name");
-		String url = instanceData.get("instanceurl");
+		String url = instanceData.get("monitoringurl");
 		String inst_status = instanceData.get("instance_status");
 		String mon_status = instanceData.get("monitoringstatus");
 //
@@ -224,6 +224,7 @@ public class SiteManager implements CatalogEnabled
 		Map extra = new HashMap();
 //		extra.put("collectionid", collectionid);
 		extra.put("instanceurl", url);
+		extra.put("monitoringurl", url);
 		extra.put("instancename", name);
 		extra.put("instancestatus", inst_status);
 		extra.put("monitoringstatus", mon_status);
@@ -307,17 +308,17 @@ public class SiteManager implements CatalogEnabled
 
 	private String buildURL(Data inMonitor, String inCatalog,  String fileURL)
 	{
-		String instanceUrl = inMonitor.get("monitoringurl"); 
-		if ( instanceUrl== null)
+		String monitoringurl = inMonitor.get("monitoringurl"); 
+		if ( monitoringurl== null)
 		{
 			throw new OpenEditException("Instance's URL or catalog missing");
 		}
-		String dns = instanceUrl;
+		String dns = monitoringurl;
 		if (dns.endsWith("/"))
 		{ 
 			inMonitor.setProperty("monitoringurl", dns.substring(0, (dns.length() - 1)));
 		}
-		return instanceUrl + "/" + inCatalog + fileURL;
+		return monitoringurl + "/" + inCatalog + fileURL;
 	}
 
 //	private DiskSpace scanDisks(Data inInstance, Data inReal, int inPercent)

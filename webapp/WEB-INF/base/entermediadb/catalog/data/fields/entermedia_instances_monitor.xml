@@ -293,11 +293,6 @@
   
   <property id="isautofailover" index="true" editable="true" keyword="true" type="boolean">Auto Failover</property>
  
-	<property id="instanceurl" index="true" editable="false" stored="true" internalfield="false" isbadge="false" required="false" multilanguage="false" highlight="false" deleted="false" rendermask="${instanceid:entermedia_instances.instanceurl}" autocreatefromexif="false" writenametoexif="false" filter="false" keyword="false" viewtype="url" rendertype="url"> 
-    <name>
-      <language id="en"><![CDATA[Instance URL]]></language>
-    </name>
-  </property> 
   <property id="serverid" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" listid="monitoredsites_servers" filter="false" highlight="false" deleted="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New
     <name>
       <language id="en"><![CDATA[Server]]></language>
@@ -309,7 +304,7 @@
   	</property>
   <property id="monitoringurl" index="true" editable="true" keyword="true" note="http://client-a44.entermediadb.net">Monitoring URL</property>
   <property id="primarycname" index="true" editable="true" keyword="true" type="list" listid="entermedia_ip_lookup">Primary IP</property>
-  <property id="failovercname" index="true" editable="true" keyword="true" listid="entermedia_ip_lookup">Failover IP</property>
+  <property id="failovercname" index="true" editable="true" keyword="true" type="list" listid="entermedia_ip_lookup">Failover IP</property>
   <property id="monitoredsitesdnsregion" index="true" multilanguage="false" editable="true" stored="true" filter="true" datatype="list" viewtype="multiselect" listid="monitoredsitesdnsregion">New 
     <name>
       <language id="en"><![CDATA[Region]]></language>
