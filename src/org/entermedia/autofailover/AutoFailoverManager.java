@@ -121,7 +121,7 @@ public class AutoFailoverManager implements CatalogEnabled
 //				{
 //					json.put("priority", priority);
 //				}
-		//handleRequest(HttpPatch.METHOD_NAME, url, json);
+		handleRequest(HttpPatch.METHOD_NAME, url, json);
 	}
 
 	public Long findRecordId(String parentdomain, String inPublicDomain, String inPrimaryIp, String inSecondaryIp )
