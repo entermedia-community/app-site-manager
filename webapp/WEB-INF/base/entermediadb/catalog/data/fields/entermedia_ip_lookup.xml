@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<properties prefix="entermedia_ip_lookup" beanname="listSearcher"> 
+   <property id="name" index="true" editable="true" stored="true" sortable="true" filter="false" keyword="false">New 
+    <name>  
+      <language id="en"><![CDATA[Name]]></language>  
+    </name> 
+  </property>  
+  <property id="ip" index="true" editable="true" stored="true" sortable="true" filter="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[IP Address]]></language> 
+    </name> 
+  </property>  
+</properties>
