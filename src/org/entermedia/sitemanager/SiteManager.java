@@ -675,8 +675,12 @@ public class SiteManager implements CatalogEnabled
 		if (inReal.getBoolean("isautofailover") )
 		{
 			AutoFailoverManager dnsManager = getAutoFailoverManager();
-			String failovercname = inReal.get("failovercname");
-			dnsManager.updateRecord(inReal, failovercname);
+			Data failoverip = getMediaArchive().getData("entermedia_ip_lookup",inReal.get("failovercname"));
+			Data primaryip = getMediaArchive().getData("entermedia_ip_lookup",inReal.get("primarycname"));
+			String parentdomainzone = inReal.get("parentdomainzone");
+			log.info(parentdomainzone + " is switching to " + failoverip);
+			String publicdomainname = inReal.get("publicdomainname");
+			dnsManager.updateRecord(true,parentdomainzone,publicdomainname, primaryip.get("ip"), failoverip.get("ip"));
 		}	
 	}
 
@@ -691,8 +695,12 @@ public class SiteManager implements CatalogEnabled
 		if (inReal.getBoolean("isautofailover") )
 		{
 			AutoFailoverManager dnsManager = getAutoFailoverManager();
-			String primary = inReal.get("primarycname");
-			dnsManager.updateRecord(inReal, primary);
+			Data failoverip = getMediaArchive().getData("entermedia_ip_lookup",inReal.get("failovercname"));
+			Data primaryip = getMediaArchive().getData("entermedia_ip_lookup",inReal.get("primarycname"));
+			String parentdomainzone = inReal.get("parentdomainzone");
+			log.info(parentdomainzone + " is switching to " + primaryip);
+			String publicdomainname = inReal.get("publicdomainname");
+			dnsManager.updateRecord(false,parentdomainzone,publicdomainname, primaryip.get("ip"), failoverip.get("ip"));
 		}	
 	}
 

@@ -71,9 +71,6 @@ public class StripePaymentProcessor
 		chargeParams.put("metadata", initialMetadata);
 		try
 		{
-			
-			
-			
 			String customerid = inUser.get("stripeid");
 			if(customerid == null){
 				Map<String, Object> customerParams = new HashMap<String, Object>();

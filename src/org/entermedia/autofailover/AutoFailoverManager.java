@@ -52,17 +52,6 @@ public class AutoFailoverManager implements CatalogEnabled
 	private Searcher dnsSearcher;
 
 
-	public void updateRecord(MultiValued inReal, String inCurrentCName)
-	{
-		String parentdomainzone = inReal.get("parentdomainzone");
-		String primarycname = inReal.get("primarycname");
-		String failovercname = inReal.get("failovercname");
-		
-		log.info(parentdomainzone + " is switching from " + primarycname + " cname to " + failovercname + " cname.");
-		
-		
-		updateRecord(parentdomainzone, primarycname, failovercname, inCurrentCName);
-	}
 
 	public void initGeoLatencyRules()
 	{
@@ -100,16 +89,15 @@ public class AutoFailoverManager implements CatalogEnabled
 //			}
 //		}
 //	}
-	public void updateRecord(String parentdomain, String inPrimaryCname, String inFailovercname,String inCurrentCname )//, Collection<String> region, Integer ttl, Integer priority)
+	public void updateRecord(boolean gointofailover,String parentdomain, String inPublicDomainName, String primaryip, String insecondaryip )//, Collection<String> region, Integer ttl, Integer priority)
 	{
-		Long findrecordid = findRecordId(parentdomain,inPrimaryCname,inFailovercname);
+		Long findrecordid = findRecordId(parentdomain,inPublicDomainName, primaryip, insecondaryip);
 		
 		String url = API_ROOT_URL_PROD + "/zones/" + parentdomain + "/records/" + findrecordid;
 
 		JSONObject json = new JSONObject();
 
 		//json.put("name", "ALIAS");
-		json.put("content", inCurrentCname);
 //				if (region != null)
 //				{
 //					json.put("regions", region);
@@ -118,13 +106,15 @@ public class AutoFailoverManager implements CatalogEnabled
 //				{
 //					json.put("ttl", ttl);
 //				}
-		if(inCurrentCname.equals(inPrimaryCname))
+		if(gointofailover)
 		{
-			json.put("ttl", 600);
+			json.put("content", insecondaryip);
+			json.put("ttl", 120); //Failover
 		}
 		else
 		{
-			json.put("ttl", 120); //Failover
+			json.put("content", primaryip);
+			json.put("ttl", 600);
 		}
 
 		//				if (priority != null)
@@ -134,20 +124,26 @@ public class AutoFailoverManager implements CatalogEnabled
 		handleRequest(HttpPatch.METHOD_NAME, url, json);
 	}
 
-	public Long findRecordId(String parentdomain, String inPrimaryCname, String inFailovercname)
+	public Long findRecordId(String parentdomain, String inPublicDomain, String inPrimaryIp, String inSecondaryIp)
 	{
 		Collection<DnsRecord> records = getDnsRecords(parentdomain);
 		for (Iterator iterator = records.iterator(); iterator.hasNext();)
 		{
 			DnsRecord dnsRecord2 = (DnsRecord) iterator.next();
-			String content = dnsRecord2.getContent();
-			log.info("DNS Checking " + content  + " on record id " + dnsRecord2.getId());
-			if( content != null && (content.equals(inPrimaryCname) ||  content.equals(inFailovercname) ) )
+			if( "A".equals(dnsRecord2.getType()))
 			{
-				return dnsRecord2.getId();
+				if( inPublicDomain.equals(dnsRecord2.getName() ) )
+				{
+					String content = dnsRecord2.getContent();
+					log.info("DNS Checking " + content  + " on record id " + dnsRecord2.getId());
+					if( content != null && (content.equals(inPrimaryIp) ||  content.equals(inSecondaryIp) ) )
+					{
+						return dnsRecord2.getId();
+					}
+				}
 			}
 		}
-		throw new OpenEditException("No such DNS entry found " + parentdomain + " with: " + inPrimaryCname + "|" + inFailovercname);
+		throw new OpenEditException("No such DNS entry found " + parentdomain + " with: " + inPublicDomain);
 	}
 	public boolean createRecord(String name, String type, String zone, String content, Collection<String> region, Integer ttl, Integer priority)
 	{

@@ -304,10 +304,12 @@
     </name>
   </property>
 
-  <property id="parentdomainzone" index="true" editable="true" keyword="true">Parent Domain / Zone</property>
-  <property id="primarycname" index="true" editable="true" keyword="true">Primary CNAME</property>
-  <property id="failovercname" index="true" editable="true" keyword="true">Failover CNAME</property>
-  <property id="monitoringurl" index="true" editable="true" keyword="true">Monitoring URL</property>
+  <property id="parentdomainzone" index="true" editable="true" keyword="true" note="entermediadb.net">Parent Domain / Zone</property>
+  <property id="publicdomainname" index="true" editable="true" keyword="true" note="clientname.entermediadb.net">The Public Domain 
+  	</property>
+  <property id="monitoringurl" index="true" editable="true" keyword="true" note="http://client-a44.entermediadb.net">Monitoring URL</property>
+  <property id="primarycname" index="true" editable="true" keyword="true" type="list" listid="entermedia_ip_lookup">Primary IP</property>
+  <property id="failovercname" index="true" editable="true" keyword="true" listid="entermedia_ip_lookup">Failover IP</property>
   <property id="monitoredsitesdnsregion" index="true" multilanguage="false" editable="true" stored="true" filter="true" datatype="list" viewtype="multiselect" listid="monitoredsitesdnsregion">New 
     <name>
       <language id="en"><![CDATA[Region]]></language>
