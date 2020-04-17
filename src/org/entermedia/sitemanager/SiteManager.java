@@ -66,7 +66,7 @@ public class SiteManager implements CatalogEnabled
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-resolve.html";
 		WebEmail templatemail = inArchive.createSystemEmail(notifyemail, templatePage);
 
-		templatemail.setSubject("[EM][" + inInstance.get("name") + "] error resolved");
+		templatemail.setSubject("[" + inInstance.get("name") + "] error resolved");
 		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
 		objects.put("instance", inInstance);
@@ -88,7 +88,7 @@ public class SiteManager implements CatalogEnabled
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-error.html";
 		WebEmail templatemail = inArchive.createSystemEmail(notifyemail, templatePage);
 
-		templatemail.setSubject("[EM][" + inInstance.get("name") + "] error detected!");
+		templatemail.setSubject("[" + inInstance.get("name") + "] error detected!");
 		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
 		objects.put("instance", inInstance);
