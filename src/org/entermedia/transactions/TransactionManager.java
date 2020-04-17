@@ -24,7 +24,7 @@ public class TransactionManager implements CatalogEnabled
 	public String getTransactionTotal(String inCollectionId)
 	{
 		Searcher invoiceSearcher = getMediaArchive().getSearcher("transaction");
-		Collection<Data> clientinvoices = invoiceSearcher.query().exact("librarycollection", inCollectionId).search();
+		Collection<Data> clientinvoices = invoiceSearcher.query().exact("collectionid", inCollectionId).search();
 		double amount = 0;
 
 		for (Data it : clientinvoices)
@@ -33,7 +33,7 @@ public class TransactionManager implements CatalogEnabled
 
 			try
 			{
-				amount += (double)real.getValue("totalprice");
+				amount = amount + real.getFloat("totalprice");
 			}
 			catch (Exception e)
 			{

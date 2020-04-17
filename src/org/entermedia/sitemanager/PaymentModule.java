@@ -75,6 +75,8 @@ public class PaymentModule extends BaseMediaModule
 		Data payment = payments.createNewData();
 		payments.updateData(inReq, inReq.getRequestParameters("field"), payment);
 
+		payment.setValue("paymenttype","stripe" );
+		
 		boolean success = getOrderProcessor().process(archive, inReq.getUser(), payment, token);
 		if (success)
 		{
