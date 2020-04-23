@@ -56,7 +56,7 @@ public class SiteManager implements CatalogEnabled
 	
 	private void sendEmailResolved(Data inInstance, MultiValued inReal, MediaArchive inArchive)
 	{
-		String notifyemail = "help@entermediadb.org";
+		String notifyemail = "notifications@entermediadb.org";
 		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
 			notifyemail = inArchive.getCatalogSettingValue("monitor_notify_email");
 		}
