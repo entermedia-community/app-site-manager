@@ -16,6 +16,11 @@ import org.openedit.users.User;
 import org.openedit.util.XmlUtil;
 
 import com.stripe.Stripe;
+import com.stripe.exception.APIConnectionException;
+import com.stripe.exception.APIException;
+import com.stripe.exception.AuthenticationException;
+import com.stripe.exception.CardException;
+import com.stripe.exception.InvalidRequestException;
 import com.stripe.model.BalanceTransaction;
 import com.stripe.model.Charge;
 import com.stripe.model.Customer;
@@ -71,23 +76,37 @@ public class StripePaymentProcessor
 		chargeParams.put("metadata", initialMetadata);
 		try
 		{
-			String customerid = inUser.get("stripeid");
-			if(customerid == null){
-				Map<String, Object> customerParams = new HashMap<String, Object>();
-				customerParams.put("email", inUser.getEmail());
-				customerParams.put("source", inToken);
-				
-				Customer customer = Customer.create(customerParams);
-				customerid = customer.getId();
-				inUser.setValue("stripeid", customer.getId());
-				inArchive.getUserManager().saveUser(inUser);
+			String customerid = inUser.get("stripeid");  //This might fail with the admin user
+			//No such customer: cus_C9JdWVqvhQ16Uq; a similar object exists in test mode, but a live mode key was used to make this request.
+			if(customerid == null)
+			{
+				customerid = createCustomer(inArchive, inUser, inToken);
 			}				
-			chargeParams.put("customer", customerid); // obtained via js
-//	https://stripe.com/docs/saving-cards
+			chargeParams.put("customer", customerid); // obtained via https://stripe.com/docs/saving-cards
+			
+			Charge c = null;
+			try
+			{
+				c = Charge.create(chargeParams);
+			}
+			catch( com.stripe.exception.InvalidRequestException ex )
+			{	
+				 //: No such customer: cus_GyDBm8HUKk4U6p
+				if( ex.getMessage().startsWith("No such customer")) //Customer was deleted or this is a new account
+				{
+					customerid = createCustomer(inArchive, inUser, inToken);
+					chargeParams.put("customer", customerid); // obtained via js
+					c = Charge.create(chargeParams);
+				}
+				else
+				{
+					throw new OpenEditException(ex);
+				}
+			}
 			
 			
-			Charge c = Charge.create(chargeParams);
-			if(c.getPaid()) {
+			if(c.getPaid()) 
+			{
 			String balancetransaction = c.getBalanceTransaction();
 			BalanceTransaction balance = BalanceTransaction.retrieve(balancetransaction);
 			long fee = balance.getFee();
@@ -120,6 +139,23 @@ public class StripePaymentProcessor
 		throw new OpenEditException(e);
 		}
 
+	}
+
+
+
+
+	protected String createCustomer(MediaArchive inArchive, User inUser, String inToken) throws AuthenticationException, InvalidRequestException, APIConnectionException, CardException, APIException
+	{
+		String customerid;
+		Map<String, Object> customerParams = new HashMap<String, Object>();
+		customerParams.put("email", inUser.getEmail());
+		customerParams.put("source", inToken);
+		
+		Customer customer = Customer.create(customerParams);
+		customerid = customer.getId();
+		inUser.setValue("stripeid", customer.getId());
+		inArchive.getUserManager().saveUser(inUser);
+		return customerid;
 	}
 	
 	
