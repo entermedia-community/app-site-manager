@@ -101,8 +101,11 @@
 		#foreach( $ohit in $organizations )
 			<li class="#if($selectedproject==$ohit.id) current #end">
 				<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" >
+				#if( $modcollections.contains($ohit.getId()) )
+				<i class="fas fa-sitemap"></i> $ohit.name <i class="fas fa-bell fa-xs" style="color:orange"></i>
+				#else
 				<i class="fas fa-sitemap"></i> $ohit.name
-				#if( $modcollections.contains($ohit.getId())) * #end
+				#end
 				</a>
 			</li>
 		#end
