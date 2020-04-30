@@ -27,7 +27,11 @@
 		#set( $pendingmessages = $chatManager.loadChatTopicLastChecked("${user.getId()}-messages",$user.getId() ) )
 		<li class="#if($content.appsection == "messages") current #end">
 			<a href="$sitelink/app/messages/index.html">
-			<i class="fa fa-comment"></i> [[Messages]] #if($pendingmessages && !$pendingmessages.isEmpty()) * #end
+			#if($pendingmessages && !$pendingmessages.isEmpty())
+			<i class="fa fa-comment"></i> [[Messages]] <i class="fas fa-bell fa-xs" style="color:orange"></i>
+			#else
+			<i class="fa fa-comment"></i> [[Messages]]
+			#end
 			</a>
 		</li>
 		#if($userprojectsids.size() && $userticketsids.size())
