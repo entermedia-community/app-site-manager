@@ -7,7 +7,7 @@
 <p>[[A password reset link was requested for]]: $mail</p>
 <div style="margin:10px; padding:15px; background-color:#f0f0f0;">
 
-	#set( $link = "$context.siteRoot$home/$applicationid/views/myaccount/setuserpassword.html?entermedia.key=$entermediakey" )
+	#set( $link = "$context.siteRoot$home/$applink/authentication/autologin.html?entermedia.key=$entermediakey" )
 	#set( $expiry = $context.getPageProperty("temporary_password_expiry"))
 	#set( $days = $numberutils.toInt($expiry))
 	#set ( $calendar = $datetool.getCalendar() )
@@ -16,10 +16,7 @@
 	#set($null = $calendar.add(6, $days))
 	
 	<p>
-	<a href="$link">[[Change Password]]</a> 
-	#if ($expiry)
-	&nbsp;(link expires on $calendar.getTime())
-	#end
+	<a href="$link">[[Login Here]]</a> 
 	</p>
 </div>
 
@@ -27,9 +24,6 @@
 	#set( $link = "$context.siteRoot$home/$applicationid/" )
 #else
 	#set( $link = "$url_util.buildRoot()$home/$applicationid/" )
-#end
-#if($link)
-<p>[[Access the site here]]: <a href="$link">$link</a></p>
 #end
 <p><strong>The EnterMediaDB Team</strong><br>
 <em><a href="mailto:help@entermediadb.org">help@entermediadb.org</a></em>
