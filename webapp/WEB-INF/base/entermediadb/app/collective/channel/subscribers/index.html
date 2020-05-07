@@ -62,11 +62,14 @@
 <div class="subscribesidebarbox">
 
 #set( $team = $mediaarchive.query("librarycollectionusers").exact("collectionid",$collectionid).exact("ontheteam",true).search($context) )
+
+#if($canviewsettings)
 <h4>
 <div class="float-right">
 <a class="emdialog" data-cancelsubmit="true" title="View Team" href="$applink/collective/channel/subscribers/teamlist.html?collectionid=$librarycol.getId()">
 $team.size()</a>
 </div>
+#end
 
 <i class="fas fa-users"></i> [[Team]]</h4>
 
