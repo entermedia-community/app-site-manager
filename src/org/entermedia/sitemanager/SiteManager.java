@@ -35,6 +35,8 @@ import org.openedit.MultiValued;
 import org.openedit.OpenEditException;
 import org.openedit.data.Searcher;
 import org.openedit.util.DateStorageUtil;
+import org.openedit.util.Exec;
+import org.openedit.util.ExecResult;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -46,6 +48,7 @@ public class SiteManager implements CatalogEnabled
 	protected MediaArchive fieldMediaArchive;
 	protected ModuleManager fieldModuleManager;
 	protected AutoFailoverManager fieldAutoFailoverManager;
+	protected Exec fieldExec;
 	protected Searcher fieldDnsSearcher;
 	private JSONObject fieldJson;
 	int CPU_TIME_AVG = 10;
@@ -78,6 +81,14 @@ public class SiteManager implements CatalogEnabled
 
 	private void sendErrorNotification(Data inInstance, MultiValued inReal, MediaArchive inArchive)
 	{
+		/* Run trace result */
+		String url = inReal.get("publicdomainname");
+		ArrayList<String> args = new ArrayList<String>();
+		args.add(url);
+		ExecResult trace = getExec().runExec("traceroute", args, true);
+		String traceresult = trace.getStandardOut();
+		log.info(traceresult);
+		
 		String notifyemail = "notifications@entermediadb.org"; 
 		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
 			notifyemail = inArchive.getCatalogSettingValue("monitor_notify_email");
@@ -92,6 +103,7 @@ public class SiteManager implements CatalogEnabled
 		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
 		objects.put("instance", inInstance);
+		objects.put("traceresult",traceresult);
 		templatemail.send(objects);
 		inReal.setProperty("mailsent", "true");
 		
@@ -808,6 +820,15 @@ public class SiteManager implements CatalogEnabled
 		            .build();
 		}
 		return fieldHttpClient;
+	}
+	public Exec getExec()
+	{
+		return fieldExec;
+	}
+
+	public void setExec(Exec exec)
+	{
+		fieldExec = exec;
 	}
 	
 }
