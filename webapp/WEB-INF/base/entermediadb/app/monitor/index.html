@@ -4,7 +4,7 @@
 <div class="maincontent h-100">
 <h3>Active [[Servers]]</h3>
 	##Search instances in these organizations
-	#set( $instances = $mediaarchive.query("entermedia_instances_monitor").exact("monitoringenable","true").sort("name").search() )
+	#set( $instances = $mediaarchive.query("entermedia_instances_monitor").exact("monitoringenable","true").sort("monitoringurl").search() )
 	#if ($instances)
 		<div class="emdata">
 	    <table class="table table-striped">
