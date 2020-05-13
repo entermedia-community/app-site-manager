@@ -467,7 +467,7 @@ public class SiteManager implements CatalogEnabled
 		catch (Exception e)
 		{
 			//throw new OpenEditException(e);
-			log.error("Cant' get to " + jsonUrl);
+			log.error("Cant' get to " + jsonUrl, e);
 			stats.setReachable(false);
 		}
 		return stats;
