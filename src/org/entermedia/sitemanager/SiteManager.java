@@ -82,7 +82,9 @@ public class SiteManager implements CatalogEnabled
 	private void sendErrorNotification(Data inInstance, MultiValued inReal, MediaArchive inArchive)
 	{
 		/* Run trace result */
-		String url = inReal.get("publicdomainname");
+		String monitoringurl = inReal.get("monitoringurl");
+		String url = monitoringurl.substring(monitoringurl.indexOf("//") + 2, monitoringurl.indexOf("/",9) );
+		log.info(url);
 		ArrayList<String> args = new ArrayList<String>();
 		args.add(url);
 		ExecResult trace = getExec().runExec("traceroute", args, true);
@@ -465,7 +467,7 @@ public class SiteManager implements CatalogEnabled
 		catch (Exception e)
 		{
 			//throw new OpenEditException(e);
-			log.error("Cant' get to " + jsonUrl, e);
+			log.error("Cant' get to " + jsonUrl);
 			stats.setReachable(false);
 		}
 		return stats;
