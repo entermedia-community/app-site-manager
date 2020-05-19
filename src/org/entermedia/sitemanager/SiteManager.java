@@ -435,27 +435,7 @@ public class SiteManager implements CatalogEnabled
 
 			if (response.get("status") != null && response.get("status").equals("ok"))
 			{
-				
-				ArrayList<DiskPartition> partitions = new ArrayList<DiskPartition>();
-				DiskSpace diskSpace = new DiskSpace();
-
-				try
-				{
-					JSONArray results = (JSONArray) json.get("partitions");
-					for (Object partitionObj : results.toArray())
-					{
-						JSONObject partition = (JSONObject) partitionObj;
-						DiskPartition diskPartiton = mapper.readValue(partition.toJSONString(), DiskPartition.class);
-						diskPartiton.isOverloaded(98);
-						partitions.add(diskPartiton);
-					}
-				}
-				catch (Exception e)
-				{
-					throw new OpenEditException(e);
-				}
-				diskSpace.setPartitions(partitions);
-				stats.setDiskSpace(diskSpace);
+				stats.setReachable(true);
 				
 			}
 			else
