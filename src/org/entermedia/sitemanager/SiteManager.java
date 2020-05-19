@@ -369,53 +369,38 @@ public class SiteManager implements CatalogEnabled
 //		return diskSpace;
 //	}
 
-	public void scanSoftwareVersions(MediaArchive inArchive)
-	{
-		Searcher sites = inArchive.getSearcher("entermedia_sites_monitor");
-		Collection<Data> sitestomonitor = sites.query().all().search();
-
-		for (Data it : sitestomonitor)
-		{
-			MultiValued real = (MultiValued) sites.loadData(it);
-			
-			//Get Instance Data
-			Searcher instances = inArchive.getSearcher("entermedia_instances_monitored");
-			Data instance = instances.query().exact("id", real.get("instanceid")).searchOne();
-			if (instance == null) {
-				continue;
-			}
-
-			if (real.get("monitoringstatus") != null && real.get("monitoringstatus").compareTo("ok") == 0)
-			{
-				try
-				{
-					ObjectMapper mapper = new ObjectMapper();
-					Downloader downloader = new Downloader();
-
-					String jsonString = downloader.downloadToString(buildURL(real, real.get("catalog"), "/mediadb/services/system/softwareversions.json"));
-					JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
-
-					JSONArray results = (JSONArray) json.get("results");
-					for (Object versionObj : results.toArray())
-					{
-
-						JSONObject partition = (JSONObject) versionObj;
-						SoftwareVersion version = mapper.readValue(partition.toJSONString(), SoftwareVersion.class);
-
-						if (version.getName() != null)
-						{
-							real.setValue("version_" + version.getName(), version.getVersion() != null ? version.getVersion() : "");
-						}
-					}
-				}
-				catch (Exception e)
-				{
-					log.error("Cant' get software versions", e);
-				}
-			}
-			sites.saveData(real, null);
-		}
-	}
+	/*
+	 * public void scanSoftwareVersions(MediaArchive inArchive) { Searcher sites =
+	 * inArchive.getSearcher("entermedia_sites_monitor"); Collection<Data>
+	 * sitestomonitor = sites.query().all().search();
+	 * 
+	 * for (Data it : sitestomonitor) { MultiValued real = (MultiValued)
+	 * sites.loadData(it);
+	 * 
+	 * //Get Instance Data Searcher instances =
+	 * inArchive.getSearcher("entermedia_instances_monitored"); Data instance =
+	 * instances.query().exact("id", real.get("instanceid")).searchOne(); if
+	 * (instance == null) { continue; }
+	 * 
+	 * if (real.get("monitoringstatus") != null &&
+	 * real.get("monitoringstatus").compareTo("ok") == 0) { try { ObjectMapper
+	 * mapper = new ObjectMapper(); Downloader downloader = new Downloader();
+	 * 
+	 * String jsonString = downloader.downloadToString(buildURL(real,
+	 * real.get("catalog"), "/mediadb/services/system/softwareversions.json"));
+	 * JSONObject json = (JSONObject) new JSONParser().parse(jsonString);
+	 * 
+	 * JSONArray results = (JSONArray) json.get("results"); for (Object versionObj :
+	 * results.toArray()) {
+	 * 
+	 * JSONObject partition = (JSONObject) versionObj; SoftwareVersion version =
+	 * mapper.readValue(partition.toJSONString(), SoftwareVersion.class);
+	 * 
+	 * if (version.getName() != null) { real.setValue("version_" +
+	 * version.getName(), version.getVersion() != null ? version.getVersion() : "");
+	 * } } } catch (Exception e) { log.error("Cant' get software versions", e); } }
+	 * sites.saveData(real, null); } }
+	 */
 	
 	protected ServerStats scanStats(MultiValued inMonitor, Data inInstance)
 	{
@@ -435,7 +420,9 @@ public class SiteManager implements CatalogEnabled
 
 			if (response.get("status") != null && response.get("status").equals("ok"))
 			{
+				
 				stats.setReachable(true);
+				
 				
 			}
 			else
@@ -627,7 +614,15 @@ public class SiteManager implements CatalogEnabled
 			real.setValue("catalog", "assets");
 			sites.saveData(real, null);
 		}
-
+		
+		/* Take care of blank monitoring statuses */
+		if (real.get("monitoringstatus") == null)
+		{
+			real.setValue("monitoringstatus", "ok");
+			sites.saveData(real, null);
+		
+		}
+		
 		ServerStats stats = scanStats(real, instance);
 		try
 		{
@@ -635,7 +630,8 @@ public class SiteManager implements CatalogEnabled
 			{
 				real.setValue("isreachable", false);
 				real.setValue("lastcheckfail", true);
-				if( "ok".equals( real.get("monitoringstatus") ) )
+				String monstatus = real.get("monitoringstatus");
+				if(monstatus == null || monstatus.equals("ok") || monstatus.isEmpty() )
 				{
 					real.setValue("monitoringstatus", "error");
 					setErrorType(stats,real);
@@ -645,7 +641,7 @@ public class SiteManager implements CatalogEnabled
 			}
 			else
 			{
-				if( "error".equals( real.get("monitoringstatus") ) )
+				if( real.get("monitoringstatus").equals("error")  )
 				{
 					real.setValue("monitoringstatus", "ok");
 					real.setValue("lastcheckfail", false);
