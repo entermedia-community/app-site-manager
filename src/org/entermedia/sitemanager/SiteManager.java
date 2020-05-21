@@ -87,16 +87,14 @@ public class SiteManager implements CatalogEnabled
 		log.info(url);
 		ArrayList<String> args = new ArrayList<String>();
 		args.add(url);
+		log.info("Running 'traceroute'.");
 		ExecResult trace = getExec().runExec("traceroute", args, true);
 		String traceresult = trace.getStandardOut();
-		log.info(traceresult);
+		log.info("Trace Route: " + traceresult);
 		
 		String notifyemail = "notifications@entermediadb.org"; 
 		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
 			notifyemail = inArchive.getCatalogSettingValue("monitor_notify_email");
-		}
-		if (inReal.get("notifyemail") != null && !inReal.get("notifyemail").isEmpty()) {
-			notifyemail = inReal.get("notifyemail"); 
 		}
 		String templatePage = "/" + inArchive.getCatalogSettingValue("events_notify_app") + "/theme/emails/monitoring-error.html";
 		WebEmail templatemail = inArchive.createSystemEmail(notifyemail, templatePage);
@@ -106,6 +104,7 @@ public class SiteManager implements CatalogEnabled
 		objects.put("monitored", inReal);
 		objects.put("instance", inInstance);
 		objects.put("traceresult",traceresult);
+		log.info("Sending email to:"+ notifyemail);
 		templatemail.send(objects);
 		inReal.setProperty("mailsent", "true");
 		
@@ -626,12 +625,12 @@ public class SiteManager implements CatalogEnabled
 		ServerStats stats = scanStats(real, instance);
 		try
 		{
-			if (stats.isError()) 
+			if (!stats.isReachable()) 
 			{
 				real.setValue("isreachable", false);
 				real.setValue("lastcheckfail", true);
 				String monstatus = real.get("monitoringstatus");
-				log.error("Failing over.");
+				log.error("Failing over. Monitoring status is " + monstatus);
 				if(monstatus == null || monstatus.equals("ok") || monstatus.isEmpty() )
 				{
 					real.setValue("monitoringstatus", "error");
