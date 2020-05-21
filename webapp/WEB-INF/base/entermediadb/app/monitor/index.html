@@ -22,7 +22,7 @@
 				<tr>
 				     #set( $instance = $mediaarchive.getData("entermedia_instances",$instancemonitor.instanceid))
 		            <td>
-		            $instancemonitor.name
+		            $!instancemonitor.name
 		            #if ($instancemonitor.getBoolean("monitoringenable") == false)
 		            	(Disabled)
 		            #end
