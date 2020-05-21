@@ -22,7 +22,7 @@
 				<tr>
 				     #set( $instance = $mediaarchive.getData("entermedia_instances",$instancemonitor.instanceid))
 		            <td>
-		            $instance.name
+		            $instancemonitor.name
 		            #if ($instancemonitor.getBoolean("monitoringenable") == false)
 		            	(Disabled)
 		            #end
@@ -49,7 +49,9 @@
 						#end
 					</td>
 					<td>
-					#if ($mediaarchive.getData("entermedia_servers",$instance.entermedia_servers))
+					#if ($instancemonitor.Isautofailover)
+						$instancemonitor.primarycname
+					#elseif ($mediaarchive.getData("entermedia_servers",$instance.entermedia_servers))
 						$mediaarchive.getData("entermedia_servers",$instance.entermedia_servers)
 					#else
 						No Server

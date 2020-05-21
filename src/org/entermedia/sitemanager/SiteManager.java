@@ -631,6 +631,7 @@ public class SiteManager implements CatalogEnabled
 				real.setValue("isreachable", false);
 				real.setValue("lastcheckfail", true);
 				String monstatus = real.get("monitoringstatus");
+				log.error("Failing over.");
 				if(monstatus == null || monstatus.equals("ok") || monstatus.isEmpty() )
 				{
 					real.setValue("monitoringstatus", "error");
@@ -667,6 +668,7 @@ public class SiteManager implements CatalogEnabled
 
 	private void enterFailover(MultiValued inReal, Data inInstance, MediaArchive inArchive)
 	{
+		log.info("Entering failover...");
 		sendErrorNotification(inInstance, inReal, inArchive);
 		inReal.setValue("monitoringstatus", "error");
 		inReal.setValue("lastcheckfail", true);
