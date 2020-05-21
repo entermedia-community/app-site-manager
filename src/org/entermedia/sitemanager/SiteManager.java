@@ -625,6 +625,7 @@ public class SiteManager implements CatalogEnabled
 		ServerStats stats = scanStats(real, instance);
 		try
 		{
+			log.info(stats.isReachable());
 			if (!stats.isReachable()) 
 			{
 				real.setValue("isreachable", false);
