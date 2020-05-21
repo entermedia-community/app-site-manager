@@ -35,6 +35,7 @@
 			</a>
 		</li>
 		#if($userprojectsids.size() && $userticketsids.size())
+		#if($canviewsettings)
 		<li class="#if($content.appsection == "tasks") current #end">
 			#if ($canviewsettings)
 				#set($args = "goaltrackerstaff=*")
@@ -50,6 +51,7 @@
 			<a href="$sitelink/app/users/tasks/search.html?ticketlevel=marketing&$!{args}" class="badge badge-success">[[Marketing]]</a>
 			</div>
 		</li>
+		#end
 		#end
 		#if($canviewsettings)
 		<li class="#if($content.appsection == "completed") current #end"><a href="$sitelink/app/users/tasks/report.html?collectionid=*&goaltrackerstaff=*"><i class="far fa-file-alt"></i> [[Completed Tasks]]</a></li>
