@@ -49,7 +49,7 @@
 						#end
 					</td>
 					<td>
-					#if ($instancemonitor.Isautofailover)
+					#if ($instancemonitor.primarycname)
 						$instancemonitor.primarycname
 					#elseif ($mediaarchive.getData("entermedia_servers",$instance.entermedia_servers))
 						$mediaarchive.getData("entermedia_servers",$instance.entermedia_servers)
