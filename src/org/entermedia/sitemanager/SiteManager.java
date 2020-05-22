@@ -109,6 +109,7 @@ public class SiteManager implements CatalogEnabled
 		inReal.setProperty("mailsent", "true");
 		
 		//sends mobile push notifications for server errors.
+		log.info("Sending error 'Push' notification.");
 		sendEMPushNotification(inArchive,inInstance,inReal);
 		
 	}
