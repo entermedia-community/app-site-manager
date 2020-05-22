@@ -674,7 +674,7 @@ public class SiteManager implements CatalogEnabled
 	{
 		log.info("Entering failover...");
 		sendErrorNotification(inInstance, inReal, inArchive);
-		inReal.setValue("monitoringstatus", "error");
+		/* inReal.setValue("monitoringstatus", "error"); */
 		inReal.setValue("lastcheckfail", true);
 		
 		if (inReal.getBoolean("isautofailover") )
@@ -693,7 +693,7 @@ public class SiteManager implements CatalogEnabled
 	{
 		//Send email
 		sendEmailResolved(inInstance, inReal, inArchive);		
-		inReal.setValue("monitoringstatus", "ok");
+		/* inReal.setValue("monitoringstatus", "ok"); */
 		inReal.setValue("alerttype",new ArrayList<String>());
 		inReal.setValue("lastcheckfail", false);
 		
