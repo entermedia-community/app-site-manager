@@ -82,19 +82,26 @@ public class SiteManager implements CatalogEnabled
 	private void sendErrorNotification(Data inInstance, MultiValued inReal, MediaArchive inArchive)
 	{
 		/* Run trace result */
-		/*
-		 * String monitoringurl = inReal.get("monitoringurl"); String url =
-		 * monitoringurl.substring(monitoringurl.indexOf("//") + 2,
-		 * monitoringurl.indexOf("/",9) ); log.info("Monitoring URL:" + monitoringurl);
-		 * log.info("Trace Route URL: " + url); ArrayList<String> args = new
-		 * ArrayList<String>(); args.add(url); log.info("Running 'traceroute'.");
-		 * ExecResult trace = getExec().runExec("traceroute", args, true); String
-		 * traceresult = trace.getStandardOut(); log.info("Trace Route: " +
-		 * traceresult);
-		 */
 		String monitoringurl = inReal.get("monitoringurl");
-		log.info("Trace route is not active. The monitoring URL:" + monitoringurl);
+		String url = monitoringurl.substring(monitoringurl.indexOf("//") + 2, monitoringurl.indexOf("/", 9));
+		log.info("Monitoring URL:" + monitoringurl);
+		log.info("Trace Route URL: " + url);
+		ArrayList<String> args = new ArrayList<String>();
+		args.add(url);
+		log.info("Running 'traceroute'.");
+		String traceresult = null;
+		ExecResult trace = getExec().runExec("traceroute", args, true, 12000);
+		if (trace.getReturnValue() > 0) 
+		{
+			traceresult = "Trace timed out! " + trace.getStandardError();
+		}
+		else 
+		{
+			traceresult = trace.getStandardOut();
+		}
+		log.info("Trace Route: " + traceresult);
 		
+		/* Send email */
 		String notifyemail = "notifications@entermediadb.org"; 
 		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
 			notifyemail = inArchive.getCatalogSettingValue("monitor_notify_email");
@@ -106,7 +113,7 @@ public class SiteManager implements CatalogEnabled
 		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
 		objects.put("instance", inInstance);
-		/* objects.put("traceresult",traceresult); */
+		objects.put("traceresult",traceresult);
 		log.info("Sending email to:"+ notifyemail);
 		templatemail.send(objects);
 		inReal.setProperty("mailsent", "true");
