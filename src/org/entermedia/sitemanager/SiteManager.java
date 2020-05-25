@@ -81,9 +81,9 @@ public class SiteManager implements CatalogEnabled
 
 	private void sendErrorNotification(Data inInstance, MultiValued inReal, MediaArchive inArchive)
 	{
-		/* Run trace result */
+		//Run trace result
 		String monitoringurl = inReal.get("monitoringurl");
-		String url = monitoringurl.substring(monitoringurl.indexOf("//") + 2, monitoringurl.indexOf("/", 9));
+		String url = monitoringurl.substring(monitoringurl.indexOf("//") + 2);
 		log.info("Monitoring URL:" + monitoringurl);
 		log.info("Trace Route URL: " + url);
 		ArrayList<String> args = new ArrayList<String>();
@@ -101,7 +101,7 @@ public class SiteManager implements CatalogEnabled
 		}
 		log.info("Trace Route: " + traceresult);
 		
-		/* Send email */
+		// Send email
 		String notifyemail = "notifications@entermediadb.org"; 
 		if (inArchive.getCatalogSettingValue("monitor_notify_email") != null) {
 			notifyemail = inArchive.getCatalogSettingValue("monitor_notify_email");
@@ -666,6 +666,7 @@ public class SiteManager implements CatalogEnabled
 		}
 		catch ( Exception ex)
 		{
+			log.error("Could not scan.", ex);
 			real.addValue("alerttype", ex.getMessage()); //Should not happen
 			sites.saveData(real, null);
 		}
