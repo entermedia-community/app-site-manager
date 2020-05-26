@@ -84,7 +84,7 @@ public class SiteManager implements CatalogEnabled
 		//Run trace result
 		String monitoringurl = inReal.get("monitoringurl");
 		String url = monitoringurl.substring(monitoringurl.indexOf("//") + 2);
-		log.info("Monitoring URL:" + monitoringurl);
+		log.info("Monitoring URL: " + monitoringurl);
 		log.info("Trace Route URL: " + url);
 		ArrayList<String> args = new ArrayList<String>();
 		args.add(url);
