@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open Sans');
 @import url('https://fonts.googleapis.com/css?family=League Spartan');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 body {
   font-family: 'Open Sans', sans-serif;
   
@@ -1821,28 +1823,36 @@ padding:20px 60px;
 }
 
 .homepage {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: bolder;
-
+  font-family: 'Roboto', sans-serif;	
+  font-weight: lighter;
+  text-transform: uppercase;
+  
+ 
 }
 .homepage-btn {
-  font-family: 'League Spartan', sans-serif;
-  
-
+  font-family: 'Roboto', sans-serif;	
+  text-transform: uppercase;
 }
+
+/*  text-transform: uppercase;
+
+  font-family: 'League Spartan', sans-serif;
+  font-family: 'Roboto', sans-serif;	
+  font-family: 'Open Sans', sans-serif;
+
+*/
 .headerbanner {
   /* The image used 
   background-image: url('/entermediadb/theme/images/background.jpg');
 */
 
   /* Set a specific height */
-  height: auto;
+  height: 400px;
 
   /* Create the parallax scrolling effect */
-  background-attachment: fixed;
-  background-position: center;
+  background-position: top right;
   background-repeat: no-repeat;
-  background-color: black;
+  background-color: #376c30;
 }
 
 
