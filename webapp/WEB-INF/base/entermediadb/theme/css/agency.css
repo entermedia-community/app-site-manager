@@ -1855,7 +1855,11 @@ padding:20px 60px;
   background-color: #376c30;
 }
 
-
+.headerbanner .imageright
+{
+	background: rgb(55,108,48);
+	background: linear-gradient(90deg, rgba(55,108,48,1) 0%, rgba(98,177,87,1) 100%);
+}
 .emcarousel-caption {
     position: absolute;
     width: 380px;
