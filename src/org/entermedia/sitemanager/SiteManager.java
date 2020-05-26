@@ -90,7 +90,7 @@ public class SiteManager implements CatalogEnabled
 		args.add(url);
 		log.info("Running 'traceroute'.");
 		String traceresult = null;
-		ExecResult trace = getExec().runExec("traceroute", args, true, 12000);
+		ExecResult trace = getExec().runExec("traceroute", args, true, 25000);
 		if (trace.getReturnValue() > 0) 
 		{
 			traceresult = "Trace timed out! " + trace.getStandardError();
