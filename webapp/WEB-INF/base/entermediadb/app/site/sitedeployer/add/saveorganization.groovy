@@ -69,7 +69,7 @@ public void init()
 	}
 	
 	//Add Project Manager to Team
-	String projectmanager = "168";  //Jay
+	String projectmanager = "388";  // Rishi Bond
 	Data agentexists = librarycolusersearcher.query().exact("followeruser", projectmanager).exact("collectionid", collectionid).searchOne();
 	if (agentexists == null) {
 		librarycolusers = null;
@@ -85,7 +85,7 @@ public void init()
 	Searcher chats = mediaArchive.getSearcher("chatterbox");
 	Data chat = chats.createNewData();
 	chat.setValue("date", new Date());
-	String welcomemessage = "Welcome to the EnterMedia community. My name is Jay and I'm here as your personal support agent. Our platform is BIG, with a ton of options and features, so please don't hesitate to ask any questions you may come across. We're looking forward to working with you.";
+	String welcomemessage = "Welcome to the EnterMedia community. My name is Rishi and I'm here as your personal support agent. Our platform is BIG, with a ton of options and features, so please don't hesitate to ask any questions you may come across. We're looking forward to working with you.";
 	chat.setValue("message", welcomemessage);
 	chat.setValue("user", projectmanager);
 	chat.setValue("channel", generaltopicid);
