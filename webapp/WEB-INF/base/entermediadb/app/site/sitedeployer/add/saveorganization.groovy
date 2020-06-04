@@ -85,7 +85,7 @@ public void init()
 	Searcher chats = mediaArchive.getSearcher("chatterbox");
 	Data chat = chats.createNewData();
 	chat.setValue("date", new Date());
-	String welcomemessage = "Welcome to the EnterMedia community. My name is Rishi and I'm here as your personal support agent. Our platform is BIG, with a ton of options and features, so please don't hesitate to ask any questions you may come across. We're looking forward to working with you.";
+	String welcomemessage = "Welcome to EnterMedia! My name is Rishi and I'm the Service Delivery Manager. My job is to make sure that you are happy with our product. Please take a look around and if you have any questions you can ask them here or email me at rishi@entermediadb.org. Looking forward to working with you!";
 	chat.setValue("message", welcomemessage);
 	chat.setValue("user", projectmanager);
 	chat.setValue("channel", generaltopicid);
