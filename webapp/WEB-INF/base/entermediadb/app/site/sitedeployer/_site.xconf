@@ -2,7 +2,7 @@
 
 <page>
   <property name="title">EnterMedia Site Deployer</property>
-
+	<property name="allowguestregistration">true</property>
   
   <path-action name="MediaArchiveModule.loadApplicationId" />
   
