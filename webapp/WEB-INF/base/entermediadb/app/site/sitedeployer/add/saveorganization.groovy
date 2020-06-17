@@ -31,6 +31,7 @@ public void init()
 	}
 	
 	collection.setValue("library", library.getId());
+	collection.setValue("organizationstatus", "active");
 	if( collection.get("owner") == null )
 	{
 		collection.setValue("owner", user.getId());
