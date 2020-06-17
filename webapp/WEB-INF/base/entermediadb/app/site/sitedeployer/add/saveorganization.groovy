@@ -22,10 +22,10 @@ public void init()
 	Data library = librarysearcher.searchById("organizations");
 	if( library == null)
 	{
+		
 		library = librarysearcher.createNewData();
 		library.setId("organizations");
 		library.setValue("owner", "admin");
-		library.setValue("organizationstatus", "active");
 		library.setName("Organizations");
 		librarysearcher.saveData(library);
 	}
