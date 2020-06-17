@@ -177,6 +177,7 @@ protected Data addNewMonitor(Data instance)
 	newmonitor.setValue("admin_pass", "admin");
 	
 	newmonitor.setValue("monitoringenable", true);
+	newmonitor.setValue("monitoringurl", instance.instanceurl);
 	
 	newmonitor.setValue("notifyemail", "help@entermediadb.org");  //not need it custom?
 	monitorsearcher.saveData(newmonitor,null);
