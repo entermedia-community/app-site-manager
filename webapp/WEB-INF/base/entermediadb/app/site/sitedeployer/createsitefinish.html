@@ -2,7 +2,7 @@
 #if( $errorcode )
 	#if($errorcode=="1")
 		<h1>Error on submit</h1>
-		Invalid Submission. Please  <a href='./createsite.html?organizationid=$!organizationid' style="text-decoration:underline">try again</a>
+		Invalid Submission. Please  <a href='./createsite.html?collectionid=$!organizationid' style="text-decoration:underline">try again</a>
 	#end
 	#if($errorcode=="2" || $errorcode=="3" )
 		<h1>New Instance Delayed!</h1>

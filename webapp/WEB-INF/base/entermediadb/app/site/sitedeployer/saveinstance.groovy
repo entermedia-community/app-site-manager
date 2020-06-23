@@ -15,7 +15,7 @@ public void init()
 {
 		
 	String catalogid = "entermediadb/catalog";
-    String notifyemail = "help@entermediadb.org";
+    String notifyemail = "cristobal@entermediadb.org";
 	String clientemail = user.getEmail();
 
 	
@@ -56,11 +56,16 @@ public void init()
 		//Search Server by Region
 		log.info("- Checking region " + region);
 		
- 		HitTracker servers = mediaarchive.query("entermedia_servers").match("server_region", region).search();
+ 		HitTracker servers = mediaarchive.query("entermedia_servers").exact("allownewinstances", "true").exact("server_region", region).search();
 		Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
 
 		Data seat = null;
 		Data server = null;
+		Integer nodeid = 0;
+		String subnetwork = "";
+		Integer maxinstances = 0;
+		Integer currentinstances = 0;
+		Boolean foundspace = false;
 		//Check if server's seat has room
 		if (servers) 
 			{
@@ -68,37 +73,46 @@ public void init()
 			{
 				server = serversSearcher.loadData(serverIterator.next());
 				log.info("- Checking server " + server.getName());
+				maxinstances = server.getValue("maxinstance");
+				currentinstances = server.getValue("currentinstances");
+				if (currentinstances < maxinstances) {
+					subnetwork = server.getValue("dockersubnet");
+					nodeid = server.getValue("lastnodeid") + 1;
+					foundspace = true;
+					break;
+				}
+				/*
 				HitTracker seats = mediaarchive.query("entermedia_seats").match("seatstatus", "true").match("entermedia_servers", server.id).search();
 				if ( seats.size() < Integer.parseInt(server.maxinstance) )
 				{
 					seat = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).searchOne();
 					break;
-				}
+				}*/
 			 }
 		
-			if (seat == null) {
-				log.info("No seats available. Max: "+server.maxinstance);
+			if (foundspace) {
+				log.info("- No space on servers for trialsites");
 				context.putPageValue("errorcode","2");
 				
 				//Send Email Notify No Seats
 				context.putPageValue("from", clientemail);
-				context.putPageValue("subject", "No Seats Available for Trial Sites");
+				context.putPageValue("subject", "No space for Trial Sites");
 				sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
 			}
 			else{
-				log.info("Seat found: " + seat);
+				log.info("- Found space at: " + server.getName());
 				// Call deploy script 
 				try {
 					List<String> command = new ArrayList<String>();
 					command.add(server.sshname); //server name
-					command.add(server.dockersubnet);  //server subnet
+					command.add(subnetwork);  //server subnet
 					command.add(selected_url);  //client url
-					command.add(String.valueOf(seat.nodeid));  //client nodeid				
+					command.add(nodeid);  //client nodeid				
 					command.add(server.getValue("serverurl"));  // DNS
 					
 					Exec exec = moduleManager.getBean("exec");
 					ExecResult done = exec.runExec("setupclient", command); //Todo: Need to move this script here?
-					log.info("Deploying Trial Site " + selected_url + " at " + server.sshname);
+					log.info("- Deploying Trial Site " + selected_url + " at " + server.sshname);
 					
 						
 						String fullURL = "https://" + selected_url + "." + server.serverurl;
@@ -112,11 +126,22 @@ public void init()
 						newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
 						instancesearcher.saveData(newinstance);
 						
-						//Assign client to seat
+						//Update Server
+						server.setValue("currentinstances", currentinstances + 1);
+						if (nodeid>250) {
+							server.setValue("lastnodeid", 1);
+							server.setValue("dockersubnet", subnetwork + 1);
+						}
+						else {
+							server.setValue("lastnodeid", nodeid);
+						}
+						mediaarchive.saveData("entermedia_servers", server);
+						/*
 						seat.setValue("instanceid", newinstance.getId());
 						seat.setValue("seatstatus", "true");
 						mediaarchive.saveData("entermedia_seats", seat);
-
+						*/
+						
 						context.putPageValue("userurl",fullURL);
 						
 						BaseSearcher collectionsearcher = mediaarchive.getSearcher("librarycollection");
@@ -151,7 +176,7 @@ public void init()
 			}
 			}
 			else {
-				log.info("No servers available.");
+				log.info("- No Servers Available.");
 				context.putPageValue("errorcode","3");
 				
 			}
