@@ -75,6 +75,7 @@ public void init()
 				log.info("- Checking server " + server.getName());
 				maxinstances = server.getValue("maxinstance");
 				currentinstances = server.getValue("currentinstances");
+				log.info("- Server: "+server.getName()+" M/C:"+maxinstances+"/"+currentinstances);
 				if (currentinstances < maxinstances) {
 					subnetwork = server.getValue("dockersubnet");
 					nodeid = server.getValue("lastnodeid") + 1;
@@ -90,7 +91,7 @@ public void init()
 				}*/
 			 }
 		
-			if (foundspace) {
+			if (!foundspace) {
 				log.info("- No space on servers for trialsites");
 				context.putPageValue("errorcode","2");
 				
@@ -103,15 +104,15 @@ public void init()
 				log.info("- Found space at: " + server.getName());
 				// Call deploy script 
 				try {
-					List<String> command = new ArrayList<String>();
+					ArrayList<String> command = new ArrayList<String>();
 					command.add(server.sshname); //server name
-					command.add(subnetwork);  //server subnet
+					command.add(String.valueOf(subnetwork));  //server subnet
 					command.add(selected_url);  //client url
-					command.add(nodeid);  //client nodeid				
+					command.add(String.valueOf(nodeid));  //client nodeid				
 					command.add(server.getValue("serverurl"));  // DNS
 					
 					Exec exec = moduleManager.getBean("exec");
-					ExecResult done = exec.runExec("setupclient", command); //Todo: Need to move this script here?
+					ExecResult done = exec.runExec("setupclient", command, true); //Todo: Need to move this script here?
 					log.info("- Deploying Trial Site " + selected_url + " at " + server.sshname);
 					
 						
@@ -154,7 +155,7 @@ public void init()
 						context.putPageValue("newpassword", "admin");
 						
 						//Add Site to Monitoring
-						Data monitor = addNewMonitor(newinstance);
+						//Data monitor = addNewMonitor(newinstance);
 						
 		                //Send Notification to us
 						context.putPageValue("from", clientemail);

@@ -62,11 +62,10 @@
 						<label for="user">[[Select a Region to deploy your trial server]]</label>
 						
 						<select class="form-control" name="region" required data-msg="[[Please select a region]].">
-						#set( $servers = $mediaarchive.query("entermedia_servers").search() )
+						#set( $servers = $mediaarchive.query("entermedia_servers").exact("allownewinstances", "true").search() )
 						#if ($servers)
 							#foreach( $server in $servers )
-								#set( $seats = $mediaarchive.query("entermedia_seats").match("entermedia_servers", $server.getId()).match("seatstatus", "false").search() )
-								#if($seats && $seats.size() <= $server.maxinstance)
+								#if($server.maxinstance > $server.currentinstances)
 									#set( $region = $mediaarchive.query("server_region").match("id", $server.server_region).searchOne() )
 									<option value="$server.server_region">$region</option>
 								#end
