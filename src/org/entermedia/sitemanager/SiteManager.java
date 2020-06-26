@@ -94,7 +94,7 @@ public class SiteManager implements CatalogEnabled
 		log.info("Running 'traceroute'.");
 		String traceresult = null;
 		/* bash* /home/entermedia/docker-doctor/checkserver.sh url m48 */
-		if ( url != "https://unitednations-us-1.entermediadb.net" )
+		if ( monitoringurl != "https://unitednations-us-1.entermediadb.net" )
 		{
 			ExecResult trace = getExec().runExec("traceroute", args, true, 25000);
 			if (trace.getReturnValue() > 0) 
