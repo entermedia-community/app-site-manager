@@ -135,6 +135,7 @@ public class SiteManager implements CatalogEnabled
 		}
 		else {
 			
+			log.info("about to run checkserver...");
 			ExecResult trace = getExec().runExec("checkserver-as.sh", null, true, 25000);
 			if (trace.getReturnValue() > 0) 
 			{
