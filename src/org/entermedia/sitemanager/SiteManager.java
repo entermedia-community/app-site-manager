@@ -136,7 +136,7 @@ public class SiteManager implements CatalogEnabled
 		else {
 			
 			log.info("about to run checkserver...");
-			ExecResult trace = getExec().runExec("checkserver-as.sh", null, true, 25000);
+			ExecResult trace = getExec().runExec("/home/entermedia/docker-doctor/checkserver-eu.sh", null, true, 25000);
 			/*
 			 * if (trace.getReturnValue() > 0) { traceresult = "Script timed out! " +
 			 * trace.getStandardError(); } else { traceresult = trace.getStandardOut();
