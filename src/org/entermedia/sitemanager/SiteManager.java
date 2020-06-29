@@ -137,15 +137,11 @@ public class SiteManager implements CatalogEnabled
 			
 			log.info("about to run checkserver...");
 			ExecResult trace = getExec().runExec("checkserver-as.sh", null, true, 25000);
-			if (trace.getReturnValue() > 0) 
-			{
-				traceresult = "Script timed out! " + trace.getStandardError();
-			}
-			else 
-			{
-				traceresult = trace.getStandardOut();
-				log.info("Script Result: " + traceresult);
-			}
+			/*
+			 * if (trace.getReturnValue() > 0) { traceresult = "Script timed out! " +
+			 * trace.getStandardError(); } else { traceresult = trace.getStandardOut();
+			 * log.info("Script Result: " + traceresult); }
+			 */
 			
 			
 			/*
