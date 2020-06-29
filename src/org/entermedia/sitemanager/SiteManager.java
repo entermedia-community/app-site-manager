@@ -91,7 +91,7 @@ public class SiteManager implements CatalogEnabled
 		/*
 		 * args.add("https://unitednations-us-1.entermediadb.net"); args.add("m48");
 		 */
-		log.info("Running 'traceroute'.");
+		log.info("Running 'traceroute' or checkserver.");
 		String traceresult = null;
 		/* bash* /home/entermedia/docker-doctor/checkserver.sh url m48 */
 		if ( monitoringurl.equals("https://unitednations-us-1.entermediadb.net") )
@@ -135,15 +135,23 @@ public class SiteManager implements CatalogEnabled
 		}
 		else {
 			
-			ExecResult trace = getExec().runExec("traceroute", args, true, 25000);
+			ExecResult trace = getExec().runExec("checkserver-as.sh", null, true, 25000);
 			if (trace.getReturnValue() > 0) 
 			{
-				traceresult = "Trace timed out! " + trace.getStandardError();
+				traceresult = "Script timed out! " + trace.getStandardError();
 			}
 			else 
 			{
 				traceresult = trace.getStandardOut();
+				log.info("Script Result: " + traceresult);
 			}
+			
+			
+			/*
+			 * ExecResult trace = getExec().runExec("traceroute", args, true, 25000); if
+			 * (trace.getReturnValue() > 0) { traceresult = "Trace timed out! " +
+			 * trace.getStandardError(); } else { traceresult = trace.getStandardOut(); }
+			 */
 		}
 		log.info("Trace Route: " + traceresult);
 		
