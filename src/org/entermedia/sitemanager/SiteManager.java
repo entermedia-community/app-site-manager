@@ -96,7 +96,7 @@ public class SiteManager implements CatalogEnabled
 		/* bash* /home/entermedia/docker-doctor/checkserver.sh url m48 */
 		if ( monitoringurl == "https://unitednations-us-1.entermediadb.net" )
 		{
-			ExecResult trace = getExec().runExec("/home/entermedia/docker-doctor/checkserver.sh", null, true, 25000);
+			ExecResult trace = getExec().runExec("checkserver.sh", null, true, 25000);
 			if (trace.getReturnValue() > 0) 
 			{
 				traceresult = "Script timed out! " + trace.getStandardError();
@@ -109,7 +109,7 @@ public class SiteManager implements CatalogEnabled
 		}
 		else if( monitoringurl == "https://unitednations-eu-1.entermediadb.net")
 		{
-			ExecResult trace = getExec().runExec("/home/entermedia/docker-doctor/checkserver-eu.sh", null, true, 25000);
+			ExecResult trace = getExec().runExec("checkserver-eu.sh", null, true, 25000);
 			if (trace.getReturnValue() > 0) 
 			{
 				traceresult = "Script timed out! " + trace.getStandardError();
@@ -122,7 +122,7 @@ public class SiteManager implements CatalogEnabled
 		}
 		else if( monitoringurl == "https://unitednations-as-1.entermediadb.net")
 		{
-			ExecResult trace = getExec().runExec("/home/entermedia/docker-doctor/checkserver-as.sh", null, true, 25000);
+			ExecResult trace = getExec().runExec("checkserver-as.sh", null, true, 25000);
 			if (trace.getReturnValue() > 0) 
 			{
 				traceresult = "Script timed out! " + trace.getStandardError();
