@@ -94,19 +94,8 @@ public class SiteManager implements CatalogEnabled
 		log.info("Running 'traceroute'.");
 		String traceresult = null;
 		/* bash* /home/entermedia/docker-doctor/checkserver.sh url m48 */
-		if ( monitoringurl != "https://unitednations-us-1.entermediadb.net" )
+		if ( monitoringurl == "https://unitednations-us-1.entermediadb.net" )
 		{
-			ExecResult trace = getExec().runExec("traceroute", args, true, 25000);
-			if (trace.getReturnValue() > 0) 
-			{
-				traceresult = "Trace timed out! " + trace.getStandardError();
-			}
-			else 
-			{
-				traceresult = trace.getStandardOut();
-			}
-		}
-		else {
 			ExecResult trace = getExec().runExec("/home/entermedia/docker-doctor/checkserver.sh", null, true, 25000);
 			if (trace.getReturnValue() > 0) 
 			{
@@ -116,6 +105,44 @@ public class SiteManager implements CatalogEnabled
 			{
 				traceresult = trace.getStandardOut();
 				log.info("Script Result: " + traceresult);
+			}
+		}
+		else if( monitoringurl == "https://unitednations-eu-1.entermediadb.net")
+		{
+			ExecResult trace = getExec().runExec("/home/entermedia/docker-doctor/checkserver-eu.sh", null, true, 25000);
+			if (trace.getReturnValue() > 0) 
+			{
+				traceresult = "Script timed out! " + trace.getStandardError();
+			}
+			else 
+			{
+				traceresult = trace.getStandardOut();
+				log.info("Script Result: " + traceresult);
+			}
+		}
+		else if( monitoringurl == "https://unitednations-as-1.entermediadb.net")
+		{
+			ExecResult trace = getExec().runExec("/home/entermedia/docker-doctor/checkserver-as.sh", null, true, 25000);
+			if (trace.getReturnValue() > 0) 
+			{
+				traceresult = "Script timed out! " + trace.getStandardError();
+			}
+			else 
+			{
+				traceresult = trace.getStandardOut();
+				log.info("Script Result: " + traceresult);
+			}
+		}
+		else {
+			
+			ExecResult trace = getExec().runExec("traceroute", args, true, 25000);
+			if (trace.getReturnValue() > 0) 
+			{
+				traceresult = "Trace timed out! " + trace.getStandardError();
+			}
+			else 
+			{
+				traceresult = trace.getStandardOut();
 			}
 		}
 		log.info("Trace Route: " + traceresult);
