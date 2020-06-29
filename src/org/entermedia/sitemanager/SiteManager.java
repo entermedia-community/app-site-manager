@@ -94,7 +94,7 @@ public class SiteManager implements CatalogEnabled
 		log.info("Running 'traceroute'.");
 		String traceresult = null;
 		/* bash* /home/entermedia/docker-doctor/checkserver.sh url m48 */
-		if ( monitoringurl == "https://unitednations-us-1.entermediadb.net" )
+		if ( monitoringurl.equals("https://unitednations-us-1.entermediadb.net") )
 		{
 			ExecResult trace = getExec().runExec("checkserver.sh", null, true, 25000);
 			if (trace.getReturnValue() > 0) 
@@ -107,7 +107,7 @@ public class SiteManager implements CatalogEnabled
 				log.info("Script Result: " + traceresult);
 			}
 		}
-		else if( monitoringurl == "https://unitednations-eu-1.entermediadb.net")
+		else if( monitoringurl.equals("https://unitednations-eu-1.entermediadb.net"))
 		{
 			ExecResult trace = getExec().runExec("checkserver-eu.sh", null, true, 25000);
 			if (trace.getReturnValue() > 0) 
@@ -120,7 +120,7 @@ public class SiteManager implements CatalogEnabled
 				log.info("Script Result: " + traceresult);
 			}
 		}
-		else if( monitoringurl == "https://unitednations-as-1.entermediadb.net")
+		else if( monitoringurl.equals("https://unitednations-as-1.entermediadb.net"))
 		{
 			ExecResult trace = getExec().runExec("checkserver-as.sh", null, true, 25000);
 			if (trace.getReturnValue() > 0) 
