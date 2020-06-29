@@ -1,5 +1,6 @@
 package org.entermedia.sitemanager;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -79,7 +80,7 @@ public class SiteManager implements CatalogEnabled
 		inReal.setValue("alertcount", 0);
 	}
 
-	private void sendErrorNotification(Data inInstance, MultiValued inReal, MediaArchive inArchive)
+	private void sendErrorNotification(Data inInstance, MultiValued inReal, MediaArchive inArchive) throws IOException
 	{
 		//Run trace result
 		String monitoringurl = inReal.get("monitoringurl");
@@ -136,7 +137,14 @@ public class SiteManager implements CatalogEnabled
 		else {
 			
 			log.info("about to run checkserver...");
-			ExecResult trace = getExec().runExec("/home/entermedia/docker-doctor/checkserver-eu.sh", null, true, 25000);
+			/* New way of running it */
+			String[] env = {"PATH=/bin:/usr/bin/"};
+			String cmd = "checkserver-eu.sh";  //e.g test.sh -dparam1 -oout.txt
+			Process process = Runtime.getRuntime().exec(cmd, env);
+			
+			/*
+			 * ExecResult trace = getExec().runExec("checkserver-eu.sh", null, true, 25000);
+			 */
 			/*
 			 * if (trace.getReturnValue() > 0) { traceresult = "Script timed out! " +
 			 * trace.getStandardError(); } else { traceresult = trace.getStandardOut();
@@ -729,7 +737,7 @@ public class SiteManager implements CatalogEnabled
 		
 	}
 
-	private void enterFailover(MultiValued inReal, Data inInstance, MediaArchive inArchive)
+	private void enterFailover(MultiValued inReal, Data inInstance, MediaArchive inArchive) throws IOException
 	{
 		log.info("Entering failover...");
 		sendErrorNotification(inInstance, inReal, inArchive);
