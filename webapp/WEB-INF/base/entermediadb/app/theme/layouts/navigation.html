@@ -1,61 +1,50 @@
-<!-- Navigation EnterMediaDb -->
-<nav class="navbar navbar-expand-lg navbar-dark navbar-shrink" id="mainNav">
 #set($collectionid = $context.getRequestParameter("collectionid"))
 #set($goaluser = $context.getRequestParameter("goaltrackerstaff"))
 #set($topic = $context.getRequestParamater("topic"))
 
-      <div class="container">
-        <a class="navbar-brand js-scroll-trigger" href="/" title="EnterMedia Database">
-		<img src="$sitelink/theme/img/entermedia_database.png" alt="EnterMedia Collaboratibe DAM" class="img-fluid" />
-		</a>
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          [[Menu]]
-          <i class="fa fa-bars"></i>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav text-uppercase ml-auto">
-            
-            <li class="nav-item">
-              <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="product/support.html") active #end" href="$sitelink/product/support.html">[[Services]]</a>
-            </li>
+<div class="container">
+<div class="account-top-menu">
+#if( $user )
+	<a class=" #if($content.section == "eminstituteapp") active #end" href="$sitelink/app/users/$user.getId()/index.html">[[My Account]]</a>
+	## $pages.include("/entermediadb/app/account/activity/link.html")
 
-            <li class="nav-item">
-              <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath.toString().contains("knowledge/")) active #end" href="$sitelink/knowledge/10/index.html">[[Resources]]</a>
-            </li>
+	<a class=" #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/logout.html" rel="nofollow">[[Log Out]]</a>
+    #if( $collectionid )
+        <a class="btn btn-light emdialog" style="background: transparent; color: #01b34f; border: transparent;" href="$applink/collective/goals/editgoalpanel.html?collectionid=$!collectionid&topic=$!topic&categoryid=$!selectedcat.getId()&goaluser=$!goaluser&goalfolder=priorities&userlikes=$user.id"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> <i class="far fa-file-alt fa-2x"></i></a>
+    #end
+#else
+	<a class=" #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/login.html" rel="nofollow">[[Login]]</a>
+#end
+</div>
+</div>
 
-            <li class="nav-item">
-                    <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="cloud-hosted-dam/") active #end" href="$sitelink/cloud-hosted-dam/">[[Cloud Hosting]]</a>
-            </li>
-	  ##  <li class="nav-item">
-           ##   <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="community/") active #end" href="$sitelink/community/index.html">[[Community]]</a>
-           ## </li>
-	
-       	  #if( $user )
-		  	<li class="nav-item " >
-		  		<a class="nav-link #if($content.section == "eminstituteapp") active #end" href="$sitelink/app/users/$user.getId()/index.html">[[Account]]</a>
-				## $pages.include("/entermediadb/app/account/activity/link.html")
-            </li>
+<div class="container entermedia-header">
+<div class="row">
+	<div class="col-sm-4">
+	<a href="$sitelink">
+	<img src="$sitelink/theme/img/entermedia_database.png" alt="EnterMedia Collaboratibe DAM" class="img-fluid" />
+	</a>
+	</div>
+	<div class="col-sm-8">
+	<nav class="navbar navbar-expand-lg navbar-dark navbar-shrink"  id="mainNav">
+	<ul class="navbar-nav text-uppercase ">
+         <li class="nav-item">
+           <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="product/support.html") active #end" href="$sitelink/product/support.html">[[Services]]</a>
+         </li>
 
-            <li class="nav-item">
-              <a class="nav-link #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/logout.html" rel="nofollow">[[Log Out]]</a>
-            </li>
-            #if( $collectionid )
-            <li class="nav-item">
-            <a class="btn btn-light emdialog" style="background: transparent; color: #01b34f; border: transparent;" href="$applink/collective/goals/editgoalpanel.html?collectionid=$!collectionid&topic=$!topic&categoryid=$!selectedcat.getId()&goaluser=$!goaluser&goalfolder=priorities&userlikes=$user.id"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> <i class="far fa-file-alt fa-2x"></i></a>
-            </li>
-            #end
-            #else
-            <li class="nav-item ">
-              <a class="nav-link #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/login.html" rel="nofollow">[[Login]]</a>
-            </li>
-	    <li class="nav-item">
-              <a class="btn btn-secondary btn-sm" href="$sitelink/entermediadb/app/site/sitedeployer/createaccount.html" rel="nofollow">[[Free Account]]</a>
-            </li>
-            #end
+         <li class="nav-item">
+           <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath.toString().contains("knowledge/")) active #end" href="$sitelink/knowledge/10/index.html">[[Resources]]</a>
+         </li>
 
-          </ul>
-        </div>
-      </div>
-      
-      
-    </nav>
+         <li class="nav-item">
+                 <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="cloud-hosted-dam/") active #end" href="$sitelink/cloud-hosted-dam/">[[Cloud Hosting]]</a>
+         </li>
+		 ##<li class="nav-item">
+       ##   <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="community/") active #end" href="$sitelink/community/index.html">[[Community]]</a>
+       ##</li>
+   </ul>
+   </nav>
+	</div>
+</div>
+</div>
+
