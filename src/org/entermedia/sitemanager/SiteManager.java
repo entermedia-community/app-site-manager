@@ -97,66 +97,42 @@ public class SiteManager implements CatalogEnabled
 		/* bash* /home/entermedia/docker-doctor/checkserver.sh url m48 */
 		if ( monitoringurl.equals("https://unitednations-us-1.entermediadb.net") )
 		{
-			ExecResult trace = getExec().runExec("checkserver.sh", null, true, 25000);
-			if (trace.getReturnValue() > 0) 
-			{
-				traceresult = "Script timed out! " + trace.getStandardError();
-			}
-			else 
-			{
-				traceresult = trace.getStandardOut();
-				log.info("Script Result: " + traceresult);
-			}
+			String[] env = {"PATH=/bin:/usr/bin/"};
+			String cmd = "checkserver.sh";  //e.g test.sh -dparam1 -oout.txt
+			Process process = Runtime.getRuntime().exec(cmd, env);
 		}
 		else if( monitoringurl.equals("https://unitednations-eu-1.entermediadb.net"))
 		{
-			ExecResult trace = getExec().runExec("checkserver-eu.sh", null, true, 25000);
-			if (trace.getReturnValue() > 0) 
-			{
-				traceresult = "Script timed out! " + trace.getStandardError();
-			}
-			else 
-			{
-				traceresult = trace.getStandardOut();
-				log.info("Script Result: " + traceresult);
-			}
-		}
-		else if( monitoringurl.equals("https://unitednations-as-1.entermediadb.net"))
-		{
-			ExecResult trace = getExec().runExec("checkserver-as.sh", null, true, 25000);
-			if (trace.getReturnValue() > 0) 
-			{
-				traceresult = "Script timed out! " + trace.getStandardError();
-			}
-			else 
-			{
-				traceresult = trace.getStandardOut();
-				log.info("Script Result: " + traceresult);
-			}
-		}
-		else {
-			
-			log.info("about to run checkserver...");
-			/* New way of running it */
 			String[] env = {"PATH=/bin:/usr/bin/"};
 			String cmd = "checkserver-eu.sh";  //e.g test.sh -dparam1 -oout.txt
 			Process process = Runtime.getRuntime().exec(cmd, env);
+		}
+		else if( monitoringurl.equals("https://unitednations-as-1.entermediadb.net"))
+		{
+			String[] env = {"PATH=/bin:/usr/bin/"};
+			String cmd = "checkserver-as.sh";  //e.g test.sh -dparam1 -oout.txt
+			Process process = Runtime.getRuntime().exec(cmd, env);
+		}
+		else {
 			
-			/*
-			 * ExecResult trace = getExec().runExec("checkserver-eu.sh", null, true, 25000);
-			 */
-			/*
-			 * if (trace.getReturnValue() > 0) { traceresult = "Script timed out! " +
-			 * trace.getStandardError(); } else { traceresult = trace.getStandardOut();
-			 * log.info("Script Result: " + traceresult); }
-			 */
+			log.info("About to run checkserver...");
+			/* New way of running it , always run checkserver.sh for this testing phase.*/
+			String[] env = {"PATH=/bin:/usr/bin/"};
+			String cmd = "checkserver.sh";
+			Process process = Runtime.getRuntime().exec(cmd, env);
 			
-			
-			/*
-			 * ExecResult trace = getExec().runExec("traceroute", args, true, 25000); if
-			 * (trace.getReturnValue() > 0) { traceresult = "Trace timed out! " +
-			 * trace.getStandardError(); } else { traceresult = trace.getStandardOut(); }
-			 */
+			/* Run traceroute */
+			 ExecResult trace = getExec().runExec("traceroute", args, true, 25000); 
+			 if(trace.getReturnValue() > 0) 
+			 { 
+				 traceresult = "Trace timed out! " + trace.getStandardError(); 
+			 } 
+			 else 
+			 { 
+				 traceresult = trace.getStandardOut(); 
+			 }
+			 
+			 
 		}
 		log.info("Trace Route: " + traceresult);
 		
