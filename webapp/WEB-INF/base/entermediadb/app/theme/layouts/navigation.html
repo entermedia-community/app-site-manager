@@ -39,11 +39,7 @@
             <li class="nav-item">
               <a class="nav-link #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/logout.html" rel="nofollow">[[Log Out]]</a>
             </li>
-            #if( $collectionid )
-            <li class="nav-item">
-            <a class="btn btn-light emdialog" style="background: transparent; color: #01b34f; border: transparent;" href="$applink/collective/goals/editgoalpanel.html?collectionid=$!collectionid&topic=$!topic&categoryid=$!selectedcat.getId()&goaluser=$!goaluser&goalfolder=priorities&userlikes=$user.id"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> <i class="far fa-file-alt fa-2x"></i></a>
-            </li>
-            #end
+           
             #else
             <li class="nav-item ">
               <a class="nav-link #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/login.html" rel="nofollow">[[Login]]</a>
