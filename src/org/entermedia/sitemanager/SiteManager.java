@@ -1,5 +1,6 @@
 package org.entermedia.sitemanager;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -79,7 +80,7 @@ public class SiteManager implements CatalogEnabled
 		inReal.setValue("alertcount", 0);
 	}
 
-	private void sendErrorNotification(Data inInstance, MultiValued inReal, MediaArchive inArchive)
+	private void sendErrorNotification(Data inInstance, MultiValued inReal, MediaArchive inArchive) throws IOException
 	{
 		//Run trace result
 		String monitoringurl = inReal.get("monitoringurl");
@@ -91,59 +92,47 @@ public class SiteManager implements CatalogEnabled
 		/*
 		 * args.add("https://unitednations-us-1.entermediadb.net"); args.add("m48");
 		 */
-		log.info("Running 'traceroute'.");
+		log.info("Running 'traceroute' or checkserver.");
 		String traceresult = null;
 		/* bash* /home/entermedia/docker-doctor/checkserver.sh url m48 */
-		if ( monitoringurl == "https://unitednations-us-1.entermediadb.net" )
+		if ( monitoringurl.equals("https://unitednations-us-1.entermediadb.net") )
 		{
-			ExecResult trace = getExec().runExec("/home/entermedia/docker-doctor/checkserver.sh", null, true, 25000);
-			if (trace.getReturnValue() > 0) 
-			{
-				traceresult = "Script timed out! " + trace.getStandardError();
-			}
-			else 
-			{
-				traceresult = trace.getStandardOut();
-				log.info("Script Result: " + traceresult);
-			}
+			String[] env = {"PATH=/bin:/usr/bin/"};
+			String cmd = "checkserver.sh";  //e.g test.sh -dparam1 -oout.txt
+			Process process = Runtime.getRuntime().exec(cmd, env);
 		}
-		else if( monitoringurl == "https://unitednations-eu-1.entermediadb.net")
+		else if( monitoringurl.equals("https://unitednations-eu-1.entermediadb.net"))
 		{
-			ExecResult trace = getExec().runExec("/home/entermedia/docker-doctor/checkserver-eu.sh", null, true, 25000);
-			if (trace.getReturnValue() > 0) 
-			{
-				traceresult = "Script timed out! " + trace.getStandardError();
-			}
-			else 
-			{
-				traceresult = trace.getStandardOut();
-				log.info("Script Result: " + traceresult);
-			}
+			String[] env = {"PATH=/bin:/usr/bin/"};
+			String cmd = "checkserver-eu.sh";  //e.g test.sh -dparam1 -oout.txt
+			Process process = Runtime.getRuntime().exec(cmd, env);
 		}
-		else if( monitoringurl == "https://unitednations-as-1.entermediadb.net")
+		else if( monitoringurl.equals("https://unitednations-as-1.entermediadb.net"))
 		{
-			ExecResult trace = getExec().runExec("/home/entermedia/docker-doctor/checkserver-as.sh", null, true, 25000);
-			if (trace.getReturnValue() > 0) 
-			{
-				traceresult = "Script timed out! " + trace.getStandardError();
-			}
-			else 
-			{
-				traceresult = trace.getStandardOut();
-				log.info("Script Result: " + traceresult);
-			}
+			String[] env = {"PATH=/bin:/usr/bin/"};
+			String cmd = "checkserver-as.sh";  //e.g test.sh -dparam1 -oout.txt
+			Process process = Runtime.getRuntime().exec(cmd, env);
 		}
 		else {
 			
-			ExecResult trace = getExec().runExec("traceroute", args, true, 25000);
-			if (trace.getReturnValue() > 0) 
-			{
-				traceresult = "Trace timed out! " + trace.getStandardError();
-			}
-			else 
-			{
-				traceresult = trace.getStandardOut();
-			}
+			log.info("About to run checkserver...");
+			/* New way of running it , always run checkserver.sh for this testing phase.*/
+			String[] env = {"PATH=/bin:/usr/bin/"};
+			String cmd = "checkserver.sh";
+			Process process = Runtime.getRuntime().exec(cmd, env);
+			
+			/* Run traceroute */
+			 ExecResult trace = getExec().runExec("traceroute", args, true, 25000); 
+			 if(trace.getReturnValue() > 0) 
+			 { 
+				 traceresult = "Trace timed out! " + trace.getStandardError(); 
+			 } 
+			 else 
+			 { 
+				 traceresult = trace.getStandardOut(); 
+			 }
+			 
+			 
 		}
 		log.info("Trace Route: " + traceresult);
 		
@@ -724,7 +713,7 @@ public class SiteManager implements CatalogEnabled
 		
 	}
 
-	private void enterFailover(MultiValued inReal, Data inInstance, MediaArchive inArchive)
+	private void enterFailover(MultiValued inReal, Data inInstance, MediaArchive inArchive) throws IOException
 	{
 		log.info("Entering failover...");
 		sendErrorNotification(inInstance, inReal, inArchive);
