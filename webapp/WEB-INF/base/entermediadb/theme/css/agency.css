@@ -56,24 +56,24 @@ h6 {
   color:#fff;
 }
 h1 {
-	font-size:2.5em;
+	font-size:2.2em;
 	margin-bottom: 2rem;
 
 }
 .h2, h2 {
-    font-size: 2.2rem;
+    font-size: 2rem;
     margin-bottom: 2.1rem;
 }
 .h3, h3 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     text-transform:uppercase;
     margin-bottom: 1.6rem;
 }
 section {
-  padding: 40px 0;
+  padding: 30px 0;
 }
 .hometext {
-	font-size:1.4rem;
+	font-size:1.2rem;
 	padding:10px 10%;
 }
 
@@ -117,35 +117,29 @@ img::-moz-selection {
 .account-top-menu a {
 	color:#bbb;
 	margin-left: 20px;
+	font-weight: 600;
+	font-size:0.85rem;
+	text-transform: uppercase;
 }
 .account-top-menu a:hover {
 	color:#fff;
 	text-decoration: none;
 }
+.entermedia-header-container {
+	background-color: #07172C;
+}
 .entermedia-header {
 	padding-bottom: 30px;
-}
-#mainNav .navbar-toggler {
-  font-size: 12px;
-  font-weight:bold;
-  right: 0;
-  padding: 13px;
-  text-transform: uppercase;
-  color: white;
-  border: 0;
-  background-color: #ffc107;
-  
+	
 }
 
-
-#mainNav .navbar-brand.active, #mainNav .navbar-brand:active, #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
-  color: #fec503;
-}
+#mainNav.navbar { padding:20px 0 0; }
+#mainNav .navbar-nav { width:100%;}
 
 #mainNav .navbar-nav .nav-item .nav-link {
   font-size: .9rem;
   font-weight: bold;
-  padding: 0.75em 0;
+  padding: 0.75rem 1rem;
   letter-spacing: 1px;
   color: white;
 }
@@ -673,8 +667,16 @@ text-align:center;
     display: table;
 }
 
-.navbar { background-color: #000; border-radius:0!important; margin-bottom:0;  }
-
+.navbar { 
+	 margin-bottom:0;
+	 flex-flow: row nowrap;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+}
+.navbar-expand-sm .navbar-nav {
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
 .navbar-brand {
     float: left;
     height: 70px;
@@ -1657,13 +1659,6 @@ padding:20px 60px;
 		font-weight: bold;
 		padding:.95rem .65rem;
 	}
-	#mainNav .nav-item {
-	    border-bottom: 1px solid #444;
-	}
-	#mainNav .nav-item:last-child {
-		border:0 none;
-		padding:15px 0 5px;
-	}
 	#mainNav .nav-item .nav-link {
 		font-size: 1rem;
   		font-weight: bold;
@@ -1687,11 +1682,8 @@ padding:20px 60px;
   padding-top:60px;
 }
 
-
-
-.headerbanner .container {
-  
-  background-image: url("https://entermediadb.org/entermediadb/mediadb/services/module/librarycollection/downloads/originals/AXMB25JIlK7rmxopNUdE/Collections/General/Website%202020/2020/entermedia-2020-header-01_2.png/entermedia-2020-header-01_2.png");
+.entermedia-introduction .headerbanner-content {
+  background-image: url("../img/entermedia-2020-header-01_2.png");
   background-size: contain;
   background-repeat: no-repeat;
   background-position: right center;
@@ -1700,20 +1692,20 @@ padding:20px 60px;
   padding:60px 0 80px;
   color:#fff;
 }
-.headerbanner h2 {
+.entermedia-introduction h2 {
 	color:#fff;
 	font-family: futuraheavy, sans-serif;
-	font-size:2.6rem;
+	font-size:1.8rem;
 	margin-bottom:0.2em;
 	text-transform: uppercase;
 }
-.headerbanner h3 {
+.entermedia-introduction h3 {
 	color:#ccc;
-	font-size:2.1rem;
+	font-size:1.6rem;
 	text-transform: uppercase;
 }
-.headerbanner p {
-	font-size: 1.6rem;
+.entermedia-introduction p {
+	font-size: 1.3rem;
 	padding:20px 0;
 	padding-right:30%;
 }
@@ -1727,18 +1719,43 @@ padding:20px 60px;
   border-radius: .8rem;
 }
 
-
 .carousel-item {
     color: #fff;
     text-align: center;
 }
 
 .home-video {
-	padding-top:60px;
+	padding:60px 0;
 }
 
 .account-services {
+	padding:10px 10px;
+	font-size:1rem;
+}
+
+@media (min-width: 960px) {
+	.entermedia-introduction h2 {
+		font-size:2.6rem;
+		margin-bottom:0.2em;
+	}
+	.entermedia-introduction h3 {
+		font-size:2.1rem;
+	}
+	.entermedia-introduction p {
+		font-size: 1.6rem;
+		padding:20px 0;
+		padding-right:30%;
+	}
+	h3 {
+	font-size:2rem;
+	}
+	.hometext {
+	font-size:1.4rem;
+	}
+	.account-services {
 	padding:20px 80px;
 	font-size:1.1rem;
 }
+}
+
 

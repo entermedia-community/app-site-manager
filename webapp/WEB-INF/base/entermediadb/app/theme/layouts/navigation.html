@@ -1,7 +1,7 @@
 #set($collectionid = $context.getRequestParameter("collectionid"))
 #set($goaluser = $context.getRequestParameter("goaltrackerstaff"))
 #set($topic = $context.getRequestParamater("topic"))
-
+<div class="entermedia-header-container">
 <div class="container">
 <div class="account-top-menu">
 #if( $user )
@@ -26,7 +26,7 @@
 	</a>
 	</div>
 	<div class="col-sm-8">
-	<nav class="navbar navbar-expand-lg navbar-dark navbar-shrink"  id="mainNav">
+	<nav class="navbar navbar-expand-sm "  id="mainNav">
 	<ul class="navbar-nav text-uppercase ">
          <li class="nav-item">
            <a class="nav-link js-scroll-triggerr #if($postdata.sourcepath=="product/support.html") active #end" href="$sitelink/product/support.html">[[Services]]</a>
@@ -48,3 +48,4 @@
 </div>
 </div>
 
+</div>
