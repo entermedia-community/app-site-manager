@@ -98,19 +98,19 @@ public class SiteManager implements CatalogEnabled
 		if ( monitoringurl.equals("https://unitednations-us-1.entermediadb.net") )
 		{
 			String[] env = {"PATH=/bin:/usr/bin/"};
-			String cmd = "checkserver.sh";  //e.g test.sh -dparam1 -oout.txt
+			String cmd = "checkserver.sh";  
 			Process process = Runtime.getRuntime().exec(cmd, env);
 		}
 		else if( monitoringurl.equals("https://unitednations-eu-1.entermediadb.net"))
 		{
 			String[] env = {"PATH=/bin:/usr/bin/"};
-			String cmd = "checkserver-eu.sh";  //e.g test.sh -dparam1 -oout.txt
+			String cmd = "checkserver-eu.sh";  
 			Process process = Runtime.getRuntime().exec(cmd, env);
 		}
 		else if( monitoringurl.equals("https://unitednations-as-1.entermediadb.net"))
 		{
 			String[] env = {"PATH=/bin:/usr/bin/"};
-			String cmd = "checkserver-as.sh";  //e.g test.sh -dparam1 -oout.txt
+			String cmd = "checkserver-as.sh";  
 			Process process = Runtime.getRuntime().exec(cmd, env);
 		}
 		else {
