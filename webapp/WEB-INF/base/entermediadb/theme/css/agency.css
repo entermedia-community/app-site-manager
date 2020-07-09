@@ -112,14 +112,14 @@ img::-moz-selection {
 
 .account-top-menu {
 	text-align: right;
-	padding:10px 0;
+	padding:2px 0;
 }
 .account-top-menu a {
 	color:#bbb;
 	margin-left: 20px;
 	font-weight: 600;
-	font-size:0.85rem;
-	text-transform: uppercase;
+	font-size:0.9rem;
+	
 }
 .account-top-menu a:hover {
 	color:#fff;
@@ -129,11 +129,14 @@ img::-moz-selection {
 	background-color: #07172C;
 }
 .entermedia-header {
-	padding-bottom: 30px;
+	padding:15px 15px 20px;
 	
 }
+.entermedia-headertop-container {
+	background-color: #111;
+}
 
-#mainNav.navbar { padding:20px 0 0; }
+#mainNav.navbar { padding:0; }
 #mainNav .navbar-nav { width:100%;}
 
 #mainNav .navbar-nav .nav-item .nav-link {
@@ -1680,6 +1683,7 @@ padding:20px 60px;
   background-repeat: no-repeat;
   background-position: center center;
   padding-top:60px;
+  padding-bottom:40px;
 }
 
 .entermedia-introduction .headerbanner-content {
@@ -1689,7 +1693,7 @@ padding:20px 60px;
   background-position: right center;
 }
 .headerbanner-content {
-  padding:60px 0 80px;
+  padding:10px 0 80px;
   color:#fff;
 }
 .entermedia-introduction h2 {
@@ -1711,8 +1715,8 @@ padding:20px 60px;
 }
 .homepage-btn {
   font-weight: bold;
-  font-size:1rem;
-  padding: .275rem 2rem;
+  font-size:1.1rem;
+  padding: .475rem 2.5rem;
   text-transform: uppercase;
   background-color: #63AF57;
   border-color:#63AF57;
@@ -1736,7 +1740,7 @@ padding:20px 60px;
 @media (min-width: 960px) {
 	.entermedia-introduction h2 {
 		font-size:2.6rem;
-		margin-bottom:0.2em;
+		margin:0 0 0.2em;
 	}
 	.entermedia-introduction h3 {
 		font-size:2.1rem;

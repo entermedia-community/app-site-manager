@@ -1,23 +1,29 @@
 #set($collectionid = $context.getRequestParameter("collectionid"))
 #set($goaluser = $context.getRequestParameter("goaltrackerstaff"))
 #set($topic = $context.getRequestParamater("topic"))
-<div class="entermedia-header-container">
+
+<div class="entermedia-headertop-container">
 <div class="container">
 <div class="account-top-menu">
 #if( $user )
-	<a class=" #if($content.section == "eminstituteapp") active #end" href="$sitelink/app/users/$user.getId()/index.html">[[My Account]]</a>
+	<a class=" #if($content.section == "eminstituteapp") active #end" href="$sitelink/app/users/$user.getId()/index.html"
+	title="[[EnterMedia Client Portal]]">[[My Account]]</a>
 	## $pages.include("/entermediadb/app/account/activity/link.html")
 
-	<a class=" #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/logout.html" rel="nofollow">[[Log Out]]</a>
+	<a class=" #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/logout.html" rel="nofollow"
+	title="[[Log out from EnterMedia]]">[[Log Out]]</a>
     #if( $collectionid )
         <a class="btn btn-light emdialog" style="background: transparent; color: #01b34f; border: transparent;" href="$applink/collective/goals/editgoalpanel.html?collectionid=$!collectionid&topic=$!topic&categoryid=$!selectedcat.getId()&goaluser=$!goaluser&goalfolder=priorities&userlikes=$user.id"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> <i class="far fa-file-alt fa-2x"></i></a>
     #end
 #else
-	<a class=" #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/login.html" rel="nofollow">[[Login]]</a>
+	<a class=" #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/login.html" rel="nofollow"
+	title="[[Log in to EnterMedia]]">[[Log In]]</a>
 #end
 </div>
 </div>
+</div>
 
+<div class="entermedia-header-container">
 <div class="container entermedia-header">
 <div class="row">
 	<div class="col-sm-4">
