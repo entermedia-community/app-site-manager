@@ -1,32 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<properties> 
-  <property id="serverrealname" index="true" deleted="false" editable="true" stored="true">New 
+<properties>
+<property id="id" index="true" internalfield="true" editable="true" stored="true" sortable="true" keyword="false">
+    <name> 
+      <language id="en"><![CDATA[Id]]></language>  
+   	</name> 
+  </property> 
+
+<property id="name" index="true" multilanguage="true" editable="true" stored="true" sortable="true" keyword="false">
+    <name> 
+      <language id="de"><![CDATA[Identität]]></language>  
+      <language id="en"><![CDATA[Name]]></language>  
+      <language id="es"><![CDATA[Nombre]]></language>  
+      <language id="fr"><![CDATA[Identité]]></language> 
+    </name> 
+  </property>
+  <property id="serverrealname" index="true" editable="true" stored="true">
     <name> 
       <language id="en"><![CDATA[serverrealname]]></language> 
     </name> 
   </property>  
-  <property id="server_region" index="true" listchild="country" internalfield="false" editable="true" isbadge="false" viewtype="list" rendertype="list" required="false" filter="true" multilanguage="false" highlight="false" deleted="false" datatype="list" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+  <property id="server_region" index="true" editable="true" stored="true">
     <name> 
-      <language id="de"><![CDATA[Region]]></language>  
-      <language id="en"><![CDATA[Region]]></language>  
-      <language id="es"><![CDATA[Región]]></language>  
-      <language id="fr"><![CDATA[Region]]></language> 
+      <language id="en"><![CDATA[server_region]]></language> 
     </name> 
   </property>  
-  <property id="dockersubnet" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" highlight="false" deleted="false" datatype="number" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+  <property id="dockersubnet" index="true" editable="true" stored="true" multilanguage="false" datatype="number" keyword="false" >
     <name> 
       <language id="en"><![CDATA[dockersubnet]]></language> 
     </name> 
   </property>  
-  <property id="lastnodeid" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" highlight="false" deleted="false" datatype="number" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
+  <property id="lastnodeid" index="true" editable="true" stored="true" multilanguage="false" datatype="number" keyword="false" >
+    <name>
+      <language id="en"><![CDATA[lastnodeid]]></language>
+    </name>
+  </property>  
+  <property id="currentinstances" index="true" editable="true" stored="true" multilanguage="false" datatype="number" keyword="false" >
     <name> 
-      <language id="en"><![CDATA[lastnodeid]]></language> 
+      <language id="en"><![CDATA[currentinstances]]></language> 
     </name> 
   </property>  
-  <property id="currentinstances" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" filter="false" multilanguage="false" highlight="false" deleted="false" datatype="number" autocreatefromexif="false" keyword="false" writenametoexif="false">New 
-    <name>
-      <language id="en"><![CDATA[currentinstances]]></language>
-    </name>
-  </property> 
+  <property id="serverurl" index="true" editable="true" stored="true">
+    <name> 
+      <language id="en"><![CDATA[serverurl]]></language> 
+    </name> 
+  </property>  
+  <property id="sshname" index="true" editable="true" stored="true">
+    <name> 
+      <language id="en"><![CDATA[sshname]]></language> 
+    </name> 
+  </property>  
+  <property id="allownewinstances" index="true" editable="true" stored="true" multilanguage="false" datatype="boolean" keyword="false" >
+    <name> 
+      <language id="en"><![CDATA[allownewinstances]]></language> 
+    </name> 
+  </property>  
+  <property id="maxinstance" index="true" editable="true" stored="true" multilanguage="false" datatype="number" keyword="false" >
+    <name> 
+      <language id="en"><![CDATA[maxinstance]]></language> 
+    </name> 
+  </property>  
+  <property id="datacenter" index="true" editable="true" multilanguage="false" listid="monitoredsites_datacenters" datatype="list" stored="true" keyword="false" >
+    <name> 
+      <language id="en"><![CDATA[datacenter]]></language> 
+    </name> 
+  </property>  
+  <property id="serverip" index="true" editable="true" stored="true">
+    <name> 
+      <language id="en"><![CDATA[serverip]]></language> 
+    </name> 
+  </property>  
+  <property id="notes" index="true" editable="true" stored="true" sortable="true" keyword="false">
+    <name> 
+      <language id="de"><![CDATA[Notizen]]></language>  
+      <language id="en"><![CDATA[Notes]]></language>  
+      <language id="es"><![CDATA[notas]]></language>  
+      <language id="fr"><![CDATA[Remarques]]></language> 
+    </name> 
+  </property>  
+    
+   
 </properties>
