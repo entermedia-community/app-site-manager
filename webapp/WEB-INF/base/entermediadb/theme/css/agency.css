@@ -28,8 +28,12 @@
 body {
   font-family: futuralight, sans-serif;
   font-size:1.1rem;
-  background-color: #0C223A;
+}
+
+.bodywebsite {
+	  background-color: #0C223A;
   color:#fff;
+	
 }
 
 @media (min-width: 1200px) {
@@ -53,7 +57,7 @@ h5,
 h6 {
   font-family: futurabold, sans-serif;
   font-weight: 400;
-  color:#fff;
+
 }
 h1 {
 	font-size:2.2em;
