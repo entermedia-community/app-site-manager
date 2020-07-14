@@ -1688,9 +1688,6 @@ padding:20px 60px;
 
 
 
-
-
-
 .emcarouselhome {
   background-image: url("../img/entermedia-2020-header-02.png");
   background-size: auto;
@@ -1706,6 +1703,11 @@ padding:20px 60px;
   background-repeat: no-repeat;
   background-position: right center;
 }
+
+.emcarouselhome .carousel {
+	padding-bottom:30px;
+}
+
 .headerbanner-content {
   padding:10px 0 80px;
   color:#fff;
