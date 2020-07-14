@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpMessage;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPatch;
 import org.apache.http.client.methods.HttpPost;
@@ -23,7 +24,6 @@ import org.json.simple.parser.JSONParser;
 import org.openedit.CatalogEnabled;
 import org.openedit.Data;
 import org.openedit.ModuleManager;
-import org.openedit.MultiValued;
 import org.openedit.OpenEditException;
 import org.openedit.data.Searcher;
 
@@ -121,7 +121,7 @@ public class AutoFailoverManager implements CatalogEnabled
 //				{
 //					json.put("priority", priority);
 //				}
-		handleRequest(HttpPatch.METHOD_NAME, url, json);
+		handleRequest(url, json);
 	}
 
 	public Long findRecordId(String parentdomain, String inPublicDomain, String inPrimaryIp, String inSecondaryIp )
@@ -161,6 +161,7 @@ public class AutoFailoverManager implements CatalogEnabled
 		}
 		throw new OpenEditException("No such DNS entry found " + parentdomain + " with: " + inPublicDomain);
 	}
+	/*
 	public boolean createRecord(String name, String type, String zone, String content, Collection<String> region, Integer ttl, Integer priority)
 	{
 		try
@@ -184,64 +185,56 @@ public class AutoFailoverManager implements CatalogEnabled
 				   json.put("priority", priority);
 			   }
 
-			   handleRequest(HttpPost.METHOD_NAME, url, json);
+			   handleRequest(url, json);
 				
 		}
 		catch (Exception e) {
 			log.error("Can't create DNS Record", e);
+			return false;
 		}
 		return true;
 	}
-
-	protected void handleRequest(String method, String url, JSONObject json)
+	*/
+	protected JSONObject handleRequest(String url, JSONObject json)
 	{
-		HttpMessage httpMethod = null;
-		switch (method)
-		{
-		case HttpPatch.METHOD_NAME:
-			httpMethod = new HttpPatch(url);
+		HttpMessage httpMethod = new HttpPatch(url);
 			((HttpPatch)httpMethod).setEntity(new StringEntity(json.toString(), "UTF-8"));
-			break;
-		case HttpPost.METHOD_NAME:
-			httpMethod = new HttpPost(url);
-			((HttpPost) httpMethod).setEntity(new StringEntity(json.toString(), "UTF-8"));
-			break;
-		case HttpGet.METHOD_NAME:
-			httpMethod = new HttpGet(url);
-			break;
-		default:
-			break;
-		}
 		
 		String apitoken = getMediaArchive().getCatalogSettingValue("site_monitor_prod_token");
 		
 		httpMethod.setHeader("Authorization", "Bearer " + apitoken);
 		httpMethod.setHeader("Content-Type", "application/json; charset=utf-8");
 
+		CloseableHttpResponse response = null;
 		try
 		{
 			log.info("Setting DNS value: " + url + " with: " + json.toJSONString() );
-			HttpResponse response = getHttpConnection().getSharedClient().execute((HttpUriRequest) httpMethod);
+			response = (CloseableHttpResponse)getHttpConnection().getSharedClient().execute((HttpUriRequest) httpMethod);
 			StatusLine sl = response.getStatusLine();
 	
 			if (sl.getStatusCode() != 200)
 			{
-				throw new Exception(method + " Request failed: status code " + sl.getStatusCode());
+				throw new Exception(" Request failed: status code " + sl.getStatusCode());
 			}
 			else
 			{
 				String responseJSON = EntityUtils.toString(response.getEntity(), "UTF-8");
 	
 				JSONObject jsonResponse = (JSONObject) new JSONParser().parse(responseJSON);
-				JSONObject result = (JSONObject) jsonResponse.get("data");
-				DnsRecord dnsRecord = getMapper().readValue(result.toJSONString(), DnsRecord.class);
-	
+				return jsonResponse;
+//				JSONObject result = (JSONObject) jsonResponse.get("data");
+//				DnsRecord dnsRecord = getMapper().readValue(result.toJSONString(), DnsRecord.class);
+//				return dnsRecord;
 				//updateLocalDnsRecord(dnsRecord, null);
 			}
 		}
 		catch( Throwable ex)
 		{
 			throw new OpenEditException(ex);
+		}
+		finally
+		{
+			getHttpConnection().release(response);
 		}
 	}
 
@@ -367,36 +360,43 @@ public class AutoFailoverManager implements CatalogEnabled
 				   method.setHeader("Authorization", "Bearer " + apitoken);
 				   method.setHeader("Content-Type", "application/json; charset=utf-8");
 	
-				   HttpResponse response = getHttpConnection().getSharedClient().execute(method);
-					StatusLine sl = response.getStatusLine();           
-					if (sl.getStatusCode() != 200)
-					{
-						throw new Exception( method  + " Request failed: status code " + sl.getStatusCode());
-					}
-					else
-					{
-						ObjectMapper mapper = new ObjectMapper();
-					    String responseJSON = EntityUtils.toString(response.getEntity(), "UTF-8");
-					    //log.error("Got DNS data back " + responseJSON);
-						JSONObject jsonResponse = (JSONObject) new JSONParser().parse(responseJSON);
-						JSONArray results = (JSONArray) jsonResponse.get("data");
-						for (Object jsonObj : results.toArray())
+				   CloseableHttpResponse response = (CloseableHttpResponse)getHttpConnection().getSharedClient().execute(method);
+				   try
+				   {
+						StatusLine sl = response.getStatusLine();           
+						if (sl.getStatusCode() != 200)
 						{
-	
-							JSONObject record = (JSONObject) jsonObj;
-							DnsRecord dnsRecord = mapper.readValue(record.toJSONString(), DnsRecord.class);
-							dnsrecords.add(dnsRecord);							
+							throw new Exception( method  + " Request failed: status code " + sl.getStatusCode());
 						}
-						JSONObject pagination = (JSONObject) jsonResponse.get("pagination");
-						if( pagination != null)
+						else
 						{
-							Object count = pagination.get("total_pages");
-							if( count != null)
+							ObjectMapper mapper = new ObjectMapper();
+						    String responseJSON = EntityUtils.toString(response.getEntity(), "UTF-8");
+						    //log.error("Got DNS data back " + responseJSON);
+							JSONObject jsonResponse = (JSONObject) new JSONParser().parse(responseJSON);
+							JSONArray results = (JSONArray) jsonResponse.get("data");
+							for (Object jsonObj : results.toArray())
 							{
-								maxpages = Integer.parseInt( count.toString() );
+		
+								JSONObject record = (JSONObject) jsonObj;
+								DnsRecord dnsRecord = mapper.readValue(record.toJSONString(), DnsRecord.class);
+								dnsrecords.add(dnsRecord);							
+							}
+							JSONObject pagination = (JSONObject) jsonResponse.get("pagination");
+							if( pagination != null)
+							{
+								Object count = pagination.get("total_pages");
+								if( count != null)
+								{
+									maxpages = Integer.parseInt( count.toString() );
+								}
 							}
 						}
-					}
+				   }
+				   finally
+				   {
+					   getHttpConnection().release(response);
+				   }
 			   }
 			return dnsrecords;
 		}
@@ -405,30 +405,4 @@ public class AutoFailoverManager implements CatalogEnabled
 			throw new OpenEditException("Can't update DNS Record", e);
 		}
 	}
-	
-	public boolean getRecord(String name)
-	{
-		Data dnsRecord = getMediaArchive().query("monitoredsitesdns").match("name", name).searchOne();
-
-		if (dnsRecord != null)
-		{
-			try
-			{
-				String url = API_ROOT_URL_PROD + "/zones/" + dnsRecord.getValue("recordzone") + "/records/" + dnsRecord.getValue("recordid");
-				handleRequest(HttpGet.METHOD_NAME, url, null);
-			}
-			catch (Exception e)
-			{
-				log.error("Can't get DNS Record", e);
-				return false;
-			}
-		}
-		else
-		{
-			log.error("Can't find any matching DNS Record on DB");
-			return false;
-		}
-		return true;
-	}
-
 }
