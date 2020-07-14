@@ -1,0 +1,10 @@
+#if($user)
+
+$pages.include("$apphome/workspaces/projects.html", $context)
+
+#else
+<div class="text-center">
+<h2>[[Welcome to EnterMedia AI - Please Log In]]</h2>
+$pages.include("$appsite/authentication/login.html", $context)
+</div>
+#end

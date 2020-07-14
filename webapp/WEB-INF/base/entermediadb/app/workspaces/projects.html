@@ -31,20 +31,13 @@
 		#end
 
    #if( $selecteduser.getId() == $user.getId()) 
-   <h3 	> [[Active Projects]]</h3>
+   <h3 	> [[Active Workspaces]]</h3>
    #else
-   <h3 	> [[Common Projects]]</h3>
+   <h3 	> [[Common Workspaces]]</h3>
    #end
 
 <div class="project-grid ">
- #if( $selecteduser.getId() == $user.getId()) 
-	<div class="project-item project-item-add">
-	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog project-add" title="[[Add a Project]]">
-	<i class="fas fa-plus" style="font-size:.8em;"></i> [[Add a Project]]</a>
-	</div>
-#end
-
-	#if($oids)
+ 	#if($oids)
 		#set( $organizations = $mediaarchive.query("librarycollection").exact("organizationstatus","active").ids($oids).sort("name").hitsPerPage(200).search($context) )
 		#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
 		#foreach( $ohit in $organizations )
@@ -64,32 +57,16 @@
 			</div>
 		#end
 	#end
+	#if( $selecteduser.getId() == $user.getId()) 
+	<div class="project-item project-item-add">
+	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog project-add" title="[[Add a Project]]">
+	<i class="fas fa-plus" style="font-size:.8em;"></i> [[Add a Worskpace]]</a>
+	</div>
+	#end
 	<div class="clearfix"></div>
 </div>
 
-#set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selecteduser.getId()).exact("ontheteam","true").hitsPerPage(200).search() )
-#set($doids = [])
-#foreach( $dohit in $organizationsuser )
-	#set($x = $doids.add($dohit.collectionid))
-#end
-#if($doids)
-<hr>
-<h3>[[Closed/Disabled Projects]]</h3>
-		#set( $organizations = $mediaarchive.query("librarycollection").ids($doids).orgroup("organizationstatus","disabled|closed").sort("name").hitsPerPage(200).search($context) )
-		#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
-		#foreach( $ohit in $organizations )
-			<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" 
-				class="project-title #if($selectedproject==$ohit.id) active #end">
-			$ohit.name
-			#if( $modcollections.contains($ohit.getId())) * #end
-			($ohit.organizationstatus)
-			</a><br>
-			
-			
-		#end
-#end
-</div>
-  
+ 
 	
 #if ($organizations.size() == 1)
 	#set($collection = $organizations.get(0))

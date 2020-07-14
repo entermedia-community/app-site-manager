@@ -125,6 +125,9 @@ img::-moz-selection {
 	font-size:0.9rem;
 	
 }
+.account-top-menu a.active {
+	color:#bbb;
+}
 .account-top-menu a:hover {
 	color:#fff;
 	text-decoration: none;
@@ -652,6 +655,10 @@ label.error { color:#F93122; font-weight: normal; line-height: 1.2; padding: 3px
   float:left;
 }
 
+.carousel-indicators li {
+	cursor: pointer;
+	opacity: .85;
+}
 
 
 .plans {
