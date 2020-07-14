@@ -658,6 +658,8 @@ label.error { color:#F93122; font-weight: normal; line-height: 1.2; padding: 3px
 .carousel-indicators li {
 	cursor: pointer;
 	opacity: .85;
+	background-color: rgba(255, 255, 255, 0.75);
+	
 }
 
 
