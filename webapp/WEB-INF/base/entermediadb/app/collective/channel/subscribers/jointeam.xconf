@@ -8,5 +8,7 @@
 	<path-action name="Script.run">
 		<script>./notifysubscription.groovy</script>
     </path-action>
+    
+    <inner-layout />
 	
 </page>
