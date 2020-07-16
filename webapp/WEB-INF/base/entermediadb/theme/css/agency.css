@@ -73,6 +73,9 @@ h1 {
     text-transform:uppercase;
     margin-bottom: 1.6rem;
 }
+h4 {
+	color:#fefefe;
+}
 section {
   padding: 30px 0;
 }
@@ -1341,7 +1344,23 @@ color:#fff;
 
 .package {
 float:left;
-width:265px;
+width:45%;
+font-size:1rem;
+margin-bottom:20px;
+text-align: left;
+}
+
+
+@media (min-width: 992px) {
+	.package {
+		width:220px;
+		font-size:0.9rem;
+	}
+}
+@media (min-width: 1200px) {
+	.package {
+		width:240px;
+	}
 }
 
 .package-left {
@@ -1572,6 +1591,7 @@ padding:20px 60px;
 	.package {
 		margin:0 auto 40px auto!important;
 		float:none!important;
+		width:80%;
 	}
 	.package-content {
 		height: auto;
