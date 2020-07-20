@@ -13,7 +13,8 @@
 	<a class=" #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/logout.html" rel="nofollow"
 	title="[[Log out from EnterMedia]]">[[Log Out]]</a>
     #if( $canviewsettings )
-        <a class="btn btn-light emdialog" style="background: transparent; color: #01b34f; border: transparent;" href="$applink/collective/goals/editgoalpanel.html?collectionid=$!collectionid&topic=$!topic&categoryid=$!selectedcat.getId()&goaluser=$!goaluser&goalfolder=priorities&userlikes=$user.id"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> <i class="far fa-file-alt fa-2x"></i></a>
+    $topic
+        <a class="btn btn-light emdialog" style="background: transparent; color: #01b34f; border: transparent;" href="$applink/collective/goals/editgoalpanel.html?collectionid=$!collectionid&foreignkeyvalue=$!collectionid&topic=$!topic&categoryid=$!selectedcat.getId()&goaluser=$!goaluser&goalfolder=priorities&userlikes=$user.id"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> <i class="far fa-file-alt fa-2x"></i></a>
     #end
 #else
 	<a class=" #if($content.section == "authentication") active #end" href="$sitelink/app/authentication/login.html" rel="nofollow"
