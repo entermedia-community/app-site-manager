@@ -6,4 +6,6 @@
  <path-action name="PostModule.loadPost"/>
  <inner-layout>${siteid}/homelayout.html</inner-layout>
  
+ 
+ <script id="recapcha" src="https://www.google.com/recaptcha/api.js" />
 </page>
