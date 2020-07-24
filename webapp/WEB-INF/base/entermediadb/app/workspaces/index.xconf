@@ -1,0 +1,9 @@
+<page>
+	
+  <property name="loginroot">/${applicationid}/workspaces/authentication</property>
+  <property name="loginokpage">/${applicationid}/workspaces/index.html</property>
+
+  <permission name="view">
+    <boolean value="true"/>
+  </permission>
+</page>

@@ -14,18 +14,18 @@
 	$content.setValue("GAtrakingcode", "")
 #end
 
-#set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selecteduser.getId()).exact("ontheteam","true").hitsPerPage(200).search() )
+#set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("library","workspaces").exact("followeruser",$selecteduser.getId()).exact("ontheteam","true").hitsPerPage(200).search() )
 #set($oids = [])
 #foreach( $ohit in $organizationsuser )
 	#set($x = $oids.add($ohit.collectionid))
 #end
 
-<div style="max-width:1000px; margin:0 auto; padding:20px 1%">
+
 	
 		#if(!$oids)
 		<h3>[[Welcome to Entermedia]]</h3>	
 		<p>
-		Welcome to EnterMedia! To start, click <strong>Add a Project</strong> on the left or below. Next, DEPLOY INSTANCE. If you have questions or require support and would like to direct chat with one of our agents, click here.
+		Welcome to EnterMedia! To start, click <strong>Add a Workspace</strong>.
 		</p>
 		
 		#end
@@ -46,21 +46,35 @@
 				#set($asset = $mediaarchive.getAsset($ohit.assetportrait))
 				#set($link = $mediaarchive.asLinkToPreview($asset,"image200x200.jpg"))
 			#end
-			<div class="project-item " style='border:2px solid #01b34f; #if($link) background-image: url("#uuencode($link)");#else background-image: url($apphome/theme/images/emprojectdefault.png); #end'>
-			<div class="project-item-box ">	
-			<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" 
-				class="project-title #if($selectedproject==$ohit.id) active #end" style="color:white">
-			$ohit.name
-			#if( $modcollections.contains($ohit.getId())) * #end
-			</a>
-			</div>
+			<div class="project-item " style='border:2px solid #01b34f; 
+			##if($link) background-image: url("#uuencode($link)");#else background-image: url($apphome/theme/images/emprojectdefault.png); 
+			##end
+			'>
+			#set( $servers = $mediaarchive.query("entermedia_instances").exact("organizationid", $ohit.getId()).sort("name").search($context) )
+			#foreach($shit in $servers)		
+				<div class="project-item-box ">
+				<form action="${shit.instanceurl}/assets/mediaapp/index.html" method="post">
+					#set($entermediakey = $mediaarchive.getUserManager.getEnterMediaKey($user))
+					<input type="hidden" name="entermedia.key" value="$!entermediakey" />
+					<button id="senddata" type="submit" class="btn btn-primary">
+					    [[Go To Your EnterMedia Workspace]]
+					</button>
+				</form>
+					
+				<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" 
+					class="project-title #if($selectedproject==$ohit.id) active #end" style="color:white">
+				$ohit.name
+				
+				</a>
+				</div>
+			#end
 			</div>
 		#end
 	#end
 	#if( $selecteduser.getId() == $user.getId()) 
 	<div class="project-item project-item-add">
-	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog project-add" title="[[Add a Project]]">
-	<i class="fas fa-plus" style="font-size:.8em;"></i> [[Add a Worskpace]]</a>
+	<a href="$applink/workspaces/create/createsite.html" class="project-add" title="[[Add a Project]]">
+	<i class="fas fa-plus" style="font-size:.8em;"></i> [[Add a Workspace]]</a>
 	</div>
 	#end
 	<div class="clearfix"></div>

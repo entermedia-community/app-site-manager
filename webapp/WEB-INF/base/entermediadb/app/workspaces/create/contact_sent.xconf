@@ -1,0 +1,10 @@
+<page>
+	<path-action alltypes="true" name="MediaArchiveModule.getMediaArchive"/>
+	<path-action name="Email.sendEmail" />
+	<property name="emaillayout">/${applicationid}/contact_template.html</property>
+	<property name="subject">Contact From entermediadb.com</property>
+	<property name="to">help@entermediadb.org</property>
+	<property name="from">noreply@entermediadb.org</property>
+	
+	<layout>/theme/layouts/application.html</layout>
+</page>

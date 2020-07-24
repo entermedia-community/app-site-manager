@@ -5,7 +5,7 @@
   <property name="sectiontitle">Authentication</property>
   <inner-layout>/${applicationid}/theme/layouts/largearea.html</inner-layout>
   <property name="fallbackdirectory">/WEB-INF/base/system/components/authentication</property>
-  <property name="loginroot">/${applicationid}/authentication</property>
+  <property name="loginroot">/${applicationid}/workspaces/authentication</property>
   <property name="shownav">false</property>
   <property name="hidemediaviewer">true</property>
   

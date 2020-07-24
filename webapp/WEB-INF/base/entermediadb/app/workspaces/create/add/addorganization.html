@@ -1,0 +1,30 @@
+##Exising ones 
+##No existing programs found.
+<form name="saveproject" id="saveproject" action="$apphome/site/sitedeployer/add/saveorganization.html" method="post" class="force-validate-inputs">
+	<input type="hidden" name="save" value="true" />
+	<input type="hidden" name="searchtype" value="librarycollection" />
+	
+	<input type="hidden" name="field" value="owner" />
+	<input type="hidden" name="owner.value" value="$user.getId()" />
+	
+	<input type="hidden" name="field" value="organizationstatus" />
+	<input type="hidden" name="organizationstatus.value" value="active" />
+	
+	<input type="hidden" name="collectionroot" value="$sitelink/app/collective/sites/index.html" />
+	
+##	#set( $searcher = $mediaarchive.getSearcher("librarycollection") )
+##	$context.putPageValue("searcher",$searcher)
+##	$context.putPageValue("view", "project/addnew")
+	
+##	$pages.include("/$applicationid/components/xml/detaileditor4.html", $context)
+	<div class="form-group">
+	<input type="hidden" name="field" value="name" />
+	<input type="text" name="name.value" id="name.value" value="" class="form-control" />
+  	</div>
+  	<div id="loadingresult"></div>
+</form>
+
+
+<script>
+
+</script>

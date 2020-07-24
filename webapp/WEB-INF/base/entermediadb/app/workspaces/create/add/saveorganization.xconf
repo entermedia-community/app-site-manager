@@ -1,0 +1,12 @@
+<page>
+	<property name="virtual">true</property>
+	
+	<path-action name="DataEditModule.saveData"/>
+	
+	<path-action name="Script.run" >
+		<script>/${applicationid}/site/sitedeployer/add/saveorganization.groovy</script>
+	</path-action>
+	
+	 <path-action name="ProjectModule.redirectToCollectionRoot" />
+	
+</page>

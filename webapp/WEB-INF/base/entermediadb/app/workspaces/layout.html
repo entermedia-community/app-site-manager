@@ -1,1 +1,41 @@
+<div class="emheader workspacesheader">
+<div class=" navbar  navbar-expand-lg navbar-dark ">
+	<div class="collapse navbar-collapse navlinks" id="navbarNav">
+	<ul class="navbar-nav  ml-auto">
+		#if( $user )
+			<li class="nav-item nav-first-item"><a class="emdialog" data-width="900" data-height="1900" title="[[Help Center]]" href="$home$apphome/views/modules/help/helpcenter.html">[[Help]]</a></li>
+	    	#if( $canviewmyaccount ) 
+	   			##<li class="nav-item"><a href="$home$apphome/views/myaccount/myassets/index.html">[[My Account]]</a></li>	    	
+	    	#end
+			 
+	    	<li   class="nav-item"><a href="$home$applink/workspaces/authentication/logout.html">[[Logout]]</a></li> 
+	    #end
+	    #if($user)
+		#set( $localesearcher = $mediaarchive.getSearcher("locale") )
+	       #set($currentlang = $localesearcher.searchById($context.language))
+	      #if($currentlang)
+	 	<li class="nav-item dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">$currentlang</a> 
+	    #else
+	 	<li class="nav-item dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown">[[Language]]</a> 
+	     #end
+	  
+	  	<div id="language-bar-select" class="dropdown-menu">
+			#set( $localesearcher = $mediaarchive.getSearcher("locale") )
+			#set( $languages = $localesearcher.query().match("enabled", "true").search($context) )
+			#foreach( $lang in $languages)
+				 <a class="dropdown-item" href="$home$apphome/components/languages/changelanguage.html?newlang=locale_$lang.id&origURL=#uuencode($context.getPathUrl())">$lang </a>
+			#end
+	    </div> 
+		</li>
+		#end	
+
+    </ul>
+ </div>
+</div>
+</div>
+
+<div class="workspacescontainer">
+
 $pages.includeContent()
+
+</div>
