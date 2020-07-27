@@ -618,14 +618,14 @@ public class SiteManager implements CatalogEnabled
 		{
 			try
 			{
-				scanSite(inArchive,it);
+				scanSite(inArchive, it);
 			}
 			catch( Throwable ex)
 			{
 				log.error("Could not scan site " + it ,ex);
 			}
 		}
-		log.info("scan complete");
+		log.info("Scan complete on "+ sitestomonitor.size() +" sites.");
 	}
 	
 
@@ -671,7 +671,7 @@ public class SiteManager implements CatalogEnabled
 		ServerStats stats = scanStats(real, instance);
 		try
 		{
-			log.info(stats.isReachable());
+			//log.info(stats.isReachable());
 			if (!stats.isReachable()) 
 			{
 				real.setValue("isreachable", false);
@@ -701,7 +701,7 @@ public class SiteManager implements CatalogEnabled
 		}
 		catch ( Exception ex)
 		{
-			log.error("Could not scan.", ex);
+			log.error("Could not scan: " + real.getName(), ex);
 			real.addValue("alerttype", ex.getMessage()); //Should not happen
 			sites.saveData(real, null);
 		}
