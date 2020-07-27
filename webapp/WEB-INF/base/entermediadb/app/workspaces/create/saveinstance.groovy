@@ -39,11 +39,24 @@ public void init()
 	Data organization = collectionSearcher.createNewData();
 	organization.setName(instancename);
 	organization.setValue("owner", user.getId());
+	organization.setValue("organizationstatus", "active");
 	organization.setValue("library", "workspaces");
 	collectionSearcher.saveData(organization);
 	String organizationid = organization.getId();
-	
 	context.setRequestParameter("collectionid", organizationid);
+	
+	//Add user as Follower and Team
+	Searcher librarycolusersearcher = mediaarchive.getSearcher("librarycollectionusers");
+	Data userexists = librarycolusersearcher.query().exact("followeruser", user.getId()).exact("collectionid", organizationid).searchOne();
+	Data librarycolusers = null;
+	if (userexists == null) {
+		log.info('Adding User to Collection');
+		librarycolusers = librarycolusersearcher.createNewData();
+		librarycolusers.setValue("collectionid", organizationid);
+		librarycolusers.setValue("followeruser", user.getId());
+		librarycolusers.setValue("ontheteam","true");
+		librarycolusersearcher.saveData(librarycolusers);
+	}
 	
 	if (organizationid && region) {
 		
@@ -64,7 +77,7 @@ public void init()
 		instancesearcher.saveData(newinstance);
 		
 		//Search Server by Region
-		log.info("- Checking region " + region);
+		//log.info("- Checking region " + region);
 		
  		HitTracker servers = mediaarchive.query("entermedia_servers").exact("allownewinstances", "true").exact("server_region", region).search();
 		Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
@@ -82,7 +95,7 @@ public void init()
 			for (Iterator serverIterator = servers.iterator(); serverIterator.hasNext();)
 			{
 				server = serversSearcher.loadData(serverIterator.next());
-				log.info("- Checking server " + server.getName());
+				//log.info("- Checking server " + server.getName());
 				maxinstances = server.getValue("maxinstance");
 				currentinstances = server.getValue("currentinstances");
 				//log.info("- Server: "+server.getName()+" M/C:"+maxinstances+"/"+currentinstances);
@@ -111,7 +124,7 @@ public void init()
 				sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/workspaces/create/email/noseats.html");
 			}
 			else{
-				log.info("- Found space at: " + server.getName());
+				//log.info("- Found space at: " + server.getName());
 				// Call deploy script 
 				try {
 					ArrayList<String> command = new ArrayList<String>();

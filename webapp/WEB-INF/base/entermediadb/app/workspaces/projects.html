@@ -13,22 +13,17 @@
 #else
 	$content.setValue("GAtrakingcode", "")
 #end
-
-#set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("library","workspaces").exact("followeruser",$selecteduser.getId()).exact("ontheteam","true").hitsPerPage(200).search() )
-#set($oids = [])
-#foreach( $ohit in $organizationsuser )
-	#set($x = $oids.add($ohit.collectionid))
-#end
-
-
-	
-		#if(!$oids)
+#set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("followeruser",$selecteduser.getId()).exact("ontheteam","true").search($context) )
+	#set($oids = [])
+	#foreach( $organization in $organizationsuser )
+			#set($x = $oids.add($organization.collectionid))
+	#end
+	#if(!$oids)
 		<h3>[[Welcome to Entermedia]]</h3>	
 		<p>
 		Welcome to EnterMedia! To start, click <strong>Add a Workspace</strong>.
 		</p>
-		
-		#end
+	#end
 
    #if( $selecteduser.getId() == $user.getId()) 
    <h3 	> [[Active Workspaces]]</h3>
@@ -38,38 +33,45 @@
 
 <div class="project-grid ">
  	#if($oids)
+ 		##.exact("library","workspaces")
 		#set( $organizations = $mediaarchive.query("librarycollection").exact("organizationstatus","active").ids($oids).sort("name").hitsPerPage(200).search($context) )
-		#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
-		#foreach( $ohit in $organizations )
+		##set( $modcollections = $chatManager.loadCollectionsModified($organizations, $selecteduser.getId() ) )
+		#foreach( $organization in $organizations )
 			#set($link = false)
-			#if($ohit.assetportrait)
-				#set($asset = $mediaarchive.getAsset($ohit.assetportrait))
+			#if($organization.assetportrait)
+				#set($asset = $mediaarchive.getAsset($organization.assetportrait))
 				#set($link = $mediaarchive.asLinkToPreview($asset,"image200x200.jpg"))
 			#end
-			<div class="project-item " style='border:2px solid #01b34f; 
-			##if($link) background-image: url("#uuencode($link)");#else background-image: url($apphome/theme/images/emprojectdefault.png); 
-			##end
-			'>
-			#set( $servers = $mediaarchive.query("entermedia_instances").exact("organizationid", $ohit.getId()).sort("name").search($context) )
-			#foreach($shit in $servers)		
-				<div class="project-item-box ">
-				<form action="${shit.instanceurl}/assets/mediaapp/index.html" method="post">
-					#set($entermediakey = $mediaarchive.getUserManager.getEnterMediaKey($user))
-					<input type="hidden" name="entermedia.key" value="$!entermediakey" />
-					<button id="senddata" type="submit" class="btn btn-primary">
-					    [[Go To Your EnterMedia Workspace]]
-					</button>
-				</form>
-					
-				<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" 
-					class="project-title #if($selectedproject==$ohit.id) active #end" style="color:white">
-				$ohit.name
-				
-				</a>
+			<div class="project-item1 " style='border:2px solid #ddd; background-color:#fff; float:left; margin:0 10px 10px 0; width:260px; height: 160px;'>
+				#set( $servers = $mediaarchive.query("entermedia_instances").match("librarycollection", $organization.getId()).search($context) )
+				<div style="padding:5px; border-bottom:#eee;">
+				<strong>$organization.name</strong>
 				</div>
-			#end
+				<div style="overflow-y:auto; height: 120px;"> 
+				#foreach($instance in $servers)
+					   <div class="project-item-box1 " style="padding:5px;">
+						
+						#if($organization.library == "workspaces")
+							#set($instanceurl = "${instance.instanceurl}/assets/mediaapp/startmediaboat.html")
+						#else
+							#set($instanceurl = "${instance.instanceurl}/assets/emshare2/index.html")
+						#end
+						##chatlink-> "$sitelink/app/collective/community/index.html?collectionid=$organization.id&goaltrackerstaff=*"
+						<form action="$instanceurl" name="launchinstance" method="post">
+						<input type="hidden" name="entermedia.key" value="$!entermediakey" />
+						<input type="hidden" name="workspacetype" value="$organization.library" />
+						<a href="#" 
+							class="submitlaunchinstance" 
+							style="display: block" 
+							>
+							$instance.name
+						</a>
+						</form>
+						</div>
+					#end
+				</div>
 			</div>
-		#end
+			#end
 	#end
 	#if( $selecteduser.getId() == $user.getId()) 
 	<div class="project-item project-item-add">
@@ -79,19 +81,28 @@
 	#end
 	<div class="clearfix"></div>
 </div>
-
- 
+<script>
+$(document).ready(function(){
+	$(".submitlaunchinstance").click(function(e){
+		e.preventDefault();
+		var theform = $(this).closest('form');
+		var type = $(theform).find('input[name=workspacetype]').val();
+		if(window && window.process && window.process.type && type=='workspaces') {
+			var electron = require('electron');
+	    	var startMediaBoat = electron.remote.require('./index.js').startMediaBoat;
+	    	//var entermediakey = $(theform).find('input[name="entermedia.key"]').val();
+	    	var entermediakey = "adminmd5421c0af185908a6c0c40d50fd5e3f16760d5580bc";
+	    	var instanceurl = $(theform).attr("action");
+	    	console.log("Launching: "+instanceurl + "key: "+entermediakey);
+	    	var mediaBoat = startMediaBoat(instanceurl, entermediakey);
+		
+		}
+		else {
+			theform.submit();
+		}
+	});
 	
-#if ($organizations.size() == 1)
-	#set($collection = $organizations.get(0))
-	#set($collectionid = $collection.collectionid)
-	#set( $instances = $mediaarchive.query("entermedia_instances").match("librarycollection", $collectionid).search() )
-	#if ($collectionid && $instances.isEmpty())
-	
-	<a href="/entermediadb/app/site/sitedeployer/createsite.html?organizationid=$collectionid" class="btn btn-secondary btn-sm">[[Deploy New Server]]</a>
-	
-	#end
-#end
-
+});
+</script>
 
 
