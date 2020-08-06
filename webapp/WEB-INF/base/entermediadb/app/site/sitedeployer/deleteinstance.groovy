@@ -20,12 +20,12 @@ public void init()
 	if (instanceid != null) {
 		Searcher instanceSearcher = searcherManager.getSearcher(catalogid, "entermedia_instances");
 		Data instance = instanceSearcher.searchById(instanceid);
-		if (instance != null) {
-			
+		//log.info("- To delete: " +instance.instancename+instance.instancenode)
+		if (instance != null && instance.getValue("instance_status") != 'deleted') {
 			Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
 			Data server = serversSearcher.searchById(instance.entermedia_servers);
 			if(server != null) {
-				log.info("Deleting: " +instance.instancename+instance.instancenode+" on: "+server.sshname)
+				log.info("- Deleting: " +instance.instancename+instance.instancenode+" on: "+server.sshname)
 				ArrayList<String> command = new ArrayList<String>();
 				command.add(server.sshname); //server name
 				command.add(instance.instancename);  // Docker id
@@ -33,7 +33,17 @@ public void init()
 				
 				Exec exec = moduleManager.getBean("exec"); //removeclientinstance.sh m44 test 22
 				ExecResult done = exec.runExec("removeclientinstance", command, true); //Todo: Need to move this script here?
+				
+				
+				instance.setValue("instance_status", "deleted");
+				instanceSearcher.saveData(instance);
+				
+				//Discount currentinstances on server
+				server.setValue("currentinstances", server.getValue("currentinstances") - 1);
+				serversSearcher.saveData(server);
 			}
 		}
 	}
 }
+
+init();

@@ -53,9 +53,6 @@ public void init()
 		
 		instancesearcher.saveData(newinstance);
 		
-		//Search Server by Region
-		log.info("- Checking region " + region);
-		
  		HitTracker servers = mediaarchive.query("entermedia_servers").exact("allownewinstances", "true").exact("server_region", region).search();
 		Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
 
@@ -72,7 +69,6 @@ public void init()
 			for (Iterator serverIterator = servers.iterator(); serverIterator.hasNext();)
 			{
 				server = serversSearcher.loadData(serverIterator.next());
-				log.info("- Checking server " + server.getName());
 				maxinstances = server.getValue("maxinstance");
 				currentinstances = server.getValue("currentinstances");
 				log.info("- Server: "+server.getName()+" M/C:"+maxinstances+"/"+currentinstances);
@@ -82,26 +78,18 @@ public void init()
 					foundspace = true;
 					break;
 				}
-				/*
-				HitTracker seats = mediaarchive.query("entermedia_seats").match("seatstatus", "true").match("entermedia_servers", server.id).search();
-				if ( seats.size() < Integer.parseInt(server.maxinstance) )
-				{
-					seat = mediaarchive.query("entermedia_seats").match("seatstatus", "false").match("entermedia_servers", server.id).searchOne();
-					break;
-				}*/
 			 }
 		
 			if (!foundspace) {
 				log.info("- No space on servers for trialsites");
 				context.putPageValue("errorcode","2");
 				
-				//Send Email Notify No Seats
+				//Send Email Notify No Space on Servers
 				context.putPageValue("from", clientemail);
 				context.putPageValue("subject", "No space for Trial Sites");
 				sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
 			}
 			else{
-				log.info("- Found space at: " + server.getName());
 				// Call deploy script 
 				try {
 					ArrayList<String> command = new ArrayList<String>();
@@ -138,7 +126,7 @@ public void init()
 						else {
 							server.setValue("lastnodeid", nodeid);
 						}
-						mediaarchive.saveData("entermedia_servers", server);
+						serversSearcher.saveData(server);
 
 						
 						context.putPageValue("userurl",fullURL);
@@ -165,7 +153,6 @@ public void init()
 						context.putPageValue("from", notifyemail);
 						context.putPageValue("subject", "Welcome to EnterMediaDB ");
 						sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
-					
 				
 					}
 					catch(Exception e){

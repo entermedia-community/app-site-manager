@@ -1,7 +1,0 @@
-<page>
-
-    <path-action name="Script.run">
-		<script>./saveinstance.groovy</script>
-	</path-action>
-	<layout>/theme/layouts/application.html</layout>
-</page>

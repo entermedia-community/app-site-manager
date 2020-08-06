@@ -66,9 +66,9 @@
       <language id="en"><![CDATA[Docker Instance Name]]></language> 
     </name> 
   </property>
-  <property id="instanceport" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false"> 
+  <property id="instancenode" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false"> 
     <name> 
-      <language id="en"><![CDATA[Docker Instance Port]]></language> 
+      <language id="en"><![CDATA[Docker Instance Node]]></language> 
     </name> 
   </property>
   <property id="entermedia_servers" listid="entermedia_servers" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
