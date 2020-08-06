@@ -1,9 +1,22 @@
 <page>
-	<path-action alltypes="true" name="MediaArchiveModule.getMediaArchive"/>
-	<path-action name="Email.sendEmail" />
+
+<path-action name="MediaArchiveModule.getMediaArchive"/>
+
+
+
+	<path-action name="Script.run">
+		<script>./contact_sent.groovy</script>
+	</path-action>
+
+	 <property name="postsourcepath">thankyou.html</property>
+	 <property name="isfullscreen">true</property>
+	 <path-action name="PostModule.loadPost"/>
+	 
+	 
+	<!-- <path-action name="Email.sendEmail" /> -->
 	<property name="emaillayout">/${siteid}/contact_template.html</property>
 	<property name="subject">Contact From EnterMediadb.org</property>
-	<property name="to">help@entermediadb.org</property>
+	<property name="to">cristobal@entermediadb.org</property>
 	<property name="from">noreply@entermediadb.org</property>
 	<property name="thankspage">/${siteid}/thankyou.html</property>
 
