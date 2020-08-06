@@ -120,6 +120,8 @@ public void init()
 						
 						newinstance.setValue("instanceurl", fullURL);
 						newinstance.setValue("instance_status", "active");
+						newinstance.setValue("instancename", selected_url);
+						newinstance.setValue("instancenode", String.valueOf(nodeid));
 						newinstance.setValue("istrial", true);
 						newinstance.setValue("entermedia_servers", server.id);
 						DateStorageUtil dateStorageUtil = DateStorageUtil.getStorageUtil();
@@ -137,11 +139,7 @@ public void init()
 							server.setValue("lastnodeid", nodeid);
 						}
 						mediaarchive.saveData("entermedia_servers", server);
-						/*
-						seat.setValue("instanceid", newinstance.getId());
-						seat.setValue("seatstatus", "true");
-						mediaarchive.saveData("entermedia_seats", seat);
-						*/
+
 						
 						context.putPageValue("userurl",fullURL);
 						

@@ -44,10 +44,10 @@ public void init()
                 Data server = servers.query().exact("id", instance.entermedia_servers).searchOne();
                 if (server) {
                         log.info("Deleting instance: "+instance.name+",  on server "+server.name);
-
+						string instacename = instance.instanceprefix + "";
                         List<String> command = new ArrayList<String>();
                         command.add(server.sshname); //server name
-                        command.add(instance.instanceprefix);  //client url
+                        command.add(instancename);  //client url
 
                         Exec exec = moduleManager.getBean("exec");
                         ExecResult done = exec.runExec("removeclient", command);

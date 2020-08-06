@@ -41,11 +41,11 @@
       <language id="en"><![CDATA[End Date]]></language> 
     </name> 
   </property>  
-  <property id="instance_status" listid="entermedia_instance_status" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
-    <name> 
-      <language id="en"><![CDATA[Instance Status]]></language> 
-    </name> 
-  </property>  
+    <property id="instance_status" index="true" internalfield="false" isbadge="false" required="false" listid="entermedia_instance_status" multilanguage="false" highlight="false" deleted="false" stored="true" autocreatefromexif="false" writenametoexif="false" searchcomponent="list" editable="true" datatype="list" filter="false" keyword="false">New 
+    <name>
+      <language id="en"><![CDATA[Instance Status]]></language>
+    </name>
+  </property>   
   <property id="istrial" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="boolean" viewtype="boolean" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
     <name> 
       <language id="en"><![CDATA[Trial Site]]></language> 
@@ -61,6 +61,16 @@
       <language id="en"><![CDATA[URL Prefix]]></language> 
     </name> 
   </property>  
+  <property id="instancename" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false"> 
+    <name> 
+      <language id="en"><![CDATA[Docker Instance Name]]></language> 
+    </name> 
+  </property>
+  <property id="instanceport" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false"> 
+    <name> 
+      <language id="en"><![CDATA[Docker Instance Port]]></language> 
+    </name> 
+  </property>
   <property id="entermedia_servers" listid="entermedia_servers" index="true" internalfield="false" editable="true" isbadge="false" required="false" multilanguage="false" filter="false" datatype="list" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
     <name> 
       <language id="en"><![CDATA[Server]]></language> 
@@ -101,8 +111,7 @@
       <language id="en"><![CDATA[Sync Priority]]></language> 
     </name> 
   </property>
- 
-     <property id="instanceplugins" index="true" editable="true" stored="true">New 
+  <property id="instanceplugins" index="true" editable="true" stored="true">New 
     <name> 
       <language id="en"><![CDATA[Plugins]]></language> 
     </name> 

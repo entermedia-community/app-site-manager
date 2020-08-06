@@ -42,7 +42,7 @@
 				#set($asset = $mediaarchive.getAsset($organization.assetportrait))
 				#set($link = $mediaarchive.asLinkToPreview($asset,"image200x200.jpg"))
 			#end
-			<div class="project-item1 " style='border:2px solid #ddd; background-color:#fff; float:left; margin:0 10px 10px 0; width:280px; height: 160px;'>
+			<div class="project-item1 " style='border:2px solid #ddd; background-color:#fff; float:left; margin:0 10px 10px 0; width:320px; height: 160px;'>
 				#set( $servers = $mediaarchive.query("entermedia_instances").match("librarycollection", $organization.getId()).search($context) )
 				<div style="padding:5px; border-bottom:#eee;">
 				<strong>$organization.name</strong>
@@ -56,10 +56,11 @@
 						#else
 							#set($instanceurl = "${instance.instanceurl}/assets/emshare2/index.html")
 						#end
+						
 						##chatlink-> "$sitelink/app/collective/community/index.html?collectionid=$organization.id&goaltrackerstaff=*"
-						#set($entermediakey = $mediaarchive.getUserManager().getEnterMediaKey($user))
+						
 						<form action="$instanceurl" name="launchinstance" method="post">
-						<input type="hidden" name="entermediacloudkey" value="$!entermediakey" />
+						<input type="hidden" name="entermediacloudkey" value="$tempentermediakey" />
 						<input type="hidden" name="collectionid" value="$organization.getId()" />
 						<input type="hidden" name="workspacetype" value="$organization.library" />
 						<a href="#" 
