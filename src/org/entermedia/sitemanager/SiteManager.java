@@ -468,6 +468,11 @@ public class SiteManager implements CatalogEnabled
 				
 				stats.setReachable(true);
 				
+				if(response.get("assetscount") != null)
+				{
+					stats.setTotalassets(response.get("assetscount"));
+				}
+				
 				
 			}
 			else
