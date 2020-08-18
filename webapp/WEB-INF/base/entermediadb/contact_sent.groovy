@@ -14,7 +14,7 @@ public void init()
 {
 		
 	String catalogid = "entermediadb/catalog";
-	String notifyemail = "cristobal@entermediadb.org";
+	String notifyemail = "help@entermediadb.org";
 
 	//Send Email Notify No Seats
 	context.putPageValue("from", "noreply@entermediadb.org");
@@ -32,7 +32,8 @@ protected void sendEmail(Map pageValues, String email, String templatePage){
 	//Verify Captcha
 	String usercaptcha = context.getRequestParameter("g-recaptcha-response");
 	GoogleCaptcha captcha = (GoogleCaptcha)moduleManager.getBean("googleCaptcha");
-	captcha.setSecretKey("6LfnfroZAAAAAMHa9ixE5nIn6ScHArXl1Zys4jtz");
+	//sk: 6LeiosAZAAAAAOOo0OlpphL4jYJHTq2jZMQz_1ZF
+	captcha.setSecretKey("6LeiosAZAAAAAFbwYWRjti8Mec3EFeX1NdKsvcn_");
 	if(captcha.isValid(usercaptcha)) {
 		//send e-mail
 		RequestUtils rutil = moduleManager.getBean("requestUtils");
