@@ -4,7 +4,7 @@
 		<script>./createsitedialoglogin.groovy</script>
     </path-action>
     <path-action name="Admin.redirectInternal">
-    <property name="redirectpath">/${applicationid}/authentication/loginform.html</property>
+    <property name="redirectpath">/${applicationid}/authentication/loginformdialog.html</property>
     </path-action>
 	<inner-layout>/${applicationid}/theme/layouts/dialoglayout.html</inner-layout>
 	

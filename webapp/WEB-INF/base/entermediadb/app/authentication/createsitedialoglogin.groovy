@@ -7,10 +7,8 @@ import java.util.Random;
 
 public void init() 
 {
-/* Save variables */
 	Map params = context.getParameterMap();
 	context.putSessionValue("userparams", params);
-/* Redirect */
 	String confirmpage = context.findValue("confirmpage");
 	context.putSessionValue("fullOriginalEntryPage", confirmpage);
 	
