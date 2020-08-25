@@ -1,0 +1,73 @@
+<div>
+	<div id="deploywarning" style="display: none; padding-left: 10px;">
+		<em>[[Please be patient, we will start deploying your instance now...]]</em>
+	</div>
+		<div class="card card-login mx-auto mt-5">
+		  <div class="card-header">
+		  <strong>[[Your Server Info]]</strong>
+		  </div>
+		  <div class="card-body">
+			
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label for="user">[[Instance Name]]</label>
+						<input class="form-control" id="instancename" name="instancename" type="text" placeholder="[[Instance Name]]" value="$userparams.instancename" required data-msg="[[Please enter Instance name]].">
+						
+					</div>
+				</div>
+						<div class="col-sm-6">
+					<div class="form-group">
+						<label for="user">[[Industry]]</label>
+						
+						<select class="form-control" name="organization_type" required data-msg="[[Please enter your Organization Industria Type]].">
+						<option value="accounting">[[Accounting]] </option>
+						<option value="educational">[[Educational]] </option>
+						<option value="entretainment">[[Entertainment]]</option> 
+						<option value="food">[[Food]]</option> 
+						<option value="healthcare">[[Heath Care]]</option>
+						<option value="manufacturing">[[Manufacturing]]</option>
+						<option value="marketingsales">[[Marketing & Sales]]</option>
+						<option value="realestate">[[Real Estate]]</option>
+						<option value="telecomunications">[[Telecommunications]]</option>
+						<option value="transport">[[Transport]]</option>
+						<option value="technology">[[Technology]]</option>
+						<option value="other">[[Other]]</option>
+						</select>
+						
+					</div>
+				</div>
+		
+		 	</div>
+			
+		  
+					<div class="form-group">
+						<label for="user">Preferred Instance URL prefix</label>
+						<input class="form-control" id="organization_url" name="organization_url" type="text" placeholder="URL*" value="$userparams.organization_url"  required>
+						
+					</div>
+		
+					<div class="form-group">
+						<label for="user">[[Select a Region to deploy your trial server]]</label>
+						
+						<select class="form-control" name="region" required data-msg="[[Please select a region]].">
+						#set( $servers = $mediaarchive.query("entermedia_servers").exact("allownewinstances", "true").search() )
+						#if ($servers)
+							#foreach( $server in $servers )
+								#if($server.maxinstance > $server.currentinstances)
+									#set( $region = $mediaarchive.query("server_region").match("id", $server.server_region).searchOne() )
+									<option value="$server.server_region">$region</option>
+								#end
+							#end
+						#end
+						</select>
+					</div>
+	
+			
+						<a id="btn-next" class="emdialog btn btn-sm btn-primary" href="$applink/authentication/createsitedialoglogin.html">Next</a>
+					
+			</div>
+		   
+		  </div>
+	
+</div>
