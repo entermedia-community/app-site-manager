@@ -29,9 +29,10 @@ public void init()
  * null) { context.putSessionValue("clientform", null); } else {
  * context.putPageValue("errorcode", "1"); return; }
  */
-	createcollection();
+	
+	
+	String organizationid = createcollection();
 	Map params = context.getSessionValue("userparams");
-	String organizationid = context.getRequestParameter("collectionid");  //collectionid
 	String instanceurl = params.get("organization_url");
 	String instancename = params.get("instancename");
 	String organization_type = params.get("organization_type");
@@ -219,7 +220,7 @@ protected void sendEmail(Map pageValues, String email, String templatePage){
 	log.info("email sent to ${email}");
 }
 
-public void createcollection()
+public String createcollection()
 {
 	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 	BaseSearcher collectionsearcher = mediaArchive.getSearcher("librarycollection");
@@ -309,6 +310,8 @@ public void createcollection()
 	chatmanager.updateChatTopicLastModified(generaltopicid);
 	
 	mediaArchive.getProjectManager().getRootCategory(mediaArchive, collection);
+	
+	return collectionid;
 }
 
 init();
