@@ -11,7 +11,7 @@ public void init()
 	context.putSessionValue("userparams", params);
 	String confirmpage = context.findValue("confirmpage");
 	context.putSessionValue("fullOriginalEntryPage", confirmpage);
-	log.info(confirmpage);
+	
 }
 
 init();

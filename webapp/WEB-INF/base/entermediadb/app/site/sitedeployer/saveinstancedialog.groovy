@@ -24,20 +24,19 @@ public void init()
 	String clientemail = user.getEmail();
 
 	
-	String clientform = context.getSessionValue("clientform");
-	if (clientform != null) {
-		context.putSessionValue("clientform", null);
-	}
-	else {
-		context.putPageValue("errorcode", "1");
-		return;
-	}
+/*
+ * String clientform = context.getSessionValue("clientform"); if (clientform !=
+ * null) { context.putSessionValue("clientform", null); } else {
+ * context.putPageValue("errorcode", "1"); return; }
+ */
+	createcollection();
+	Map params = context.getSessionValue("userparams");
 	String organizationid = context.getRequestParameter("collectionid");  //collectionid
-	String instanceurl = context.getRequestParameter("organization_url");
-	String instancename = context.getRequestParameter("instancename");
-	String organization_type = context.getRequestParameter("organization_type");
-	String timezone = context.getRequestParameter("timezone");
-	String region = context.getRequestParameter("region");
+	String instanceurl = params.get("organization_url");
+	String instancename = params.get("instancename");
+	String organization_type = params.get("organization_type");
+	String region = params.get("region");
+	
 	
 	if (organizationid && region) {
 		
@@ -251,7 +250,7 @@ public void createcollection()
 	}
 	collectionsearcher.saveData(collection);
 	String collectionid = collection.getId();
-	context.putPageValue("librarycol", collection);
+	context.putPageValue("collectionid", collectionid);
 	log.info("Project created: ("+collectionid+") " + collection + " Owner: "+user.getId());
 	
 	//Create General Topic if not exists
