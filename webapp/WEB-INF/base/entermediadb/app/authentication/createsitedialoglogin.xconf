@@ -1,5 +1,6 @@
 <page>
 	<property name="virtual">true</property>
+	<property name ="confirmpage">/${applicationid}/site/sitedeployer/createsitedialogconfirm.html</property>
 	<path-action name="Script.run">
 		<script>./createsitedialoglogin.groovy</script>
     </path-action>
