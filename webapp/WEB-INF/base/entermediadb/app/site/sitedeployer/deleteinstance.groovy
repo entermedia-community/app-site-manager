@@ -34,13 +34,15 @@ public void init()
 				Exec exec = moduleManager.getBean("exec"); //removeclientinstance.sh m44 test 22
 				ExecResult done = exec.runExec("trialremove", command, true); //Todo: Need to move this script here?
 				
+				//Discount currentinstances on server
+				if(instance.getValue("instance_status") == 'active') {
+					server.setValue("currentinstances", server.getValue("currentinstances") - 1);
+				}
+				serversSearcher.saveData(server);
 				
 				instance.setValue("instance_status", "deleted");
 				instanceSearcher.saveData(instance);
 				
-				//Discount currentinstances on server
-				server.setValue("currentinstances", server.getValue("currentinstances") - 1);
-				serversSearcher.saveData(server);
 			}
 		}
 	}

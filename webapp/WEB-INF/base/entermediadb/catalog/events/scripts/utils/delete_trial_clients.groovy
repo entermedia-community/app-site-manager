@@ -40,8 +40,8 @@ public void init()
                 Data instance = instanceSearcher.loadData(instanceIterator.next());
 
 				//Get Server Info
-                Searcher servers = mediaArchive .getSearcher("entermedia_servers");
-                Data server = servers.query().exact("id", instance.entermedia_servers).searchOne();
+				Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
+				Data server = serversSearcher.searchById(instance.entermedia_servers);
                 if (server) {
                         log.info("Deleting instance: "+instance.name+",  on server "+server.name);
 						string instacename = instance.instanceprefix + "";
@@ -53,10 +53,16 @@ public void init()
                         Exec exec = moduleManager.getBean("exec");
                         ExecResult done = exec.runExec("trialremove", command);
                         //log.info("Exec: " + done.getStandardOut());
+						
+						//Discount currentinstances on server
+						if(instance.getValue("instance_status") == 'active') {
+							server.setValue("currentinstances", server.getValue("currentinstances") - 1);
+						}
+						serversSearcher.saveData(server);
+						
 
                         //Set Status Deleted to Client
                         instance.setProperty("instance_status","deleted");
-                        //client.setProperty("server","");
                         instanceSearcher.saveData(instance, null);
 						
 						//Delete Monitoring

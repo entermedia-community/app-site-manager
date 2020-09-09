@@ -38,20 +38,28 @@ public void init()
 		{
             //Get The Instance
 			Data instance = instanceSearcher.loadData(instanceIterator.next());
-            log.info("Disabling: "+instance.name+" -> "+instance.dateend);
+            log.info("Disabling: "+instance.instancename+" -> "+instance.dateend);
             //Get Server Info
-                Searcher servers = mediaArchive.getSearcher("entermedia_servers");
-                Data server = servers.query().exact("id", instance.entermedia_servers).searchOne();
+			Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
+			Data server = serversSearcher.searchById(instance.entermedia_servers);
                 if (server) {
                         List<String> command = new ArrayList<String>();
                         command.add(server.name); //server name
-                        command.add(instance.instanceprefix);  //client url
-                        command.add(String.valueOf(seat.nodeid));  //client nodeid
+                        command.add(instance.instancename);  // Docker id
+                        command.add(instance.instancenode);  // Docker Node
 
                         Exec exec = moduleManager.getBean("exec");
                         ExecResult done = exec.runExec("trialdisable", command);
                         log.info("Exec: " + done.getStandardOut());
+						
+						//Discount currentinstances on server
+						if(instance.getValue("instance_status") == 'active') {
+							server.setValue("currentinstances", server.getValue("currentinstances") - 1);
+						}
+						serversSearcher.saveData(server);
                 }
+				
+				
             //Set Status Expired to Client
             instance.setProperty("instance_status","disabled");
             instanceSearcher.saveData(instance, null);
