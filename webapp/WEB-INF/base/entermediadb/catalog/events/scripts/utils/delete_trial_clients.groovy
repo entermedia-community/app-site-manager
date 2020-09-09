@@ -40,6 +40,7 @@ public void init()
                 Data instance = instanceSearcher.loadData(instanceIterator.next());
 
 				//Get Server Info
+				searcherManager = context.getPageValue("searcherManager");
 				Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
 				Data server = serversSearcher.searchById(instance.entermedia_servers);
                 if (server) {

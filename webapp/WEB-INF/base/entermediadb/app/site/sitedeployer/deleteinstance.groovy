@@ -18,6 +18,7 @@ public void init()
 	
 	String instanceid = context.getRequestParameter("instanceid"); 
 	if (instanceid != null) {
+		searcherManager = context.getPageValue("searcherManager");
 		Searcher instanceSearcher = searcherManager.getSearcher(catalogid, "entermedia_instances");
 		Data instance = instanceSearcher.searchById(instanceid);
 		//log.info("- To delete: " +instance.instancename+instance.instancenode)

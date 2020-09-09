@@ -40,13 +40,13 @@ public void init()
 			Data instance = instanceSearcher.loadData(instanceIterator.next());
             log.info("Disabling: "+instance.instancename+" -> "+instance.dateend);
             //Get Server Info
-			Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
-			Data server = serversSearcher.searchById(instance.entermedia_servers);
+                Searcher serversSearcher = mediaArchive.getSearcher("entermedia_servers");
+                Data server = serversSearcher.query().exact("id", instance.entermedia_servers).searchOne();
                 if (server) {
                         List<String> command = new ArrayList<String>();
-                        command.add(server.name); //server name
+                        command.add(server.sshname); //server name
                         command.add(instance.instancename);  // Docker id
-                        command.add(instance.instancenode);  // Docker Node
+						command.add(instance.instancenode);  // Docker Node
 
                         Exec exec = moduleManager.getBean("exec");
                         ExecResult done = exec.runExec("trialdisable", command);
