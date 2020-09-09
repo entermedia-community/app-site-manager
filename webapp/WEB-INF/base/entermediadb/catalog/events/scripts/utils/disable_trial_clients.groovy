@@ -39,17 +39,9 @@ public void init()
             //Get The Instance
 			Data instance = instanceSearcher.loadData(instanceIterator.next());
             log.info("Disabling: "+instance.name+" -> "+instance.dateend);
-
-            //Search Seat Info
-            Searcher seatssearcher = mediaArchive.getSearcher("entermedia_seats");
-            SearchQuery scquery = seatssearcher.createSearchQuery();
-            HitTracker seats = seatssearcher.search(scquery);
-            Data seat = seatssearcher.query().match("instanceid", instance.id).searchOne();
-            if (seat) 
-				{
-                //Get Server Info
+            //Get Server Info
                 Searcher servers = mediaArchive.getSearcher("entermedia_servers");
-                Data server = servers.query().exact("id", seat.entermedia_servers).searchOne();
+                Data server = servers.query().exact("id", instance.entermedia_servers).searchOne();
                 if (server) {
                         List<String> command = new ArrayList<String>();
                         command.add(server.name); //server name
@@ -57,17 +49,9 @@ public void init()
                         command.add(String.valueOf(seat.nodeid));  //client nodeid
 
                         Exec exec = moduleManager.getBean("exec");
-                        ExecResult done = exec.runExec("disableclient", command);
+                        ExecResult done = exec.runExec("trialdisable", command);
                         log.info("Exec: " + done.getStandardOut());
-
-                        seat.setValue("instanceid","");
-                        seat.setValue("seatstatus","false");
-                        seatssearcher.saveData(seat, null);
-
-                        //Keep the server it was installed for the record
-                        instance.setProperty("server", seat.trial_servers);
                 }
-            }
             //Set Status Expired to Client
             instance.setProperty("instance_status","disabled");
             instanceSearcher.saveData(instance, null);

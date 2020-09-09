@@ -46,11 +46,12 @@ public void init()
                         log.info("Deleting instance: "+instance.name+",  on server "+server.name);
 						string instacename = instance.instanceprefix + "";
                         List<String> command = new ArrayList<String>();
-                        command.add(server.sshname); //server name
-                        command.add(instancename);  //client url
+						command.add(server.sshname); //server name
+						command.add(instance.instancename);  // Docker id
+						command.add(instance.instancenode);  // Docker Node
 
                         Exec exec = moduleManager.getBean("exec");
-                        ExecResult done = exec.runExec("removeclient", command);
+                        ExecResult done = exec.runExec("trialremove", command);
                         //log.info("Exec: " + done.getStandardOut());
 
                         //Set Status Deleted to Client

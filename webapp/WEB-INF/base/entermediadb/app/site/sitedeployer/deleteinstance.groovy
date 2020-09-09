@@ -32,7 +32,7 @@ public void init()
 				command.add(instance.instancenode);  // Docker Node
 				
 				Exec exec = moduleManager.getBean("exec"); //removeclientinstance.sh m44 test 22
-				ExecResult done = exec.runExec("removeclientinstance", command, true); //Todo: Need to move this script here?
+				ExecResult done = exec.runExec("trialremove", command, true); //Todo: Need to move this script here?
 				
 				
 				instance.setValue("instance_status", "deleted");
