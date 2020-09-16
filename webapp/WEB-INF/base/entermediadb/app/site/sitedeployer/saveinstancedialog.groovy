@@ -104,7 +104,7 @@ public void init()
 					command.add(server.getValue("serverurl"));  // DNS
 					
 					Exec exec = moduleManager.getBean("exec");
-					ExecResult done = exec.runExec("setupclient", command, true); //Todo: Need to move this script here?
+					ExecResult done = exec.runExec("trialsetup", command, true); //Todo: Need to move this script here?
 					log.info("- Deploying Trial Site " + selected_url + " at " + server.sshname);
 					
 						
