@@ -8,6 +8,15 @@
   }
 },
 {
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.example.em_mobile_flutter",
+    "sha256_cert_fingerprints":
+    ["31:1C:B4:6E:19:0D:A3:93:A2:B3:14:A7:C4:5A:34:91:19:36:84:AC:4B:F8:44:21:69:E4:45:0F:39:14:70:0E"]
+  }
+},
+{
   "relation": ["delegate_permission/common.get_login_creds"],
   "target": {
     "namespace": "web",
@@ -21,5 +30,14 @@
     "package_name": "org.entermediadb.chat2",
     "sha256_cert_fingerprints":
     ["DD:C8:21:7B:4A:11:4E:EC:BB:91:95:12:57:76:7A:1D:28:20:A9:19:17:33:0B:18:4F:6B:71:5A:34:E9:E7:6A"]
+  }
+},
+{
+  "relation": ["delegate_permission/common.get_login_creds"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.example.em_mobile_flutter",
+    "sha256_cert_fingerprints":
+    ["31:1C:B4:6E:19:0D:A3:93:A2:B3:14:A7:C4:5A:34:91:19:36:84:AC:4B:F8:44:21:69:E4:45:0F:39:14:70:0E"]
   }
 }]
