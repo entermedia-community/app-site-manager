@@ -13,7 +13,9 @@
     <data id="entermedia_servers">
     <name><![CDATA[Servers]]></name>
   </data>  
-  
+    <data id="entermedia_clients" showonsearch="false" securityenabled="false" ordering="0" showonnav="true">
+    <name><![CDATA[Clients]]></name>
+  </data> 
   
   
 </root>
