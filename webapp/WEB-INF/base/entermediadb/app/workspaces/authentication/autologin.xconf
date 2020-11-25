@@ -2,6 +2,6 @@
 
 <page>
   <path-action name="Admin.redirect">
-		  <redirectpath>${applink}/account/index.html</redirectpath>
+		  <redirectpath>${applink}/workspaces/index.html</redirectpath>
 	</path-action>
 </page>
