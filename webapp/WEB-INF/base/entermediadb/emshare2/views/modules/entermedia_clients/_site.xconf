@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-  <property name="fallbackdirectory">/entermediadb/emshare2/views/modules/default</property>
+  <property name="fallbackdirectory">/${applicationid}/views/modules/default</property>
   <property name="module">entermedia_clients</property>
 </page>

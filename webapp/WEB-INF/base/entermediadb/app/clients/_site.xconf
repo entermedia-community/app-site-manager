@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  
+  <property name="fallbackdirectory">/${applicationid}/views/modules/entermedia_clients</property>
+  <property name="module">entermedia_clients</property>
+  <property name="showactions">true</property>
+  
+</page>
