@@ -5,5 +5,5 @@
   <property name="fallbackdirectory">/${applicationid}/views/modules/entermedia_clients</property>
   <property name="module">entermedia_clients</property>
   <property name="showactions">true</property>
-  
+  <property name="appsection">clients</property>
 </page>
