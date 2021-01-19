@@ -20,7 +20,7 @@
       <language id="en"><![CDATA[serverrealname]]></language> 
     </name> 
   </property>  
-  <property id="server_region" index="true" editable="true" stored="true">
+  <property id="server_region" listid="server_region" datatype="list" index="true" editable="true" stored="true">
     <name> 
       <language id="en"><![CDATA[server_region]]></language> 
     </name> 
