@@ -134,7 +134,8 @@ public void init() {
 					ArrayList<String> command = new ArrayList<String>();
 					
 					command.add("-i");
-					command.add("inventory.yml trial.yml");
+					command.add("/media/services/ansible/inventory.yml")
+					command.add("/media/services/ansible/trial.yml");
 					command.add("-e");
 					command.add(jsonObject.toJSONString()); //
 					
