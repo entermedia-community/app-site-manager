@@ -29,7 +29,7 @@ public void init() {
 	String notifyemail = "help@entermediadb.org";
 	String clientemail = user.getEmail();
 
-	
+/*	
 	String clientform = context.getSessionValue("clientform");
 	if (clientform != null) {
 		context.putSessionValue("clientform", null);
@@ -38,14 +38,36 @@ public void init() {
 		context.putPageValue("errorcode", "1");
 		return;
 	}
-	String organizationid = context.getRequestParameter("collectionid");  //collectionid
-	String instanceurl = context.getRequestParameter("organization_url");
-	String instancename = context.getRequestParameter("instancename");
-	String organization_type = context.getRequestParameter("organization_type");
-	String timezone = context.getRequestParameter("timezone");
-	String region = context.getRequestParameter("region");
+	*/
 	
-	if (organizationid && region) {
+	String organizationid = context.getRequestParameter("collectionid");  //collectionid
+	if (organizationid == null) {
+		organizationid = createcollection();
+	}
+	Map params = context.getSessionValue("userparams");
+	String instanceurl = null;
+	String region = null;
+	String instancename = null;
+	String organization_type = null;
+	
+	if (params != null) {
+		///Dialog Parameters
+		log.info("creating site from dialog");
+		instanceurl = params.get("organization_url");
+		instancename = params.get("instancename");
+		organization_type = params.get("organization_type");
+		region = params.get("region");
+	}
+	if (params == null || instanceurl == null) {
+		//Regular Form
+		log.info("creating site from internal page");
+		instanceurl = context.getRequestParameter("organization_url");
+		instancename = context.getRequestParameter("instancename");
+		organization_type = context.getRequestParameter("organization_type");
+		region = context.getRequestParameter("region");
+	}
+	
+	if (organizationid && region && instanceurl) {
 		
 		//Create Valid URL
 		String selected_url = instanceurl.toLowerCase();
@@ -101,99 +123,100 @@ public void init() {
 			else{
 				// Call deploy script
 				try {
-					
+					//Update Server
+					currentinstances = currentinstances +1 ;
+					server.setValue("currentinstances", currentinstances);
+					if (nodeid>250) {
+						server.setValue("lastnodeid", 1);
+						//server.setValue("dockersubnet", subnetwork + 1);
+					}
+					else {
+						server.setValue("lastnodeid", nodeid);
+					}
+					serversSearcher.saveData(server);
 
 					JSONObject jsonObject = new JSONObject();
 					JSONArray jsonInstance = new JSONArray();
 					
 					JSONObject jsonInstanceObject = new JSONObject();
 					
-					jsonInstanceObject.put("name", instancename);
-					jsonInstanceObject.put("to", "trial0"+String.valueOf(nodeid));
+					jsonInstanceObject.put("subdomain", instancename);
+					jsonInstanceObject.put("containername", "trial00"+String.valueOf(nodeid));
 					jsonInstance.add(jsonInstanceObject);
 					
 					jsonObject.put("assigned", jsonInstance);
-	/*				
-					try {
-						String rootfolder = "/WEB-INF/temp"
-					   Page output = mediaarchive.getPageManager().getPage(rootfolder + "/deploy.json");
-					   String realpath = output.getContentItem().getAbsolutePath();
-					   File outputfile = new File(realpath);
-					   File parent = outputfile.parentFile;
-	   				   parent.mkdirs();
-					   FileWriter out = new FileWriter(outputfile);
-					   out.write(jsonObject.toJSONString());
-					   out.flush();
-					   out.close();
-						   
+					
+					//Next available instances
+					jsonInstance = new JSONArray();
+					int count = 1;
+					for (int i = currentinstances; i<=maxinstances; i=i+1) {
+						if (count<=3) { //always 3 more available
+							jsonInstanceObject = new JSONObject();
+							jsonInstanceObject.put("containername", "trial00"+String.valueOf(i));
+							jsonInstance.add(jsonInstanceObject);
+							count=count+1;
+						}
 					}
-					catch (IOException e) {
-									e.printStackTrace();
-					}
-					*/
+					jsonObject.put("available", jsonInstance);
+					
 					ArrayList<String> command = new ArrayList<String>();
 					
 					command.add("-i");
 					command.add("/media/services/ansible/inventory.yml")
 					command.add("/media/services/ansible/trial.yml");
+					command.add("--extra-vars");
+					command.add("server=" + server.sshname + "");
 					command.add("-e");
-					command.add(jsonObject.toJSONString()); //
+					command.add("" + jsonObject.toJSONString() + ""); //
 					
 					
 					Exec exec = moduleManager.getBean("exec");
 					ExecResult done = exec.runExec("trialsansible", command, true); //Todo: Need to move this script here?
-					log.info("- Deploying Trial Site " + selected_url + " at " + server.sshname);
+					//ExecResult done = exec.runExec("/media/services/ansible/trialsansible.sh", command, true); //Todo: Need to move this script here?
+					log.info("- Deploying Trial Site " + selected_url + " at " + server.getName());
 					
 						
-						String fullURL = "https://" + selected_url + "." + server.serverurl;
-						
-						newinstance.setValue("instanceurl", fullURL);
-						newinstance.setValue("instance_status", "active");
-						newinstance.setValue("instancename", selected_url);
-						newinstance.setValue("instancenode", String.valueOf(nodeid));
-						newinstance.setValue("istrial", true);
-						newinstance.setValue("entermedia_servers", server.id);
-						DateStorageUtil dateStorageUtil = DateStorageUtil.getStorageUtil();
-						newinstance.setValue("datestart", new Date());
-						newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
-						instancesearcher.saveData(newinstance);
-						
-						//Update Server
-						server.setValue("currentinstances", currentinstances + 1);
-						if (nodeid>250) {
-							server.setValue("lastnodeid", 1);
-							//server.setValue("dockersubnet", subnetwork + 1);
-						}
-						else {
-							server.setValue("lastnodeid", nodeid);
-						}
-						serversSearcher.saveData(server);
+					String fullURL = "https://" + selected_url + "." + server.trialdomain;
+					
+					newinstance.setValue("instanceurl", fullURL);
+					newinstance.setValue("instance_status", "active");
+					newinstance.setValue("instancename", selected_url);
+					newinstance.setValue("instancenode", String.valueOf(nodeid));
+					newinstance.setValue("istrial", true);
+					newinstance.setValue("entermedia_servers", server.id);
+					DateStorageUtil dateStorageUtil = DateStorageUtil.getStorageUtil();
+					newinstance.setValue("datestart", new Date());
+					newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
+					instancesearcher.saveData(newinstance);
+					
+					
 
-						
-						context.putPageValue("userurl",fullURL);
-						
-						BaseSearcher collectionsearcher = mediaarchive.getSearcher("librarycollection");
-						Data collection = collectionsearcher.searchByField("id", organizationid);
-						if (collection) {
-							context.putPageValue("organization", collection.getValue("name"));
-						}
-						
-						context.putPageValue("newuser", "admin");
-						context.putPageValue("newpassword", "admin");
-						
-						//Add Site to Monitoring
-						//Data monitor = addNewMonitor(newinstance);
-						
-						//Send Notification to us
-						context.putPageValue("from", clientemail);
-						context.putPageValue("subject", "New Activation - " + fullURL);
-						sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");
-						
-						
-						//Send Email to Client
-						context.putPageValue("from", notifyemail);
-						context.putPageValue("subject", "Welcome to EnterMediaDB ");
-						sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
+					
+					context.putPageValue("userurl",fullURL);
+					
+					BaseSearcher collectionsearcher = mediaarchive.getSearcher("librarycollection");
+					Data collection = collectionsearcher.searchByField("id", organizationid);
+					if (collection) {
+						context.putPageValue("organization", collection.getValue("name"));
+					}
+					
+					context.putPageValue("newuser", "admin");
+					context.putPageValue("newpassword", "admin");
+					
+					//Add Site to Monitoring
+					//Data monitor = addNewMonitor(newinstance);
+					
+					//Send Notification to us
+					context.putPageValue("from", clientemail);
+					context.putPageValue("subject", "New Activation - " + fullURL);
+					//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");
+					
+					
+					//Send Email to Client
+					context.putPageValue("from", notifyemail);
+					context.putPageValue("subject", "Welcome to EnterMediaDB ");
+					
+					sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
 				
 					}
 					catch(Exception e){
@@ -215,164 +238,6 @@ public void init() {
 }
 
 
-
-public void init_old() 
-{
-		
-	String catalogid = "entermediadb/catalog";
-    String notifyemail = "help@entermediadb.org";
-	String clientemail = user.getEmail();
-
-	
-	String clientform = context.getSessionValue("clientform");
-	if (clientform != null) {
-		context.putSessionValue("clientform", null);
-	}
-	else {
-		context.putPageValue("errorcode", "1");
-		return;
-	}
-	String organizationid = context.getRequestParameter("collectionid");  //collectionid
-	String instanceurl = context.getRequestParameter("organization_url");
-	String instancename = context.getRequestParameter("instancename");
-	String organization_type = context.getRequestParameter("organization_type");
-	String timezone = context.getRequestParameter("timezone");
-	String region = context.getRequestParameter("region");
-	
-	if (organizationid && region) {
-		
-		//Create Valid URL
-		String selected_url = instanceurl.toLowerCase();
-		context.putPageValue("selected_url", selected_url);
-				
-		Searcher instancesearcher = searcherManager.getSearcher(catalogid, "entermedia_instances");
-		Data newinstance = instancesearcher.createNewData();
-		newinstance.setValue("librarycollection", organizationid);
-		newinstance.setValue("owner", user.getId());
-		newinstance.setValue("instance_status", "pending");
-		newinstance.setValue("name", instancename); //Needs validation?
-		context.putPageValue("instancename", instancename);
-		newinstance.setValue("instanceprefix", selected_url);
-		newinstance.setValue("istrial", true);
-		
-		instancesearcher.saveData(newinstance);
-		
- 		HitTracker servers = mediaarchive.query("entermedia_servers").exact("allownewinstances", "true").exact("server_region", region).search();
-		Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
-
-		Data seat = null;
-		Data server = null;
-		Integer nodeid = 0;
-		String subnetwork = "";
-		Integer maxinstances = 0;
-		Integer currentinstances = 0;
-		Boolean foundspace = false;
-		//Check if server's seat has room
-		if (servers) 
-			{
-			for (Iterator serverIterator = servers.iterator(); serverIterator.hasNext();)
-			{
-				server = serversSearcher.loadData(serverIterator.next());
-				maxinstances = server.getValue("maxinstance");
-				currentinstances = server.getValue("currentinstances");
-				log.info("- Server: "+server.getName()+" M/C:"+maxinstances+"/"+currentinstances);
-				if (currentinstances < maxinstances) {
-					subnetwork = server.getValue("dockersubnet");
-					nodeid = server.getValue("lastnodeid") + 1;
-					foundspace = true;
-					break;
-				}
-			 }
-		
-			if (!foundspace) {
-				log.info("- No space on servers for trialsites");
-				context.putPageValue("errorcode","2");
-				
-				//Send Email Notify No Space on Servers
-				context.putPageValue("from", clientemail);
-				context.putPageValue("subject", "No space for Trial Sites");
-				sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
-			}
-			else{
-				// Call deploy script 
-				try {
-					ArrayList<String> command = new ArrayList<String>();
-					command.add(server.sshname); //server name
-					command.add(String.valueOf(subnetwork));  //server subnet
-					command.add(selected_url);  //client url
-					command.add(String.valueOf(nodeid));  //client nodeid				
-					command.add(server.getValue("serverurl"));  // DNS
-					
-					Exec exec = moduleManager.getBean("exec");
-					ExecResult done = exec.runExec("trialsetup", command, true); //Todo: Need to move this script here?
-					log.info("- Deploying Trial Site " + selected_url + " at " + server.sshname);
-					
-						
-						String fullURL = "https://" + selected_url + "." + server.serverurl;
-						
-						newinstance.setValue("instanceurl", fullURL);
-						newinstance.setValue("instance_status", "active");
-						newinstance.setValue("instancename", selected_url);
-						newinstance.setValue("instancenode", String.valueOf(nodeid));
-						newinstance.setValue("istrial", true);
-						newinstance.setValue("entermedia_servers", server.id);
-						DateStorageUtil dateStorageUtil = DateStorageUtil.getStorageUtil();
-						newinstance.setValue("datestart", new Date());
-						newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
-						instancesearcher.saveData(newinstance);
-						
-						//Update Server
-						server.setValue("currentinstances", currentinstances + 1);
-						if (nodeid>250) {
-							server.setValue("lastnodeid", 1);
-							server.setValue("dockersubnet", subnetwork + 1);
-						}
-						else {
-							server.setValue("lastnodeid", nodeid);
-						}
-						serversSearcher.saveData(server);
-
-						
-						context.putPageValue("userurl",fullURL);
-						
-						BaseSearcher collectionsearcher = mediaarchive.getSearcher("librarycollection");
-						Data collection = collectionsearcher.searchByField("id", organizationid);
-						if (collection) {
-							context.putPageValue("organization", collection.getValue("name"));
-						}
-						
-						context.putPageValue("newuser", "admin");
-						context.putPageValue("newpassword", "admin");
-						
-						//Add Site to Monitoring
-						//Data monitor = addNewMonitor(newinstance);
-						
-		                //Send Notification to us
-						context.putPageValue("from", clientemail);
-						context.putPageValue("subject", "New Activation - " + fullURL);
-						sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");
-						
-						
-						//Send Email to Client
-						context.putPageValue("from", notifyemail);
-						context.putPageValue("subject", "Welcome to EnterMediaDB ");
-						sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
-				
-					}
-					catch(Exception e){
-						 e.printStackTrace();
-					}
-			
-			}
-			}
-			else {
-				log.info("- No Servers Available.");
-				context.putPageValue("errorcode","3");
-				
-			}
-		
-	}
-}
 
 protected Data addNewMonitor(Data instance)
 {
@@ -420,8 +285,7 @@ protected void sendEmail(Map pageValues, String email, String templatePage){
 	log.info("email sent to ${email}");
 }
 
-public void createcollection()
-{
+public String createcollection() {
 	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 	BaseSearcher collectionsearcher = mediaArchive.getSearcher("librarycollection");
 	LibraryCollection  collection = collectionsearcher.createNewData();
@@ -510,6 +374,8 @@ public void createcollection()
 	chatmanager.updateChatTopicLastModified(generaltopicid);
 	
 	mediaArchive.getProjectManager().getRootCategory(mediaArchive, collection);
+	
+	return collectionid;
 }
 
 init();
