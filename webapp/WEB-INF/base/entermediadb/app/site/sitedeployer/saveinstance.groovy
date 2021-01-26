@@ -82,6 +82,13 @@ public void init() {
 	
 	if (organizationid && instanceurl) {
 		
+		BaseSearcher collectionsearcher = mediaarchive.getSearcher("librarycollection");
+		Data collection = collectionsearcher.searchByField("id", organizationid);
+		if (collection) {
+			context.putPageValue("organizationid", organizationid);
+			context.putPageValue("organization", collection.getValue("name"));
+		}
+		
 		//Create Valid URL
 		String selected_url = instanceurl.toLowerCase();
 		context.putPageValue("selected_url", selected_url);
@@ -208,16 +215,10 @@ public void init() {
 					newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
 					instancesearcher.saveData(newinstance);
 					
-					
-
-					
-					context.putPageValue("userurl",fullURL);
-					
-					BaseSearcher collectionsearcher = mediaarchive.getSearcher("librarycollection");
-					Data collection = collectionsearcher.searchByField("id", organizationid);
-					if (collection) {
-						context.putPageValue("organization", collection.getValue("name"));
-					}
+					context.putPageValue("status", "ok");
+					context.putPageValue("instanceid", newinstance.getId());
+					context.putPageValue("userurl", fullURL);
+					context.putPageValue("instanceurl", fullURL);
 					
 					context.putPageValue("newuser", "admin");
 					context.putPageValue("newpassword", "admin");

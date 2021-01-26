@@ -1,0 +1,16 @@
+{
+  "response":
+      {
+        "status": "$status",
+        "id":"$!newasset.id"
+      }
+  #if($status)
+  ,
+  "data":
+  {
+  		"organizationid" : "$organizationid",
+  		"instanceid": "$instanceid",
+  		"instanceurl":"$instanceurl"
+  }
+  #end
+}
