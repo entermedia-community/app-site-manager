@@ -1,10 +1,14 @@
 {
   "response":
       {
-        "status": "$status",
-        "id":"$!newasset.id"
+        "status": "$status"
+        #if($status=="ok")
+        ,"id":"$!instanceid"
+        #else
+        ,"error": "$!error"
+        #end
       }
-  #if($status)
+  #if($status=="ok")
   ,
   "data":
   {

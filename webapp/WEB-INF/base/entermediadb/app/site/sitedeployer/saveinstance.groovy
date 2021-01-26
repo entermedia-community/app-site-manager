@@ -132,7 +132,6 @@ public void init() {
 				currentinstances = server.getValue("currentinstances");
 				log.info("- Server: "+server.getName()+" M/C:"+maxinstances+"/"+currentinstances);
 				if (currentinstances < maxinstances) {
-					nodeid = server.getValue("lastnodeid") + 1;
 					foundspace = true;
 					break;
 				}
@@ -141,7 +140,8 @@ public void init() {
 			if (!foundspace) {
 				log.info("- No space on servers for trialsites");
 				context.putPageValue("errorcode","2");
-				
+				context.putPageValue("status", "error");
+				context.putPageValue("error", "No space on servers");
 				//Send Email Notify No Space on Servers
 				context.putPageValue("from", clientemail);
 				context.putPageValue("subject", "No space for Trial Sites");
@@ -153,12 +153,8 @@ public void init() {
 					//Update Server
 					currentinstances = currentinstances +1 ;
 					server.setValue("currentinstances", currentinstances);
-					if (nodeid>250) {
-						server.setValue("lastnodeid", 1);
-					}
-					else {
-						server.setValue("lastnodeid", nodeid);
-					}
+					nodeid = server.getValue("lastnodeid") + 1;
+					server.setValue("lastnodeid", nodeid);
 					serversSearcher.saveData(server);
 
 					JSONObject jsonObject = new JSONObject();
@@ -178,7 +174,7 @@ public void init() {
 					for (int i = currentinstances; i<=maxinstances; i=i+1) {
 						if (count<=3) { //always 3 more available
 							jsonInstanceObject = new JSONObject();
-							jsonInstanceObject.put("containername", "trial00"+String.valueOf(i));
+							jsonInstanceObject.put("containername", "trial00"+String.valueOf(nodeid+count));
 							jsonInstance.add(jsonInstanceObject);
 							count=count+1;
 						}
@@ -239,6 +235,8 @@ public void init() {
 				
 					}
 					catch(Exception e){
+						context.putPageValue("status", "error");
+						context.putPageValue("error", "Unexpected Error");
 						 e.printStackTrace();
 					}
 			
@@ -247,12 +245,16 @@ public void init() {
 			else {
 				log.info("- No Servers Available.");
 				context.putPageValue("errorcode","3");
+				context.putPageValue("status", "error");
+				context.putPageValue("error", "No servers availavle");
 				
 			}
 		
 	}
 	else {
 		log.info("Missing: "+organizationid + " Region:" + region + " Instance:"+instanceurl);
+		context.putPageValue("status", "error");
+		context.putPageValue("error", "Missing Data");
 	}
 	
 	
