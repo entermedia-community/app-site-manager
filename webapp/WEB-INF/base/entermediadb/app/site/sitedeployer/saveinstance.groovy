@@ -40,10 +40,7 @@ public void init() {
 	}
 	*/
 	
-	String organizationid = context.getRequestParameter("collectionid");  //collectionid
-	if (organizationid == null) {
-		organizationid = createcollection();
-	}
+
 	Map params = context.getSessionValue("userparams");
 	String instanceurl = null;
 	String region = null;
@@ -67,7 +64,23 @@ public void init() {
 		region = context.getRequestParameter("region");
 	}
 	
-	if (organizationid && region && instanceurl) {
+	if (instanceurl == null) {
+		//Generate random instance url
+		PasswordGenerator randomurl = new PasswordGenerator();
+		instanceurl = randomurl.generate();
+	}
+	
+	if (instancename == null) {
+		instancename = instanceurl;
+	}
+	
+	
+	String organizationid = context.getRequestParameter("collectionid");  //collectionid
+	if (organizationid == null) {
+		organizationid = createcollection(instancename);
+	}
+	
+	if (organizationid && instanceurl) {
 		
 		//Create Valid URL
 		String selected_url = instanceurl.toLowerCase();
@@ -79,18 +92,26 @@ public void init() {
 		newinstance.setValue("owner", user.getId());
 		newinstance.setValue("instance_status", "pending");
 		newinstance.setValue("name", instancename); //Needs validation?
-		context.putPageValue("instancename", instancename);
 		newinstance.setValue("instanceprefix", selected_url);
 		newinstance.setValue("istrial", true);
-		
 		instancesearcher.saveData(newinstance);
 		
-		HitTracker servers = mediaarchive.query("entermedia_servers").exact("allownewinstances", true).match("server_region", region).search();
+		context.putPageValue("instancename", instancename);
+		
+		HitTracker servers = null;
+		
+		if (region != null) {
+			 servers = mediaarchive.query("entermedia_servers").exact("allownewinstances", true).match("server_region", region).search();
+		}
+		else {
+			servers = mediaarchive.query("entermedia_servers").exact("allownewinstances", true).search();
+		}
+		
 		Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
 
 		Data server = null;
 		Integer nodeid = 0;
-		String subnetwork = "";
+		
 		Integer maxinstances = 0;
 		Integer currentinstances = 0;
 		Boolean foundspace = false;
@@ -104,7 +125,6 @@ public void init() {
 				currentinstances = server.getValue("currentinstances");
 				log.info("- Server: "+server.getName()+" M/C:"+maxinstances+"/"+currentinstances);
 				if (currentinstances < maxinstances) {
-					//--subnetwork = server.getValue("dockersubnet");
 					nodeid = server.getValue("lastnodeid") + 1;
 					foundspace = true;
 					break;
@@ -118,7 +138,7 @@ public void init() {
 				//Send Email Notify No Space on Servers
 				context.putPageValue("from", clientemail);
 				context.putPageValue("subject", "No space for Trial Sites");
-				sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
+				//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
 			}
 			else{
 				// Call deploy script
@@ -128,7 +148,6 @@ public void init() {
 					server.setValue("currentinstances", currentinstances);
 					if (nodeid>250) {
 						server.setValue("lastnodeid", 1);
-						//server.setValue("dockersubnet", subnetwork + 1);
 					}
 					else {
 						server.setValue("lastnodeid", nodeid);
@@ -209,14 +228,13 @@ public void init() {
 					//Send Notification to us
 					context.putPageValue("from", clientemail);
 					context.putPageValue("subject", "New Activation - " + fullURL);
-					//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");
-					
+					//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");				
 					
 					//Send Email to Client
 					context.putPageValue("from", notifyemail);
 					context.putPageValue("subject", "Welcome to EnterMediaDB ");
 					
-					sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
+					//sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
 				
 					}
 					catch(Exception e){
@@ -231,6 +249,9 @@ public void init() {
 				
 			}
 		
+	}
+	else {
+		log.info("Missing: "+organizationid + " Region:" + region + " Instance:"+instanceurl);
 	}
 	
 	
@@ -285,14 +306,14 @@ protected void sendEmail(Map pageValues, String email, String templatePage){
 	log.info("email sent to ${email}");
 }
 
-public String createcollection() {
+public String createcollection(String inInstancename) {
 	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 	BaseSearcher collectionsearcher = mediaArchive.getSearcher("librarycollection");
 	LibraryCollection  collection = collectionsearcher.createNewData();
-	Map params = context.getSessionValue("userparams");
-	String instancename = params.get("instancename")
-	collection.setValue("name", instancename);
+	
+	collection.setValue("name", inInstancename);
 	collection.setValue("owner",user.getId());
+
 
 	//Create Orgainzations Library if does not exists
 	BaseSearcher librarysearcher = mediaArchive.getSearcher("library");
