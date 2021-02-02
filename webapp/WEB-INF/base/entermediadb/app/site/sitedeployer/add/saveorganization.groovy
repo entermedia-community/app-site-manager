@@ -70,27 +70,27 @@ public void init()
 	}
 	
 	//Add Project Manager to Team
-	String projectmanager = "388";  // Rishi Bond
-	Data agentexists = librarycolusersearcher.query().exact("followeruser", projectmanager).exact("collectionid", collectionid).searchOne();
-	if (agentexists == null) {
-		librarycolusers = null;
-		librarycolusers = librarycolusersearcher.createNewData();
-		librarycolusers.setValue("collectionid", collectionid);
-		librarycolusers.setValue("followeruser", projectmanager);
-		librarycolusers.setValue("ontheteam","true");
-		librarycolusersearcher.saveData(librarycolusers);
-	}
+//	String projectmanager = "388";  // Rishi Bond
+//	Data agentexists = librarycolusersearcher.query().exact("followeruser", projectmanager).exact("collectionid", collectionid).searchOne();
+//	if (agentexists == null) {
+//		librarycolusers = null;
+//		librarycolusers = librarycolusersearcher.createNewData();
+//		librarycolusers.setValue("collectionid", collectionid);
+//		librarycolusers.setValue("followeruser", projectmanager);
+//		librarycolusers.setValue("ontheteam","true");
+//		librarycolusersearcher.saveData(librarycolusers);
+//	}
 	//--
 		
 	//Send Welcome Chat
-	Searcher chats = mediaArchive.getSearcher("chatterbox");
-	Data chat = chats.createNewData();
-	chat.setValue("date", new Date());
-	String welcomemessage = "Welcome to EnterMedia! My name is Rishi and I'm the Service Delivery Manager. My job is to make sure that you are happy with our product. Please take a look around and if you have any questions you can ask them here or email me at rishi@entermediadb.org. Looking forward to working with you!";
-	chat.setValue("message", welcomemessage);
-	chat.setValue("user", projectmanager);
-	chat.setValue("channel", generaltopicid);
-	chats.saveData(chat);
+//	Searcher chats = mediaArchive.getSearcher("chatterbox");
+//	Data chat = chats.createNewData();
+//	chat.setValue("date", new Date());
+//	String welcomemessage = "Welcome to EnterMedia! My name is Rishi and I'm the Service Delivery Manager. My job is to make sure that you are happy with our product. Please take a look around and if you have any questions you can ask them here or email me at rishi@entermediadb.org. Looking forward to working with you!";
+//	chat.setValue("message", welcomemessage);
+//	chat.setValue("user", projectmanager);
+//	chat.setValue("channel", generaltopicid);
+//	chats.saveData(chat);
 	//--
 
 	ChatManager chatmanager = (ChatManager) mediaArchive.getModuleManager().getBean(mediaArchive.getCatalogId(), "chatManager");

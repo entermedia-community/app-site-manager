@@ -1,15 +1,17 @@
 ##Search collections this user is teammeber
 #set( $organizationsuser = $mediaarchive.query("librarycollectionusers").exact("followeruser",$user.getId()).exact("ontheteam","true").search() )
 #set($userprojectsids = [])
-#set($userticketsids = [])
-#foreach( $ohit in $organizationsuser )
-	#set($x = $userprojectsids.add($ohit.collectionid))
-	##Search for Tickets in Collection
-	#set($goalsuser = $mediaarchive.query("projectgoal").exact("collectionid",$ohit.collectionid).enduser(true).search())
-	#if ($goalsuser)
-	#set($x = $userticketsids.add($goalsuser))
-	#end
-#end
+
+##set($userticketsids = [])
+##foreach( $ohit in $organizationsuser )
+##	#set($x = $userprojectsids.add($ohit.collectionid))
+##	##Search for Tickets in Collection
+##	#set($goalsuser = $mediaarchive.query("projectgoal").exact("collectionid",$ohit.collectionid).enduser(true).search())
+##	#if ($goalsuser)
+##	#set($x = $userticketsids.add($goalsuser))
+##	#end
+##end
+
 #set( $pendingmessages = $chatManager.loadChatTopicLastChecked("${user.getId()}-messages",$user.getId() ) )
 
 
@@ -25,16 +27,21 @@
     	<ul class="sidebar-list">
 		<li class="#if($content.appsection == "profile") current #end"><a href="$sitelink/app/users/$user.getId()/index.html"><i class="fa fa-user"></i> [[Profile]]</a></li>
 		
+		<li class="#if($content.appsection == "activity") current #end">
+			<a href="$sitelink/app/activity/index.html">
+			<i class="fa fa-comment"></i> [[All Chats]]
+			</a>
+		</li>
 		<li class="#if($content.appsection == "messages") current #end">
 			<a href="$sitelink/app/messages/index.html">
 			#if($pendingmessages && !$pendingmessages.isEmpty())
-			<i class="fa fa-comment"></i> [[Messages]] <i class="fas fa-bell fa-xs" style="color:orange"></i>
+			<i class="fa fa-comment"></i> [[Direct Chat]] <i class="fas fa-bell fa-xs" style="color:orange"></i>
 			#else
-			<i class="fa fa-comment"></i> [[Messages]]
+			<i class="fa fa-comment"></i> [[Direct Chat]]
 			#end
 			</a>
 		</li>
-		#if($userprojectsids.size() && $userticketsids.size())
+		##if($userprojectsids.size() )
 		#if($canviewsettings)
 		<li class="#if($content.appsection == "tasks") current #end">
 			#if ($canviewsettings)
@@ -52,7 +59,7 @@
 			</div>
 		</li>
 		#end
-		#end
+		##end
 		#if($canviewsettings)
 		<li class="#if($content.appsection == "completed") current #end"><a href="$sitelink/app/users/tasks/report.html?collectionid=*&goaltrackerstaff=*"><i class="far fa-file-alt"></i> [[Completed Tasks]]</a></li>
 		#end
@@ -101,25 +108,22 @@
 	
 	#set($selectedproject = $librarycol.getId())
 
-	#if($userprojectsids)
-	#set( $organizations = $mediaarchive.query("librarycollection").exact("organizationstatus","active").ids($userprojectsids).enduser(true).sort("name").search() )
+	##if($userprojectsids)
+	#set( $organizations = $mediaarchive.query("librarycollection").exact("organizationstatus","active").enduser(true).sort("name").search() )
 	
 	#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
-	
 	<ul class="sidebar-list" >
 		#foreach( $ohit in $organizations )
+			#if( $modcollections.isEmpty() || $modcollections.contains($ohit.getId()) )
 			<li class="#if($selectedproject==$ohit.id) current #end">
 				<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" >
-				#if( $modcollections.contains($ohit.getId()) )
-				<i class="fas fa-sitemap"></i> $ohit.name <i class="fas fa-bell fa-xs" style="color:orange"></i>
-				#else
-				<i class="fas fa-sitemap"></i> $ohit.name
-				#end
+				<i class="fas fa-sitemap"></i> $ohit.name #if( $modcollections.contains($ohit.getId()) )<i class="fas fa-bell fa-xs" style="color:orange"></i>#end
 				</a>
 			</li>
+			#end
 		#end
 	</ul>
-	#end
+	##end
 <hr>
 	<div style="padding:20px 20px;">
 	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">[[Add a Workspace]]</a></div>
