@@ -114,7 +114,7 @@
 	#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
 	<ul class="sidebar-list" >
 		#foreach( $ohit in $organizations )
-			#if( $modcollections.isEmpty() || $modcollections.contains($ohit.getId()) )
+			#if( $modcollections.contains($ohit.getId()) )
 			<li class="#if($selectedproject==$ohit.id) current #end">
 				<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" >
 				<i class="fas fa-sitemap"></i> $ohit.name #if( $modcollections.contains($ohit.getId()) )<i class="fas fa-bell fa-xs" style="color:orange"></i>#end
