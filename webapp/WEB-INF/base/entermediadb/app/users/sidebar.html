@@ -98,7 +98,7 @@
 						data-dropdownparent="sidebarboxprojects"
 					>
 					<option></option>
-					#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").sort("name").search() )
+					#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").not("organizationstatus","disabled").not("organizationstatus","closed").sort("name").search() )
 					#foreach( $collective in $collectives )
 						<option value="$collective.getId()">#esc($collective.name)</option>
 					#end
