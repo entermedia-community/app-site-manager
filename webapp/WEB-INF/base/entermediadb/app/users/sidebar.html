@@ -87,8 +87,11 @@
     <div class="sidebar-box-header">
         [[My Workspaces]]        
     </div>
+
+#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").not("organizationstatus","disabled").not("organizationstatus","closed").enduser(true).sort("name").search() )
+
     <div class="sidebar-box-content" style="padding:0;" id="sidebarboxprojects">
-    	#if($canviewsettings)
+    	#if( $collectives.size() >= 10)
     		<div style="padding:5px 15px;">
 			<select  id="collectivesearch2" 
 						name="collectionid" 
@@ -98,7 +101,6 @@
 						data-dropdownparent="sidebarboxprojects"
 					>
 					<option></option>
-					#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").not("organizationstatus","disabled").not("organizationstatus","closed").sort("name").search() )
 					#foreach( $collective in $collectives )
 						<option value="$collective.getId()">#esc($collective.name)</option>
 					#end
@@ -109,12 +111,11 @@
 	#set($selectedproject = $librarycol.getId())
 
 	##if($userprojectsids)
-	#set( $organizations = $mediaarchive.query("librarycollection").exact("organizationstatus","active").enduser(true).sort("name").search() )
 	
-	#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
+	#set( $modcollections = $chatManager.loadCollectionsModified($collectives,$user.getId() ) )
 	<ul class="sidebar-list" >
-		#foreach( $ohit in $organizations )
-			#if( $modcollections.contains($ohit.getId()) )
+		#foreach( $ohit in $collectives )
+			#if( $collectives.size() < 10 || $modcollections.contains($ohit.getId()) )
 			<li class="#if($selectedproject==$ohit.id) current #end">
 				<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" >
 				<i class="fas fa-sitemap"></i> $ohit.name #if( $modcollections.contains($ohit.getId()) )<i class="fas fa-bell fa-xs" style="color:orange"></i>#end
