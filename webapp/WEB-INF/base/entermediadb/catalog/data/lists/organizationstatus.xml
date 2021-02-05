@@ -16,4 +16,11 @@
       <language id="en"><![CDATA[Closed]]></language> 
     </name> 
   </data>  
+
+  <data id="pendingdelete"> 
+    <name> 
+      <language id="en"><![CDATA[Pending Delete]]></language> 
+    </name> 
+  </data>  
+
   </root>
