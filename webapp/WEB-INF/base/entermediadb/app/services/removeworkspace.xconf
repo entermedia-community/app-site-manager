@@ -2,7 +2,7 @@
 	<path-action name="JsonAdminModule.preprocess" />
 
 	<path-action name="Script.run">
-		<script>/${applicationid}/services/savelabel.groovy</script>
+		<script>/${applicationid}/services/removeworkspace.groovy</script>
     </path-action>
     
     <generator  name="velocityGenerator" mimetypes="text/json"/>
