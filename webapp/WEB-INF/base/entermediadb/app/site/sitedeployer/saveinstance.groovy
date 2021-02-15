@@ -162,8 +162,9 @@ public void init() {
 					
 					JSONObject jsonInstanceObject = new JSONObject();
 					
-					jsonInstanceObject.put("subdomain", instancename);
-					jsonInstanceObject.put("containername", "trial00"+String.valueOf(nodeid));
+					jsonInstanceObject.put("subdomain", instancename + "-" + String.valueOf(nodeid));
+					jsonInstanceObject.put("containername", "t"+String.valueOf(nodeid));
+
 					jsonInstance.add(jsonInstanceObject);
 					
 					jsonObject.put("assigned", jsonInstance);
@@ -174,7 +175,8 @@ public void init() {
 					for (int i = currentinstances; i<=maxinstances; i=i+1) {
 						if (count<=3) { //always 3 more available
 							jsonInstanceObject = new JSONObject();
-							jsonInstanceObject.put("containername", "trial00"+String.valueOf(nodeid+count));
+							int nextnodeid = nodeid+count;
+							jsonInstanceObject.put("containername", "t"+String.valueOf(nextnodeid));
 							jsonInstance.add(jsonInstanceObject);
 							count=count+1;
 						}
