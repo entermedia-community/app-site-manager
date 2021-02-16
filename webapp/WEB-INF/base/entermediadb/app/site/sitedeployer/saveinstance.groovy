@@ -169,6 +169,8 @@ public void init() {
 					
 					jsonObject.put("assigned", jsonInstance);
 					
+					
+					/* Now it runs on an Event with availablecontainers.groovy
 					//Next available instances
 					jsonInstance = new JSONArray();
 					int count = 1;
@@ -182,12 +184,12 @@ public void init() {
 						}
 					}
 					jsonObject.put("available", jsonInstance);
-					
+					*/
 					ArrayList<String> command = new ArrayList<String>();
 					
 					command.add("-i");
 					command.add("/media/services/ansible/inventory.yml")
-					command.add("/media/services/ansible/trial.yml");
+					command.add("/media/services/ansible/trial-assign.yml");
 					command.add("--extra-vars");
 					command.add("server=" + server.sshname + "");
 					command.add("-e");

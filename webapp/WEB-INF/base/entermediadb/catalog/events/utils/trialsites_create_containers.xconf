@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="period">1h</property>
+  <property name="enabled">true</property>
+  <property name="eventname">Trial Sites Create Containers</property>
+  <path-action name="Script.run" allowduplicates="true">
+    <script>/${catalogid}/events/scripts/utils/availablecontainers.groovy</script>
+  </path-action>
+</page>
