@@ -162,7 +162,7 @@ public void init() {
 					
 					JSONObject jsonInstanceObject = new JSONObject();
 					
-					jsonInstanceObject.put("subdomain", instancename + "-" + String.valueOf(nodeid));
+					jsonInstanceObject.put("subdomain", selected_url + "-" + String.valueOf(nodeid));
 					jsonInstanceObject.put("containername", "t"+String.valueOf(nodeid));
 
 					jsonInstance.add(jsonInstanceObject);
@@ -202,11 +202,11 @@ public void init() {
 					log.info("- Deploying Trial Site " + selected_url + " at " + server.getName());
 					
 						
-					String fullURL = "https://" + selected_url + "." + server.trialdomain;
+					String fullURL = "https://" + selected_url + "-" + String.valueOf(nodeid) + "." + server.trialdomain;
 					
 					newinstance.setValue("instanceurl", fullURL);
 					newinstance.setValue("instance_status", "active");
-					newinstance.setValue("instancename", selected_url);
+					newinstance.setValue("instanceprefix", selected_url + "-" + String.valueOf(nodeid));
 					newinstance.setValue("instancenode", String.valueOf(nodeid));
 					newinstance.setValue("istrial", true);
 					newinstance.setValue("entermedia_servers", server.id);
