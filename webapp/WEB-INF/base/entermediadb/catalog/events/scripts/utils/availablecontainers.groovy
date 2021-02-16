@@ -73,9 +73,9 @@ public void init() {
 						JSONObject jsonInstanceObject = new JSONObject();
 						
 						//Next available instances
-						int count = 1;
+						int count = 0;
 						for (int i = currentinstances; i<=maxinstances; i=i+1) {
-							if (count<=3) { //always 3 more available
+							if (count<=2) { //always 3 more available
 								jsonInstanceObject = new JSONObject();
 								int nextnodeid = nodeid+count;
 								jsonInstanceObject.put("containername", "t"+String.valueOf(nextnodeid));
@@ -83,6 +83,9 @@ public void init() {
 								count=count+1;
 							}
 						}
+						
+						log.info("- Enabling "+count+" Containers at " + server.getName());
+						
 						jsonObject.put("available", jsonInstance);
 						
 						ArrayList<String> command = new ArrayList<String>();
@@ -114,9 +117,9 @@ public void init() {
 					context.putPageValue("status", "error");
 					context.putPageValue("error", "No space on servers");
 					//Send Email Notify No Space on Servers
-					context.putPageValue("from", clientemail);
+					context.putPageValue("from", notifyemail);
 					context.putPageValue("subject", "No space for Trial Sites");
-					//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
+					sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
 				}
 			 }
 		
