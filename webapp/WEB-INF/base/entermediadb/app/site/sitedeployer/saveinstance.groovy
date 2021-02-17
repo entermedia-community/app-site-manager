@@ -154,6 +154,7 @@ public void init() {
 					currentinstances = currentinstances +1 ;
 					server.setValue("currentinstances", currentinstances);
 					nodeid = server.getValue("lastnodeid") + 1;
+					selected_url = selected_url + "-" + String.valueOf(nodeid)< 
 					server.setValue("lastnodeid", nodeid);
 					serversSearcher.saveData(server);
 
@@ -162,7 +163,7 @@ public void init() {
 					
 					JSONObject jsonInstanceObject = new JSONObject();
 					
-					jsonInstanceObject.put("subdomain", selected_url + "-" + String.valueOf(nodeid));
+					jsonInstanceObject.put("subdomain", selected_url);
 					jsonInstanceObject.put("containername", "t"+String.valueOf(nodeid));
 
 					jsonInstance.add(jsonInstanceObject);
@@ -202,11 +203,11 @@ public void init() {
 					log.info("- Deploying Trial Site " + selected_url + " at " + server.getName());
 					
 						
-					String fullURL = "https://" + selected_url + "-" + String.valueOf(nodeid) + "." + server.trialdomain;
+					String fullURL = "https://" + selected_url + "." + server.trialdomain;
 					
 					newinstance.setValue("instanceurl", fullURL);
 					newinstance.setValue("instance_status", "active");
-					newinstance.setValue("instanceprefix", selected_url + "-" + String.valueOf(nodeid));
+					newinstance.setValue("instanceprefix", selected_url);
 					newinstance.setValue("instancenode", String.valueOf(nodeid));
 					newinstance.setValue("istrial", true);
 					newinstance.setValue("entermedia_servers", server.id);
