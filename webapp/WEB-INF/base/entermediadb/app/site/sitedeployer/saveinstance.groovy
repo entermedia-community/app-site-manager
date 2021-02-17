@@ -154,7 +154,7 @@ public void init() {
 					currentinstances = currentinstances +1 ;
 					server.setValue("currentinstances", currentinstances);
 					nodeid = server.getValue("lastnodeid") + 1;
-					selected_url = selected_url + "-" + String.valueOf(nodeid)< 
+					selected_url = selected_url + "-" + String.valueOf(nodeid);
 					server.setValue("lastnodeid", nodeid);
 					serversSearcher.saveData(server);
 
