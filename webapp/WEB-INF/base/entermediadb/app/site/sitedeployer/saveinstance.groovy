@@ -207,7 +207,8 @@ public void init() {
 					
 					newinstance.setValue("instanceurl", fullURL);
 					newinstance.setValue("instance_status", "active");
-					newinstance.setValue("instanceprefix", selected_url);
+					newinstance.setValue("instanceprefix", selected_url); //not need it?
+					newinstance.setValue("instancename", selected_url);
 					newinstance.setValue("instancenode", String.valueOf(nodeid));
 					newinstance.setValue("istrial", true);
 					newinstance.setValue("entermedia_servers", server.id);

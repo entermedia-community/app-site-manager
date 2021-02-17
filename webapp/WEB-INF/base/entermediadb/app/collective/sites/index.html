@@ -9,7 +9,7 @@
 		#set( $instances = $mediaarchive.query("entermedia_instances").match("librarycollection", $collectionid).search() )
 		#if(!$instances)
 		<p>
-		Next, to create your first <em>EnterMediadDB Instance</em>, click on <strong>[[Deploy New Server]]</strong> below. If you have questions or require support and would like to direct chat with one of our agents, click on the <strong>[[Chat]] tab</strong>.
+		[[Next, to create your first]] <em>EnterMediadDB [[Instance]]</em>, [[click on]] <strong>[[Deploy New Server]]</strong> [[below]]. [[If you have questions or require support and would like to direct chat with one of our agents, click on the]] <strong>[[Chat Tab]] </strong>.
 		</p>
 		#end
 		#if ($instances)
@@ -57,7 +57,7 @@
 							##Monitor - Only Admins
 							#if($canviewsettings)
 								&nbsp;<a href="$home/emshare2/views/modules/entermedia_instances/edit/edit.html?id=${hit.id}&viewid=entermedia_instancesgeneral&viewpath=entermedia_instances/entermedia_instancesgeneral&searchtype=entermedia_instances&detailsreadonly=false&preview=true"  class="btn btn-xs btn-primary">[[Monitor]]</a>
-								#if($hit.istrial && $hit.instance_status!='deleted')
+								#if($hit.istrial == "true" && $hit.instance_status!='deleted')
 								&nbsp;<a href="/entermediadb/app/site/sitedeployer/deleteinstance.html?instanceid=${hit.id}&collectionid=$collectionid" 
 										 class="btn btn-xs btn-primary confirm"
 										 data-confirm="[[Are you sure to delete this instance]]?">[[Delete Instance]]</a>
