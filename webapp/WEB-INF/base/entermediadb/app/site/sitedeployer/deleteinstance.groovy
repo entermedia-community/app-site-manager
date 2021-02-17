@@ -42,7 +42,7 @@ public void init()
 				JSONObject jsonInstanceObject = new JSONObject();
 				
 				jsonInstanceObject.put("subdomain", instance.instancename);
-				jsonInstanceObject.put("containername", "trial00"+instance.instancenode);
+				jsonInstanceObject.put("containername", "trial_t"+instance.instancenode);
 				jsonInstance.add(jsonInstanceObject);
 				
 				jsonObject.put("deleted", jsonInstance);
