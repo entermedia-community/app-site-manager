@@ -84,7 +84,7 @@ public void init() {
 							}
 						}
 						
-						log.info("- Enabling "+count+" Containers at " + server.getName());
+						
 						
 						jsonObject.put("available", jsonInstance);
 						
@@ -102,7 +102,7 @@ public void init() {
 						Exec exec = moduleManager.getBean("exec");
 						ExecResult done = exec.runExec("trialsansible", command, true); //Todo: Need to move this script here?
 						//ExecResult done = exec.runExec("/media/services/ansible/trialsansible.sh", command, true); //Todo: Need to move this script here?
-						log.info("- Enabling Containers for Trialsites at " + server.getName());
+						log.info("- Enabling "+count+" Containers at " + server.getName());
 					
 						}
 						catch(Exception e){
