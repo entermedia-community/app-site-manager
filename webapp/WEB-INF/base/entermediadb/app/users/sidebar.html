@@ -100,6 +100,7 @@
 		</li>
 		##if($userprojectsids.size() )
 		#if($canviewsettings)
+		<li class="#if($appsection == "mytasks") current #end"><a href="$sitelink/app/users/tasks/mytasks.html?goaltrackerstaff=$user.getId()"><i class="fas fa-hammer"></i> [[My Tasks]]</a></li>
 		<li class="#if($appsection == "tasks") current #end">
 			#if ($canviewsettings)
 				#set($args = "goaltrackerstaff=*")
@@ -123,9 +124,7 @@
 		#if($canviewsettings)
 		<li class="#if($appsection == "tixreport") current #end"><a href="$sitelink/app/users/tasks/tixreport.html?goaltrackerstaff=$user.getId()"><i class="fas fa-chart-line"></i> [[Tix Report]]</a></li>
 		#end
-		#if($canviewsettings)
-		<li class="#if($appsection == "mytasks") current #end"><a href="$sitelink/app/users/tasks/mytasks.html?goaltrackerstaff=$user.getId()"><i class="fas fa-hammer"></i> [[My Tasks]]</a></li>
-		#end
+
 		#if($canviewsettings)
 		<li class="#if($appsection == "monitor") current #end"><a href="$sitelink/app/monitor/index.html"><i class="fas fa-network-wired"></i> [[Monitor]]</a></li>
 		#end
