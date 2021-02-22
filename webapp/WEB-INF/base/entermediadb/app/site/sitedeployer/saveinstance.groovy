@@ -27,7 +27,7 @@ public void init() {
 	
 	String catalogid = "entermediadb/catalog";
 	String notifyemail = "help@entermediadb.org";
-	String clientemail = user.getEmail();
+	//String clientemail = user.getEmail();
 
 /*	
 	String clientform = context.getSessionValue("clientform");
@@ -40,30 +40,52 @@ public void init() {
 	}
 	*/
 	
+	
 
 	Map params = context.getSessionValue("userparams");
 	String instanceurl = null;
 	String region = null;
 	String instancename = null;
 	String organization_type = null;
+	String userid = null;
 	
-	if (params != null) {
-		///Dialog Parameters
-		log.info("creating site from dialog");
-		instanceurl = params.get("organization_url");
-		instancename = params.get("instancename");
-		organization_type = params.get("organization_type");
-		region = params.get("region");
+	User user = context.getUser();
+	if(user == null) {
+		//Creating instance+user from email?
+		user = getUser(context.getRequestParameter("email"));
+		if(user == null) {
+			context.putPageValue("status", "error");
+			context.putPageValue("error", "Invalid Request");
+			return;
+		}
+		else {
+			userid = user.getId();
+		}
 	}
-	if (params == null || instanceurl == null) {
-		//Regular Form
-		log.info("creating site from internal page");
-		instanceurl = context.getRequestParameter("organization_url");
-		instancename = context.getRequestParameter("instancename");
-		organization_type = context.getRequestParameter("organization_type");
-		region = context.getRequestParameter("region");
+	else {
+		if (params != null) {
+			///Dialog Parameters
+			log.info("creating site from dialog");
+			instanceurl = params.get("organization_url");
+			instancename = params.get("instancename");
+			organization_type = params.get("organization_type");
+			region = params.get("region");
+			if (params.get("userid") != null) {
+				userid = params.get("userid");
+			}
+		}
+		if (params == null || instanceurl == null) {
+			//Regular Form
+			log.info("creating site from internal page");
+			instanceurl = context.getRequestParameter("organization_url");
+			instancename = context.getRequestParameter("instancename");
+			organization_type = context.getRequestParameter("organization_type");
+			region = context.getRequestParameter("region");
+			if (context.getRequestParameter("userid") != null) {
+				userid = context.getRequestParameter("userid");
+			}
+		}
 	}
-	
 	if (instanceurl == null) {
 		//Generate random instance url
 		PasswordGenerator randomurl = new PasswordGenerator();
@@ -74,10 +96,20 @@ public void init() {
 		instancename = instanceurl;
 	}
 	
+	if (userid == null && user!= null) {
+		userid = user.getId();
+	}
+	/*else {
+		log.info("-Workspaces: No user defined.");
+		context.putPageValue("status", "error");
+		context.putPageValue("error", "No user defined");
+		return;
+	}*/
+	
 	
 	String organizationid = context.getRequestParameter("collectionid");  //collectionid
 	if (organizationid == null) {
-		organizationid = createcollection(instancename);
+		organizationid = createcollection(instancename, userid);
 	}
 	
 	if (organizationid && instanceurl) {
@@ -96,7 +128,7 @@ public void init() {
 		Searcher instancesearcher = searcherManager.getSearcher(catalogid, "entermedia_instances");
 		Data newinstance = instancesearcher.createNewData();
 		newinstance.setValue("librarycollection", organizationid);
-		newinstance.setValue("owner", user.getId());
+		newinstance.setValue("owner", userid);
 		newinstance.setValue("instance_status", "pending");
 		newinstance.setValue("name", instancename); //Needs validation?
 		newinstance.setValue("instanceprefix", selected_url);
@@ -143,7 +175,7 @@ public void init() {
 				context.putPageValue("status", "error");
 				context.putPageValue("error", "No space on servers");
 				//Send Email Notify No Space on Servers
-				context.putPageValue("from", clientemail);
+				//context.putPageValue("from", clientemail);
 				context.putPageValue("subject", "No space for Trial Sites");
 				//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
 			}
@@ -160,34 +192,15 @@ public void init() {
 
 					JSONObject jsonObject = new JSONObject();
 					JSONArray jsonInstance = new JSONArray();
-					
 					JSONObject jsonInstanceObject = new JSONObject();
 					
 					jsonInstanceObject.put("subdomain", selected_url);
 					jsonInstanceObject.put("containername", "t"+String.valueOf(nodeid));
 
 					jsonInstance.add(jsonInstanceObject);
-					
 					jsonObject.put("assigned", jsonInstance);
 					
-					
-					/* Now it runs on an Event with availablecontainers.groovy
-					//Next available instances
-					jsonInstance = new JSONArray();
-					int count = 1;
-					for (int i = currentinstances; i<=maxinstances; i=i+1) {
-						if (count<=3) { //always 3 more available
-							jsonInstanceObject = new JSONObject();
-							int nextnodeid = nodeid+count;
-							jsonInstanceObject.put("containername", "t"+String.valueOf(nextnodeid));
-							jsonInstance.add(jsonInstanceObject);
-							count=count+1;
-						}
-					}
-					jsonObject.put("available", jsonInstance);
-					*/
 					ArrayList<String> command = new ArrayList<String>();
-					
 					command.add("-i");
 					command.add("/media/services/ansible/inventory.yml")
 					command.add("/media/services/ansible/trial-assign.yml");
@@ -229,7 +242,7 @@ public void init() {
 					//Data monitor = addNewMonitor(newinstance);
 					
 					//Send Notification to us
-					context.putPageValue("from", clientemail);
+					//context.putPageValue("from", clientemail);
 					context.putPageValue("subject", "New Activation - " + fullURL);
 					//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");				
 					
@@ -237,7 +250,7 @@ public void init() {
 					context.putPageValue("from", notifyemail);
 					context.putPageValue("subject", "Welcome to EnterMediaDB ");
 					
-					//sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
+					sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
 				
 					}
 					catch(Exception e){
@@ -315,13 +328,13 @@ protected void sendEmail(Map pageValues, String email, String templatePage){
 	log.info("email sent to ${email}");
 }
 
-public String createcollection(String inInstancename) {
+public String createcollection(String inInstancename, String userid) {
 	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 	BaseSearcher collectionsearcher = mediaArchive.getSearcher("librarycollection");
 	LibraryCollection  collection = collectionsearcher.createNewData();
 	
 	collection.setValue("name", inInstancename);
-	collection.setValue("owner",user.getId());
+	collection.setValue("owner",userid);
 
 
 	//Create Orgainzations Library if does not exists
@@ -341,12 +354,12 @@ public String createcollection(String inInstancename) {
 	collection.setValue("organizationstatus", "active");
 	if( collection.get("owner") == null )
 	{
-		collection.setValue("owner", user.getId());
+		collection.setValue("owner", userid);
 	}
 	collectionsearcher.saveData(collection);
 	String collectionid = collection.getId();
 	context.putPageValue("librarycol", collection);
-	log.info("Project created: ("+collectionid+") " + collection + " Owner: "+user.getId());
+	log.info("Project created: ("+collectionid+") " + collection + " Owner: "+userid);
 	
 	//Create General Topic if not exists
 	Searcher topicssearcher = mediaArchive.getSearcher("collectiveproject");
@@ -366,12 +379,12 @@ public String createcollection(String inInstancename) {
 	
 	//Add user as Follower and Team
 	Searcher librarycolusersearcher = mediaArchive.getSearcher("librarycollectionusers");
-	Data userexists = librarycolusersearcher.query().exact("followeruser", user.getId()).exact("collectionid", collectionid).searchOne();
+	Data userexists = librarycolusersearcher.query().exact("followeruser", userid).exact("collectionid", collectionid).searchOne();
 	Data librarycolusers = null;
 	if (userexists == null) {
 		librarycolusers = librarycolusersearcher.createNewData();
 		librarycolusers.setValue("collectionid", collectionid);
-		librarycolusers.setValue("followeruser", user.getId());
+		librarycolusers.setValue("followeruser", userid);
 		librarycolusers.setValue("ontheteam","true");
 		librarycolusersearcher.saveData(librarycolusers);
 	}
@@ -407,6 +420,32 @@ public String createcollection(String inInstancename) {
 	
 	return collectionid;
 }
+
+
+public User getUser(String email) {
+	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
+	
+	email = email.trim().toLowerCase();
+	User theuser = null;
+	theuser = mediaArchive.getUserManager().getUserByEmail(email);
+	if( theuser != null)
+	{
+		log.info("Workspaces: User exists:"+theuser.getId());
+	}
+	else{
+		//create user
+			String	password = new PasswordGenerator().generate();
+				
+			theuser = mediaArchive.getUserManager().createUser(null, password);
+			theuser.setEmail(email.trim().toLowerCase());
+			theuser.setEnabled(true);
+			mediaArchive.getUserManager().saveUser(theuser);
+			log.info("Workspaces: New user created:"+theuser.getId());
+	}
+	return theuser;
+}
+
+
 
 init();
 
