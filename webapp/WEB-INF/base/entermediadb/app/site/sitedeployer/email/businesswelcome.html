@@ -21,7 +21,7 @@ Your unique application address (URL):
 ##<strong>Password:</strong> admin<br><br>
 
 
-	#set( $link = "$context.siteRoot$applink/workspaces/index.html?entermedia.key=$entermediakey" )
+	#set( $link = "$link?entermedia.key=$entermediakey" )
 	#set( $expiry = $context.getPageProperty("temporary_password_expiry"))
 	#set( $days = $numberutils.toInt($expiry))
 	#set ( $calendar = $datetool.getCalendar() )
