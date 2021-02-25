@@ -10,11 +10,11 @@ import org.openedit.users.authenticate.PasswordGenerator
 import org.openedit.util.Exec
 import org.openedit.util.ExecResult
 import org.openedit.util.RequestUtils
+import org.openedit.util.StringEncryption
 import org.entermediadb.asset.MediaArchive
 import org.entermediadb.location.Position
 import org.entermediadb.projects.*
 import org.entermediadb.websocket.chat.ChatManager
-import org.openedit.Data
 import org.openedit.page.Page
 import org.openedit.util.PathUtilities
 
@@ -27,7 +27,7 @@ public void init() {
 	
 	String catalogid = "entermediadb/catalog";
 	String notifyemail = "help@entermediadb.org";
-	//String clientemail = user.getEmail();
+	String clientemail = null;
 
 /*	
 	String clientform = context.getSessionValue("clientform");
@@ -60,9 +60,11 @@ public void init() {
 		}
 		else {
 			userid = user.getId();
+			clientemail = user.getEmail();
 		}
 	}
 	else {
+		clientemail = user.getEmail();
 		if (params != null) {
 			///Dialog Parameters
 			log.info("creating site from dialog");
@@ -249,6 +251,8 @@ public void init() {
 					//Send Email to Client
 					context.putPageValue("from", notifyemail);
 					context.putPageValue("subject", "Welcome to EnterMediaDB ");
+					
+					context.putPageValue("entermediakey", getUserKey(user));
 					
 					sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
 				
@@ -445,6 +449,34 @@ public User getUser(String email) {
 	return theuser;
 }
 
+
+public String getUserKey(User theuser) {
+	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
+	String passenc = mediaArchive.getUserManager().getStringEncryption().getPasswordMd5(theuser.getPassword());
+	passenc = theuser.getUserName() + "md542" + passenc;
+
+	try
+	{
+		String tsenc = mediaArchive.getUserManager().getStringEncryption().encrypt(String.valueOf(new Date().getTime()));
+		if (tsenc != null && !tsenc.isEmpty())
+		{
+			if (tsenc.startsWith("DES:"))
+				tsenc = tsenc.substring("DES:".length());//kloog: remove DES: prefix since appended to URL
+			passenc += StringEncryption.TIMESTAMP + tsenc;
+		}
+		else
+		{
+			log.info("Unable to append encrypted timestamp. Autologin URL does not have an expiry.");
+		}
+	}
+	catch (OpenEditException oex)
+	{
+		log.error(oex.getMessage(), oex);
+		log.info("Unable to append encrypted timestamp. Autologin URL does not have an expiry.");
+	}
+	return passenc;
+	
+}
 
 
 init();

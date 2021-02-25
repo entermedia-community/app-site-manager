@@ -10,15 +10,36 @@
 
 
 
-<p><strong>Hello,</strong>,</p> 
-<p>It’s live! Your site is ready to be utilized to its maximum potential. Now upload, view, and share your own media whilst exploring an array of key features created for you.</p> 
-<p>Login Information:<br><br>
-Your unique application address (URL):<br> 
-<a href="$link">$link</a><br><br>
+<p><strong>Hello,</strong></p> 
+<p>It’s live! Your Instance is ready to be utilized to its maximum potential. Now upload, view, and share your own media whilst exploring an array of key features created for you.</p> 
+<p><strong>Login Information:</strong><br>
+Your unique application address (URL):
 
-<strong>Username:</strong> admin<br>
-<strong>Password:</strong> admin<br>
-</p>
+##<a href="$link">$link</a><br><br>
+##Use this credentials to login:
+##<strong>Username:</strong> admin<br>
+##<strong>Password:</strong> admin<br><br>
+
+
+	#set( $link = "$context.siteRoot$applink/workspaces/index.html?entermedia.key=$entermediakey" )
+	#set( $expiry = $context.getPageProperty("temporary_password_expiry"))
+	#set( $days = $numberutils.toInt($expiry))
+	#set ( $calendar = $datetool.getCalendar() )
+	#set ( $today = $datetool.getDate() )
+	#set($null = $calendar.setTime($today))
+	#set($null = $calendar.add(6, $days))
+	
+	
+	<a href="$link">$link</a>
+	</p>
+	<p>
+	or Copy/Paste Entermedia Key below into app:<br> $entermediakey
+	</p>
+	[[Key will expire in 24 hours.]] 
+	
+
+
+
 
 <hr>
 
