@@ -17,11 +17,16 @@ public void init()
 	String notifyemail = "help@entermediadb.org";
 
 	//Send Email Notify No Seats
-	context.putPageValue("from", "noreply@entermediadb.org");
+	context.putPageValue("from", "help@entermediadb.org");
 	context.putPageValue("subject", "Contact Form");
 	context.putPageValue("form_name", context.getRequestParameter("name") );
 	context.putPageValue("form_email", context.getRequestParameter("email") );
 	context.putPageValue("form_message", context.getRequestParameter("message") );
+
+		//loging
+	context.putPageValue("senderinfo", "Contactform - Site Url: "+context.getPageValue("siteRoot")+" Refering page: "+context.getPageValue("referringPage")  );
+	log.info($senderinfo);
+	log.info(context.getProperties());
 	
 	sendEmail(context.getPageMap(), notifyemail, "/entermediadb/contact_template.html");
 }
