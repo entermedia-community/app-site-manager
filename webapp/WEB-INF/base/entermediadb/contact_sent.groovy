@@ -23,10 +23,11 @@ public void init()
 	context.putPageValue("form_email", context.getRequestParameter("email") );
 	context.putPageValue("form_message", context.getRequestParameter("message") );
 
-		//loging
-	context.putPageValue("senderinfo", "Contactform - Site Url: "+context.getPageValue("siteRoot")+" Refering page: "+context.getPageValue("referringPage")  );
-	log.info($senderinfo);
-	log.info(context.getProperties());
+	//logs
+	String senderinfo = "Contact Form - Site Url: "+context.getPageValue("siteRoot")+" Refering page: "+context.getPageValue("referringPage")+" Page: "+context.getPageValue("page");
+	context.putPageValue("senderinfo",   senderinfo);
+	log.info(senderinfo);
+	//log.info(context.getProperties());
 	
 	sendEmail(context.getPageMap(), notifyemail, "/entermediadb/contact_template.html");
 }
