@@ -1,8 +1,9 @@
 <page>
 
-	<property name="workspaceslibrary">workspaces</property>
+	
 	
     <path-action name="Script.run">
+    	<property name="workspaceslibrary">workspaces</property>
 		<script>/WEB-INF/base/entermediadb/app/site/sitedeployer/saveinstance.groovy</script>
 	</path-action>
 	

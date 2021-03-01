@@ -343,7 +343,7 @@ public String createcollection(String inInstancename, String userid) {
 
 	//Create Orgainzations Library if does not exists
 	BaseSearcher librarysearcher = mediaArchive.getSearcher("library");
-	String workspaceslibrary = context.getPageValue("workspaceslibrary");
+	String workspaceslibrary = context.findValue("workspaceslibrary");
 	if (workspaceslibrary == null)
 	{
 		workspaceslibrary = "organizations";
