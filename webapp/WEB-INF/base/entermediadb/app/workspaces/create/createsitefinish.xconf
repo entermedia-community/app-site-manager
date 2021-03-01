@@ -1,7 +1,9 @@
 <page>
 
+	<property name="workspaceslibrary">workspaces</property>
+	
     <path-action name="Script.run">
-		<script>./saveinstance.groovy</script>
+		<script>/WEB-INF/base/entermediadb/app/site/sitedeployer/saveinstance.groovy</script>
 	</path-action>
 	
 	<property name="GAtrakingcode">GA-conversionnewsite.html</property>

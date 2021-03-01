@@ -75,7 +75,7 @@ public void init() {
 						//Next available instances
 						int count = 0;
 						for (int i = currentinstances; i<=maxinstances; i=i+1) {
-							if (count<=2) { //always 3 more available
+							if (count<=20) { //always 3 more available
 								jsonInstanceObject = new JSONObject();
 								int nextnodeid = nodeid+count;
 								jsonInstanceObject.put("containername", "t"+String.valueOf(nextnodeid));

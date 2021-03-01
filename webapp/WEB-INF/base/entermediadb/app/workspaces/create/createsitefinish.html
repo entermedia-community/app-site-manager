@@ -28,7 +28,7 @@
 	#if($userurl)
 		<h2 style="color:#5BA14F; margin-bottom:30px;">[[Your Media Database is ready]]!</h2>
 	
-		<form action="${userurl}/assets/mediaapp/startmediaboat.html" method="post">
+		<form action="${userurl}/finder/find/startmediaboat.html" method="post">
 			#set($entermediakey = $mediaarchive.getUserManager().getEnterMediaKey($user))
 			<input type="hidden" name="entermedia.key" value="$!entermediakey" />
 			<button id="senddata" type="submit" class="btn btn-primary">
@@ -46,14 +46,14 @@
 jQuery(document).ready(function() 
 { 
 	function magic() {
-		$('#loading').delay(6000).fadeOut('slow').promise().done(function(){
+		$('#loading').delay(4000).fadeOut('slow').promise().done(function(){
 			$('#loaded').delay(2000).fadeIn('slow');
 		});
 		
 	}
 	setTimeout(function(){
 	  magic();
-	}, 20000);
+	}, 10000);
 
 });
 </script>
