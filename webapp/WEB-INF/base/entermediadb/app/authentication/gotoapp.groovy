@@ -64,7 +64,8 @@ public void init()
 	}
 	def mostrecent = servers.first();
 	String url = mostrecent.get("instanceurl");
-	log.info("Go to url " + url);
+	String entermediakey = context.getRequestParameter("entermedia.key");
+	log.info("Go to url " + url + "/finder/find/startmediaboat.html?entermediacloudkey=" + entermediakey);
 	context.redirect(url);
 	
 }
