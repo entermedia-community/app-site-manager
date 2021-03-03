@@ -2,4 +2,5 @@
 	<inner-layout>/${applicationid}/theme/layouts/application.html</inner-layout>
 	<property name="loginokpage">/${applicationid}/users/index.html</property>
 	<property name="section">authentication</property>
+	<property name="loginroot">/${applicationid}/authentication</property>
 </page>
