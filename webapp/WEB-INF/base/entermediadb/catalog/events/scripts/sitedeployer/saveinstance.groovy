@@ -128,7 +128,7 @@ public void init() {
 		String selected_url = instanceurl.toLowerCase();
 		context.putPageValue("selected_url", selected_url);
 				
-		Searcher instancesearcher = searcherManager.getSearcher(catalogid, "entermedia_instances");
+		Searcher instancesearcher = mediaarchive.getSearcher("entermedia_instances");
 		Data newinstance = instancesearcher.createNewData();
 		newinstance.setValue("librarycollection", organizationid);
 		newinstance.setValue("owner", userid);
@@ -149,7 +149,7 @@ public void init() {
 			servers = mediaarchive.query("entermedia_servers").exact("allownewinstances", true).search();
 		}
 		
-		Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
+		Searcher serversSearcher = mediaarchive.getSearcher("entermedia_servers");
 
 		Data server = null;
 		Integer nodeid = 0;
@@ -289,7 +289,7 @@ public void init() {
 
 protected Data addNewMonitor(Data instance)
 {
-	Searcher monitorsearcher = searcherManager.getSearcher(catalogid, "entermedia_instances_monitor");
+	Searcher monitorsearcher = mediaarchive.getSearcher("entermedia_instances_monitor");
 	//TODO: set userid into client table
 	Data newmonitor = monitorsearcher.createNewData();
 

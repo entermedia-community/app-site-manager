@@ -54,7 +54,7 @@ public void init()
 		Map params = new HashMap();
 		params.put("collectionid",collectionid);
 		
-		mediaarchive.fireGeneralEvent(user,"sitedepoyer","deployinstance",params);
+		mediaarchive.fireGeneralEvent(user,"sitedeployer","deployinstance",params);
 		
         servers = mediaarchive.query("entermedia_instances").exact("librarycollection", collectionid).search();
 	}
