@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-  <path-action name="Admin.login"/>
+
+	<inner-layout>/${applicationid}/theme/layouts/dialoglayout.html</inner-layout>
+ 	<path-action name="Admin.login"/>
 </page>
