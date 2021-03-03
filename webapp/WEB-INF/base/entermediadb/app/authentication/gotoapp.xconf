@@ -2,6 +2,6 @@
 
 <page>
 	<path-action name="Script.run">
-		<script>./saveinstance.groovy</script>
+		<script>./gotoapp.groovy</script>
 	</path-action>
 </page>

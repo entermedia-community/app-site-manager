@@ -4,7 +4,7 @@
 	#set( $allowguest =  false)
 #end
 <div class="login-area" >
-
+$content.loginroot
 		$pages.include("$content.loginroot/emailonlyloginform.html",$context)
 		<!-- #if( $allowguest )
 			$pages.include("$content.loginroot/register.html",$context)

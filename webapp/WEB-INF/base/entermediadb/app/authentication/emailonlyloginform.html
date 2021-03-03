@@ -21,7 +21,7 @@
 		#set( $to = $context.getRequestParameter("to") )	
 			#set( $username = $context.getRequestParameter("username") )
 			
-			<form class="" action="emailonlysendmagiclinkfinish.html" id="password-reminder" name="passwordReminder"  method="post">
+			<form class="" action="$content.loginroot/emailonlysendmagiclinkfinish.html" id="password-reminder" name="passwordReminder"  method="post">
 			
 					<p>[[Sign-In or Sign-Up, a link will be sent to you via e-mail:]]</p>
 					<p><input class="form-control form-control-sm required" type="text" name="to" size="40" style="margin:0 auto; width:300px" placeholder="[[Enter your Email Address]]" required /></p>
