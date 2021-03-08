@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  	<property name="emaillayout">/${siteid}/app/authentication/emailonlysendmagiclinkemail.html</property>
+	
+	<path-action name="JsonAdminModule.preprocess" />
+  	<path-action name="Admin.createTempUser"/>
+  	<path-action name="Admin.emailPasswordReminder"/>
+</page>
