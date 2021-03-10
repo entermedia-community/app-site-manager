@@ -66,6 +66,8 @@ public void init()
 	String url = mostrecent.get("instanceurl");
 	String entermediakey = context.getRequestParameter("entermedia.key");
 	log.info("Go to url " + url + "/finder/find/startmediaboat.html?entermediacloudkey=" + entermediakey);
+	
+	//TODO: Enable user
 	context.redirect(url + "/finder/find/startmediaboat.html?entermediacloudkey=" + entermediakey);
 	
 }
