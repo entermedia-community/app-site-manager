@@ -2,6 +2,10 @@
 
 <page>
 
+  <permission name="view">
+    <user />
+  </permission>
+
 <property name="forceautologin">true</property>
 	<path-action name="Script.run">
 		<script>./gotoapp.groovy</script>

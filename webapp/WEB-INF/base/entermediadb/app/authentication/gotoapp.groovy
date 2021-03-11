@@ -65,6 +65,11 @@ public void init()
 	def mostrecent = servers.first();
 	String url = mostrecent.get("instanceurl");
 	String entermediakey = context.getRequestParameter("entermedia.key");
+	if( entermediakey == null)
+	{
+		entermediakey = mediaarchive.getUserManager().getEnterMediaKey(user);
+	}
+	
 	log.info("Go to url " + url + "/finder/find/startmediaboat.html?entermediacloudkey=" + entermediakey);
 	
 	//TODO: Enable user
