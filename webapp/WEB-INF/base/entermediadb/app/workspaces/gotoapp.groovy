@@ -25,6 +25,7 @@ import org.json.simple.JSONObject;
 
 public void init() 
 {
+	log.info(context.getUser());
 	if( context.getUser() == null )
 	{
 		return;
