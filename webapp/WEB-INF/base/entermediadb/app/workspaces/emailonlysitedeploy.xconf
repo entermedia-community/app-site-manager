@@ -2,6 +2,11 @@
 
 <page>
 
+
+  <permission name="view">
+    <boolean value="true" />
+  </permission>
+
 	<inner-layout>/${applicationid}/theme/layouts/dialoglayout.html</inner-layout>
- 	<path-action name="Admin.login"/>
+ 	
 </page>

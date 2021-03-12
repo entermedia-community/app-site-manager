@@ -25,7 +25,10 @@ import org.json.simple.JSONObject;
 
 public void init() 
 {
-	
+	if( context.getUser() == null )
+	{
+		return;
+	}
 	Collection organizationsusers = mediaarchive.query("librarycollectionusers").exact("followeruser",user.getId()).exact("ontheteam","true").search();
 	
     List oids = new ArrayList();
