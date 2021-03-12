@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
+
+  <permission name="view">
+    <boolean value="true" />
+  </permission>
+
+
   	<property name="emaillayout">/${applicationid}/workspaces/emailonlysendmagiclinkemail.html</property>
   	<path-action name="Admin.createTempUser"/>
   	<path-action name="Admin.emailPasswordReminder"/>
