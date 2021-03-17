@@ -11,6 +11,7 @@ import org.openedit.util.Exec
 import org.openedit.util.ExecResult
 import org.openedit.util.RequestUtils
 import org.openedit.util.StringEncryption
+import org.openedit.util.URLUtilities
 import org.entermediadb.asset.MediaArchive
 import org.entermediadb.location.Position
 import org.entermediadb.projects.*
@@ -77,7 +78,12 @@ public void init()
 	log.info("Go to url " + url + "/finder/find/startmediaboat.html?entermediacloudkey=" + entermediakey);
 	
 	//TODO: Enable user
-	context.redirect(url + "/finder/find/startmediaboat.html?entermediacloudkey=" + entermediakey);
+	
+	String link = url + "/finder/find/startmediaboat.html?entermediacloudkey=" + entermediakey
+	String encoded = URLUtilities.urlEscape(link);
+	log.info("Sending to " + encoded);
+	
+	context.redirect(encoded);
 	
 }
 
