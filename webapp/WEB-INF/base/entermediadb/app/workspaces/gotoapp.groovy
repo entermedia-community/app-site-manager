@@ -50,18 +50,21 @@ public void init()
 	}
 	//log.info("Collections " + collections.size() + " for user " + user.getId());
 	
+	String collectionid = null;
 	
 	if( servers == null || servers.isEmpty()) 
 	{
 		PasswordGenerator randomurl = new PasswordGenerator();
 		String instancename = randomurl.generate();
-		String collectionid = createcollection(instancename,user.getId());
+		String newcollectionid = createcollection(instancename,user.getId());
 		Map params = new HashMap();
-		params.put("collectionid",collectionid);
+		params.put("collectionid",newcollectionid);
 		
 		mediaarchive.fireGeneralEvent(user,"sitedeployer","deployinstance",params);
 		
-        servers = mediaarchive.query("entermedia_instances").exact("librarycollection", collectionid).search();
+        servers = mediaarchive.query("entermedia_instances").exact("librarycollection", newcollectionid).search();
+		
+		collectionid = newcollectionid;
 	}
 	if( servers.isEmpty())
 	{
@@ -70,6 +73,9 @@ public void init()
 	def mostrecent = servers.first();
 	String url = mostrecent.get("instanceurl");
 	String entermediakey = context.getRequestParameter("entermedia.key");
+	if (collectionid == null) {
+		collectionid = mostrecent.get("librarycollection");
+	}
 	if( entermediakey == null)
 	{
 		entermediakey = mediaarchive.getUserManager().getEnterMediaKey(user);
@@ -79,7 +85,7 @@ public void init()
 	
 	//TODO: Enable user
 	
-	String link = url + "/finder/find/startmediaboat.html?entermediacloudkey=" + entermediakey
+	String link = url + "/finder/find/startmediaboat.html?entermediacloudkey=" + entermediakey + "&collectionid=" + collectionid
 	String encoded = URLUtilities.urlEscape(link);
 	log.info("Sending to " + encoded);
 	
