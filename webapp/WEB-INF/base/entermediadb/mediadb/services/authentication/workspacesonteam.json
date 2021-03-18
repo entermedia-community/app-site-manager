@@ -8,7 +8,8 @@
 		  {	
 			"id": "$workspace.getValue('id')",
 			"url": "#esc($workspace.getValue('instanceurl'))",
-			"name": "$workspace.getValue('name')"
+			"name": "$workspace.getValue('name')",
+			"collectionid": "$workspace.getValue('librarycollection')"
 		  }
 	    #end
     ]
