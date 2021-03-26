@@ -19,10 +19,20 @@
 			<form class="" action="emailonlysendmagiclinkfinish.html" id="password-reminder" name="passwordReminder"  method="post">
 			
 					<p>[[Sign in or register with your e-mail]]</p>
-					<p><input class="form-control form-control-sm required grabfocus" type="text" name="to" size="50" style="margin:0 auto; width:400px" placeholder="[[Enter your Email Address]]" required /></p>
-					<input type="hidden" name="subject" VALUE="[[Your Login Info]]"/>
+					<p>
+					<input name="to"
+							id="emailinput"
+							class="form-control form-control-sm required grabfocus" 
+							type="text" 
+							size="50" 
+							style="margin:0 auto; width:400px" 
+							placeholder="[[Enter your Email Address]]" required /></p>
+					<input type="hidden" name="subject" value="[[Your Login Info]]"/>
 					<input class="btn btn-secondary" name="submit" type="submit" value="[[Send Link]]" style="margin-right:150px"/>
-					<a href="$home$content.loginroot/emkeysignin.html" class="emdialog" title="Enter App Key" style="text-decoration:underline">[[Sign-In with App Key]]</a> 
+					<a href="$siteroot$content.loginroot/emkeysignin.html" 
+					class="emdialog" 
+					title="[[Enter App Key]]"
+					style="text-decoration:underline">[[Sign-In with App Key]]</a> 
 					
             </form>
 		
@@ -33,10 +43,7 @@
 
 </div>
 <script language="JavaScript" >
-	jQuery(document).ready(function() 
-	{ 
-		document.getElementById("entermediakey" ).focus();
-	});
+
 	function confirmPassword(form)
 	{
 		if(form.entermediakey.value=="")

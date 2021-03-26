@@ -5,7 +5,7 @@
 	     #set($loginok = $context.findValue("loginokpage") ) 
 
 		<div class="hr"></div>
-		<form name="login" id="login" action="$home$content.loginroot/login.html" method="POST" onsubmit="return confirmPassword(this);">
+		<form name="login" id="login" action="$siteroot$content.loginroot/login.html" method="POST" onsubmit="return confirmPassword(this);">
 			<div class="form-group">
 			<label for="password">[[Paste EM App Key]]</label>
 			<input class="form-control" id="entermediakey" name="entermediakey" />

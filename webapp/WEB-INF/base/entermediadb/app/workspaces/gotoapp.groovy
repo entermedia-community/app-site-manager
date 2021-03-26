@@ -80,11 +80,8 @@ public void init()
 	{
 		entermediakey = mediaarchive.getUserManager().getEnterMediaKey(user);
 	}
-	
-	log.info("Go to url " + url + "/finder/find/startmediaboat.html?entermediacloudkey=" + entermediakey);
-	
+
 	//TODO: Enable user
-	
 	String link = url + "/finder/find/startmediaboat.html?entermediacloudkey=" + entermediakey + "&collectionid=" + collectionid
 	String encoded = URLUtilities.urlEscape(link);
 	log.info("Sending to " + encoded);

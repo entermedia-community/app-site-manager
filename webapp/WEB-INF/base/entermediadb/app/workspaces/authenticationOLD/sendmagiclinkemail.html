@@ -24,9 +24,9 @@
 </div>
 
 #if( $context.siteRoot )
-	#set( $link = "$context.siteRoot$home/$applicationid/" )
+	#set( $link = "$siteroot/$applicationid/" )
 #else
-	#set( $link = "$url_util.buildRoot()$home/$applicationid/" )
+	#set( $link = "$url_util.buildRoot()$siteroot/$applicationid/" )
 #end
 <p><strong>The EnterMediaDB Team</strong><br>
 <em><a href="mailto:help@entermediadb.org">help@entermediadb.org</a></em>

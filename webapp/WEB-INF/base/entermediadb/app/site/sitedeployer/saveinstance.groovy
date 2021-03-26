@@ -51,8 +51,14 @@ public void init() {
 	
 	User user = context.getUser();
 	if(user == null) {
+		log.info("-Workspaces: No user defined.");
+		context.putPageValue("status", "error");
+		context.putPageValue("error", "No user defined");
+		return ;
 		//Creating instance+user from email?
-		user = getUser(context.getRequestParameter("email"));
+		/*
+		 * user = getUser(context.getRequestParameter("email"));
+		 
 		if(user == null) {
 			context.putPageValue("status", "error");
 			context.putPageValue("error", "Invalid Request");
@@ -62,6 +68,7 @@ public void init() {
 			userid = user.getId();
 			clientemail = user.getEmail();
 		}
+		*/
 	}
 	else {
 		clientemail = user.getEmail();

@@ -8,8 +8,8 @@
 			
 			<form name="login" 
 					id="login" 
-					action="$apphome/workspaces/authentication/login.html" 
-					method="POST" onsubmit="return confirmPassword(this);">
+					action="$siteroot$apphome/workspaces/authentication/login.html" 
+					method="post">
 			<div class="form-group">
 			<label for="password">[[Paste EM App Key]]</label>
 			<input class="form-control" id="entermediakey" name="entermediakey" />
@@ -19,7 +19,7 @@
 			<input class="btn btn-sm btn-primary float-right" name="submit" type="submit" id="login-submit" value="[[Login]]" />
 			#set($loginok = $context.findValue("loginokpage") )
 			#if($loginok)
-			#set( $loginok = "$context.siteRoot" + "$loginok")
+			#set( $loginok = "$siteroot" + "$loginok")
 			<input type="hidden" name="loginokpage" value="#esc($!loginok)"/>
 			#end
 			</div>

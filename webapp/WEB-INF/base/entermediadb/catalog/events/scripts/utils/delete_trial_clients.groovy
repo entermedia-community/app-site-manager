@@ -41,11 +41,11 @@ public void init()
 
 				//Get Server Info
 				searcherManager = context.getPageValue("searcherManager");
-				Searcher serversSearcher = searcherManager.getSearcher(catalogid, "entermedia_servers");
+				Searcher serversSearcher = mediaArchive .getSearcher("entermedia_servers");
 				Data server = serversSearcher.searchById(instance.entermedia_servers);
                 if (server) {
                         log.info("Deleting instance: "+instance.name+",  on server "+server.name);
-						string instacename = instance.instanceprefix + "";
+						String instacename = instance.instanceprefix + "";
                         List<String> command = new ArrayList<String>();
 						command.add(server.sshname); //server name
 						command.add(instance.instancename);  // Docker id
