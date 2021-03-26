@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>	
+    <property name="emaillayout">/${siteid}/app/workspaces/emailonlysendwordpress.html</property>
 	<permission name="view">
     	<boolean value="true" />
   	</permission>
 	
 	<path-action name="JsonAdminModule.preprocess" />
-  	<path-action name="Admin.emailWordPress"/>  	
+  	<path-action name="Admin.emailPasswordReminder"/>  	
 </page>
