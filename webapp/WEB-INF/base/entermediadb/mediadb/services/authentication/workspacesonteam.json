@@ -1,0 +1,22 @@
+## This should not have HTML in it
+#if($user)
+{
+    "userid":"$user.id",
+    "userKey":"$userKey",
+    "workspaces": [
+        #foreach( $workspace in $workspaces ) #if( ${foreach.count} != 1 ), #end
+		  {	
+			"id": "$workspace.getValue('id')",
+			"url": "#esc($workspace.getValue('instanceurl'))",
+			"name": "$workspace.getValue('name')",
+			"collectionid": "$workspace.getValue('librarycollection')"
+		  }
+	    #end
+    ]
+}
+#else
+{
+	"status":"error",
+	"authenticated":"false"
+}
+#end

@@ -1,0 +1,33 @@
+<div style="background-color:#efefef">
+<div style="background-color:#fff; padding:0 20px 20px 20px; margin:0 auto; width:600px;">
+<div style="background-color:#000; padding: 1px 0 5px 0; margin-bottom:20px;">
+<a href="https://entermediadb.org"><img src="https://emediafinder.com/theme/img/logo.png"></a>
+</div>
+<p>[[Hello]] $mail,</p>
+
+<div style="margin:10px; padding:15px; background-color:#f0f0f0;">
+
+        #set( $link = "$context.siteRoot/app/workspaces/gotoapp.html?entermedia.key=$entermediakey" )
+        #set( $expiry = $context.getPageProperty("temporary_password_expiry"))
+        #set( $days = $numberutils.toInt($expiry))
+        #set ( $calendar = $datetool.getCalendar() )
+        #set ( $today = $datetool.getDate() )
+        #set($null = $calendar.setTime($today))
+        #set($null = $calendar.add(6, $days))
+
+<hr>
+        [[Copy and Paste key on Entermedia Cloud Key Field Cloud Wordpress]]
+        <p id="entermediakey" style="text-align:center;">$entermediakey</p>
+
+</div>
+
+#if( $context.siteRoot )
+        #set( $link = "$context.siteRoot$home/$applicationid/" )
+#else
+        #set( $link = "$url_util.buildRoot()$home/$applicationid/" )
+#end
+<p><strong>The eMediaFinder Team</strong><br>
+<em><a href="mailto:help@entermediadb.org">help@entermediadb.org</a></em>
+</p>
+</div>
+</div>
