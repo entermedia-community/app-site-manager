@@ -6,12 +6,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	#set($siteid = $content.siteid)
 	$context.putPageValue("siteid", $siteid)
-	#set($meta_title = $content.getValue("meta_title"))
+	#set($meta_title = $postdata.getValue("post_title"))
 	#if(!$meta_title)
-		#set($meta_title = $postdata.getValue("post_title"))
+		#set($meta_title = $content.get("meta_title"))
 	#end
 	#if(!$meta_title)
-		#set($meta_title = "EnterMedia Open-source Digital Asset Management")
+		#set($meta_title = "eMediaFinder - Find what your looking for")
 	#end
 	#if ($content.section == "knowledge")
 		#if($content.project == "project9")

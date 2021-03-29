@@ -29,6 +29,7 @@ public void init()
 	log.info(context.getUser());
 	if( context.getUser() == null )
 	{
+		log.info("User key did not work for login ");
 		return;
 	}
 	Collection organizationsusers = mediaarchive.query("librarycollectionusers").exact("followeruser",user.getId()).exact("ontheteam","true").search();
