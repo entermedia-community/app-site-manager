@@ -11,7 +11,7 @@
 
 <div class="col-md-8" style=" max-width:500px; padding:40px 0px 0 40px; ">
 		
-		 #set($loginok = $context.findValue("loginokpage") ) 
+		#set($loginok = $context.findValue("loginokpage") ) 
 
 		#set( $to = $context.getRequestParameter("to") )	
 			#set( $username = $context.getRequestParameter("username") )
@@ -29,11 +29,16 @@
 							placeholder="[[Enter your Email Address]]" required /></p>
 					<input type="hidden" name="subject" value="[[Your Login Info]]"/>
 					<input class="btn btn-secondary" name="submit" type="submit" value="[[Send Link]]" style="margin-right:150px"/>
+					
+					
 					<a href="$siteroot$content.loginroot/emkeysignin.html" 
+					id="signindialog"
 					class="emdialog" 
 					title="[[Enter App Key]]"
-					style="text-decoration:underline">[[Sign-In with App Key]]</a> 
+					style="text-decoration:underline; display:none;">[[Sign-In with App Key]]</a> 
 					
+					
+					<input type="hidden" name="launchersource" value="browser" id="launchersource" />
             </form>
 		
 
@@ -42,7 +47,7 @@
 </div>
 
 </div>
-<script language="JavaScript" >
+<script >
 
 	function confirmPassword(form)
 	{
@@ -57,11 +62,19 @@
 			return true;
 		}
 	}
+	
+	$(document).ready(function(){
+		if(window && window.process && window.process.type) {
+			$("#launchersource").val('desktopapp');
+		} else {
+			$("#signindialog").show();
+		}
+	});
+
 </script> 
 
 </div>
-		<!-- #if( $allowguest )
-			$pages.include("$content.loginroot/register.html",$context)
-		#end -->
-</div>
+<!-- #if( $allowguest )
+	$pages.include("$content.loginroot/register.html",$context)
+#end -->
 
