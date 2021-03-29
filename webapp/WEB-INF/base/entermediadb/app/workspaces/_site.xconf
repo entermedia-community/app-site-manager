@@ -3,5 +3,7 @@
   <property name="login-path">/${applicationid}/workspaces/authentication/nopermissions.html</property>
   
   <inner-layout>/${applicationid}/workspaces/layout.html</inner-layout>
+  
+  <property name="loginroot">/${applicationid}/workspaces</property>
 	
 </page>

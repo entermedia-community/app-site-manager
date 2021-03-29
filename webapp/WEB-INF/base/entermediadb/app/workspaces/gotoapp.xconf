@@ -7,7 +7,6 @@
     <boolean value="true" />
   </permission>
 
- <property name="loginroot">/${applicationid}/workspaces</property>
  
 
 <property name="forceautologin">true</property>
