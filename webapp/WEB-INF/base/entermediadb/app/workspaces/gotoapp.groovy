@@ -81,13 +81,18 @@ public void init()
 	{
 		entermediakey = mediaarchive.getUserManager().getEnterMediaKey(user);
 	}
-
+	
+	Boolean noredirect = Boolean.parseBoolean(context.getPageValue("noredirect"));
+	if(noredirect) {
+		return;
+	}
+	
 	//TODO: Enable user
 	String link = url + "/finder/find/startmediaboat.html?entermediacloudkey=" + entermediakey + "&collectionid=" + collectionid
 	String encoded = URLUtilities.urlEscape(link);
 	log.info("Sending to " + encoded);
-	
 	context.redirect(encoded);
+
 	
 }
 
