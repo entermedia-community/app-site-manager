@@ -2,6 +2,8 @@
 
 <page>	
     <property name="emaillayout">/${siteid}/app/workspaces/emailonlysendwordpress.html</property>
+    <property name="createuser">true</property>
+    
 	<permission name="view">
     	<boolean value="true" />
   	</permission>
