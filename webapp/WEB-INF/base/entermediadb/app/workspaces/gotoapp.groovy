@@ -82,7 +82,7 @@ public void init()
 		entermediakey = mediaarchive.getUserManager().getEnterMediaKey(user);
 	}
 	
-	Boolean noredirect = Boolean.parseBoolean(context.getPageValue("noredirect"));
+	Boolean noredirect = Boolean.parseBoolean(context.getRequestParameter("noredirect"));
 	if(noredirect) {
 		return;
 	}
