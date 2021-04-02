@@ -43,14 +43,19 @@
 							#end
 						</td>
 						<td>
-							##Auto Login to emshare2 
+							##Auto Login to Finder
+							<form method="post" action="$${hit.instanceurl}/finder/find/startmediaboat.html" class="float-left" target="_blank">
+							<input type="hidden" name="entermediacloudkey" value="$instancemonitor.entermediadbkey" />
+							<input type="submit"class="btn btn-xs btn-primary" value="[[Finder]]" />
+							</form>
+
 							#set($instancemonitor = $mediaarchive.query("entermedia_instances_monitor").match("instanceid", $hit.id).searchOne())
 							#if($instancemonitor)
 								#if($hit.instanceurl && $instancemonitor.catalog && $instancemonitor.entermediadbkey)
 									#set($instancefullurl = "${hit.instanceurl}/$instancemonitor.catalog/emshare2/index.html")
 									<form method="post" action="$instancefullurl" class="float-left" target="_blank">
 									<input type="hidden" name="entermedia.key" value="$instancemonitor.entermediadbkey" />
-									<input type="submit"class="btn btn-xs btn-primary" value="[[Login]]" />
+									<input type="submit"class="btn btn-xs btn-primary" value="$instancemonitor.catalog" />
 									</form>
 								#end
 							#end
