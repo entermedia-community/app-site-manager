@@ -16,8 +16,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 
-public void init()
+public void removeinstance()
 {
+	log.info("Delete Instance");
 	String catalogid = "entermediadb/catalog";
 	String notifyemail = "cristobal@entermediadb.org";
 	
@@ -74,6 +75,12 @@ public void init()
 			}
 		}
 	}
+	log.info("No instance.");
+}
+
+
+public void init() {
+	removeinstance();
 }
 
 init();

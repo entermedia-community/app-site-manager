@@ -1,0 +1,3 @@
+#set($collectoinid=$context.getRequestParameter("collectionid"))
+
+$pages.include("$applink/collective/sites/index.html?collectionid=$!collectionid")

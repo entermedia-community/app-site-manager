@@ -1,10 +1,21 @@
 <page>
-	<path-action name="JsonAdminModule.preprocess" />
+	
+	<path-action name="Admin.autoLogin" alltypes="true"/>
+	
+	<property name="forceautologin">true</property>
 
-	<path-action name="Script.run">
-		<script>/${applicationid}/services/removeworkspace.groovy</script>
-    </path-action>
+	<path-action name="JsonAdminModule.preprocess" />
     
-    <generator  name="velocityGenerator" mimetypes="text/json"/>
+   	<path-action name="Script.run">
+		<script>/${applicationid}/services/removeworkspace.groovy</script>
+    </path-action>  
+    
+    <generator name="velocityGenerator" mimetypes="text/json"/>
+    <property name="cancelredirect">true</property>
+    
+      <permission name="view">
+    <boolean value="true" />
+  </permission>
+    
     
 </page>

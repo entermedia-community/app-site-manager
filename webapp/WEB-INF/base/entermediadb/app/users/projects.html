@@ -4,6 +4,7 @@
 #end
 
 #set ($usertracked = $selecteduser.getValue("gatracked"))
+
 #if(!$usertracked)
 	#set( $usersearcher = $mediaarchive.getSearcher("user") )
 	$!user.setValue("gatracked", "true")
@@ -101,6 +102,9 @@
 	
 	#end
 #end
+
+
+
 
 
 
