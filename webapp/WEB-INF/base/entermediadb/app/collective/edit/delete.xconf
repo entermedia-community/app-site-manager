@@ -1,6 +1,10 @@
 <page>
    	<path-action name="Script.run">
 		<script>/${applicationid}/services/removeworkspace.groovy</script>
-    </path-action>  
-    <inner-layout>/${applicationid}/theme/layouts/collectivelayout.html</inner-layout>
+    </path-action>
+    
+      <path-action name="Admin.redirect">
+      	<property name="redirectpath">${applicationid}/</property>
+      </path-action>
+    
 </page>

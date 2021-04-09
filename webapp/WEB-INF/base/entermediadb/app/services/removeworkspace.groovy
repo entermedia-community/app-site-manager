@@ -1,3 +1,4 @@
+import org.entermediadb.asset.MediaArchive
 import org.entermediadb.email.PostMail
 import org.entermediadb.email.TemplateWebEmail
 import org.openedit.*
@@ -10,7 +11,6 @@ import org.openedit.users.authenticate.PasswordGenerator
 import org.openedit.util.Exec
 import org.openedit.util.ExecResult
 import org.openedit.util.RequestUtils
-import org.entermediadb.asset.MediaArchive
 import org.entermediadb.location.Position
 import org.entermediadb.projects.*
 import org.entermediadb.websocket.chat.ChatManager
@@ -28,23 +28,30 @@ public void init()
 	User user = context.getUser();
 	if(user == null) {
 		context.putPageValue("status","error");
+		log.info("No user");
 		return
 	}
 	
-	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
-	BaseSearcher collectionsearcher = mediaArchive.getSearcher("librarycollection");
+	MediaArchive mediaarchive = context.getPageValue("mediaarchive");
+	Searcher collectionsearcher = mediaarchive.getSearcher("librarycollection");
 
 	String collectionid = context.getRequestParameter("collectionid");
-	Data collection = mediaArchive.getData("librarycollection",collectionid);
+	LibraryCollection collection = (LibraryCollection)collectionsearcher.searchById(collectionid);
 	if( collection != null)
 	{
 		
 		//Search Instance
+		Searcher instancesearcher = mediaarchive.getSearcher("entermedia_instances");
 		Data instance = null;
-		instance = mediaArchive.query("entermedia_instances").match("librarycollection", collectionid).exact("owner", user.getId()).searchOne();
+		if ("admin".equals(user.getId())) {
+			instance = instancesearcher.query("entermedia_instances").match("librarycollection", collectionid).searchOne();
+		}
+		else {
+			instance = instancesearcher.query("entermedia_instances").match("librarycollection", collectionid).exact("owner", user.getId()).searchOne();
+		}
 		if (instance) {
 			collection.setValue("organizationstatus","pendingdelete");
-			mediaArchive.saveData("librarycollection",collection);
+			collectionsearcher.saveData(collection);
 	
 			context.putPageValue("instanceid",instance.getId());
 			log.info("Deleting Intance: "+instance.getId());
@@ -53,6 +60,7 @@ public void init()
 			return;
 		}
 		context.putPageValue("status","nopermissions");
+		log.info("No permissions.")
 		return;
 	}
 	else
@@ -79,11 +87,11 @@ public void removeinstance()
 		Data instance =  instancesearcher.searchById(instanceid);
 		
 		
-		if (instance != null && instance.get("instance_status") != 'deleted') {
-			log.info("-- To delete: id:" +instanceid+" Name:"+instance.getName());
+		if (instance != null && !"deleted".equals(instance.get("instance_status"))) {
+			log.info("-- to delete: id:" +instanceid+" Name:"+instance.getName());
 			
 			Searcher serverssearcher = mediaarchive.getSearcher("entermedia_servers");
-			Data server = serverssearcher.searchById(instance.getValue("entermedia_servers"));
+			Data server = serverssearcher.searchById(instance.get("entermedia_servers"));
 			if(server != null) {
 				log.info("- Deleting: " +instance.getName()+" / "+instance.get("instancenode")+" on: "+server.get("sshname"))
 
@@ -122,9 +130,14 @@ public void removeinstance()
 				instancesearcher.saveData(instance);
 				
 			}
+			else {
+				log.info("- server not found:" + instance.get("entermedia_servers"))
+			}
 		}
 	}
-	log.info("No instance.");
+	else {
+		log.info("No instance.");
+	}
 }
 
 
