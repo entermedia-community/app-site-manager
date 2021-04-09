@@ -29,10 +29,10 @@
         </a>
     </div>
 
-#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").not("organizationstatus","disabled").not("organizationstatus","closed").enduser(true).sort("name").search($context) )
+#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").contains("organizationstatus","active").enduser(true).sort("name").search($context) )
 
     <div class="sidebar-box-content" style="padding:0;" id="sidebarboxprojects">
-    	#if( $collectives.size() >= 10)
+    	#if( $collectives.size() >= 1)
     		<div style="padding:5px 15px;">
 			<select  id="collectivesearch2" 
 						name="collectionid" 

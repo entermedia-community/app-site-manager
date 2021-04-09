@@ -44,10 +44,10 @@ public void init()
 		Searcher instancesearcher = mediaarchive.getSearcher("entermedia_instances");
 		Data instance = null;
 		if ("admin".equals(user.getId())) {
-			instance = instancesearcher.query("entermedia_instances").match("librarycollection", collectionid).searchOne();
+			instance = instancesearcher.query().match("librarycollection", collectionid).searchOne();
 		}
 		else {
-			instance = instancesearcher.query("entermedia_instances").match("librarycollection", collectionid).exact("owner", user.getId()).searchOne();
+			instance = instancesearcher.query().match("librarycollection", collectionid).exact("owner", user.getId()).searchOne();
 		}
 		if (instance) {
 			collection.setValue("organizationstatus","pendingdelete");
