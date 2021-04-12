@@ -35,10 +35,10 @@
 					id="signindialog"
 					class="emdialog" 
 					title="[[Enter App Key]]"
-					style="text-decoration:underline; display:none;">[[Sign-In with App Key]]</a> 
+					style="text-decoration:underline; ">[[Sign-In with App Key]]</a> 
 					
 					
-					<input type="hidden" name="launchersource" value="browser" id="launchersource" />
+					<input type="text" name="launchersource" value="browser" id="launchersource" />
             </form>
 		
 
@@ -65,9 +65,9 @@
 	
 	$(document).ready(function(){
 		if(window && window.process && window.process.type) {
-			$("#launchersource").val('desktopapp');
+ 			$("#launchersource").val('desktopapp');
 		} else {
-			$("#signindialog").show();
+
 		}
 	});
 
