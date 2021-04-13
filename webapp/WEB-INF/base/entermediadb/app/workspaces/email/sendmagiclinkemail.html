@@ -10,7 +10,8 @@
 <div style="margin:10px 0; padding:5px; background-color:#f0f0f0;">
 
 #if($launchersource!="desktopapp")
-        #set( $link = "$context.siteRoot/app/workspaces/gotoapp.html?entermedia.key=$entermediakey" )
+		
+        #set( $link = "$context.siteroot/app/workspaces/gotoapp.html?entermedia.key=$entermediakey" )
         #set( $expiry = $context.getPageProperty("temporary_password_expiry"))
         #set( $days = $numberutils.toInt($expiry))
         #set ( $calendar = $datetool.getCalendar() )
@@ -30,13 +31,10 @@
          [[Copy and paste key]]
         <p id="entermediakey" style="text-align:center;">$entermediakey</p>
 #end
+-$launchersource
 </div>
 
-#if( $context.siteRoot )
-        #set( $link = "$siteroot/$applicationid/" )
-#else
-        #set( $link = "$url_util.buildRoot()$siteroot/$applicationid/" )
-#end
+
 <p><strong>The eMediaFinder Team</strong><br>
 <em><a href="mailto:help@entermediadb.org">help@entermediadb.org</a></em>
 </p>
