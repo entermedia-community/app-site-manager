@@ -63,14 +63,17 @@ public void init()
 		
 		mediaarchive.fireGeneralEvent(user,"sitedeployer","deployinstance",params);
 		
-        servers = mediaarchive.query("entermedia_instances").exact("librarycollection", newcollectionid).search();
+        servers = mediaarchive.query("entermedia_instances").exact("librarycollection", newcollectionid).match("instance_status","active").search();
 		
 		collectionid = newcollectionid;
 	}
 	if( servers.isEmpty())
 	{
-		throw new OpenEditException("Server could not be deployed");
+		throw new OpenEditException("Server could not be deployed"); //Never Empty
+		return;
 	}
+	
+	//Redirects to first available
 	def mostrecent = servers.first();
 	String url = mostrecent.get("instanceurl");
 	String entermediakey = context.getRequestParameter("entermedia.key");

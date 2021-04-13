@@ -186,7 +186,7 @@ public void init() {
 				//Send Email Notify No Space on Servers
 				//context.putPageValue("from", clientemail);
 				context.putPageValue("subject", "No space for Trial Sites");
-				//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
+				sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
 			}
 			else{
 				// Call deploy script
