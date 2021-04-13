@@ -184,7 +184,7 @@ public void init() {
 				context.putPageValue("status", "error");
 				context.putPageValue("error", "No space on servers");
 				//Send Email Notify No Space on Servers
-				//context.putPageValue("from", clientemail);
+				context.putPageValue("from", clientemail);
 				context.putPageValue("subject", "No space for Trial Sites");
 				sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
 			}
@@ -336,7 +336,7 @@ protected void sendEmail(Map pageValues, String email, String templatePage){
 	//mailer.setMessage(inOrder.get("sharenote"));
 	//mailer.setWebPageContext(context);
 	mailer.send();
-	log.info("email sent to ${email}");
+	log.info("save instance email sent to ${email}");
 }
 
 public String createcollection(String inInstancename, String userid) {

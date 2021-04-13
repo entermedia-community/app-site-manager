@@ -5,8 +5,11 @@
 </div>
 <p>[[Hello]] $mail,</p>
 
+
+
 <div style="margin:10px 0; padding:5px; background-color:#f0f0f0;">
 
+#if($launchersource!="desktopapp")
         #set( $link = "$context.siteRoot/app/workspaces/gotoapp.html?entermedia.key=$entermediakey" )
         #set( $expiry = $context.getPageProperty("temporary_password_expiry"))
         #set( $days = $numberutils.toInt($expiry))
@@ -20,10 +23,13 @@
         <br>
         [[Key will expire in 24 hours.]]
         </p>
-<hr>
-         [[Or copy and paste key]]
+        [[Or copy and paste key]]
         <p id="entermediakey" style="text-align:center;">$entermediakey</p>
-
+<hr>
+#else
+         [[Copy and paste key]]
+        <p id="entermediakey" style="text-align:center;">$entermediakey</p>
+#end
 </div>
 
 #if( $context.siteRoot )

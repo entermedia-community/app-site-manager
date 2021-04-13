@@ -26,19 +26,9 @@ import org.json.simple.JSONObject;
 public void init() {
 	
 	String catalogid = "entermediadb/catalog";
-	String notifyemail = "help@entermediadb.org";
+	String notifyemail = "tech@entermediadb.org";
 	String clientemail = user.getEmail();
 
-/*	
-	String clientform = context.getSessionValue("clientform");
-	if (clientform != null) {
-		context.putSessionValue("clientform", null);
-	}
-	else {
-		context.putPageValue("errorcode", "1");
-		return;
-	}
-	*/
 	
 	MediaArchive mediaarchive = context.getPageValue("mediaarchive");
 
