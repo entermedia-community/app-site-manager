@@ -26,7 +26,7 @@ import org.json.simple.JSONObject;
 public void init() {
 	
 	String catalogid = "entermediadb/catalog";
-	String notifyemail = "help@entermediadb.org";
+	String notifyemail = "tech@entermediadb.org";
 	String clientemail = null;
 
 /*	

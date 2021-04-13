@@ -69,7 +69,8 @@ public void init()
 	}
 	if( servers.isEmpty())
 	{
-		throw new OpenEditException("Server could not be deployed"); //Never Empty
+		//throw new OpenEditException("Server could not be deployed"); //Never Empty
+		context.redirect("error.html");
 		return;
 	}
 	
