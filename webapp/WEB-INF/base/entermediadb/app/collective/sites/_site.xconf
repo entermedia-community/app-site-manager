@@ -4,4 +4,7 @@
 	<property name="collectivesection">instances</property>
 	
 	<path-action name="ChatModule.getChatManager"/>
+	
+	<path-action name="Admin.loadTemporaryKey"/>
+	
 </page>
