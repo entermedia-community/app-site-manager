@@ -1,19 +1,10 @@
 package utils;
 
-import org.entermediadb.email.PostMail
-import org.entermediadb.email.TemplateWebEmail
 import org.entermediadb.asset.MediaArchive
+import org.json.simple.JSONArray
+import org.json.simple.JSONObject
 import org.openedit.*
 import org.openedit.data.Searcher
-import org.openedit.users.*
-import org.openedit.util.DateStorageUtil
-
-import org.openedit.BaseWebPageRequest
-import org.openedit.hittracker.*
-import org.openedit.users.authenticate.PasswordGenerator
-import org.openedit.util.Exec
-import org.openedit.util.ExecResult
-import org.openedit.util.RequestUtils
 
 public void init()
 {
@@ -23,7 +14,7 @@ public void init()
         Searcher instanceSearcher = mediaArchive .getSearcher("entermedia_instances");
 
         Calendar limit = Calendar.getInstance();
-        limit.add(Calendar.DAY_OF_YEAR, -15);
+        limit.add(Calendar.DAY_OF_YEAR, -15); 
 
         Collection expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status","disabled").and().before("dateend", limit.getTime()).search();
 		
@@ -46,14 +37,26 @@ public void init()
                 if (server) {
                         log.info("Deleting instance: "+instance.name+",  on server "+server.name);
 						String instacename = instance.instanceprefix + "";
-                        List<String> command = new ArrayList<String>();
-						command.add(server.sshname); //server name
-						command.add(instance.instancename);  // Docker id
-						command.add(instance.instancenode);  // Docker Node
-
-                        Exec exec = moduleManager.getBean("exec");
-                        ExecResult done = exec.runExec("trialremove", command);
-                        //log.info("Exec: " + done.getStandardOut());
+                        
+						JSONObject jsonObject = new JSONObject();
+						JSONArray jsonInstance = new JSONArray();
+						JSONObject jsonInstanceObject = new JSONObject();
+						
+						jsonInstanceObject.put("subdomain", instance.instancename);
+						jsonInstanceObject.put("containername", "t"+instance.instancenode);
+						jsonInstance.add(jsonInstanceObject);
+						
+						jsonObject.put("deleted", jsonInstance);
+						
+						ArrayList<String> command = new ArrayList<String>();
+					
+						command.add("-i");
+						command.add("/media/services/ansible/inventory.yml")
+						command.add("/media/services/ansible/trial.yml");
+						command.add("--extra-vars");
+						command.add("server=" + server.sshname + "");
+						command.add("-e");
+						command.add("" + jsonObject.toJSONString() + "");
 						
 						//Discount currentinstances on server
 						if(instance.getValue("instance_status") == 'active') {

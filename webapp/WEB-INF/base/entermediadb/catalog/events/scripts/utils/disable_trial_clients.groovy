@@ -1,16 +1,12 @@
 package utils;
 
+import org.entermediadb.asset.MediaArchive
 import org.entermediadb.email.PostMail
 import org.entermediadb.email.TemplateWebEmail
-import org.entermediadb.asset.MediaArchive
+import org.json.simple.JSONArray
+import org.json.simple.JSONObject
 import org.openedit.*
 import org.openedit.data.Searcher
-import org.openedit.users.*
-import org.openedit.util.DateStorageUtil
-
-import org.openedit.BaseWebPageRequest
-import org.openedit.hittracker.*
-import org.openedit.users.authenticate.PasswordGenerator
 import org.openedit.util.Exec
 import org.openedit.util.ExecResult
 import org.openedit.util.RequestUtils
@@ -43,14 +39,32 @@ public void init()
                 Searcher serversSearcher = mediaArchive.getSearcher("entermedia_servers");
                 Data server = serversSearcher.query().exact("id", instance.entermedia_servers).searchOne();
                 if (server) {
-                        List<String> command = new ArrayList<String>();
-                        command.add(server.sshname); //server name
-                        command.add(instance.instancename);  // Docker id
-						command.add(instance.instancenode);  // Docker Node
-
-                        Exec exec = moduleManager.getBean("exec");
-                        ExecResult done = exec.runExec("trialdisable", command);
-                        log.info("Exec: " + done.getStandardOut());
+					
+						
+						JSONObject jsonObject = new JSONObject();
+						JSONArray jsonInstance = new JSONArray();
+						JSONObject jsonInstanceObject = new JSONObject();
+						
+						jsonInstanceObject.put("subdomain", instance.instancename);
+						jsonInstanceObject.put("containername", "t"+instance.instancenode);
+						jsonInstance.add(jsonInstanceObject);
+						
+						jsonObject.put("disabled", jsonInstance);
+						
+						ArrayList<String> command = new ArrayList<String>();
+					
+						command.add("-i");
+						command.add("/media/services/ansible/inventory.yml")
+						command.add("/media/services/ansible/trial.yml");
+						command.add("--extra-vars");
+						command.add("server=" + server.sshname + "");
+						command.add("-e");
+						command.add("" + jsonObject.toJSONString() + "");
+			
+						
+						Exec exec = moduleManager.getBean("exec"); //removeclientinstance.sh m44 test 22
+						ExecResult done = exec.runExec("trialsansible", command, true); //Todo: Need to move this script here?
+						
 						
 						//Discount currentinstances on server
 						if(instance.getValue("instance_status") == 'active') {
