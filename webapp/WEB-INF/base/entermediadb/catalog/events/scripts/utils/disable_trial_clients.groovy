@@ -39,34 +39,29 @@ public void init()
                 Searcher serversSearcher = mediaArchive.getSearcher("entermedia_servers");
                 Data server = serversSearcher.query().exact("id", instance.entermedia_servers).searchOne();
                 if (server) {
-					
-						
 						JSONObject jsonObject = new JSONObject();
 						JSONArray jsonInstance = new JSONArray();
 						JSONObject jsonInstanceObject = new JSONObject();
-						
+
 						jsonInstanceObject.put("subdomain", instance.instancename);
 						jsonInstanceObject.put("containername", "t"+instance.instancenode);
 						jsonInstance.add(jsonInstanceObject);
-						
+
 						jsonObject.put("disabled", jsonInstance);
-						
+
 						ArrayList<String> command = new ArrayList<String>();
-					
+
 						command.add("-i");
 						command.add("/media/services/ansible/inventory.yml")
 						command.add("/media/services/ansible/trial.yml");
 						command.add("--extra-vars");
 						command.add("server=" + server.sshname + "");
 						command.add("-e");
-						command.add("" + jsonObject.toJSONString() + "");
-			
-						
-						Exec exec = moduleManager.getBean("exec"); //removeclientinstance.sh m44 test 22
-						ExecResult done = exec.runExec("trialsansible", command, true); //Todo: Need to move this script here?
-						
-						
-						//Discount currentinstances on server
+						command.add("" + jsonObject.toJSONString() + "");			
+
+						Exec exec = moduleManager.getBean("exec");
+						ExecResult done = exec.runExec("trialsansible", command, true);
+
 						if(instance.getValue("instance_status") == 'active') {
 							server.setValue("currentinstances", server.getValue("currentinstances") - 1);
 						}
