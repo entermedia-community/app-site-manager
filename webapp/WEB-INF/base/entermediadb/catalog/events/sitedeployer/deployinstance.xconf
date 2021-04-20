@@ -4,6 +4,6 @@
   <property name="enabled">true</property>
   <property name="eventname">Deploy One Site API</property>
   <path-action name="Script.run">
-    <script>/${catalogid}/events/scripts/sitedeployer/saveinstance.groovy</script>
+    <script>/${catalogid}/events/scripts/sitedeployer/assign_trial_client.groovy</script>
   </path-action>
 </page>

@@ -5,6 +5,6 @@
   <property name="enabled">true</property>
   <property name="eventname">Trial Sites Create Containers</property>
   <path-action name="Script.run" allowduplicates="true">
-    <script>/${catalogid}/events/scripts/utils/availablecontainers.groovy</script>
+    <script>/${catalogid}/events/scripts/utils/create_trial_clients.groovy</script>
   </path-action>
 </page>

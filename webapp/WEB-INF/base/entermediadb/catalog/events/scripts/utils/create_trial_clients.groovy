@@ -107,9 +107,9 @@ public void init() {
 					context.putPageValue("status", "error");
 					context.putPageValue("error", "No space on servers");
 					//Send Email Notify No Space on Servers
-					context.putPageValue("from", notifyemail);
-					context.putPageValue("subject", "No space for Trial Sites");
-					sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
+				    //context.putPageValue("from", notifyemail);
+				    //context.putPageValue("subject", "No space for Trial Sites");
+					//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
 				}
 			 }
 		
@@ -123,24 +123,24 @@ public void init() {
 
 
 //TODO: Make that table use the site (librarycollection)
-protected void sendEmail(Map pageValues, String email, String templatePage){
-	//send e-mail
-	//Page template = getPageManager().getPage(templatePage);
-	RequestUtils rutil = moduleManager.getBean("requestUtils");
-	BaseWebPageRequest newcontext = rutil.createVirtualPageRequest(templatePage,null, null);
-	
-	newcontext.putPageValues(pageValues);
-
-	PostMail mail = (PostMail)moduleManager.getBean( "postMail");
-	TemplateWebEmail mailer = mail.getTemplateWebEmail();
-	mailer.loadSettings(newcontext);
-	mailer.setMailTemplatePath(templatePage);
-	mailer.setRecipientsFromCommas(email);
-	//mailer.setMessage(inOrder.get("sharenote"));
-	//mailer.setWebPageContext(context);
-	mailer.send();
-	log.info("email sent to ${email}");
-}
+//protected void sendEmail(Map pageValues, String email, String templatePage){
+//	//send e-mail
+//	//Page template = getPageManager().getPage(templatePage);
+//	RequestUtils rutil = moduleManager.getBean("requestUtils");
+//	BaseWebPageRequest newcontext = rutil.createVirtualPageRequest(templatePage,null, null);
+//	
+//	newcontext.putPageValues(pageValues);
+//
+//	PostMail mail = (PostMail)moduleManager.getBean( "postMail");
+//	TemplateWebEmail mailer = mail.getTemplateWebEmail();
+//	mailer.loadSettings(newcontext);
+//	mailer.setMailTemplatePath(templatePage);
+//	mailer.setRecipientsFromCommas(email);
+//	//mailer.setMessage(inOrder.get("sharenote"));
+//	//mailer.setWebPageContext(context);
+//	mailer.send();
+//	log.info("email sent to ${email}");
+//}
 
 init();
 
