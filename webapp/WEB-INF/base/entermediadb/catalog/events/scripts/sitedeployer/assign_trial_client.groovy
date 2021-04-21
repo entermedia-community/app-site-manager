@@ -24,23 +24,23 @@ import org.json.simple.JSONObject;
 
 
 public void init() {
-	
+
 	String catalogid = "entermediadb/catalog";
 	String notifyemail = "help@entermediadb.org";
 	String clientemail = null;
 
-/*	
-	String clientform = context.getSessionValue("clientform");
-	if (clientform != null) {
-		context.putSessionValue("clientform", null);
-	}
-	else {
-		context.putPageValue("errorcode", "1");
-		return;
-	}
-	*/
-	
-	
+	/*	
+	 String clientform = context.getSessionValue("clientform");
+	 if (clientform != null) {
+	 context.putSessionValue("clientform", null);
+	 }
+	 else {
+	 context.putPageValue("errorcode", "1");
+	 return;
+	 }
+	 */
+
+
 
 	Map params = context.getSessionValue("userparams");
 	String instanceurl = null;
@@ -48,7 +48,7 @@ public void init() {
 	String instancename = null;
 	String organization_type = null;
 	String userid = null;
-	
+
 	User user = context.getUser();
 	if(user == null) {
 		//Creating instance+user from email?
@@ -93,41 +93,41 @@ public void init() {
 		PasswordGenerator randomurl = new PasswordGenerator();
 		instanceurl = randomurl.generate();
 	}
-	
+
 	if (instancename == null) {
 		instancename = instanceurl;
 	}
-	
+
 	if (userid == null && user!= null) {
 		userid = user.getId();
 	}
 	/*else {
-		log.info("-Workspaces: No user defined.");
-		context.putPageValue("status", "error");
-		context.putPageValue("error", "No user defined");
-		return;
-	}*/
-	
-	
+	 log.info("-Workspaces: No user defined.");
+	 context.putPageValue("status", "error");
+	 context.putPageValue("error", "No user defined");
+	 return;
+	 }*/
+
+
 	String organizationid = context.getRequestParameter("collectionid");  //collectionid
 	if (organizationid == null) {
 		//organizationid = createcollection(instancename, userid);
-		
+
 	}
-	
+
 	if (organizationid && instanceurl) {
-		
+
 		BaseSearcher collectionsearcher = mediaarchive.getSearcher("librarycollection");
 		Data collection = collectionsearcher.searchByField("id", organizationid);
 		if (collection) {
 			context.putPageValue("organizationid", organizationid);
 			context.putPageValue("organization", collection.getValue("name"));
 		}
-		
+
 		//Create Valid URL
 		String selected_url = instanceurl.toLowerCase();
 		context.putPageValue("selected_url", selected_url);
-				
+
 		Searcher instancesearcher = mediaarchive.getSearcher("entermedia_instances");
 		Data newinstance = instancesearcher.createNewData();
 		newinstance.setValue("librarycollection", organizationid);
@@ -137,29 +137,29 @@ public void init() {
 		newinstance.setValue("instanceprefix", selected_url);
 		newinstance.setValue("istrial", true);
 		instancesearcher.saveData(newinstance);
-		
+
 		context.putPageValue("instancename", instancename);
-		
+
 		HitTracker servers = null;
-		
+
 		if (region != null) {
-			 servers = mediaarchive.query("entermedia_servers").exact("allownewinstances", true).match("server_region", region).search();
+			servers = mediaarchive.query("entermedia_servers").exact("allownewinstances", true).match("server_region", region).search();
 		}
 		else {
 			servers = mediaarchive.query("entermedia_servers").exact("allownewinstances", true).search();
 		}
-		
+
 		Searcher serversSearcher = mediaarchive.getSearcher("entermedia_servers");
 
 		Data server = null;
 		Integer nodeid = 0;
-		
+
 		Integer maxinstances = 0;
 		Integer currentinstances = 0;
 		Boolean foundspace = false;
 		//Check if server's seat has room
 		if (servers)
-			{
+		{
 			for (Iterator serverIterator = servers.iterator(); serverIterator.hasNext();)
 			{
 				server = serversSearcher.loadData(serverIterator.next());
@@ -170,8 +170,8 @@ public void init() {
 					foundspace = true;
 					break;
 				}
-			 }
-		
+			}
+
 			if (!foundspace) {
 				log.info("- No space on servers for trialsites");
 				context.putPageValue("errorcode","2");
@@ -193,34 +193,22 @@ public void init() {
 					server.setValue("lastnodeid", nodeid);
 					serversSearcher.saveData(server);
 
-					JSONObject jsonObject = new JSONObject();
-					JSONArray jsonInstance = new JSONArray();
-					JSONObject jsonInstanceObject = new JSONObject();
-					
-					jsonInstanceObject.put("subdomain", selected_url);
-					jsonInstanceObject.put("containername", "t"+String.valueOf(nodeid));
-
-					jsonInstance.add(jsonInstanceObject);
-					jsonObject.put("assigned", jsonInstance);
-					
 					ArrayList<String> command = new ArrayList<String>();
-					command.add("-i");
-					command.add("/media/services/ansible/inventory.yml")
-					command.add("/media/services/ansible/trial-assign.yml");
-					command.add("--extra-vars");
-					command.add("server=" + server.sshname + "");
-					command.add("-e");
-					command.add("" + jsonObject.toJSONString() + ""); //
-					
-					
+					command.add("/media/services/ansible/trial-assign.sh");
+					command.add("-s");
+					command.add(server.sshname);
+					command.add("-c");
+					command.add(String.valueOf(nodeid));
+					command.add("-d");
+					command.add(selected_url);
+
 					Exec exec = moduleManager.getBean("exec");
-					ExecResult done = exec.runExec("trialsansible", command, true); //Todo: Need to move this script here?
-					//ExecResult done = exec.runExec("/media/services/ansible/trialsansible.sh", command, true); //Todo: Need to move this script here?
+					ExecResult done = exec.runExec(command);
 					log.info("- Deploying Trial Site " + selected_url + " at " + server.getName());
-					
-						
+
+
 					String fullURL = "https://" + selected_url + "." + server.trialdomain;
-					
+
 					newinstance.setValue("instanceurl", fullURL);
 					newinstance.setValue("instance_status", "active");
 					newinstance.setValue("instanceprefix", selected_url); //not need it?
@@ -232,57 +220,55 @@ public void init() {
 					newinstance.setValue("datestart", new Date());
 					newinstance.setValue("dateend", dateStorageUtil.addDaysToDate(new Date(), 30));
 					instancesearcher.saveData(newinstance);
-					
+
 					context.putPageValue("status", "ok");
 					context.putPageValue("instanceid", newinstance.getId());
 					context.putPageValue("userurl", fullURL);
 					context.putPageValue("instanceurl", fullURL);
-					
+
 					context.putPageValue("newuser", "admin");
 					context.putPageValue("newpassword", "admin");
-					
+
 					//Add Site to Monitoring
 					//Data monitor = addNewMonitor(newinstance);
-					
+
 					//Send Notification to us
 					//context.putPageValue("from", clientemail);
 					context.putPageValue("subject", "New Activation - " + fullURL);
-					//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");				
-					
+					//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");
+
 					//Send Email to Client
-					context.putPageValue("from", notifyemail);
-					context.putPageValue("subject", "Welcome to EnterMediaDB ");
-					
-					context.putPageValue("entermediakey", getUserKey(user));
-					
-					sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
-				
-					}
-					catch(Exception e){
-						context.putPageValue("status", "error");
-						context.putPageValue("error", "Unexpected Error");
-						 e.printStackTrace();
-					}
-			
+					//context.putPageValue("from", notifyemail);
+					//context.putPageValue("subject", "Welcome to EnterMediaDB ");
+					//context.putPageValue("entermediakey", getUserKey(user));
+					//sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
+
+				}
+				catch(Exception e){
+					context.putPageValue("status", "error");
+					context.putPageValue("error", "Unexpected Error");
+					e.printStackTrace();
+				}
+
 			}
-			}
-			else {
-				log.info("- No Servers Available.");
-				context.putPageValue("errorcode","3");
-				context.putPageValue("status", "error");
-				context.putPageValue("error", "No servers availavle");
-				
-			}
-		
+		}
+		else {
+			log.info("- No Servers Available.");
+			context.putPageValue("errorcode","3");
+			context.putPageValue("status", "error");
+			context.putPageValue("error", "No servers availavle");
+
+		}
+
 	}
 	else {
 		log.info("Missing: "+organizationid + " Region:" + region + " Instance:"+instanceurl);
 		context.putPageValue("status", "error");
 		context.putPageValue("error", "Missing Data");
 	}
-	
-	
-	
+
+
+
 }
 
 
@@ -294,19 +280,19 @@ protected Data addNewMonitor(Data instance)
 	Data newmonitor = monitorsearcher.createNewData();
 
 	newmonitor.setValue("instanceid", instance.getId());
-	newmonitor.setValue("name", instance.getName()); 
+	newmonitor.setValue("name", instance.getName());
 	newmonitor.setValue("serverid", instance.entermedia_servers);
 	newmonitor.setValue("isssl", "false");
-	
+
 	newmonitor.setValue("diskmaxusage", 95); //Need to parametrize differently
 	newmonitor.setValue("memmaxusage", 200);
-	
+
 	newmonitor.setValue("admin_login", "admin");
 	newmonitor.setValue("admin_pass", "admin");
-	
+
 	newmonitor.setValue("monitoringenable", true);
 	newmonitor.setValue("monitoringurl", instance.instanceurl);
-	
+
 	newmonitor.setValue("notifyemail", "help@entermediadb.org");  //not need it custom?
 	monitorsearcher.saveData(newmonitor,null);
 	return newmonitor;
@@ -314,30 +300,30 @@ protected Data addNewMonitor(Data instance)
 
 
 //TODO: Make that table use the site (librarycollection)
-protected void sendEmail(Map pageValues, String email, String templatePage){
-	//send e-mail
-	//Page template = getPageManager().getPage(templatePage);
-	RequestUtils rutil = moduleManager.getBean("requestUtils");
-	BaseWebPageRequest newcontext = rutil.createVirtualPageRequest(templatePage,null, null);
-	
-	newcontext.putPageValues(pageValues);
-
-	PostMail mail = (PostMail)moduleManager.getBean( "postMail");
-	TemplateWebEmail mailer = mail.getTemplateWebEmail();
-	mailer.loadSettings(newcontext);
-	mailer.setMailTemplatePath(templatePage);
-	mailer.setRecipientsFromCommas(email);
-	//mailer.setMessage(inOrder.get("sharenote"));
-	//mailer.setWebPageContext(context);
-	mailer.send();
-	log.info("email sent to ${email}");
-}
+//protected void sendEmail(Map pageValues, String email, String templatePage){
+//	//send e-mail
+//	//Page template = getPageManager().getPage(templatePage);
+//	RequestUtils rutil = moduleManager.getBean("requestUtils");
+//	BaseWebPageRequest newcontext = rutil.createVirtualPageRequest(templatePage,null, null);
+//
+//	newcontext.putPageValues(pageValues);
+//
+//	PostMail mail = (PostMail)moduleManager.getBean( "postMail");
+//	TemplateWebEmail mailer = mail.getTemplateWebEmail();
+//	mailer.loadSettings(newcontext);
+//	mailer.setMailTemplatePath(templatePage);
+//	mailer.setRecipientsFromCommas(email);
+//	//mailer.setMessage(inOrder.get("sharenote"));
+//	//mailer.setWebPageContext(context);
+//	mailer.send();
+//	log.info("email sent to ${email}");
+//}
 
 
 
 public User getUser(String email) {
 	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
-	
+
 	email = email.trim().toLowerCase();
 	User theuser = null;
 	theuser = mediaArchive.getUserManager().getUserByEmail(email);
@@ -347,13 +333,13 @@ public User getUser(String email) {
 	}
 	else{
 		//create user
-			String	password = new PasswordGenerator().generate();
-				
-			theuser = mediaArchive.getUserManager().createUser(null, password);
-			theuser.setEmail(email.trim().toLowerCase());
-			theuser.setEnabled(true);
-			mediaArchive.getUserManager().saveUser(theuser);
-			log.info("Workspaces: New user created:"+theuser.getId());
+		String	password = new PasswordGenerator().generate();
+
+		theuser = mediaArchive.getUserManager().createUser(null, password);
+		theuser.setEmail(email.trim().toLowerCase());
+		theuser.setEnabled(true);
+		mediaArchive.getUserManager().saveUser(theuser);
+		log.info("Workspaces: New user created:"+theuser.getId());
 	}
 	return theuser;
 }
@@ -384,7 +370,7 @@ public String getUserKey(User theuser) {
 		log.info("Unable to append encrypted timestamp. Autologin URL does not have an expiry.");
 	}
 	return passenc;
-	
+
 }
 
 
