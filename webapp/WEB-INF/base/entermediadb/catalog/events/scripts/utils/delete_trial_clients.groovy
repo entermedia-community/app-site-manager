@@ -14,7 +14,7 @@ public void init()
         Searcher instanceSearcher = mediaArchive .getSearcher("entermedia_instances");
 
         Calendar limit = Calendar.getInstance();
-        limit.add(Calendar.DAY_OF_YEAR, -15); 
+        limit.add(Calendar.DAY_OF_YEAR, 30); 
 
         Collection expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status","disabled").and().before("dateend", limit.getTime()).search();
 		
