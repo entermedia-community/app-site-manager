@@ -199,28 +199,18 @@ public void init() {
 					server.setValue("lastnodeid", nodeid);
 					serversSearcher.saveData(server);
 
-					JSONObject jsonObject = new JSONObject();
-					JSONArray jsonInstance = new JSONArray();
-					JSONObject jsonInstanceObject = new JSONObject();
-					
-					jsonInstanceObject.put("subdomain", selected_url);
-					jsonInstanceObject.put("containername", "t"+String.valueOf(nodeid));
-
-					jsonInstance.add(jsonInstanceObject);
-					jsonObject.put("assigned", jsonInstance);
-					
 					ArrayList<String> command = new ArrayList<String>();
-					command.add("-i");
-					command.add("/media/services/ansible/inventory.yml")
-					command.add("/media/services/ansible/trial-assign.yml");
-					command.add("--extra-vars");
-					command.add("server=" + server.sshname + "");
-					command.add("-e");
-					command.add("" + jsonObject.toJSONString() + ""); //
-					
-					
+					command.add("/media/services/ansible/trial-assign.sh");
+					command.add("-s");
+					command.add(server.sshname);
+					command.add("-c");
+					command.add(String.valueOf(nodeid));
+					command.add("-d");
+					command.add(selected_url);
+
 					Exec exec = moduleManager.getBean("exec");
-					ExecResult done = exec.runExec("trialsansible", command, true); //Todo: Need to move this script here?
+					ExecResult done = exec.runExec(command);
+					// ExecResult done = exec.runExec("trialsansible", command, true); //Todo: Need to move this script here?
 					//ExecResult done = exec.runExec("/media/services/ansible/trialsansible.sh", command, true); //Todo: Need to move this script here?
 					log.info("- Deploying Trial Site " + selected_url + " at " + server.getName());
 					
