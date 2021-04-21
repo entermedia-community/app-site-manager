@@ -1,3 +1,4 @@
+import org.entermediadb.asset.MediaArchive
 import org.entermediadb.email.PostMail
 import org.entermediadb.email.TemplateWebEmail
 import org.entermediadb.email.GoogleCaptcha
@@ -17,14 +18,14 @@ public void init()
 	String notifyemail = "help@entermediadb.org";
 
 	//Send Email Notify No Seats
-	context.putPageValue("from", "help@entermediadb.org");
-	context.putPageValue("subject", "Contact Form");
+	context.putPageValue("from", "noreply@entermediadb.org");
+	context.putPageValue("subject", "Contact Form - " + context.getPageValue("siteroot") + " - " + context.getRequestParameter("email"));
 	context.putPageValue("form_name", context.getRequestParameter("name") );
 	context.putPageValue("form_email", context.getRequestParameter("email") );
 	context.putPageValue("form_message", context.getRequestParameter("message") );
 
 	//logs
-	String senderinfo = "Contact Form - Site Url: "+context.getPageValue("siteRoot")+" Refering page: "+context.getPageValue("referringPage")+" Page: "+context.getPageValue("page");
+	String senderinfo = "Contact Form - Site Url: "+context.getPageValue("siteroot")+" Refering page: "+context.getPageValue("referringPage")+" Page: "+context.getPageValue("page");
 	context.putPageValue("senderinfo",   senderinfo);
 	log.info(senderinfo);
 	//log.info(context.getProperties());
@@ -38,8 +39,11 @@ protected void sendEmail(Map pageValues, String email, String templatePage){
 	//Verify Captcha
 	String usercaptcha = context.getRequestParameter("g-recaptcha-response");
 	GoogleCaptcha captcha = (GoogleCaptcha)moduleManager.getBean("googleCaptcha");
-	//sk: 6LeiosAZAAAAAOOo0OlpphL4jYJHTq2jZMQz_1ZF
-	captcha.setSecretKey("6LeiosAZAAAAAFbwYWRjti8Mec3EFeX1NdKsvcn_");
+
+	MediaArchive mediaarchive = (MediaArchive)context.getPageValue("mediaarchive");
+	String captchaserverkey = mediaarchive.getCatalogSettingValue("googlecaptchaserverkey");
+	
+	captcha.setSecretKey(captchaserverkey);
 	if(captcha.isValid(usercaptcha)) {
 		//send e-mail
 		RequestUtils rutil = moduleManager.getBean("requestUtils");
@@ -55,8 +59,8 @@ protected void sendEmail(Map pageValues, String email, String templatePage){
 		context.putPageValue("error", null);
 	}
 	else {
-		log.info("Invalid Captcha");
-		context.putPageValue("error", "invalid captcha");
+		log.info("Contact Form - Invalid Captcha");
+		context.putPageValue("error", "invalidcaptcha");
 	}
 	
 
