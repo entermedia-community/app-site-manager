@@ -25,10 +25,10 @@ public void init()
 	context.putPageValue("form_message", context.getRequestParameter("message") );
 
 	//logs
-	#set( $ipaddress = $context.getRequest().getRemoteAddr() )
+	String ipaddress = $context.getRequest().getRemoteAddr();
 
 	String senderinfo = "Contact Form - Url: "+context.getPageValue("siteroot")+" Refering page: "+context.getPageValue("referringPage")+" Page: "+context.getPageValue("page");
-	senderinfo = senderinfo + " Ip: " + $ipaddress;
+	senderinfo = senderinfo + " Ip: " + ipaddress;
 	
 	context.putPageValue("senderinfo",   senderinfo);
 	log.info(senderinfo);
