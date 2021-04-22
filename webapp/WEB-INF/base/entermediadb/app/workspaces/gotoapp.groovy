@@ -75,7 +75,9 @@ public void init()
 	}
 	
 	//Redirects to first available
+	Date lastlogin = new Date();
 	def mostrecent = servers.first();
+	mostrecent.setValue("lastlogin",lastlogin);
 	String url = mostrecent.get("instanceurl");
 	String entermediakey = context.getRequestParameter("entermedia.key");
 	if (collectionid == null) {

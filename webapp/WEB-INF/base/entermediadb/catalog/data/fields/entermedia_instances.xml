@@ -41,6 +41,11 @@
       <language id="en"><![CDATA[End Date]]></language> 
     </name> 
   </property>  
+  <property id="lastlogin" index="true" internalfield="false" editable="true" isbadge="false" viewtype="date" rendertype="date" required="false" multilanguage="false" filter="false" datatype="date" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[Last Login]]></language> 
+    </name> 
+  </property>
     <property id="instance_status" index="true" internalfield="false" isbadge="false" required="false" listid="entermedia_instance_status" multilanguage="false" highlight="false" deleted="false" stored="true" autocreatefromexif="false" writenametoexif="false" searchcomponent="list" editable="true" datatype="list" filter="false" keyword="false">New 
     <name>
       <language id="en"><![CDATA[Instance Status]]></language>
