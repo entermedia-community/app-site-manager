@@ -22,7 +22,6 @@ public void init() {
 	Date today = new Date();
 	Collection expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status", "active").before("dateend", today).search();
 
-
 	if (!expiredInstances.size())
 	{
 		expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status", "todisable").search();
