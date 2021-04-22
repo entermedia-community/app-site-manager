@@ -74,10 +74,13 @@ public void init()
 		return;
 	}
 	
-	//Redirects to first available
+	//Redirects to first available and track login
+	BaseSearcher instancesearcher = mediaArchive.getSearcher("entermedia_instances");
 	Date lastlogin = new Date();
 	def mostrecent = servers.first();
 	mostrecent.setValue("lastlogin",lastlogin);
+	instancesearcher.saveData(mostrecent);
+	
 	String url = mostrecent.get("instanceurl");
 	String entermediakey = context.getRequestParameter("entermedia.key");
 	if (collectionid == null) {
