@@ -75,7 +75,7 @@ public void init()
 	}
 	
 	//Redirects to first available and track login
-	BaseSearcher instancesearcher = mediaArchive.getSearcher("entermedia_instances");
+	BaseSearcher instancesearcher = mediaarchive.getSearcher("entermedia_instances");
 	Date lastlogin = new Date();
 	def mostrecent = servers.first();
 	mostrecent.setValue("lastlogin",lastlogin);
