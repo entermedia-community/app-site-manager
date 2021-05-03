@@ -53,11 +53,11 @@
 			<i class="far fa-envelope"></i> $selecteduser.email<br>
 			<i class="far fa-user"></i> $selecteduser.getAnonNickName()<br>
 			<!-- Direct message someone -->
-			<form name="messagemeform" id="messagemeform" action="$applink/messages/topics/addsave.html" method="post">
-			<input type="hidden" name="save" value="true" />
-			<input type="hidden" name="sendto.value" value="$selecteduser.getId()" />
-			<button><i class="far fa-comment"></i> Message Me</button>
-			</form>
+			##<form name="messagemeform" id="messagemeform" action="$applink/messages/topics/addsave.html" method="post">
+			##<input type="hidden" name="save" value="true" />
+			##<input type="hidden" name="sendto.value" value="$selecteduser.getId()" />
+			##<button><i class="far fa-comment"></i> Message Me</button>
+			##</form>
 			
 			<div style="margin-top:10px;">
 				#if($canviewsettings || $canedituserinfo) 
