@@ -77,7 +77,9 @@
 	</ul>
 	##end
 	<div style="padding:20px 20px;">
+	#if($canviewsettings)
 	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">[[Add a Workspace]]</a></div>
+    #end
     </div>
    
    <div class="sidebar-box-content" style="padding:0;">
@@ -90,6 +92,7 @@
 			</a>
 		</li>
 		<li class="#if($appsection == "messages") current #end">
+		#if($canviewsettings)
 			<a href="$sitelink/app/messages/index.html">
 			#if($pendingmessages && !$pendingmessages.isEmpty())
 			<i class="fa fa-comment"></i> [[Direct Chat]] <i class="fas fa-bell fa-xs" style="color:orange"></i>
@@ -97,6 +100,7 @@
 			<i class="fa fa-comment"></i> [[Direct Chat]]
 			#end
 			</a>
+		#end	
 		</li>
 		##if($userprojectsids.size() )
 		#if($canviewsettings)
