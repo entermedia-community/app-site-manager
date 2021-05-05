@@ -33,54 +33,56 @@ public void init() {
 	{
 		//Get The Instance
 		Data instance = instanceSearcher.loadData(instanceIterator.next());
-		log.info("Disabling: "+instance.instancename+" -> "+instance.dateend);
-		//Get Server Info
-		Searcher serversSearcher = mediaArchive.getSearcher("entermedia_servers");
-		Data server = serversSearcher.query().exact("id", instance.entermedia_servers).searchOne();
-		if (server)
-		{
-			JSONObject jsonObject = new JSONObject();
-			JSONArray jsonInstance = new JSONArray();
-			JSONObject jsonInstanceObject = new JSONObject();
-
-			jsonInstanceObject.put("subdomain", instance.instancename);
-			jsonInstanceObject.put("containername", "t"+instance.instancenode);
-			jsonInstance.add(jsonInstanceObject);
-
-			jsonObject.put("disabled", jsonInstance);
-
-			ArrayList<String> command = new ArrayList<String>();
-
-			command.add("-i");
-			command.add("/media/services/ansiblea/inventory.yml")
-			command.add("/media/services/ansible/trial.yml");
-			command.add("--extra-vars");
-			command.add("server=" + server.sshname + "");
-			command.add("-e");
-			command.add("" + jsonObject.toJSONString() + "");
-
-			Exec exec = moduleManager.getBean("exec");
-			ExecResult done = exec.runExec("trialsansible", command, true);
-
-			if(instance.getValue("instance_status") == 'active')
+		if (instance.lastlogin == null || instance.instance_status == "todisable") {
+			log.info("Disabling: "+instance.instancename+" -> "+instance.dateend);
+			//Get Server Info
+			Searcher serversSearcher = mediaArchive.getSearcher("entermedia_servers");
+			Data server = serversSearcher.query().exact("id", instance.entermedia_servers).searchOne();
+			if (server)
 			{
-				server.setValue("currentinstances", server.getValue("currentinstances") - 1);
+				JSONObject jsonObject = new JSONObject();
+				JSONArray jsonInstance = new JSONArray();
+				JSONObject jsonInstanceObject = new JSONObject();
+	
+				jsonInstanceObject.put("subdomain", instance.instancename);
+				jsonInstanceObject.put("containername", "t"+instance.instancenode);
+				jsonInstance.add(jsonInstanceObject);
+	
+				jsonObject.put("disabled", jsonInstance);
+	
+				ArrayList<String> command = new ArrayList<String>();
+	
+				command.add("-i");
+				command.add("/media/services/ansiblea/inventory.yml")
+				command.add("/media/services/ansible/trial.yml");
+				command.add("--extra-vars");
+				command.add("server=" + server.sshname + "");
+				command.add("-e");
+				command.add("" + jsonObject.toJSONString() + "");
+	
+				Exec exec = moduleManager.getBean("exec");
+				ExecResult done = exec.runExec("trialsansible", command, true);
+	
+				if(instance.getValue("instance_status") == 'active')
+				{
+					server.setValue("currentinstances", server.getValue("currentinstances") - 1);
+				}
+				serversSearcher.saveData(server);
 			}
-			serversSearcher.saveData(server);
-		}
-
-
-		//Set Status Expired to Client
-		instance.setProperty("instance_status","disabled");
-		log.info("updated instance");
-
-		//Disable Monitoring
-		Searcher monitorsearcher = mediaArchive.getSearcher("entermedia_instances_monitor");
-		Data instancemonitor = monitorsearcher.query().match("instanceid", instance.id).searchOne();
-		if (instancemonitor)
-		{
-			instancemonitor.setValue("monitoringenable","false");
-			monitorsearcher.saveData(instancemonitor, null);
+	
+	
+			//Set Status Expired to Client
+			instance.setProperty("instance_status","disabled");
+			log.info("updated instance");
+	
+			//Disable Monitoring
+			Searcher monitorsearcher = mediaArchive.getSearcher("entermedia_instances_monitor");
+			Data instancemonitor = monitorsearcher.query().match("instanceid", instance.id).searchOne();
+			if (instancemonitor)
+			{
+				instancemonitor.setValue("monitoringenable","false");
+				monitorsearcher.saveData(instancemonitor, null);
+			}
 		}
 
 		//Email Client
