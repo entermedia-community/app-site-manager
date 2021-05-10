@@ -115,10 +115,9 @@ public void init() {
 		return;
 	}*/
 	
-	
 	String organizationid = context.getRequestParameter("collectionid");  //collectionid
 	if (organizationid == null) {
-		organizationid = createcollection(instancename, userid);
+		organizationid = createcollection("Workspace " + instancename, userid);
 	}
 	
 	if (organizationid && instanceurl) {
