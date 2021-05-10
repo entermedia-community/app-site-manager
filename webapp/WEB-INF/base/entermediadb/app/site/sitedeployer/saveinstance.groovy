@@ -117,7 +117,7 @@ public void init() {
 	
 	String organizationid = context.getRequestParameter("collectionid");  //collectionid
 	if (organizationid == null) {
-		organizationid = createcollection("Workspace " + instancename, userid);
+		organizationid = createcollection("Workspace (" + instancename + ")", userid);
 	}
 	
 	if (organizationid && instanceurl) {
