@@ -2,11 +2,9 @@
 
 <page>
 
-
   <permission name="view">
-    <boolean value="true" />
+    <user />
   </permission>
-
  
 
 <property name="forceautologin">true</property>
