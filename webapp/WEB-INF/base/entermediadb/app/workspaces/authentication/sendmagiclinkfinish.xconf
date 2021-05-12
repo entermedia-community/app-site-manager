@@ -5,8 +5,7 @@
     	<boolean value="true" />
   	</permission>
 
-  	<property name="emaillayout">/${applicationid}/workspaces/email/sendmagiclinkemail.html</property>
-  	<property name="emaillayoutdesktopapp">/${applicationid}/workspaces/email/sendmagiclinkdesktopapp.html</property>
+  	<property name="emaillayout">/${applicationid}/workspaces/authentication/sendmagiclinkemail.html</property>
   	<property name="loginokpage">/${applicationid}/workspaces/gotoapp.html</property>
   	<path-action name="Admin.createTempUser"/>
   	<path-action name="Admin.emailPasswordReminder"/>

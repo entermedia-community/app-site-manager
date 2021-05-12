@@ -31,7 +31,7 @@ public void init()
 	{
 		log.info("User key did not work for login ");
 		//TODO: Should redirect to the login form
-		context.redirect("./authentication/nopermissions.html");
+		context.redirect("./authentication/login.html");
 		return;
 	}
 	
