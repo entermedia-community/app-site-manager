@@ -30,8 +30,11 @@ public void init()
 	if( context.getUser() == null )
 	{
 		log.info("User key did not work for login ");
+		//TODO: Should redirect to the login form
+		context.redirect("./authentication/login.html");
 		return;
 	}
+	
 	Collection organizationsusers = mediaarchive.query("librarycollectionusers").exact("followeruser",user.getId()).exact("ontheteam","true").search();
 	
     List oids = new ArrayList();

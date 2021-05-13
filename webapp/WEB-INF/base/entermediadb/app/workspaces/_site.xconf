@@ -4,6 +4,6 @@
   
   <inner-layout>/${applicationid}/workspaces/layout.html</inner-layout>
   
-  <property name="loginroot">/${applicationid}/workspaces</property>
+  <property name="loginroot">/${applicationid}/workspaces/authentication</property>
 	
 </page>

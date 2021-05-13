@@ -2,9 +2,11 @@
   <permission name="view">
     <boolean value="true"/>
   </permission>
+  <inner-layout>/${applicationid}/workspaces/layout.html</inner-layout>
+  
   <property name="sectiontitle">Authentication</property>
-  <property name="fallbackdirectory">/WEB-INF/base/system/components/authentication</property>
-  <property name="loginroot">/${applicationid}/authentication</property>
+  <property name="fallbackdirectory">/${applicationid}/authentication</property>
+  <property name="loginroot">/${applicationid}/workspaces/authentication</property>
   <property name="shownav">false</property>
   <property name="usemap">false</property>
   <property name="hidemediaviewer">true</property>

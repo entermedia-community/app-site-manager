@@ -1,0 +1,11 @@
+{
+	"response":
+	{
+		#if ($status)
+		"status":"ok"
+		#else
+		"status":"error",
+		"reason":"$reason"
+		#end
+	}
+}

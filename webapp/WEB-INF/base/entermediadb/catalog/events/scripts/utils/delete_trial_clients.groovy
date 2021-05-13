@@ -16,7 +16,7 @@ public void init()
         Calendar limit = Calendar.getInstance();
         limit.add(Calendar.DAY_OF_YEAR, 30); 
 
-        Collection expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status","disabled").and().before("lastlogin", limit.getTime()).search();		
+        Collection expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status","active").and().before("lastlogin", limit.getTime()).search();		
 		
 		if (!expiredInstances.size()) {
 			expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status", "todelete").search();

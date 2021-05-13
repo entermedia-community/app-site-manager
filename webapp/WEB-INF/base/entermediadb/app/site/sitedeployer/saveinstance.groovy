@@ -115,10 +115,9 @@ public void init() {
 		return;
 	}*/
 	
-	
 	String organizationid = context.getRequestParameter("collectionid");  //collectionid
 	if (organizationid == null) {
-		organizationid = createcollection(instancename, userid);
+		organizationid = createcollection("Workspace (" + instancename + ")", userid);
 	}
 	
 	if (organizationid && instanceurl) {
@@ -204,7 +203,7 @@ public void init() {
 					command.add("-s");
 					command.add(server.sshname);
 					command.add("-c");
-					command.add(String.valueOf(nodeid));
+					command.add("t" + String.valueOf(nodeid));
 					command.add("-d");
 					command.add(selected_url);
 

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<page>
+	<path-action name="JsonAdminModule.preprocess" />
+	<path-action name="Admin.login" />
+	<property name="noredirect">true</property>
+	
+	<path-action name="ProjectModule.addMemberToTeam" />
+	
+	<permission name="view">
+	  <blank/>
+	</permission>
+	
+</page>

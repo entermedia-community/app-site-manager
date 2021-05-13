@@ -5,9 +5,12 @@
 </div>
 <p>[[Hello]] $mail,</p>
 
+
 <div style="margin:10px 0; padding:5px; background-color:#f0f0f0;">
 
-        #set( $link = "$context.siteRoot/app/workspaces/gotoapp.html?entermedia.key=$entermediakey" )
+#if($launchersource!="desktopapp")
+		
+        #set( $link = "$context.siteroot/app/workspaces/gotoapp.html?entermedia.key=$entermediakey" )
         #set( $expiry = $context.getPageProperty("temporary_password_expiry"))
         #set( $days = $numberutils.toInt($expiry))
         #set ( $calendar = $datetool.getCalendar() )
@@ -15,16 +18,24 @@
         #set($null = $calendar.setTime($today))
         #set($null = $calendar.add(6, $days))
 
+        <p>
+        <a href="#urlescape($link)" style="font-size:1.6em; background-color:#eee;">[[Auto Login Here]]</a>
+        <br>
+        [[Key will expire]]
+        </p>
+        [[Or copy and paste key]]
+        <p id="entermediakey" style="text-align:center;">$entermediakey</p>
+<hr>
+#else
          [[Copy and paste key]]
         <p id="entermediakey" style="text-align:center;">$entermediakey</p>
+#end
+
+##-$launchersource
 
 </div>
 
-#if( $context.siteRoot )
-        #set( $link = "$siteroot/$applicationid/" )
-#else
-        #set( $link = "$url_util.buildRoot()$siteroot/$applicationid/" )
-#end
+
 <p><strong>The eMediaFinder Team</strong><br>
 <em><a href="mailto:help@entermediadb.org">help@entermediadb.org</a></em>
 </p>

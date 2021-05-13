@@ -1,0 +1,21 @@
+{
+	"response":
+	{
+		#if ($status)
+		"status":"ok",
+		"users":[
+        #foreach( $user in $users ) #if( ${foreach.count} != 1 ), #end
+		  {	
+			"id": "$user.getValue('id')",
+			"firstName": "#if($user.getValue('firstName'))$user.getValue('firstName')#end",
+			"lastName": "#if($user.getValue('lastName'))$user.getValue('lastName')#end",
+			"email": "#if($user.getValue('email'))$user.getValue('email')#end"			
+		  }
+	    #end
+    ]
+		#else
+		"status":"error",
+		"reason":"$reason"
+		#end
+	}
+}

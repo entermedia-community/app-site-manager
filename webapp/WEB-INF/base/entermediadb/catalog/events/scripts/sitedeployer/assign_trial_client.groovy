@@ -198,7 +198,7 @@ public void init() {
 					command.add("-s");
 					command.add(server.sshname);
 					command.add("-c");
-					command.add(String.valueOf(nodeid));
+					command.add("t" + String.valueOf(nodeid));
 					command.add("-d");
 					command.add(selected_url);
 
