@@ -71,3 +71,5 @@ private boolean RequestHasError(JSONObject jsonRequest, String reason) {
 	
 	return false;
 }
+
+init();
