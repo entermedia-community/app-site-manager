@@ -13,13 +13,17 @@ public void init() {
 	String instanceToRestore = context.getPageValue("collectionid");
 
 	Searcher instanceSearcher = mediaArchive .getSearcher("entermedia_instances");
-	// TODO, allow multiple restores
-	Collection restoreInstances = instanceSearcher.query().exact("instance_status","deleted").and().exact("id", instanceToRestore).search();
+	Collection restoreInstances;
+	if (instanceSearcher != null) {
+		restoreInstances = instanceSearcher.query().exact("id", instanceToRestore).search();
+	} else {
+		restoreInstances = instanceSearcher.query().exact("instance_status","torestore").search();
+	}
 
-	for (Iterator instanceIterator = restoreInstances.iterator(); instanceIterator.hasNext();)
-	{
+	log.info("Found "+restoreInstances.size()+" sites to restore.");
+	for (Iterator instanceIterator = restoreInstances.iterator(); instanceIterator.hasNext();) {
 		Data instance = instanceSearcher.loadData(instanceIterator.next());
-		
+
 		searcherManager = context.getPageValue("searcherManager");
 		Searcher serversSearcher = mediaArchive .getSearcher("entermedia_servers");
 		Data server = serversSearcher.searchById(instance.entermedia_servers);

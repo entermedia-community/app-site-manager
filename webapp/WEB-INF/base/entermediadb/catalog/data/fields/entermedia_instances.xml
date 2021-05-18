@@ -120,5 +120,15 @@
     <name> 
       <language id="en"><![CDATA[Plugins]]></language> 
     </name> 
-  </property>   
+  </property>
+  <property id="instance_reindex_status" index="true" internalfield="false" isbadge="false" required="false" listid="entermedia_instance_reindex_status" multilanguage="false" highlight="false" deleted="false" stored="true" autocreatefromexif="false" writenametoexif="false" searchcomponent="list" editable="true" datatype="list" filter="false" keyword="false">New 
+    <name>
+      <language id="en"><![CDATA[Reindex Status]]></language>
+    </name>
+  </property>
+  <property id="lastreindexdate" index="true" internalfield="false" editable="true" isbadge="false" viewtype="date" rendertype="date" required="false" multilanguage="false" filter="false" datatype="date" stored="true" autocreatefromexif="false" writenametoexif="false" keyword="false">New 
+    <name> 
+      <language id="en"><![CDATA[Last Reindex Date]]></language> 
+    </name> 
+  </property>
 </properties>
