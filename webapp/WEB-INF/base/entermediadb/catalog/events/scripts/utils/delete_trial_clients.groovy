@@ -5,6 +5,8 @@ import org.json.simple.JSONArray
 import org.json.simple.JSONObject
 import org.openedit.*
 import org.openedit.data.Searcher
+import org.openedit.util.Exec;
+import org.openedit.util.ExecResult;
 
 public void init()
 {
@@ -56,6 +58,8 @@ public void init()
 						command.add("server=" + server.sshname + "");
 						command.add("-e");
 						command.add("" + jsonObject.toJSONString() + "");
+						Exec exec = moduleManager.getBean("exec");
+						ExecResult done = exec.runExec("trialsansible", command, true);
 						
 						//Discount currentinstances on server
 						if(instance.getValue("instance_status") == 'active') {
