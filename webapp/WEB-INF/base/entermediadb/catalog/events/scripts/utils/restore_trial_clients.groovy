@@ -14,7 +14,7 @@ public void init() {
 	Searcher instanceSearcher = mediaArchive .getSearcher("entermedia_instances");
 	Collection restoreInstances;	
 	
-	restoreInstances = instanceSearcher.query().exact("instance_status","torestore").search();	
+	restoreInstances = instanceSearcher.exact("instance_status","torestore").search();	
 
 	log.info("Found "+restoreInstances.size()+" sites to restore.");
 	for (Iterator instanceIterator = restoreInstances.iterator(); instanceIterator.hasNext();) {
@@ -47,8 +47,6 @@ public void init() {
 			command.add("" + jsonObject.toJSONString() + "");
 			Exec exec = moduleManager.getBean("exec");
 			ExecResult done = exec.runExec("trialsansible", command, true);
-
-			serversSearcher.saveData(server);
 
 			//Set Status active to Client
 			instance.setProperty("instance_status", "active");
