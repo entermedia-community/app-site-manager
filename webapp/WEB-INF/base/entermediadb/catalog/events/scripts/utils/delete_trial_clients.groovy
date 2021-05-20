@@ -31,7 +31,7 @@ public void init() {
 		Searcher serversSearcher = mediaArchive .getSearcher("entermedia_servers");
 		Data server = serversSearcher.searchById(instance.entermedia_servers);
 		if (server) {
-			log.info("Deleting instance: "+instance.name+",  on server "+server.name);
+			log.info("Deleting instance: " + instance.name+",  on server "+server.name);
 			String instacename = instance.instanceprefix + "";
 
 			JSONObject jsonObject = new JSONObject();
