@@ -91,6 +91,10 @@ public class AutoFailoverManager implements CatalogEnabled
 //	}
 	public void updateRecord(boolean gointofailover,String parentdomain, String inPublicDomainName, String primaryip, String insecondaryip )//, Collection<String> region, Integer ttl, Integer priority)
 	{
+		if( parentdomain == null)
+		{
+			throw new OpenEditException("parentdomainzone must be set");
+		}
 		Long findrecordid = findRecordId(parentdomain,inPublicDomainName, primaryip, insecondaryip);
 		
 		String url = API_ROOT_URL_PROD + "/zones/" + parentdomain + "/records/" + findrecordid;
@@ -159,7 +163,7 @@ public class AutoFailoverManager implements CatalogEnabled
 				}
 			}
 		}
-		throw new OpenEditException("No such DNS entry found " + parentdomain + " with: " + inPublicDomain);
+		throw new OpenEditException("No such DNS entry found for + " + name + " using Parent Domain " + parentdomain + " with: Public domain" + inPublicDomain);
 	}
 	/*
 	public boolean createRecord(String name, String type, String zone, String content, Collection<String> region, Integer ttl, Integer priority)
