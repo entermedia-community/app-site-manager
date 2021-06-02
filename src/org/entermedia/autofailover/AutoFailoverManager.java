@@ -147,23 +147,25 @@ public class AutoFailoverManager implements CatalogEnabled
 			{
 				if( name.equals(dnsRecord2.getName() ) )
 				{
+					log.info("Found matching record for " + name);
 					String content = dnsRecord2.getContent();
+					log.info("DNS Checking " + content  + " on record id " + dnsRecord2.getId());
 					if( content != null )
 					{
-						//log.info("DNS Checking " + content  + " on record id " + dnsRecord2.getId());
-						if( 600 == dnsRecord2.getTtl() && content.equals(inPrimaryIp))
+						if( content.equals(inPrimaryIp))
 						{
 							return dnsRecord2.getId();
 						}
-						else if( 120 == dnsRecord2.getTtl() &&  content.equals(inSecondaryIp) ) 
+						else if( content.equals(inSecondaryIp) ) 
 						{
 							return dnsRecord2.getId();							
 						}
+						log.info("Could not find record id " + content);
 					}
 				}
 			}
 		}
-		throw new OpenEditException("No such DNS entry found for + " + name + " using Parent Domain " + parentdomain + " with: Public domain" + inPublicDomain);
+		throw new OpenEditException("No such DNS entry found for :" + name + " using Parent Domain " + parentdomain + " with: Public domain:" + inPublicDomain);
 	}
 	/*
 	public boolean createRecord(String name, String type, String zone, String content, Collection<String> region, Integer ttl, Integer priority)
