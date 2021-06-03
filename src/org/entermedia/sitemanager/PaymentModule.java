@@ -16,6 +16,8 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClients;
 import org.entermediadb.asset.MediaArchive;
 import org.entermediadb.asset.modules.BaseMediaModule;
+import org.entermediadb.projects.LibraryCollection;
+import org.entermediadb.projects.ProjectManager;
 import org.openedit.Data;
 import org.openedit.WebPageRequest;
 import org.openedit.data.Searcher;
@@ -266,6 +268,17 @@ public class PaymentModule extends BaseMediaModule
 			paymentplans.saveData(paymentplan);
 		}
 
+	}
+	
+	public void createProductService(WebPageRequest inReq) {
+		MediaArchive mediaArchive = getMediaArchive(inReq);
+		Searcher librarysearcher = mediaArchive.getSearcher("collectiveproduct");
+		
+		Data saved = librarysearcher.createNewData();
+		librarysearcher.updateData(inReq, inReq.getRequestParameters("field"), saved);
+		saved.setValue("createdon", new Date());
+		
+		librarysearcher.saveData(saved, null); 
 	}
 
 	//	public void connectClient(WebPageRequest inReq){
