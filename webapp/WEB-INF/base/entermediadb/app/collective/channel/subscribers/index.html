@@ -10,7 +10,7 @@
 		#if ($user && !$following)
 		<h3>[[JOIN THE PROJECT]]</h3>
 			<form name="joinprojectform" 
-				class="ajaxform" 
+				class="ajaxform showwaiting"
 				id="joinprojectform" 
 				action="$apphome/collective/channel/subscribers/jointeam.html" 
 				method="post"
@@ -32,7 +32,7 @@
 			#else
 				<input type="submit" class="btn btn-success" value="[[Request Access]]" />
 			#end
-			<div class="ajaxprogress"><img src="$apphome/components/search/images/spinner.gif"/></div>
+			##<div class="ajaxprogress"><img src="$apphome/components/search/images/spinner.gif"/></div>
 			</form>
 		#end
 	<div class="subscribe-headline">
