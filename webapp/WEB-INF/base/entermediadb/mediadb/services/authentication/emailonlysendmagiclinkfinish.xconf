@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-  	<property name="emaillayout">/${siteid}/app/workspaces/email/sendmagiclinkemail.html</property>
+  	<property name="emaillayout">/${siteid}/mediadb/authentication/sendmagiclinkemail.html</property>
 	
 	<permission name="view">
     	<boolean value="true" />
