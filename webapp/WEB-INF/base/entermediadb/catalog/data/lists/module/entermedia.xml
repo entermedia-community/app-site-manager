@@ -16,6 +16,8 @@
     <data id="entermedia_clients" showonsearch="false" securityenabled="false" ordering="0" showonnav="true">
     <name><![CDATA[Clients]]></name>
   </data> 
-  
+  <data id="collectiveinvoice" showonsearch="false" securityenabled="false" ordering="10" showonnav="true">
+    <name><![CDATA[Invoices]]></name>
+  </data> 
   
 </root>
