@@ -11,10 +11,14 @@ public void init() {
 	Searcher productSearcher = mediaArchive .getSearcher("collectiveproduct");
 
 	generateRecurringInvoices(mediaArchive, productSearcher);
-	sendInvoiceNotifications(mediaArchive);
+
+	Searcher invoiceSearcher = mediaArchive .getSearcher("collectiveinvoice");
+	sendInvoiceNotifications(mediaArchive, invoiceSearcher);
+	sendInvoiceOverdueNotifications(mediaArchive, invoiceSearcher);
+	sendInvoicePaidNotifications(mediaArchive, invoiceSearcher);
 }
 
-public void generateRecurringInvoices(MediaArchive mediaArchive, Searcher productSearcher) {
+private void generateRecurringInvoices(MediaArchive mediaArchive, Searcher productSearcher) {
 	int daysToExpire = 7; // invoice will expire in (days)
 	Calendar today = Calendar.getInstance();
 	Calendar due = Calendar.getInstance();
@@ -35,8 +39,7 @@ public void generateRecurringInvoices(MediaArchive mediaArchive, Searcher produc
 		Date lastbilldate = product.getValue("lastgeneratedinvoicedate");
 		if (lastbilldate < nextBillOn) { // otherwise assume it's already created
 			Searcher invoiceSearcher = mediaArchive.getSearcher("collectiveinvoice");
-			Data invoice = invoiceSearcher.createNewData();
-			invoice.setName(product.getName());
+			Data invoice = invoiceSearcher.createNewData();			
 
 			Calendar invoiceDue = Calendar.getInstance();
 			invoiceDue.add(Calendar.DAY_OF_YEAR, daysToExpire);
@@ -53,8 +56,8 @@ public void generateRecurringInvoices(MediaArchive mediaArchive, Searcher produc
 			invoice.setValue("totalprice", product.getValue("productprice"));
 			invoice.setValue("duedate", invoiceDue.getTime());
 			invoice.setValue("invoicedescription", product.getValue("productdescription"));
-			invoice.setValue("notificationsent", today.getTime());
-			invoice.setValue("createdon", "false");
+			invoice.setValue("notificationsent", "false");
+			invoice.setValue("createdon", today.getTime());
 			invoiceSearcher.saveData(invoice);
 
 			int recurrentCount = product.getValue("recurringperiod")
@@ -67,13 +70,38 @@ public void generateRecurringInvoices(MediaArchive mediaArchive, Searcher produc
 	}
 }
 
-public void sendInvoiceNotifications(MediaArchive mediaArchive) {
-	Searcher invoiceSearcher = mediaArchive .getSearcher("collectiveinvoice");
+private void sendInvoiceNotifications(MediaArchive mediaArchive, Searcher invoiceSearcher) {
 	Collection pendingNotificationInvoices = invoiceSearcher.query()
 			.exact("notificationsent","false").search();
 
 	log.info("Sending Notification for " + pendingNotificationInvoices.size() + " invoices");
-	for (Iterator invoiceIterator = pendingNotificationInvoices.iterator(); invoiceIterator.hasNext();) {
+	invoiceContactIterate(mediaArchive, invoiceSearcher, pendingNotificationInvoices, "notificationsent");
+}
+
+private void sendInvoiceOverdueNotifications(MediaArchive mediaArchive, Searcher invoiceSearcher) {
+	Calendar today = Calendar.getInstance();
+	Collection pendingNotificationInvoices = invoiceSearcher.query()
+			.before("duedate", today.getTime())
+			.exact("notificationoverduesent", "false")
+			.exact("paymentstatus","invoiced").search();
+
+	log.info("Found " + pendingNotificationInvoices.size() + " overdue invoices");
+	invoiceContactIterate(mediaArchive, invoiceSearcher, pendingNotificationInvoices, "notificationoverduesent");
+}
+
+private void sendInvoicePaidNotifications(MediaArchive mediaArchive, Searcher invoiceSearcher) {
+	Calendar today = Calendar.getInstance();
+	Collection pendingNotificationInvoices = invoiceSearcher.query()
+			.before("duedate", today.getTime())
+			.exact("notificationpaidsent", "false")
+			.exact("paymentstatus","paid").search();
+
+	log.info("Found " + pendingNotificationInvoices.size() + " paid invoices");
+	invoiceContactIterate(mediaArchive, invoiceSearcher, pendingNotificationInvoices, "notificationpaidsent");
+}
+
+private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSearcher, Collection invoices, String iteratorType) {
+	for (Iterator invoiceIterator = invoices.iterator(); invoiceIterator.hasNext();) {
 		Data invoice = invoiceSearcher.loadData(invoiceIterator.next());
 
 		Searcher teamSearcher = mediaArchive .getSearcher("librarycollectionusers");
@@ -82,104 +110,53 @@ public void sendInvoiceNotifications(MediaArchive mediaArchive) {
 				.exact("isbillingcontact", "true")
 				.search();
 
-		log.info("Sending Notification for " + invoiceMembers.size() + " members");
 		for (Iterator teamIterator = invoiceMembers.iterator(); teamIterator.hasNext();) {
 			Data member = teamSearcher.loadData(teamIterator.next());
 			User contact = mediaArchive.getUser(member.getValue("followeruser"));
 
 			if (contact != null) {
 				String email = contact.getValue("email");
-				log.info("sending email to: " + email);
 				if (email) {
-					sendInvoice(mediaArchive, contact, invoice);
+					switch (iteratorType) {
+						case "notificationsent":
+							sendEmail(mediaArchive, contact, invoice, "Invoice", "send-invoice-event.html");
+							break;
+						case "notificationoverduesent":
+							sendEmail(mediaArchive, contact, invoice, "Overdue Invoice", "send-overdue-invoice-event.html");
+							break;
+						case "notificationpaidsent":
+							sendEmail(mediaArchive, contact, invoice, "Payment Received", "send-paid-invoice-event.html");
+							break;
+					}
 				}
-				//TODO send email?
 			}
 		}
-		invoice.setValue("notificationsent", "true");
-		// invoiceSearcher.saveData(invoice);
+
+		invoice.setValue(iteratorType, "true");
+		invoiceSearcher.saveData(invoice);
 	}
 }
 
-public void sendInvoice(MediaArchive mediaArchive, User contact, Data invoice) {
+private void sendEmail(MediaArchive mediaArchive, User contact, Data invoice, String subject, String htmlTemplate) {
 	String appid = mediaArchive.getCatalogSettingValue("events_billing_notify_invoice_appid");
-	String template = "/" + appid + "/theme/emails/send-invoice-event.html";
-	
+	String template = "/" + appid + "/theme/emails/" + htmlTemplate;
+
 	String site = mediaArchive.getCatalogSettingValue("siteroot");
 	if (!site) {
 		site = mediaArchive.getCatalogSettingValue("cdn_prefix");
 	}
-	
+
 	String supportUrl = site + "/entermediadb/app/collective/services/index.html?collectionid=" + invoice.getValue("collectionid");
 	String actionUrl = site + "/entermediadb/app/collective/community/index.html?collectionid=" + invoice.getValue("collectionid");
-	
 	WebEmail templateEmail = mediaArchive.createSystemEmail(contact, template);
-	templateEmail.setSubject("Invoice");
-
+	templateEmail.setSubject(subject);
 	Map objects = new HashMap();
 	objects.put("followeruser", contact);
 	objects.put("mediaarchive", mediaArchive);
 	objects.put("invoice", invoice);
 	objects.put("supporturl", supportUrl);
 	objects.put("actionurl", actionUrl);
-
 	templateEmail.send(objects);
 }
-
-public void sendOverdue(MediaArchive mediaArchive, User contact, Data invoice) {
-	String appid = mediaArchive.getCatalogSettingValue("events_billing_notify_invoice_appid");
-	String template = "/" + appid + "/theme/emails/send-invoice-overdue-event.html";
-	WebEmail templateEmail = mediaArchive.createSystemEmail(contact, template);
-	templateEmail.setSubject("Invoice");
-	Map objects = new HashMap();
-	objects.put("followeruser", contact);
-	objects.put("mediaarchive", mediaArchive);
-	objects.put("invoice", invoice);
-	templateEmail.send(objects);
-}
-
-public void sendPaymentReceived(MediaArchive mediaArchive, User contact, Data invoice) {
-	String appid = mediaArchive.getCatalogSettingValue("events_billing_notify_invoice_appid");
-	String template = "/" + appid + "/theme/emails/send-invoice-payment-received-event.html";
-	WebEmail templateEmail = mediaArchive.createSystemEmail(contact, template);
-	templateEmail.setSubject("Invoice");
-	Map objects = new HashMap();
-	objects.put("followeruser", contact);
-	objects.put("mediaarchive", mediaArchive);
-	objects.put("invoice", invoice);
-	templateEmail.send(objects);
-}
-
-//overdue
-//invoiced
-//paid
-
-
-//public void CheckRecurringEmptyBills(Searcher productSearcher) {
-//	Collection	pendingProducts = productSearcher.query().exact("recurring","true").exact("billingstatus", "active").search();
-//	for (Iterator productIterator =	pendingProducts.iterator(); productIterator.hasNext();) {
-//		Data product = productSearcher.loadData(productIterator.next());
-//
-//		Calendar due = product.getValue("nextbillon"); int count =
-//		product.getValue("recurringperiod"); if (due == null && count != null) {
-//			log.info("Found a misconfigured product");
-//		}
-//	}
-//}
-
-
-
-//public void SetLastLoginDefault(MediaArchive mediaArchive, Searcher  instanceSearcher) {
-//	Collection instances =  instanceSearcher.query().exact("istrial",  "true").exact("instance_status","active").search(); // TODO: refine query.  just search for lastlogin == null or empty
-//	for (Iterator instanceIterator =instances.iterator(); instanceIterator.hasNext();) {
-//		Data instance =		mediaArchive.getSearcher("entermedia_instances").loadData(instanceIterator.		next());
-//		if (instance.lastlogin == null) {
-//			instance.setValue("lastlogin", new			Date());
-//			instanceSearcher.saveData(instance, null);
-//		}
-//	}
-//}
-
-
 
 init();

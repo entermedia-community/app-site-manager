@@ -75,7 +75,7 @@
 		editable="true" type="list">Product Type</property>
 
 	<property id="recurring" index="true" stored="true"
-		editable="true" type="boolean">Recurring Payment?</property>
+		editable="true" type="boolean">Is Recurring Payment</property>
 
 	<property id="recurringperiod" index="true" stored="true"
 		editable="true" type="number">Recurring Period (months)</property>
