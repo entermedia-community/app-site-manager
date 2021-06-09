@@ -1,24 +1,5 @@
-<!-- 
 
-<p>[[Notifications for User]]: $followeruser</p>
-
-
-#set($collectionid = $invoice.collectionid)
-#set($collection = $mediaarchive.getCachedData("librarycollection", $collectionid) )
-
-<div>
-	<a href="$context.siteRoot$applink/collective/community/index.html?collectionid=${collection.getId()}&topic=$topicid">$collection.getName()</a>
-	
-		
-	
-</div>	
-
-
-<br>
-<p>
-[[To change notification preferences please edit your]] <a href="$context.siteRoot$applink/views/myaccount/preferences/index.html">[[Account Preferences]]</a>
-</p>
--->
+#set( $currency = '$' )
 <html>
   <head>
         <style type="text/css" rel="stylesheet" media="all">
@@ -125,7 +106,7 @@
       border-bottom: 10px solid #3869D4;
       border-left: 18px solid #3869D4;
       display: inline-block;
-      color: #FFF;
+      color: #FFF!important;
       text-decoration: none;
       border-radius: 3px;
       box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
@@ -444,7 +425,7 @@
     </style>
   </head>
   <body>
-    <span class="preheader">This is an invoice for your purchase on $invoice.getValue("createdon"). Please submit payment by $invoice.getValue("duedate")</span>
+    <span class="preheader">This is an invoice for your purchase on $!context.getDate($invoice.getValue("createdon")). Please submit payment by $!context.getDate($invoice.getValue("duedate"))</span>
     <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">
       <tr>
         <td align="center">
@@ -456,11 +437,9 @@
               </a>
               </td>
             </tr>
-            <!-- Email Body -->
             <tr>
               <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
                 <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
-                  <!-- Body content -->
                   <tr>
                     <td class="content-cell">
                       <div class="f-fallback">
@@ -473,27 +452,24 @@
                                 <tr>
                                   <td class="attributes_item">
                                     <span class="f-fallback">
-              <strong>Amount Due:</strong> $invoice.getValue("totalprice")
-            </span>
+						              <strong>Amount Due:</strong> $currency $!context.roundDouble($invoice.getValue("totalprice"), 2)
+						            </span>
                                   </td>
                                 </tr>
                                 <tr>
                                   <td class="attributes_item">
                                     <span class="f-fallback">
-              <strong>Due By:</strong> $invoice.getValue("duedate")
-            </span>
+						              <strong>Due By:</strong> $!context.getDate($invoice.getValue("duedate"))
+						            </span>
                                   </td>
                                 </tr>
                               </table>
                             </td>
                           </tr>
                         </table>
-                        <!-- Action -->
                         <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
                             <td align="center">
-                              <!-- Border based button
-           https://litmus.com/blog/a-guide-to-bulletproof-buttons-in-email-design -->
                               <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation">
                                 <tr>
                                   <td align="center">
@@ -510,7 +486,7 @@
                               <h3>id: $invoice.getValue("invoicenumber")</h3>
                             </td>
                             <td>
-                              <h3 class="align-right">$invoice.getValue("createdon")</h3>
+                              <h3 class="align-right">$!context.getDate($invoice.getValue("createdon"))</h3>
                             </td>
                           </tr>
                           <tr>
@@ -527,7 +503,7 @@
                                 
                                 <tr>
                                   <td width="80%" class="purchase_item"><span class="f-fallback">$invoice.getValue("invoicedescription")</span></td>
-                                  <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">$invoice.getValue("totalprice")</span></td>
+                                  <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">$currency $!context.roundDouble($invoice.getValue("totalprice"),2)</span></td>
                                 </tr>
                                 
                                 <tr>
@@ -535,7 +511,7 @@
                                     <p class="f-fallback purchase_total purchase_total--label">Total</p>
                                   </td>
                                   <td width="20%" class="purchase_footer" valign="middle">
-                                    <p class="f-fallback purchase_total">$invoice.getValue("totalprice")</p>
+                                    <p class="f-fallback purchase_total">$currency $!context.roundDouble($invoice.getValue("totalprice"),2)</p>
                                   </td>
                                 </tr>
                               </table>
@@ -568,8 +544,8 @@
                       <p class="f-fallback sub align-center">&copy; 2021 EnterMediaDB. All rights reserved.</p>
                       <p class="f-fallback sub align-center">
                         EnterMediaDB
-                        <br>1234 Street Rd.
-                        <br>Suite 1234
+                        <br>1550 Magnolia Dr.
+						<br>Cincinnati, OH 45215
                       </p>
                     </td>
                   </tr>
