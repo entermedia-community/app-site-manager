@@ -58,20 +58,26 @@
 		#if( $librarycol)
 			<li class="current">
 				<a href="$sitelink/app/collective/community/index.html?collectionid=$librarycol.id&goaltrackerstaff=*" >
-				<i class="fas fa-sitemap"></i> $librarycol.name #if( $modcollections.contains($librarycol.getId()) )<i class="fas fa-bell fa-xs" style="color:orange"></i>#end
+				<i class="fas fa-sitemap"></i> Workspace ($librarycol.name) #if( $modcollections.contains($librarycol.getId()) )<i class="fas fa-bell fa-xs" style="color:orange"></i>#end
 				</a>
 			</li>
-		#end	
+		#end
+
 		#foreach( $ohit in $collectives )
-			#if( $librarycol.getId() != $ohit.id)
-			
-			#if( $collectives.size() < 10 || $modcollections.contains($ohit.getId()) )
-			<li class="#if($selectedproject==$ohit.id) current #end">
-				<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" >
-				<i class="fas fa-sitemap"></i> $ohit.name #if( $modcollections.contains($ohit.getId()) )<i class="fas fa-bell fa-xs" style="color:orange"></i>#end
-				</a>
-			</li>
-			#end
+			#if( $librarycol.getId() != $ohit.id)			
+				#if( $collectives.size() < 10 || $modcollections.contains($ohit.getId()) )
+				
+					#foreach($usr in $organizationsuser)
+						#if ($usr.getValue("collectionid") == $ohit.getId())
+					<li class="#if($selectedproject==$ohit.id) current #end">
+						<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" >
+						<i class="fas fa-sitemap"></i> Workspace ($ohit.name) #if( $modcollections.contains($ohit.getId()) )<i class="fas fa-bell fa-xs" style="color:orange"></i>#end
+						</a>
+					</li>
+						#end
+					#end
+
+				#end
 			#end
 		#end
 	</ul>
