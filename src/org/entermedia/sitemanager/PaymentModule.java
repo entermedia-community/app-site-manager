@@ -1,5 +1,7 @@
 package org.entermedia.sitemanager;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,6 +69,59 @@ public class PaymentModule extends BaseMediaModule
 	public void setSearcherManager(SearcherManager inSearcherManager)
 	{
 		fieldSearcherManager = inSearcherManager;
+	}
+	
+	public void processPaymentTest(WebPageRequest inReq) throws IOException, InterruptedException, URISyntaxException {
+		String token = inReq.getRequestParameter("stripeToken");
+		MediaArchive archive = getMediaArchive(inReq);
+		Searcher payments = archive.getSearcher("transaction");
+		Data payment = payments.createNewData();
+		payments.updateData(inReq, inReq.getRequestParameters("field"), payment);
+		payment.setValue("paymenttype","stripe" );
+		
+		String invoiceId = inReq.getRequestParameter("invoiceid");
+		Data invoice = archive.getInvoiceById(invoiceId);
+		
+		payment.setValue("totalprice", invoice.getValue("totalprice")); // safer to get value from database
+		log.info(payment);
+		
+		Boolean isRecurring = Boolean.valueOf(inReq.getRequestParameter("recurring"));
+		if (isRecurring == true)
+		{
+			String productId = ""; 
+			ArrayList<HashMap> products = (ArrayList) invoice.getValue("productlist");
+			for (HashMap<String, String> product : products) {
+				productId = product.get("productid");
+			}
+			Data product =  archive.getProductById(productId);
+			String recurringPeriod = String.valueOf(product.getValue("recurringperiod"));
+			Double tprice = Double.valueOf(payment.get("totalprice")); // * Integer.parseInt(recurringPeriod);
+			Money totalprice = new Money(tprice);
+			String amountStr = totalprice.toShortString().replace(".", "").replace("$", "").replace(",", "");
+			String customerId = getOrderProcessor().createCustomer2(archive, inReq.getUser(), token);
+			if (customerId.isEmpty()) {
+				// TODO: error!
+				return;
+			}
+			String stripeProductId = getOrderProcessor().createProduct(archive, productId);
+			if (stripeProductId.isEmpty()) {
+				// TODO: error!
+				return;
+			}
+			String priceId = getOrderProcessor().createPrice(archive, amountStr, recurringPeriod, stripeProductId);
+			if (priceId.isEmpty()) {
+				// TODO: error!
+				return;
+			}
+			String subscriptionId = getOrderProcessor().createSubscription(archive, inReq.getUser(), customerId, priceId);
+			if (subscriptionId.isEmpty()) {
+				// TODO: error!
+				return;
+			}
+			log.info("Created subscription on Stripe: " + subscriptionId);
+		} else {
+			getOrderProcessor().createCharge(archive, inReq.getUser(), payment, token);
+		}
 	}
 
 	public void processPayment(WebPageRequest inReq)
