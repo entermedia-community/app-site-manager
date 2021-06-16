@@ -123,6 +123,20 @@ public class PaymentModule extends BaseMediaModule
 			getOrderProcessor().createCharge(archive, inReq.getUser(), payment, token);
 		}
 	}
+	
+	public ArrayList<Map<String, Object>> getSubscriptions(WebPageRequest inReq) {
+		MediaArchive archive = getMediaArchive(inReq);
+		String email = inReq.getUser().getEmail();
+		try {
+			String customer = getOrderProcessor().getCustomerId(archive, email, null);
+			ArrayList<Map<String, Object>> subs = getOrderProcessor().getSubscriptions(archive, customer);
+			inReq.putPageValue("subs", subs);			
+			return subs;
+		} catch (URISyntaxException | IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
+	}
 
 	public void processPayment(WebPageRequest inReq)
 	{

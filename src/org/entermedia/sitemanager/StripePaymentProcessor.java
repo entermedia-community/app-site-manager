@@ -68,7 +68,9 @@ public class StripePaymentProcessor {
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder().uri(uri).header("Authorization", "Bearer " + apiKey)
 				.GET().build();
-		return client.send(request, HttpResponse.BodyHandlers.ofString());
+		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+		log.info(response.body());
+		return response;
 	}
 	
 	private String getItemId(HttpResponse<String> response) throws JsonParseException, JsonMappingException, IOException {
@@ -172,6 +174,20 @@ public class StripePaymentProcessor {
 				.addParameter("items[0][price]", price).build();				
 		HttpResponse<String> response = httpPostRequest(inArchive, uri);
 		return getItemId(response);
+	}
+	
+	protected ArrayList<Map<String, Object>> getSubscriptions(MediaArchive inArchive, String customer) throws URISyntaxException, IOException, InterruptedException {
+		HttpPost http = new HttpPost("https://api.stripe.com/v1/subscriptions");
+		URI uri = new URIBuilder(http.getURI())
+				.addParameter("customer", customer).build();
+		HttpResponse<String> response = httpGetRequest(inArchive, uri);
+		
+		if (response.statusCode() != 200) {
+			return null;
+		}		
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> map = mapper.readValue(response.body(), Map.class);
+		return (ArrayList<Map<String, Object>>) map.get("data");
 	}
 
 	protected boolean process(MediaArchive inArchive, User inUser, Data payment, String inToken) {
