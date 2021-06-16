@@ -87,54 +87,54 @@ public class SiteManager implements CatalogEnabled
 		String url = monitoringurl.substring(monitoringurl.indexOf("//") + 2);
 		log.info("Monitoring URL: " + monitoringurl);
 		log.info("Trace Route URL: " + url);
-		ArrayList<String> args = new ArrayList<String>();
-		args.add(url);
+//		ArrayList<String> args = new ArrayList<String>();
+//		args.add(url);
 		/*
 		 * args.add("https://unitednations-us-1.entermediadb.net"); args.add("m48");
 		 */
-		log.info("Running 'traceroute' or checkserver.");
-		String traceresult = null;
-		/* bash* /home/entermedia/docker-doctor/checkserver.sh url m48 */
-		if ( monitoringurl.equals("https://unitednations-us-1.entermediadb.net") )
-		{
-			String[] env = {"PATH=/bin:/usr/bin/"};
-			String cmd = "checkserver.sh";  
-			Process process = Runtime.getRuntime().exec(cmd, env);
-		}
-		else if( monitoringurl.equals("https://unitednations-eu-1.entermediadb.net"))
-		{
-			String[] env = {"PATH=/bin:/usr/bin/"};
-			String cmd = "checkserver-eu.sh";  
-			Process process = Runtime.getRuntime().exec(cmd, env);
-		}
-		else if( monitoringurl.equals("https://unitednations-as-1.entermediadb.net"))
-		{
-			String[] env = {"PATH=/bin:/usr/bin/"};
-			String cmd = "checkserver-as.sh";  
-			Process process = Runtime.getRuntime().exec(cmd, env);
-		}
-		else {
-			
-			log.info("About to run checkserver...");
-			/* New way of running it , always run checkserver.sh for this testing phase.*/
-			String[] env = {"PATH=/bin:/usr/bin/"};
-			String cmd = "checkserver.sh";
-			Process process = Runtime.getRuntime().exec(cmd, env);
-			
-			/* Run traceroute */
-			 ExecResult trace = getExec().runExec("traceroute", args, true, 25000); 
-			 if(trace.getReturnValue() > 0) 
-			 { 
-				 traceresult = "Trace timed out! " + trace.getStandardError(); 
-			 } 
-			 else 
-			 { 
-				 traceresult = trace.getStandardOut(); 
-			 }
-			 
-			 
-		}
-		log.info("Trace Route: " + traceresult);
+//		log.info("Running 'traceroute' or checkserver.");
+//		String traceresult = null;
+//		/* bash* /home/entermedia/docker-doctor/checkserver.sh url m48 */
+//		if ( monitoringurl.equals("https://unitednations-us-1.entermediadb.net") )
+//		{
+//			String[] env = {"PATH=/bin:/usr/bin/"};
+//			String cmd = "checkserver.sh";  
+//			Process process = Runtime.getRuntime().exec(cmd, env);
+//		}
+//		else if( monitoringurl.equals("https://unitednations-eu-1.entermediadb.net"))
+//		{
+//			String[] env = {"PATH=/bin:/usr/bin/"};
+//			String cmd = "checkserver-eu.sh";  
+//			Process process = Runtime.getRuntime().exec(cmd, env);
+//		}
+//		else if( monitoringurl.equals("https://unitednations-as-1.entermediadb.net"))
+//		{
+//			String[] env = {"PATH=/bin:/usr/bin/"};
+//			String cmd = "checkserver-as.sh";  
+//			Process process = Runtime.getRuntime().exec(cmd, env);
+//		}
+//		else {
+//			
+//			log.info("About to run checkserver...");
+//			/* New way of running it , always run checkserver.sh for this testing phase.*/
+//			String[] env = {"PATH=/bin:/usr/bin/"};
+//			String cmd = "checkserver.sh";
+//			Process process = Runtime.getRuntime().exec(cmd, env);
+//			
+//			/* Run traceroute */
+//			 ExecResult trace = getExec().runExec("traceroute", args, true, 25000); 
+//			 if(trace.getReturnValue() > 0) 
+//			 { 
+//				 traceresult = "Trace timed out! " + trace.getStandardError(); 
+//			 } 
+//			 else 
+//			 { 
+//				 traceresult = trace.getStandardOut(); 
+//			 }
+//			 
+//			 
+//		}
+//		log.info("Trace Route: " + traceresult);
 		
 		// Send email
 		String notifyemail = "notifications@entermediadb.org"; 
@@ -148,7 +148,7 @@ public class SiteManager implements CatalogEnabled
 		Map<String, Object> objects = new HashMap<String, Object>();
 		objects.put("monitored", inReal);
 		objects.put("instance", inInstance);
-		objects.put("traceresult",traceresult);
+//		objects.put("traceresult",traceresult);
 		log.info("Sending email to:"+ notifyemail);
 		templatemail.send(objects);
 		inReal.setProperty("mailsent", "true");

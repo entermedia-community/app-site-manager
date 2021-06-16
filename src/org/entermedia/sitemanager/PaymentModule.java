@@ -1,5 +1,7 @@
 package org.entermedia.sitemanager;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,6 +18,8 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.impl.client.HttpClients;
 import org.entermediadb.asset.MediaArchive;
 import org.entermediadb.asset.modules.BaseMediaModule;
+import org.entermediadb.projects.LibraryCollection;
+import org.entermediadb.projects.ProjectManager;
 import org.openedit.Data;
 import org.openedit.WebPageRequest;
 import org.openedit.data.Searcher;
@@ -65,6 +69,73 @@ public class PaymentModule extends BaseMediaModule
 	public void setSearcherManager(SearcherManager inSearcherManager)
 	{
 		fieldSearcherManager = inSearcherManager;
+	}
+	
+	public void processPaymentTest(WebPageRequest inReq) throws IOException, InterruptedException, URISyntaxException {
+		String token = inReq.getRequestParameter("stripeToken");
+		MediaArchive archive = getMediaArchive(inReq);
+		Searcher payments = archive.getSearcher("transaction");
+		Data payment = payments.createNewData();
+		payments.updateData(inReq, inReq.getRequestParameters("field"), payment);
+		payment.setValue("paymenttype","stripe" );
+		
+		String invoiceId = inReq.getRequestParameter("invoiceid");
+		Data invoice = archive.getInvoiceById(invoiceId);
+		
+		payment.setValue("totalprice", invoice.getValue("totalprice")); // safer to get value from database
+		log.info(payment);
+		
+		Boolean isRecurring = Boolean.valueOf(inReq.getRequestParameter("recurring"));
+		if (isRecurring == true)
+		{
+			String productId = ""; 
+			ArrayList<HashMap> products = (ArrayList) invoice.getValue("productlist");
+			for (HashMap<String, String> product : products) {
+				productId = product.get("productid");
+			}
+			Data product =  archive.getProductById(productId);
+			String recurringPeriod = String.valueOf(product.getValue("recurringperiod"));
+			Double tprice = Double.valueOf(payment.get("totalprice")); // * Integer.parseInt(recurringPeriod);
+			Money totalprice = new Money(tprice);
+			String amountStr = totalprice.toShortString().replace(".", "").replace("$", "").replace(",", "");
+			String customerId = getOrderProcessor().createCustomer2(archive, inReq.getUser(), token);
+			if (customerId.isEmpty()) {
+				// TODO: error!
+				return;
+			}
+			String stripeProductId = getOrderProcessor().createProduct(archive, productId);
+			if (stripeProductId.isEmpty()) {
+				// TODO: error!
+				return;
+			}
+			String priceId = getOrderProcessor().createPrice(archive, amountStr, recurringPeriod, stripeProductId);
+			if (priceId.isEmpty()) {
+				// TODO: error!
+				return;
+			}
+			String subscriptionId = getOrderProcessor().createSubscription(archive, inReq.getUser(), customerId, priceId);
+			if (subscriptionId.isEmpty()) {
+				// TODO: error!
+				return;
+			}
+			log.info("Created subscription on Stripe: " + subscriptionId);
+		} else {
+			getOrderProcessor().createCharge(archive, inReq.getUser(), payment, token);
+		}
+	}
+	
+	public ArrayList<Map<String, Object>> getSubscriptions(WebPageRequest inReq) {
+		MediaArchive archive = getMediaArchive(inReq);
+		String email = inReq.getUser().getEmail();
+		try {
+			String customer = getOrderProcessor().getCustomerId(archive, email, null);
+			ArrayList<Map<String, Object>> subs = getOrderProcessor().getSubscriptions(archive, customer);
+			inReq.putPageValue("subs", subs);			
+			return subs;
+		} catch (URISyntaxException | IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			return null;
+		}
 	}
 
 	public void processPayment(WebPageRequest inReq)
@@ -266,6 +337,22 @@ public class PaymentModule extends BaseMediaModule
 			paymentplans.saveData(paymentplan);
 		}
 
+	}
+	
+	public void createProductService(WebPageRequest inReq) {
+		MediaArchive mediaArchive = getMediaArchive(inReq);
+		Searcher librarysearcher = mediaArchive.getSearcher("collectiveproduct");
+		Calendar today = Calendar.getInstance();
+		today.set(Calendar.HOUR_OF_DAY, 0);
+		today.set(Calendar.MINUTE, 0);
+		today.set(Calendar.SECOND, 0);
+		
+		Data saved = librarysearcher.createNewData();
+		librarysearcher.updateData(inReq, inReq.getRequestParameters("field"), saved);
+		saved.setValue("createdon", today.getTime());
+		saved.setValue("billingstatus", "active");
+		saved.setValue("nextbillon", today.getTime());
+		librarysearcher.saveData(saved, null);
 	}
 
 	//	public void connectClient(WebPageRequest inReq){

@@ -16,4 +16,7 @@
   
   <property id="notes"/>
   <property id="sync_notes"/>
+  
+  <property id="instance_reindex_status"/>
+  <property id="lastreindexdate"/>
 </root>

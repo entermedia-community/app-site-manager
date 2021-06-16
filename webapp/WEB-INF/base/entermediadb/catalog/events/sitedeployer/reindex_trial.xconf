@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<page>
+  <property name="enabled">true</property>
+  <property name="eventname">ReIndex Trial Sites</property>
+  <path-action name="Script.run">
+    <script>/${catalogid}/events/scripts/sitedeployer/reindex_trial_site.groovy</script>
+  </path-action>
+  <property name="period">1d</property>
+  <property name="eventdescription">Reindex trials that have reindex status as pending</property>	
+  <property name="startingfrommidnight">5m</property>
+</page>

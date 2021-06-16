@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-  	<property name="emaillayout">/${siteid}/app/workspaces/email/sendmagiclinkemail.html</property>
+  	<property name="emaillayout">/${siteid}/mediadb/authentication/sendmagiclinkemail.html</property>
 	
 	<permission name="view">
     	<boolean value="true" />
   	</permission>
 	
+	
+	<property name="subject">Login Link</property>
 	
 	<path-action name="JsonAdminModule.preprocess" />
   	<path-action name="Admin.createTempUser"/>

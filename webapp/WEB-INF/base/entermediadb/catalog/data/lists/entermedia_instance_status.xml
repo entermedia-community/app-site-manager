@@ -19,4 +19,7 @@
   <entermedia_instance_status id="todelete"> 
     <name><![CDATA[Delete Now]]></name> 
   </entermedia_instance_status>
+  <entermedia_instance_status id="torestore"> 
+    <name><![CDATA[Restore Now]]></name> 
+  </entermedia_instance_status>
 </entermedia_instance_statuss>

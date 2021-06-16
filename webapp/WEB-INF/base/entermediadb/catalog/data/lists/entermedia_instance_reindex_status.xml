@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entermedia_instance_statuss> 
+  <entermedia_instance_status id="error"> 
+    <name><![CDATA[Error]]></name> 
+  </entermedia_instance_status>
+  <entermedia_instance_status id="complete"> 
+    <name><![CDATA[Complete]]></name> 
+  </entermedia_instance_status>  
+  <entermedia_instance_status id="pending"> 
+    <name><![CDATA[Pending]]></name> 
+  </entermedia_instance_status> 
+  <entermedia_instance_status id="weekly"> 
+    <name><![CDATA[Weekly]]></name> 
+  </entermedia_instance_status> 
+</entermedia_instance_statuss>
