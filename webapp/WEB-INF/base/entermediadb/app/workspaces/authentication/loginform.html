@@ -9,7 +9,7 @@
 
 #set($providers = $mediaarchive.query("oauthprovider").exact("enabled","true").search())
 
-<div class="col-md-3" style="padding:70px 0px 0 0px; ">
+<div class="col-md-3" style="padding:40px 0px 0 0px; ">
 
 #if( !$providers.isEmpty() )
 		
@@ -36,7 +36,7 @@
 			
 			<form class="" action="sendmagiclinkfinish.html" id="password-reminder" name="passwordReminder"  method="post">
 			
-					<p>[[Sign in or e-mail authentication key]]</p>
+					<p><strong>[[Or e-mail authentication key]]</strong></p>
 					<p><input class="form-control form-control-sm required grabfocus" type="text" name="to" size="50" style="margin:0 auto; width:400px" placeholder="[[Enter your Email Address]]" required /></p>
 					<input type="hidden" name="subject" VALUE="[[Your Login Info]]"/>
 					<input class="btn btn-secondary" name="submit" type="submit" value="[[Send Link]]" style="margin-right:150px"/>
