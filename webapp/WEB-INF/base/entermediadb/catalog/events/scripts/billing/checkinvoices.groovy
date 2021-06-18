@@ -51,6 +51,7 @@ private void generateRecurringInvoices(MediaArchive mediaArchive, Searcher produ
 			items.add(productItem);
 			invoice.setValue("productlist", items);
 			invoice.setValue("paymentstatus", "invoiced");
+			invoice.setValue("isautopaid", product.getValue("isautopaid"));
 			invoice.setValue("collectionid", product.getValue("collectionid"));
 			invoice.setValue("owner", product.getValue("owner"));
 			invoice.setValue("totalprice", product.getValue("productprice"));
@@ -105,35 +106,37 @@ private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSe
 		Data invoice = invoiceSearcher.loadData(invoiceIterator.next());
 
 		Searcher teamSearcher = mediaArchive .getSearcher("librarycollectionusers");
-		Collection invoiceMembers = teamSearcher.query()
-				.exact("collectionid", invoice.getValue("collectionid"))
-				.exact("isbillingcontact", "true")
-				.search();
-
-		for (Iterator teamIterator = invoiceMembers.iterator(); teamIterator.hasNext();) {
-			Data member = teamSearcher.loadData(teamIterator.next());
-			User contact = mediaArchive.getUser(member.getValue("followeruser"));
-
-			if (contact != null) {
-				String email = contact.getValue("email");
-				if (email) {
-					switch (iteratorType) {
-						case "notificationsent":
-							sendEmail(mediaArchive, contact, invoice, "Invoice", "send-invoice-event.html");
-							break;
-						case "notificationoverduesent":
-							sendEmail(mediaArchive, contact, invoice, "Overdue Invoice", "send-overdue-invoice-event.html");
-							break;
-						case "notificationpaidsent":
-							sendEmail(mediaArchive, contact, invoice, "Payment Received", "send-paid-invoice-event.html");
-							break;
+		String collectionid = invoice.getValue("collectionid");
+		if (collectionid != null) {
+			Collection invoiceMembers = teamSearcher.query()
+					.exact("collectionid", collectionid)
+					.exact("isbillingcontact", "true")
+					.search();		
+			for (Iterator teamIterator = invoiceMembers.iterator(); teamIterator.hasNext();) {
+				Data member = teamSearcher.loadData(teamIterator.next());
+				User contact = mediaArchive.getUser(member.getValue("followeruser"));
+	
+				if (contact != null) {
+					String email = contact.getValue("email");
+					if (email) {
+						switch (iteratorType) {
+							case "notificationsent":
+								sendEmail(mediaArchive, contact, invoice, "Invoice", "send-invoice-event.html");
+								break;
+							case "notificationoverduesent":
+								sendEmail(mediaArchive, contact, invoice, "Overdue Invoice", "send-overdue-invoice-event.html");
+								break;
+							case "notificationpaidsent":
+								sendEmail(mediaArchive, contact, invoice, "Payment Received", "send-paid-invoice-event.html");
+								break;
+						}
 					}
 				}
 			}
+			
+			invoice.setValue(iteratorType, "true");
+			invoiceSearcher.saveData(invoice);
 		}
-
-		invoice.setValue(iteratorType, "true");
-		invoiceSearcher.saveData(invoice);
 	}
 }
 

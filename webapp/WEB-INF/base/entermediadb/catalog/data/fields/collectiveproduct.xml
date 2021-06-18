@@ -111,4 +111,8 @@
 			<language id="en"><![CDATA[Billing Status]]></language>
 		</name>
 	</property>
+
+	<property id="isautopaid" index="true" stored="true"
+		editable="true" type="boolean">Automatic Payments</property>
+
 </properties>

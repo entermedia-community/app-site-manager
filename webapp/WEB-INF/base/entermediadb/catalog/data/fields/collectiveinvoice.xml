@@ -104,5 +104,8 @@
 	<property id="invoicepaidon" editable="true" stored="true"
 		type="date" index="true">Invoice Paid Date
 	</property>
+	
+	<property id="isautopaid" index="true" stored="true"
+		editable="true" type="boolean">Automatic Payments</property>
 
 </properties>
