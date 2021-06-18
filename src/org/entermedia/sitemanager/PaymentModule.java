@@ -130,10 +130,41 @@ public class PaymentModule extends BaseMediaModule
 		try {
 			String customer = getOrderProcessor().getCustomerId(archive, email, null);
 			ArrayList<Map<String, Object>> subs = getOrderProcessor().getSubscriptions(archive, customer);
-			inReq.putPageValue("subs", subs);			
+			inReq.putPageValue("subs", subs);
 			return subs;
 		} catch (URISyntaxException | IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public Boolean cancelSubscription(WebPageRequest inReq) {
+		MediaArchive archive = getMediaArchive(inReq);
+		String subscription = (String) inReq.getRequestParameter("subid");
+		try {
+			Boolean resp = getOrderProcessor().cancelSubscriptions(archive, subscription);
+			inReq.putPageValue("status", resp);
+			return resp;
+		} catch (URISyntaxException | IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public ArrayList<Map<String, Object>> getInvoices(WebPageRequest inReq) {
+		MediaArchive archive = getMediaArchive(inReq);
+		String customer = (String) inReq.getRequestParameter("customerid");
+		String subscription = (String) inReq.getRequestParameter("subid");
+		
+		try {
+			ArrayList<Map<String, Object>> invoices = getOrderProcessor().getInvoices(archive, customer, subscription);
+			inReq.putPageValue("invoices", invoices);
+			return invoices;
+		} catch (URISyntaxException | IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			return null;
 		}
 	}

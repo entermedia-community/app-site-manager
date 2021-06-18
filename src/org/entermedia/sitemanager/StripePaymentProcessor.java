@@ -73,6 +73,18 @@ public class StripePaymentProcessor {
 		return response;
 	}
 	
+	private HttpResponse<String> httpDeleteRequest(MediaArchive inArchive, URI uri) throws IOException, InterruptedException {
+		boolean productionmode = inArchive.isCatalogSettingTrue("productionmode");
+		String apiKey = productionmode ? inArchive.getCatalogSettingValue("stripe_access_token")
+				: inArchive.getCatalogSettingValue("stripe_test_access_token");
+		HttpClient client = HttpClient.newHttpClient();
+		HttpRequest request = HttpRequest.newBuilder().uri(uri).header("Authorization", "Bearer " + apiKey)
+				.DELETE().build();
+		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+		log.info(response.body());
+		return response;
+	}
+	
 	private String getItemId(HttpResponse<String> response) throws JsonParseException, JsonMappingException, IOException {
 		if (response.statusCode() != 200) {
 			return "";
@@ -181,13 +193,34 @@ public class StripePaymentProcessor {
 		URI uri = new URIBuilder(http.getURI())
 				.addParameter("customer", customer).build();
 		HttpResponse<String> response = httpGetRequest(inArchive, uri);
-		
 		if (response.statusCode() != 200) {
 			return null;
 		}		
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> map = mapper.readValue(response.body(), Map.class);
 		return (ArrayList<Map<String, Object>>) map.get("data");
+	}
+	
+	protected ArrayList<Map<String, Object>> getInvoices(MediaArchive inArchive, String customer, String subscription) throws URISyntaxException, IOException, InterruptedException {
+		HttpPost http = new HttpPost("https://api.stripe.com/v1/invoices");
+		URI uri = new URIBuilder(http.getURI())
+				.addParameter("customer", customer)
+				.addParameter("subscription", subscription).build();
+		log.info("URI:" + uri);
+		HttpResponse<String> response = httpGetRequest(inArchive, uri);
+		if (response.statusCode() != 200) {
+			return null;
+		}		
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> map = mapper.readValue(response.body(), Map.class);
+		return (ArrayList<Map<String, Object>>) map.get("data");
+	}
+	
+	protected Boolean cancelSubscriptions(MediaArchive inArchive, String subId) throws URISyntaxException, IOException, InterruptedException {
+		HttpPost http = new HttpPost("https://api.stripe.com/v1/subscriptions/" + subId);
+		URI uri = new URIBuilder(http.getURI()).build();
+		HttpResponse<String> response = httpDeleteRequest(inArchive, uri);
+		return response.statusCode() == 200;
 	}
 
 	protected boolean process(MediaArchive inArchive, User inUser, Data payment, String inToken) {
