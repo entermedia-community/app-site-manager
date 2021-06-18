@@ -184,13 +184,14 @@ public class StripePaymentProcessor {
 		}
 		String email =  collectionId + "@entermediadb.com";
 		String emailExists = getCustomerId(inArchive, email, source);
+		Data workspace = inArchive.getWorkspaceById(collectionId);
 		if (emailExists != null && !emailExists.isEmpty()) {
 			return emailExists;
 		}
 		HttpPost http = new HttpPost("https://api.stripe.com/v1/customers");
 		URI uri = new URIBuilder(http.getURI())
 				.addParameter("email", email)
-				.addParameter("description", "workspace")
+				.addParameter("description", "Workspace:" + workspace.getName())
 				.addParameter("source", source).build();				
 		HttpResponse<String> response = httpPostRequest(inArchive, uri);
 		return getItemId(response);
