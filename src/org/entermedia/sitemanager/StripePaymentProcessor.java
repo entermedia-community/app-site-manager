@@ -94,15 +94,15 @@ public class StripePaymentProcessor {
 		return (String) map.get("id");
 	}
 
-	protected boolean createCharge(MediaArchive inArchive, User inUser, Data payment, String source) throws IOException, InterruptedException, URISyntaxException {
-		HttpPost http = new HttpPost("https://api.stripe.com/v1/prices");
+	protected boolean createCharge(MediaArchive inArchive, User inUser, Data payment, String customer) throws IOException, InterruptedException, URISyntaxException {
+		HttpPost http = new HttpPost("https://api.stripe.com/v1/charges");
 		Money totalprice = new Money(payment.get("totalprice"));
 		String amountstring = totalprice.toShortString().replace(".", "").replace("$", "").replace(",", "");
 		String currency = inArchive.getCatalogSettingValue("currency") != null
 				? inArchive.getCatalogSettingValue("currency")
 				: "usd";
 		URI uri = new URIBuilder(http.getURI()).addParameter("amount", amountstring).addParameter("currency", currency)
-				.addParameter("source", source)
+				.addParameter("customer", customer)
 				.addParameter("description", "My First Test Charge (created for API docs)").build();
 		HttpResponse<String> response = httpPostRequest(inArchive, uri);
 		// TODO: log this somewhere
@@ -138,6 +138,18 @@ public class StripePaymentProcessor {
 		return getItemId(response);
 	}
 	
+	protected void updateCustomersSource(MediaArchive inArchive, String customerId, String source) throws URISyntaxException, IOException, InterruptedException {
+		if (!source.isEmpty() && !customerId.isEmpty()) {
+			HttpPost http = new HttpPost("https://api.stripe.com/v1/customers/" + customerId);
+			URI uri = new URIBuilder(http.getURI())
+					.addParameter("source", source).build();
+			HttpResponse<String> response = httpPostRequest(inArchive, uri);
+			if (response.statusCode() != 200) {
+				log.info("Updated Source on User: " + customerId);
+			}
+		}
+	}
+	
 	protected String getCustomerId(MediaArchive inArchive, String email, String source) throws URISyntaxException, IOException, InterruptedException {
 		HttpPost http = new HttpPost("https://api.stripe.com/v1/customers");
 		URI uri = new URIBuilder(http.getURI())
@@ -150,30 +162,35 @@ public class StripePaymentProcessor {
 		Map<String, Object> map = mapper.readValue(response.body(), Map.class);
 		ArrayList<Map<String, Object>> users = (ArrayList) map.get("data");
 		String userId = "";
+		String sourceId = "";
 		for (Map<String, Object> x : users) {
 			if (x.get("email").equals(email)) {
 				userId = (String)x.get("id");
+				sourceId = (String)x.get("source");
 			}
 		};
+		
+		if (sourceId != source) {
+			updateCustomersSource(inArchive, userId, source);
+		}
 		
 		//TODO if source is different, update source?
 		return userId;
 	}
 
-	protected String createCustomer2(MediaArchive inArchive, User inUser, String source) throws URISyntaxException, IOException, InterruptedException {
-		// TODO: check if users exists, probably by email, if it exists just return customer's id
+	protected String createCustomer2(MediaArchive inArchive, String collectionId, String source) throws URISyntaxException, IOException, InterruptedException {
 		if (source.isEmpty()) {
 			return "";
 		}
-		String email =  (String) inUser.getValue("email");
+		String email =  collectionId + "@entermediadb.com";
 		String emailExists = getCustomerId(inArchive, email, source);
 		if (emailExists != null && !emailExists.isEmpty()) {
 			return emailExists;
 		}
 		HttpPost http = new HttpPost("https://api.stripe.com/v1/customers");
 		URI uri = new URIBuilder(http.getURI())
-				.addParameter("description", inUser.getId())
 				.addParameter("email", email)
+				.addParameter("description", "workspace")
 				.addParameter("source", source).build();				
 		HttpResponse<String> response = httpPostRequest(inArchive, uri);
 		return getItemId(response);

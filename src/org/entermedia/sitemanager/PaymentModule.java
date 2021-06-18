@@ -72,14 +72,16 @@ public class PaymentModule extends BaseMediaModule
 	}
 	
 	public void processPaymentTest(WebPageRequest inReq) throws IOException, InterruptedException, URISyntaxException {
-		String token = inReq.getRequestParameter("stripeToken");
+		String source = inReq.getRequestParameter("stripeToken");
 		MediaArchive archive = getMediaArchive(inReq);
 		Searcher payments = archive.getSearcher("transaction");
 		Data payment = payments.createNewData();
 		payments.updateData(inReq, inReq.getRequestParameters("field"), payment);
 		payment.setValue("paymenttype","stripe" );
+		Calendar today = Calendar.getInstance();
 		
 		String invoiceId = inReq.getRequestParameter("invoiceid");
+		Searcher invoiceSearcher = archive.getSearcher("collectiveinvoice");
 		Data invoice = archive.getInvoiceById(invoiceId);
 		
 		payment.setValue("totalprice", invoice.getValue("totalprice")); // safer to get value from database
@@ -88,7 +90,7 @@ public class PaymentModule extends BaseMediaModule
 		Boolean isRecurring = Boolean.valueOf(inReq.getRequestParameter("recurring"));
 		if (isRecurring == true)
 		{
-			String productId = ""; 
+			String productId = "";
 			ArrayList<HashMap> products = (ArrayList) invoice.getValue("productlist");
 			for (HashMap<String, String> product : products) {
 				productId = product.get("productid");
@@ -98,7 +100,7 @@ public class PaymentModule extends BaseMediaModule
 			Double tprice = Double.valueOf(payment.get("totalprice")); // * Integer.parseInt(recurringPeriod);
 			Money totalprice = new Money(tprice);
 			String amountStr = totalprice.toShortString().replace(".", "").replace("$", "").replace(",", "");
-			String customerId = getOrderProcessor().createCustomer2(archive, inReq.getUser(), token);
+			String customerId = getOrderProcessor().createCustomer2(archive, (String)invoice.getValue("collectionid"), source);
 			if (customerId.isEmpty()) {
 				// TODO: error!
 				return;
@@ -120,7 +122,13 @@ public class PaymentModule extends BaseMediaModule
 			}
 			log.info("Created subscription on Stripe: " + subscriptionId);
 		} else {
-			getOrderProcessor().createCharge(archive, inReq.getUser(), payment, token);
+			String customerId = getOrderProcessor().createCustomer2(archive, (String)invoice.getValue("collectionid"), source);
+			Boolean isSuccess = getOrderProcessor().createCharge(archive, inReq.getUser(), payment, customerId);
+			if (isSuccess) {
+				invoice.setValue("paymentstatus", "paid");
+				invoice.setValue("invoicepaidon", today.getTime());
+				invoiceSearcher.saveData(invoice);
+			}
 		}
 	}
 	

@@ -11,7 +11,7 @@ public void init() {
 	Searcher productSearcher = mediaArchive .getSearcher("collectiveproduct");
 
 	generateRecurringInvoices(mediaArchive, productSearcher);
-
+	generateNonRecurringInvoices(mediaArchive, productSearcher);
 	Searcher invoiceSearcher = mediaArchive .getSearcher("collectiveinvoice");
 	sendInvoiceNotifications(mediaArchive, invoiceSearcher);
 	sendInvoiceOverdueNotifications(mediaArchive, invoiceSearcher);
@@ -27,11 +27,9 @@ private void generateRecurringInvoices(MediaArchive mediaArchive, Searcher produ
 	Collection pendingProducts = productSearcher.query()
 			.exact("recurring","true")
 			.exact("billingstatus", "active")
-			.before("nextbillon", today.getTime())
-			.after("nextbillon", due.getTime()).search();
+			.between("nextbillon", today.getTime(), due.getTime()).search();
 
 	log.info("Checking invoice for " + pendingProducts.size() + " products");
-
 	for (Iterator productIterator = pendingProducts.iterator(); productIterator.hasNext();) {
 		Data product = productSearcher.loadData(productIterator.next());
 
@@ -39,7 +37,7 @@ private void generateRecurringInvoices(MediaArchive mediaArchive, Searcher produ
 		Date lastbilldate = product.getValue("lastgeneratedinvoicedate");
 		if (lastbilldate < nextBillOn) { // otherwise assume it's already created
 			Searcher invoiceSearcher = mediaArchive.getSearcher("collectiveinvoice");
-			Data invoice = invoiceSearcher.createNewData();			
+			Data invoice = invoiceSearcher.createNewData();
 
 			Calendar invoiceDue = Calendar.getInstance();
 			invoiceDue.add(Calendar.DAY_OF_YEAR, daysToExpire);
@@ -67,6 +65,54 @@ private void generateRecurringInvoices(MediaArchive mediaArchive, Searcher produ
 			product.setValue("nextbillon", nextBillOn);
 			product.setValue("lastgeneratedinvoicedate", today.getTime());
 			productSearcher.saveData(product);
+		}
+	}
+}
+
+private void generateNonRecurringInvoices(MediaArchive mediaArchive, Searcher productSearcher) {
+	int daysToExpire = 7; // invoice will expire in (days)
+	Calendar today = Calendar.getInstance();
+	Calendar due = Calendar.getInstance();
+	due.add(Calendar.DAY_OF_YEAR, -5); // make invoice 5 days before next bill date
+
+	Collection pendingProducts = productSearcher.query()
+			.exact("recurring","false")
+			.exact("billingstatus", "active").search();
+
+	log.info("Checking invoice for " + pendingProducts.size() + " none-recurring Products");
+	for (Iterator productIterator = pendingProducts.iterator(); productIterator.hasNext();) {
+		Data product = productSearcher.loadData(productIterator.next());
+
+		if (product.getValue("lastgeneratedinvoicedate") == null) {
+			Date nextBillOn = product.getValue("nextbillon");
+			Date lastbilldate = product.getValue("lastgeneratedinvoicedate");
+			if (lastbilldate < nextBillOn) { // otherwise assume it's already created
+				Searcher invoiceSearcher = mediaArchive.getSearcher("collectiveinvoice");
+				Data invoice = invoiceSearcher.createNewData();
+
+				Calendar invoiceDue = Calendar.getInstance();
+				invoiceDue.add(Calendar.DAY_OF_YEAR, daysToExpire);
+				HashMap<String,Object> productItem = new HashMap<String,Object>();
+				productItem.put("productid", product.getValue("id"));
+				productItem.put("productquantity", 1 );
+				productItem.put("productprice", product.getValue("productprice"));
+				Collection items = new ArrayList();
+				items.add(productItem);
+				invoice.setValue("productlist", items);
+				invoice.setValue("paymentstatus", "invoiced");
+				invoice.setValue("isautopaid", product.getValue("isautopaid"));
+				invoice.setValue("collectionid", product.getValue("collectionid"));
+				invoice.setValue("owner", product.getValue("owner"));
+				invoice.setValue("totalprice", product.getValue("productprice"));
+				invoice.setValue("duedate", invoiceDue.getTime());
+				invoice.setValue("invoicedescription", product.getValue("productdescription"));
+				invoice.setValue("notificationsent", "false");
+				invoice.setValue("createdon", today.getTime());
+				invoiceSearcher.saveData(invoice);
+
+				product.setValue("lastgeneratedinvoicedate", today.getTime());
+				productSearcher.saveData(product);
+			}
 		}
 	}
 }
@@ -111,11 +157,11 @@ private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSe
 			Collection invoiceMembers = teamSearcher.query()
 					.exact("collectionid", collectionid)
 					.exact("isbillingcontact", "true")
-					.search();		
+					.search();
 			for (Iterator teamIterator = invoiceMembers.iterator(); teamIterator.hasNext();) {
 				Data member = teamSearcher.loadData(teamIterator.next());
 				User contact = mediaArchive.getUser(member.getValue("followeruser"));
-	
+
 				if (contact != null) {
 					String email = contact.getValue("email");
 					if (email) {
@@ -133,7 +179,7 @@ private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSe
 					}
 				}
 			}
-			
+
 			invoice.setValue(iteratorType, "true");
 			invoiceSearcher.saveData(invoice);
 		}
