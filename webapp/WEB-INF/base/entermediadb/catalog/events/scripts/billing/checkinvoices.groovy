@@ -27,7 +27,8 @@ private void generateRecurringInvoices(MediaArchive mediaArchive, Searcher produ
 	Collection pendingProducts = productSearcher.query()
 			.exact("recurring","true")
 			.exact("billingstatus", "active")
-			.between("nextbillon", today.getTime(), due.getTime()).search();
+			.between("nextbillon", today.getTime(), due.getTime())
+			.search();
 
 	log.info("Checking invoice for " + pendingProducts.size() + " products");
 	for (Iterator productIterator = pendingProducts.iterator(); productIterator.hasNext();) {

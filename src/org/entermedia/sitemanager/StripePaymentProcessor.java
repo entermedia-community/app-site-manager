@@ -151,16 +151,7 @@ public class StripePaymentProcessor {
 	}
 	
 	protected String getCustomerId(MediaArchive inArchive, String email, String source) throws URISyntaxException, IOException, InterruptedException {
-		HttpPost http = new HttpPost("https://api.stripe.com/v1/customers");
-		URI uri = new URIBuilder(http.getURI())
-				.addParameter("email", email).build();
-		HttpResponse<String> response = httpGetRequest(inArchive, uri);
-		if (response.statusCode() != 200) {
-			return "";
-		}
-		ObjectMapper mapper = new ObjectMapper();
-		Map<String, Object> map = mapper.readValue(response.body(), Map.class);
-		ArrayList<Map<String, Object>> users = (ArrayList) map.get("data");
+		ArrayList<Map<String, Object>> users = getCustomers(inArchive, email);
 		String userId = "";
 		String sourceId = "";
 		for (Map<String, Object> x : users) {
@@ -168,14 +159,26 @@ public class StripePaymentProcessor {
 				userId = (String)x.get("id");
 				sourceId = (String)x.get("source");
 			}
-		};
-		
+		};		
 		if (sourceId != source) {
 			updateCustomersSource(inArchive, userId, source);
-		}
-		
+		}		
 		//TODO if source is different, update source?
 		return userId;
+	}
+	
+	protected ArrayList<Map<String, Object>> getCustomers(MediaArchive inArchive, String email) throws URISyntaxException, IOException, InterruptedException {
+		HttpPost http = new HttpPost("https://api.stripe.com/v1/customers");
+		URI uri = new URIBuilder(http.getURI())
+				.addParameter("email", email).build();
+		HttpResponse<String> response = httpGetRequest(inArchive, uri);
+		if (response.statusCode() != 200) {
+			return null;
+		}
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> map = mapper.readValue(response.body(), Map.class);
+		ArrayList<Map<String, Object>> users = (ArrayList) map.get("data");
+		return users;
 	}
 
 	protected String createCustomer2(MediaArchive inArchive, String collectionId, String source) throws URISyntaxException, IOException, InterruptedException {

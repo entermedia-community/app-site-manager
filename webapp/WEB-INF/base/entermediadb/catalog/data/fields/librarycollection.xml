@@ -271,5 +271,8 @@
     <name>
       <language id="en"><![CDATA[Status]]></language>
     </name>
-  </property> 
+  </property>
+  
+  <property id="savestripecreditcard" index="true" stored="true"
+		editable="true" type="boolean">Save Stripe Credit card</property>
 </properties>

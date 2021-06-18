@@ -72,7 +72,9 @@ public class PaymentModule extends BaseMediaModule
 	}
 	
 	public void processPaymentTest(WebPageRequest inReq) throws IOException, InterruptedException, URISyntaxException {
-		String source = inReq.getRequestParameter("stripeToken");
+		String source = inReq.getRequestParameter("stripeToken");		
+		Boolean stripeCust = inReq.getRequestParameter("customerselected") == "true";
+		
 		MediaArchive archive = getMediaArchive(inReq);
 		Searcher payments = archive.getSearcher("transaction");
 		Data payment = payments.createNewData();
@@ -122,7 +124,12 @@ public class PaymentModule extends BaseMediaModule
 			}
 			log.info("Created subscription on Stripe: " + subscriptionId);
 		} else {
-			String customerId = getOrderProcessor().createCustomer2(archive, (String)invoice.getValue("collectionid"), source);
+			String customerId = "";
+			if (stripeCust) {
+				customerId = getOrderProcessor().createCustomer2(archive, (String)invoice.getValue("collectionid"), source);
+			} else {
+				customerId = (String) inReq.getRequestParameter("stripecustomer");
+			}
 			Boolean isSuccess = getOrderProcessor().createCharge(archive, inReq.getUser(), payment, customerId);
 			if (isSuccess) {
 				invoice.setValue("paymentstatus", "paid");
@@ -145,6 +152,25 @@ public class PaymentModule extends BaseMediaModule
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public Map<String, Object> getStripeUser(WebPageRequest inReq) {
+		MediaArchive archive = getMediaArchive(inReq);
+		String collectionId = inReq.getRequestParameter("collectionid");
+		String email = collectionId + "@entermediadb.com";
+		try {
+			ArrayList<Map<String, Object>> customers = getOrderProcessor().getCustomers(archive, email);
+			if (customers.size() > 0) {
+				Map<String, Object> customer = customers.get(0);
+				inReq.putPageValue("customer", customers.get(0));
+				return (Map<String, Object>) customers.get(0);
+			}
+		} catch (URISyntaxException | IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+		return null;
 	}
 	
 	public Boolean cancelSubscription(WebPageRequest inReq) {
