@@ -1,5 +1,6 @@
 package billing;
 
+import org.entermedia.sitemanager.StripePaymentProcessor
 import org.entermediadb.asset.MediaArchive
 import org.entermediadb.email.WebEmail
 import org.openedit.*
@@ -9,13 +10,56 @@ import org.openedit.users.User
 public void init() {
 	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
 	Searcher productSearcher = mediaArchive .getSearcher("collectiveproduct");
+	Searcher invoiceSearcher = mediaArchive .getSearcher("collectiveinvoice");
 
 	generateRecurringInvoices(mediaArchive, productSearcher);
 	generateNonRecurringInvoices(mediaArchive, productSearcher);
-	Searcher invoiceSearcher = mediaArchive .getSearcher("collectiveinvoice");
+	payAutoPaidInvoices(mediaArchive, invoiceSearcher);
+	// Notifications
 	sendInvoiceNotifications(mediaArchive, invoiceSearcher);
 	sendInvoiceOverdueNotifications(mediaArchive, invoiceSearcher);
 	sendInvoicePaidNotifications(mediaArchive, invoiceSearcher);
+}
+
+private void payAutoPaidInvoices(MediaArchive mediaArchive, Searcher invoiceSearcher) {
+	StripePaymentProcessor stripe = new StripePaymentProcessor();
+	Calendar today = Calendar.getInstance();
+	Collection invoices = invoiceSearcher.query()
+			.exact("paymentstatus","invoiced")
+			.exact("isautopaid","true").search();
+
+	log.info("Auto-Paid pending invoices " + invoices.size() + " found");
+	for (Iterator invoiceIterator = invoices.iterator(); invoiceIterator.hasNext();) {
+		Data invoice = invoiceSearcher.loadData(invoiceIterator.next());
+		Map<String, Object> customer = stripe.getCustomer(mediaArchive, invoice.getValue("collectionid") + "@entermediadb.com")
+		if (customer != null) {
+		Map<String, Object> sourcesData = customer.get("sources");
+		ArrayList<Map<String, Object>> sources = sourcesData.get("data");
+		if (sources.size() > 0) {
+			Map<String, Object> source = sources.get(0);
+			Searcher payments = mediaArchive.getSearcher("transaction");
+			Data payment = payments.createNewData();
+			payment.setValue("paymenttype","stripe" );
+			payment.setValue("totalprice", invoice.getValue("totalprice"));
+			Boolean chargeSuccess = stripe.createCharge(mediaArchive, payment, customer.get("id"));
+
+			if (chargeSuccess) {
+				invoice.setValue("paymentstatus", "paid");
+				invoice.setValue("invoicepaidon", today.getTime());
+			} else {
+				invoice.setValue("paymentstatus", "autopayfailed");
+				invoice.setValue("paymentstatusreason", "CreditCard failed");
+			}
+		} else {
+			invoice.setValue("paymentstatus", "autopayfailed");
+			invoice.setValue("paymentstatusreason", "No Credit Cards Stored");
+			}
+	} else {
+		invoice.setValue("paymentstatus", "autopayfailed");
+		invoice.setValue("paymentstatusreason", "No Customer");
+	}
+		invoiceSearcher.saveData(invoice);
+	}
 }
 
 private void generateRecurringInvoices(MediaArchive mediaArchive, Searcher productSearcher) {
@@ -27,7 +71,7 @@ private void generateRecurringInvoices(MediaArchive mediaArchive, Searcher produ
 	Collection pendingProducts = productSearcher.query()
 			.exact("recurring","true")
 			.exact("billingstatus", "active")
-			.between("nextbillon", today.getTime(), due.getTime())
+			.between("nextbillon", due.getTime(), today.getTime())
 			.search();
 
 	log.info("Checking invoice for " + pendingProducts.size() + " products");
@@ -140,7 +184,6 @@ private void sendInvoiceOverdueNotifications(MediaArchive mediaArchive, Searcher
 private void sendInvoicePaidNotifications(MediaArchive mediaArchive, Searcher invoiceSearcher) {
 	Calendar today = Calendar.getInstance();
 	Collection pendingNotificationInvoices = invoiceSearcher.query()
-			.before("duedate", today.getTime())
 			.exact("notificationpaidsent", "false")
 			.exact("paymentstatus","paid").search();
 

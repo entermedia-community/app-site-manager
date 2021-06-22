@@ -90,6 +90,7 @@ public class PaymentModule extends BaseMediaModule
 		log.info(payment);
 		
 		Boolean isRecurring = Boolean.valueOf(inReq.getRequestParameter("recurring"));
+		Boolean isSuccess = false;
 		if (isRecurring == true)
 		{
 			String productId = "";
@@ -106,23 +107,9 @@ public class PaymentModule extends BaseMediaModule
 			if (customerId.isEmpty()) {
 				// TODO: error!
 				return;
-			}
-			String stripeProductId = getOrderProcessor().createProduct(archive, productId);
-			if (stripeProductId.isEmpty()) {
-				// TODO: error!
-				return;
-			}
-			String priceId = getOrderProcessor().createPrice(archive, amountStr, recurringPeriod, stripeProductId);
-			if (priceId.isEmpty()) {
-				// TODO: error!
-				return;
-			}
-			String subscriptionId = getOrderProcessor().createSubscription(archive, inReq.getUser(), customerId, priceId);
-			if (subscriptionId.isEmpty()) {
-				// TODO: error!
-				return;
-			}
-			log.info("Created subscription on Stripe: " + subscriptionId);
+			}			
+			isSuccess = getOrderProcessor().createCharge(archive, payment, customerId);
+			log.info("Paid Stripe invoice: " + invoice.getValue("invoicenumber"));
 		} else {
 			String customerId = "";
 			if (stripeCust) {
@@ -130,13 +117,16 @@ public class PaymentModule extends BaseMediaModule
 			} else {
 				customerId = (String) inReq.getRequestParameter("stripecustomer");
 			}
-			Boolean isSuccess = getOrderProcessor().createCharge(archive, inReq.getUser(), payment, customerId);
-			if (isSuccess) {
-				invoice.setValue("paymentstatus", "paid");
-				invoice.setValue("invoicepaidon", today.getTime());
-				invoiceSearcher.saveData(invoice);
-			}
+			isSuccess = getOrderProcessor().createCharge(archive, payment, customerId);
 		}
+		if (isSuccess) {
+			invoice.setValue("paymentstatus", "paid");
+			invoice.setValue("invoicepaidon", today.getTime());
+		} else {
+			invoice.setValue("paymentstatus", "error");
+			invoice.setValue("paymentstatusreason", "Credit Card failed");
+		}
+		invoiceSearcher.saveData(invoice);
 	}
 	
 	public ArrayList<Map<String, Object>> getSubscriptions(WebPageRequest inReq) {
@@ -418,6 +408,20 @@ public class PaymentModule extends BaseMediaModule
 		saved.setValue("billingstatus", "active");
 		saved.setValue("nextbillon", today.getTime());
 		librarysearcher.saveData(saved, null);
+	}
+	
+	public void toggleAutoPay(WebPageRequest inReq) {
+		MediaArchive archive = getMediaArchive(inReq);
+		Searcher searcher = archive.getSearcher("collectiveproduct");
+		String productId =  inReq.getRequestParameter("id");
+		Data product = archive.getProductById(productId);
+		
+		Boolean isPayment = (Boolean) product.getValue("isautopaid");
+		if (isPayment == null) {
+			isPayment = false;
+		}
+		product.setValue("isautopaid", !isPayment);
+		searcher.saveData(product);		
 	}
 
 	//	public void connectClient(WebPageRequest inReq){

@@ -94,7 +94,7 @@ public class StripePaymentProcessor {
 		return (String) map.get("id");
 	}
 
-	protected boolean createCharge(MediaArchive inArchive, User inUser, Data payment, String customer) throws IOException, InterruptedException, URISyntaxException {
+	protected boolean createCharge(MediaArchive inArchive, Data payment, String customer) throws IOException, InterruptedException, URISyntaxException {
 		HttpPost http = new HttpPost("https://api.stripe.com/v1/charges");
 		Money totalprice = new Money(payment.get("totalprice"));
 		String amountstring = totalprice.toShortString().replace(".", "").replace("$", "").replace(",", "");
@@ -150,6 +150,18 @@ public class StripePaymentProcessor {
 		}
 	}
 	
+	protected Map<String, Object> getCustomer(MediaArchive inArchive, String email) throws URISyntaxException, IOException, InterruptedException {
+		ArrayList<Map<String, Object>> customers = getCustomers(inArchive, email);
+		if (customers.size() > 0) {
+			return customers.get(0);
+		}
+		return null;
+	}
+	
+	protected String getCustomerId(MediaArchive inArchive, String email) throws URISyntaxException, IOException, InterruptedException {
+		return getCustomerId(inArchive, email, null);
+	}
+	
 	protected String getCustomerId(MediaArchive inArchive, String email, String source) throws URISyntaxException, IOException, InterruptedException {
 		ArrayList<Map<String, Object>> users = getCustomers(inArchive, email);
 		String userId = "";
@@ -160,7 +172,7 @@ public class StripePaymentProcessor {
 				sourceId = (String)x.get("source");
 			}
 		};		
-		if (sourceId != source) {
+		if (source != null && sourceId != source) {
 			updateCustomersSource(inArchive, userId, source);
 		}		
 		//TODO if source is different, update source?

@@ -48,6 +48,10 @@
 
 	<property id="paymentstatus" index="true" stored="true"
 		editable="true" type="list">Payment Status</property>
+		
+	<property id="paymentstatusreason" index="true" stored="true" editable="true">
+		Payment Status Reason
+	</property>
 
 	<property id="paymenttype" index="true" stored="true"
 		editable="true" type="list">Payment Type</property>
@@ -102,8 +106,7 @@
 	</property>
 	
 	<property id="invoicepaidon" editable="true" stored="true"
-		type="date" index="true">Invoice Paid Date
-	</property>
+		type="date" index="true">Invoice Paid Date</property>
 	
 	<property id="isautopaid" index="true" stored="true"
 		editable="true" type="boolean">Automatic Payments</property>
