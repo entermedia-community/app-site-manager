@@ -33,31 +33,31 @@ private void payAutoPaidInvoices(MediaArchive mediaArchive, Searcher invoiceSear
 		Data invoice = invoiceSearcher.loadData(invoiceIterator.next());
 		Map<String, Object> customer = stripe.getCustomer(mediaArchive, invoice.getValue("collectionid") + "@entermediadb.com")
 		if (customer != null) {
-		Map<String, Object> sourcesData = customer.get("sources");
-		ArrayList<Map<String, Object>> sources = sourcesData.get("data");
-		if (sources.size() > 0) {
-			Map<String, Object> source = sources.get(0);
-			Searcher payments = mediaArchive.getSearcher("transaction");
-			Data payment = payments.createNewData();
-			payment.setValue("paymenttype","stripe" );
-			payment.setValue("totalprice", invoice.getValue("totalprice"));
-			Boolean chargeSuccess = stripe.createCharge(mediaArchive, payment, customer.get("id"));
+			Map<String, Object> sourcesData = customer.get("sources");
+			ArrayList<Map<String, Object>> sources = sourcesData.get("data");
+			if (sources.size() > 0) {
+				Map<String, Object> source = sources.get(0);
+				Searcher payments = mediaArchive.getSearcher("transaction");
+				Data payment = payments.createNewData();
+				payment.setValue("paymenttype","stripe" );
+				payment.setValue("totalprice", invoice.getValue("totalprice"));
+				Boolean chargeSuccess = stripe.createCharge(mediaArchive, payment, customer.get("id"));
 
-			if (chargeSuccess) {
-				invoice.setValue("paymentstatus", "paid");
-				invoice.setValue("invoicepaidon", today.getTime());
+				if (chargeSuccess) {
+					invoice.setValue("paymentstatus", "paid");
+					invoice.setValue("invoicepaidon", today.getTime());
+				} else {
+					invoice.setValue("paymentstatus", "autopayfailed");
+					invoice.setValue("paymentstatusreason", "CreditCard failed");
+				}
 			} else {
 				invoice.setValue("paymentstatus", "autopayfailed");
-				invoice.setValue("paymentstatusreason", "CreditCard failed");
+				invoice.setValue("paymentstatusreason", "No Credit Cards Stored");
 			}
 		} else {
 			invoice.setValue("paymentstatus", "autopayfailed");
-			invoice.setValue("paymentstatusreason", "No Credit Cards Stored");
-			}
-	} else {
-		invoice.setValue("paymentstatus", "autopayfailed");
-		invoice.setValue("paymentstatusreason", "No Customer");
-	}
+			invoice.setValue("paymentstatusreason", "No Customer");
+		}
 		invoiceSearcher.saveData(invoice);
 	}
 }

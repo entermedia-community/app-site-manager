@@ -147,11 +147,10 @@ public class PaymentModule extends BaseMediaModule
 	public Map<String, Object> getStripeUser(WebPageRequest inReq) {
 		MediaArchive archive = getMediaArchive(inReq);
 		String collectionId = inReq.getRequestParameter("collectionid");
-		String email = collectionId + "@entermediadb.com";
+		String email = "billing+" + collectionId + "@entermediadb.com";
 		try {
 			ArrayList<Map<String, Object>> customers = getOrderProcessor().getCustomers(archive, email);
 			if (customers.size() > 0) {
-				Map<String, Object> customer = customers.get(0);
 				inReq.putPageValue("customer", customers.get(0));
 				return (Map<String, Object>) customers.get(0);
 			}

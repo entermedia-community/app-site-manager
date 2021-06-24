@@ -267,7 +267,7 @@ public class StripePaymentProcessor {
 		if (source.isEmpty()) {
 			return "";
 		}
-		String email = collectionId + "@entermediadb.com";
+		String email = "billing+" + collectionId + "@entermediadb.com";
 		String emailExists = getCustomerId(inArchive, email, source);
 		Data workspace = inArchive.getWorkspaceById(collectionId);
 		if (emailExists != null && !emailExists.isEmpty()) {
