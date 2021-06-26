@@ -58,6 +58,8 @@ public class StripePaymentProcessor {
 			HttpPost request = new HttpPost(uri);
 			request.addHeader("Authorization", "Bearer " + apiKey);
 			CloseableHttpResponse response = httpClient.execute(request);
+			// HttpEntity entity = response.getEntity();
+			// log.info(EntityUtils.toString(entity));
 			return response;
 		} catch (Exception e) {
 			log.info(e.getMessage());

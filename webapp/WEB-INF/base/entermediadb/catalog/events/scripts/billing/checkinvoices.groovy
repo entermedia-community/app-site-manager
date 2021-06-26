@@ -122,42 +122,41 @@ private void generateNonRecurringInvoices(MediaArchive mediaArchive, Searcher pr
 
 	Collection pendingProducts = productSearcher.query()
 			.exact("recurring","false")
-			.exact("billingstatus", "active").search();
+			.exact("billingstatus", "active")
+			.missing("lastgeneratedinvoicedate").search();
 
 	log.info("Checking invoice for " + pendingProducts.size() + " none-recurring Products");
 	for (Iterator productIterator = pendingProducts.iterator(); productIterator.hasNext();) {
 		Data product = productSearcher.loadData(productIterator.next());
 
-		if (product.getValue("lastgeneratedinvoicedate") == null) {
-			Date nextBillOn = product.getValue("nextbillon");
-			Date lastbilldate = product.getValue("lastgeneratedinvoicedate");
-			if (lastbilldate < nextBillOn) { // otherwise assume it's already created
-				Searcher invoiceSearcher = mediaArchive.getSearcher("collectiveinvoice");
-				Data invoice = invoiceSearcher.createNewData();
+		Date nextBillOn = product.getValue("nextbillon");
+		Date lastbilldate = product.getValue("lastgeneratedinvoicedate");
+		if (lastbilldate < nextBillOn) { // otherwise assume it's already created
+			Searcher invoiceSearcher = mediaArchive.getSearcher("collectiveinvoice");
+			Data invoice = invoiceSearcher.createNewData();
 
-				Calendar invoiceDue = Calendar.getInstance();
-				invoiceDue.add(Calendar.DAY_OF_YEAR, daysToExpire);
-				HashMap<String,Object> productItem = new HashMap<String,Object>();
-				productItem.put("productid", product.getValue("id"));
-				productItem.put("productquantity", 1 );
-				productItem.put("productprice", product.getValue("productprice"));
-				Collection items = new ArrayList();
-				items.add(productItem);
-				invoice.setValue("productlist", items);
-				invoice.setValue("paymentstatus", "invoiced");
-				invoice.setValue("isautopaid", product.getValue("isautopaid"));
-				invoice.setValue("collectionid", product.getValue("collectionid"));
-				invoice.setValue("owner", product.getValue("owner"));
-				invoice.setValue("totalprice", product.getValue("productprice"));
-				invoice.setValue("duedate", invoiceDue.getTime());
-				invoice.setValue("invoicedescription", product.getValue("productdescription"));
-				invoice.setValue("notificationsent", "false");
-				invoice.setValue("createdon", today.getTime());
-				invoiceSearcher.saveData(invoice);
+			Calendar invoiceDue = Calendar.getInstance();
+			invoiceDue.add(Calendar.DAY_OF_YEAR, daysToExpire);
+			HashMap<String,Object> productItem = new HashMap<String,Object>();
+			productItem.put("productid", product.getValue("id"));
+			productItem.put("productquantity", 1 );
+			productItem.put("productprice", product.getValue("productprice"));
+			Collection items = new ArrayList();
+			items.add(productItem);
+			invoice.setValue("productlist", items);
+			invoice.setValue("paymentstatus", "invoiced");
+			invoice.setValue("isautopaid", product.getValue("isautopaid"));
+			invoice.setValue("collectionid", product.getValue("collectionid"));
+			invoice.setValue("owner", product.getValue("owner"));
+			invoice.setValue("totalprice", product.getValue("productprice"));
+			invoice.setValue("duedate", invoiceDue.getTime());
+			invoice.setValue("invoicedescription", product.getValue("productdescription"));
+			invoice.setValue("notificationsent", "false");
+			invoice.setValue("createdon", today.getTime());
+			invoiceSearcher.saveData(invoice);
 
-				product.setValue("lastgeneratedinvoicedate", today.getTime());
-				productSearcher.saveData(product);
-			}
+			product.setValue("lastgeneratedinvoicedate", today.getTime());
+			productSearcher.saveData(product);
 		}
 	}
 }
