@@ -210,7 +210,8 @@ private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSe
 					if (email) {
 						switch (iteratorType) {
 							case "notificationsent":
-								sendEmail(mediaArchive, contact, invoice, "Invoice", "send-invoice-event.html");
+								String actionUrl = getSiteRoot() + "/entermediadb/app/collective/services/paynow.html?invoiceid=" + invoice.getValue("id") + "&collectionid=" + collectionid;
+								sendEmail(mediaArchive, contact, invoice, "Invoice", "send-invoice-event.html", actionUrl);
 								break;
 							case "notificationoverduesent":
 								sendEmail(mediaArchive, contact, invoice, "Overdue Invoice", "send-overdue-invoice-event.html");
@@ -230,16 +231,18 @@ private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSe
 }
 
 private void sendEmail(MediaArchive mediaArchive, User contact, Data invoice, String subject, String htmlTemplate) {
+	sendEmail(mediaArchive, contact, invoice, subject, htmlTemplate, null);
+}
+
+private void sendEmail(MediaArchive mediaArchive, User contact, Data invoice, String subject, String htmlTemplate, String actionUrl) {
 	String appid = mediaArchive.getCatalogSettingValue("events_billing_notify_invoice_appid");
 	String template = "/" + appid + "/theme/emails/" + htmlTemplate;
 
-	String site = mediaArchive.getCatalogSettingValue("siteroot");
-	if (!site) {
-		site = mediaArchive.getCatalogSettingValue("cdn_prefix");
+	if (actionUrl == null) {
+		actionUrl = getSiteRoot() + "/entermediadb/app/collective/services/index.html?collectionid=" + invoice.getValue("collectionid");
 	}
+	String supportUrl = getSiteRoot() + "/entermediadb/app/collective/services/index.html?collectionid=" + invoice.getValue("collectionid");
 
-	String supportUrl = site + "/entermediadb/app/collective/services/index.html?collectionid=" + invoice.getValue("collectionid");
-	String actionUrl = site + "/entermediadb/app/collective/community/index.html?collectionid=" + invoice.getValue("collectionid");
 	WebEmail templateEmail = mediaArchive.createSystemEmail(contact, template);
 	templateEmail.setSubject(subject);
 	Map objects = new HashMap();
@@ -249,6 +252,15 @@ private void sendEmail(MediaArchive mediaArchive, User contact, Data invoice, St
 	objects.put("supporturl", supportUrl);
 	objects.put("actionurl", actionUrl);
 	templateEmail.send(objects);
+}
+
+private String getSiteRoot() {
+	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
+	String site = mediaArchive.getCatalogSettingValue("siteroot");
+	if (!site) {
+		site = mediaArchive.getCatalogSettingValue("cdn_prefix");
+	}
+	return site;
 }
 
 init();
