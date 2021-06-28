@@ -5,7 +5,7 @@
 
 
 <div class="card"
-	style="margin: 40px; max-width: 800px; text-align: left;">
+	style="margin: 40px; max-width: 100%; text-align: left;">
 	<div class="card-body">
 		<div class="row">
 			<div class="col-sm-6">
@@ -56,7 +56,7 @@
 					<td><span>$currency $!context.roundDouble($product.productprice, 2)</span></td>
 				</tr>
 				#end
-				<tr style="font-size: 3vh">
+				<tr>
 					<td class="text-right" colspan="2"><b>Total</b></td>
 					<td><b>$currency $!context.roundDouble($invoice.getValue("totalprice"), 2)</b></td>
 				</tr>
