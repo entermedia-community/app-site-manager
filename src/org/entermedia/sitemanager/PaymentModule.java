@@ -86,6 +86,13 @@ public class PaymentModule extends BaseMediaModule
 		Searcher invoiceSearcher = archive.getSearcher("collectiveinvoice");
 		Data invoice = archive.getInvoiceById(invoiceId);
 		
+		Searcher workspaceSearcher = archive.getSearcher("librarycollection");
+		Data workspace = archive.getWorkspaceById((String) invoice.getValue("collectionid"));
+		if ((Boolean) workspace.getValue("savestripecreditcard") != Boolean.parseBoolean(inReq.getRequestParameter("savestripecreditcard"))) {
+			workspace.setValue("savestripecreditcard", Boolean.parseBoolean(inReq.getRequestParameter("savestripecreditcard")));
+			workspaceSearcher.saveData(workspace);
+		}
+		
 		payment.setValue("totalprice", invoice.getValue("totalprice")); // safer to get value from database
 		log.info(payment);
 		
