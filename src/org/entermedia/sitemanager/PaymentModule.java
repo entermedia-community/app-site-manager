@@ -72,7 +72,7 @@ public class PaymentModule extends BaseMediaModule
 	}
 	
 	public void processPaymentTest(WebPageRequest inReq) throws IOException, InterruptedException, URISyntaxException {
-		String source = inReq.getRequestParameter("stripeToken");		
+		String source = inReq.getRequestParameter("stripecustomer");		
 		Boolean stripeCust = inReq.getRequestParameter("customerselected") == "true";
 		
 		MediaArchive archive = getMediaArchive(inReq);
