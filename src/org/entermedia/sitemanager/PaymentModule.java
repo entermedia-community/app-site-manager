@@ -72,7 +72,7 @@ public class PaymentModule extends BaseMediaModule
 	}
 	
 	public void processPaymentTest(WebPageRequest inReq) throws IOException, InterruptedException, URISyntaxException {
-		String source = inReq.getRequestParameter("stripeToken");		
+		String source = inReq.getRequestParameter("stripecustomer");		
 		Boolean stripeCust = inReq.getRequestParameter("customerselected") == "true";
 		
 		MediaArchive archive = getMediaArchive(inReq);
@@ -85,6 +85,13 @@ public class PaymentModule extends BaseMediaModule
 		String invoiceId = inReq.getRequestParameter("invoiceid");
 		Searcher invoiceSearcher = archive.getSearcher("collectiveinvoice");
 		Data invoice = archive.getInvoiceById(invoiceId);
+		
+		Searcher workspaceSearcher = archive.getSearcher("librarycollection");
+		Data workspace = archive.getWorkspaceById((String) invoice.getValue("collectionid"));
+		if ((Boolean) workspace.getValue("savestripecreditcard") != Boolean.parseBoolean(inReq.getRequestParameter("savestripecreditcard"))) {
+			workspace.setValue("savestripecreditcard", Boolean.parseBoolean(inReq.getRequestParameter("savestripecreditcard")));
+			workspaceSearcher.saveData(workspace);
+		}
 		
 		payment.setValue("totalprice", invoice.getValue("totalprice")); // safer to get value from database
 		log.info(payment);
@@ -112,7 +119,7 @@ public class PaymentModule extends BaseMediaModule
 			log.info("Paid Stripe invoice: " + invoice.getValue("invoicenumber"));
 		} else {
 			String customerId = "";
-			if (stripeCust) {
+			if (!stripeCust) {
 				customerId = getOrderProcessor().createCustomer2(archive, (String)invoice.getValue("collectionid"), source);
 			} else {
 				customerId = (String) inReq.getRequestParameter("stripecustomer");
@@ -125,8 +132,20 @@ public class PaymentModule extends BaseMediaModule
 		} else {
 			invoice.setValue("paymentstatus", "error");
 			invoice.setValue("paymentstatusreason", "Credit Card failed");
-		}
+		}		
 		invoiceSearcher.saveData(invoice);
+		inReq.putPageValue("invoice", invoice);
+	}
+	
+	public Boolean cancelService(WebPageRequest inReq) {
+		MediaArchive archive = getMediaArchive(inReq);
+		Searcher payments = archive.getSearcher("collectiveproduct");
+		String productId = (String) inReq.getRequestParameter("productid");
+		Data product = archive.getProductById(productId);
+		product.setValue("billingstatus", "canceled");
+		payments.saveData(product);
+		inReq.putPageValue("collectionid", product.getValue("collectionid"));
+		return true;
 	}
 	
 	public ArrayList<Map<String, Object>> getSubscriptions(WebPageRequest inReq) {
@@ -147,11 +166,10 @@ public class PaymentModule extends BaseMediaModule
 	public Map<String, Object> getStripeUser(WebPageRequest inReq) {
 		MediaArchive archive = getMediaArchive(inReq);
 		String collectionId = inReq.getRequestParameter("collectionid");
-		String email = collectionId + "@entermediadb.com";
+		String email = "billing+" + collectionId + "@entermediadb.com";
 		try {
 			ArrayList<Map<String, Object>> customers = getOrderProcessor().getCustomers(archive, email);
 			if (customers.size() > 0) {
-				Map<String, Object> customer = customers.get(0);
 				inReq.putPageValue("customer", customers.get(0));
 				return (Map<String, Object>) customers.get(0);
 			}
@@ -161,6 +179,11 @@ public class PaymentModule extends BaseMediaModule
 			return null;
 		}
 		return null;
+	}
+	
+	public void getIds(WebPageRequest inReq) {
+		inReq.putPageValue("collectionid", inReq.getRequestParameter("collectionid"));
+		inReq.putPageValue("productid", inReq.getRequestParameter("productid"));
 	}
 	
 	public Boolean cancelSubscription(WebPageRequest inReq) {

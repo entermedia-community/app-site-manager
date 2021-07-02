@@ -33,31 +33,31 @@ private void payAutoPaidInvoices(MediaArchive mediaArchive, Searcher invoiceSear
 		Data invoice = invoiceSearcher.loadData(invoiceIterator.next());
 		Map<String, Object> customer = stripe.getCustomer(mediaArchive, invoice.getValue("collectionid") + "@entermediadb.com")
 		if (customer != null) {
-		Map<String, Object> sourcesData = customer.get("sources");
-		ArrayList<Map<String, Object>> sources = sourcesData.get("data");
-		if (sources.size() > 0) {
-			Map<String, Object> source = sources.get(0);
-			Searcher payments = mediaArchive.getSearcher("transaction");
-			Data payment = payments.createNewData();
-			payment.setValue("paymenttype","stripe" );
-			payment.setValue("totalprice", invoice.getValue("totalprice"));
-			Boolean chargeSuccess = stripe.createCharge(mediaArchive, payment, customer.get("id"));
+			Map<String, Object> sourcesData = customer.get("sources");
+			ArrayList<Map<String, Object>> sources = sourcesData.get("data");
+			if (sources.size() > 0) {
+				Map<String, Object> source = sources.get(0);
+				Searcher payments = mediaArchive.getSearcher("transaction");
+				Data payment = payments.createNewData();
+				payment.setValue("paymenttype","stripe" );
+				payment.setValue("totalprice", invoice.getValue("totalprice"));
+				Boolean chargeSuccess = stripe.createCharge(mediaArchive, payment, customer.get("id"));
 
-			if (chargeSuccess) {
-				invoice.setValue("paymentstatus", "paid");
-				invoice.setValue("invoicepaidon", today.getTime());
+				if (chargeSuccess) {
+					invoice.setValue("paymentstatus", "paid");
+					invoice.setValue("invoicepaidon", today.getTime());
+				} else {
+					invoice.setValue("paymentstatus", "autopayfailed");
+					invoice.setValue("paymentstatusreason", "CreditCard failed");
+				}
 			} else {
 				invoice.setValue("paymentstatus", "autopayfailed");
-				invoice.setValue("paymentstatusreason", "CreditCard failed");
+				invoice.setValue("paymentstatusreason", "No Credit Cards Stored");
 			}
 		} else {
 			invoice.setValue("paymentstatus", "autopayfailed");
-			invoice.setValue("paymentstatusreason", "No Credit Cards Stored");
-			}
-	} else {
-		invoice.setValue("paymentstatus", "autopayfailed");
-		invoice.setValue("paymentstatusreason", "No Customer");
-	}
+			invoice.setValue("paymentstatusreason", "No Customer");
+		}
 		invoiceSearcher.saveData(invoice);
 	}
 }
@@ -122,42 +122,41 @@ private void generateNonRecurringInvoices(MediaArchive mediaArchive, Searcher pr
 
 	Collection pendingProducts = productSearcher.query()
 			.exact("recurring","false")
-			.exact("billingstatus", "active").search();
+			.exact("billingstatus", "active")
+			.missing("lastgeneratedinvoicedate").search();
 
 	log.info("Checking invoice for " + pendingProducts.size() + " none-recurring Products");
 	for (Iterator productIterator = pendingProducts.iterator(); productIterator.hasNext();) {
 		Data product = productSearcher.loadData(productIterator.next());
 
-		if (product.getValue("lastgeneratedinvoicedate") == null) {
-			Date nextBillOn = product.getValue("nextbillon");
-			Date lastbilldate = product.getValue("lastgeneratedinvoicedate");
-			if (lastbilldate < nextBillOn) { // otherwise assume it's already created
-				Searcher invoiceSearcher = mediaArchive.getSearcher("collectiveinvoice");
-				Data invoice = invoiceSearcher.createNewData();
+		Date nextBillOn = product.getValue("nextbillon");
+		Date lastbilldate = product.getValue("lastgeneratedinvoicedate");
+		if (lastbilldate < nextBillOn) { // otherwise assume it's already created
+			Searcher invoiceSearcher = mediaArchive.getSearcher("collectiveinvoice");
+			Data invoice = invoiceSearcher.createNewData();
 
-				Calendar invoiceDue = Calendar.getInstance();
-				invoiceDue.add(Calendar.DAY_OF_YEAR, daysToExpire);
-				HashMap<String,Object> productItem = new HashMap<String,Object>();
-				productItem.put("productid", product.getValue("id"));
-				productItem.put("productquantity", 1 );
-				productItem.put("productprice", product.getValue("productprice"));
-				Collection items = new ArrayList();
-				items.add(productItem);
-				invoice.setValue("productlist", items);
-				invoice.setValue("paymentstatus", "invoiced");
-				invoice.setValue("isautopaid", product.getValue("isautopaid"));
-				invoice.setValue("collectionid", product.getValue("collectionid"));
-				invoice.setValue("owner", product.getValue("owner"));
-				invoice.setValue("totalprice", product.getValue("productprice"));
-				invoice.setValue("duedate", invoiceDue.getTime());
-				invoice.setValue("invoicedescription", product.getValue("productdescription"));
-				invoice.setValue("notificationsent", "false");
-				invoice.setValue("createdon", today.getTime());
-				invoiceSearcher.saveData(invoice);
+			Calendar invoiceDue = Calendar.getInstance();
+			invoiceDue.add(Calendar.DAY_OF_YEAR, daysToExpire);
+			HashMap<String,Object> productItem = new HashMap<String,Object>();
+			productItem.put("productid", product.getValue("id"));
+			productItem.put("productquantity", 1 );
+			productItem.put("productprice", product.getValue("productprice"));
+			Collection items = new ArrayList();
+			items.add(productItem);
+			invoice.setValue("productlist", items);
+			invoice.setValue("paymentstatus", "invoiced");
+			invoice.setValue("isautopaid", product.getValue("isautopaid"));
+			invoice.setValue("collectionid", product.getValue("collectionid"));
+			invoice.setValue("owner", product.getValue("owner"));
+			invoice.setValue("totalprice", product.getValue("productprice"));
+			invoice.setValue("duedate", invoiceDue.getTime());
+			invoice.setValue("invoicedescription", product.getValue("productdescription"));
+			invoice.setValue("notificationsent", "false");
+			invoice.setValue("createdon", today.getTime());
+			invoiceSearcher.saveData(invoice);
 
-				product.setValue("lastgeneratedinvoicedate", today.getTime());
-				productSearcher.saveData(product);
-			}
+			product.setValue("lastgeneratedinvoicedate", today.getTime());
+			productSearcher.saveData(product);
 		}
 	}
 }
@@ -211,7 +210,8 @@ private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSe
 					if (email) {
 						switch (iteratorType) {
 							case "notificationsent":
-								sendEmail(mediaArchive, contact, invoice, "Invoice", "send-invoice-event.html");
+								String actionUrl = getSiteRoot() + "/entermediadb/app/collective/services/paynow.html?invoiceid=" + invoice.getValue("id") + "&collectionid=" + collectionid;
+								sendEmail(mediaArchive, contact, invoice, "Invoice", "send-invoice-event.html", actionUrl);
 								break;
 							case "notificationoverduesent":
 								sendEmail(mediaArchive, contact, invoice, "Overdue Invoice", "send-overdue-invoice-event.html");
@@ -231,16 +231,18 @@ private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSe
 }
 
 private void sendEmail(MediaArchive mediaArchive, User contact, Data invoice, String subject, String htmlTemplate) {
+	sendEmail(mediaArchive, contact, invoice, subject, htmlTemplate, null);
+}
+
+private void sendEmail(MediaArchive mediaArchive, User contact, Data invoice, String subject, String htmlTemplate, String actionUrl) {
 	String appid = mediaArchive.getCatalogSettingValue("events_billing_notify_invoice_appid");
 	String template = "/" + appid + "/theme/emails/" + htmlTemplate;
 
-	String site = mediaArchive.getCatalogSettingValue("siteroot");
-	if (!site) {
-		site = mediaArchive.getCatalogSettingValue("cdn_prefix");
+	if (actionUrl == null) {
+		actionUrl = getSiteRoot() + "/entermediadb/app/collective/services/index.html?collectionid=" + invoice.getValue("collectionid");
 	}
+	String supportUrl = getSiteRoot() + "/entermediadb/app/collective/services/index.html?collectionid=" + invoice.getValue("collectionid");
 
-	String supportUrl = site + "/entermediadb/app/collective/services/index.html?collectionid=" + invoice.getValue("collectionid");
-	String actionUrl = site + "/entermediadb/app/collective/community/index.html?collectionid=" + invoice.getValue("collectionid");
 	WebEmail templateEmail = mediaArchive.createSystemEmail(contact, template);
 	templateEmail.setSubject(subject);
 	Map objects = new HashMap();
@@ -250,6 +252,15 @@ private void sendEmail(MediaArchive mediaArchive, User contact, Data invoice, St
 	objects.put("supporturl", supportUrl);
 	objects.put("actionurl", actionUrl);
 	templateEmail.send(objects);
+}
+
+private String getSiteRoot() {
+	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
+	String site = mediaArchive.getCatalogSettingValue("siteroot");
+	if (!site) {
+		site = mediaArchive.getCatalogSettingValue("cdn_prefix");
+	}
+	return site;
 }
 
 init();
