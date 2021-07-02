@@ -29,7 +29,7 @@
         </a>
     </div>
 
-#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").contains("organizationstatus","active").enduser(true).sort("name").search($context) )
+#set( $collectives = $mediaarchive.query("librarycollection").match("library","organizations").match("library", "workspaces").contains("organizationstatus","active").enduser(true).sort("name").search($context) )
 
     <div class="sidebar-box-content" style="padding:0;" id="sidebarboxprojects">
     	#if( $collectives.size() >= 1)
@@ -68,10 +68,10 @@
 				#if( $collectives.size() < 10 || $modcollections.contains($ohit.getId()) )
 				
 					#foreach($usr in $organizationsuser)
-						#if ($usr.getValue("collectionid") == $ohit.getId())
+						#if ($usr.getValue("collectionid") == $ohit.getId() && $modcollections.contains($ohit.getId()))
 					<li class="#if($selectedproject==$ohit.id) current #end">
 						<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" >
-						<i class="fas fa-sitemap"></i> Workspace ($ohit.name) #if( $modcollections.contains($ohit.getId()) )<i class="fas fa-bell fa-xs" style="color:orange"></i>#end
+						<i class="fas fa-sitemap"></i> Workspace ($ohit.name)<i class="fas fa-bell fa-xs" style="color:orange"></i>
 						</a>
 					</li>
 						#end

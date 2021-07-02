@@ -1,3 +1,8 @@
+#set( $catalagDB = $mediaarchive.query("catalogsettings").exact("id","events_billing_notify_invoice_appid").searchOne() ) 
+#set( $db = "entermediadb" ) 
+#if ( $catalagDB )
+    #set( $db = "$catalagDB.value" )
+#end
 #set($collectivesection = $content.collectivesection)
 <div class="navbar-container">
 <ul class="navbar-collective">
@@ -40,8 +45,14 @@
 	
 	#if($canviewsettings)
 	<li class="nav-item">
-	<a class="nav-link emdialog" data-allwaysloadpage="true" href="$applink/collective/edit/editcollective.html?collectionid=$librarycol.getId()" title="[[Project Settings]]">
-	[[Settings]]</a>
+		<a class="nav-link emdialog" data-allwaysloadpage="true" href="$applink/collective/edit/editcollective.html?collectionid=$librarycol.getId()" title="[[Project Settings]]">
+		[[Settings]]</a>
+	</li>
+	
+	<li class="nav-item">
+		<a class="nav-link" target="_blank" href="$siteroot/$db/emshare2/views/settings/lists/datamanager/edit/edit.html?id=$librarycol.getId()&searchtype=librarycollection">
+			<i class="fa fa-database"></i>
+		</a>
 	</li>
 	#end
 </ul>
