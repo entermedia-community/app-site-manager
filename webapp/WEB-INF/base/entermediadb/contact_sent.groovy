@@ -19,18 +19,25 @@ public void init()
 
 	//Send Email Notify No Seats
 	context.putPageValue("from", "noreply@entermediadb.org");
-	context.putPageValue("subject", "Contact Form - " + context.getPageValue("siteroot") + " - " + context.getRequestParameter("email"));
+	context.putPageValue("subject", "Message Received");
 	context.putPageValue("form_name", context.getRequestParameter("name") );
 	context.putPageValue("form_email", context.getRequestParameter("email") );
 	context.putPageValue("form_message", context.getRequestParameter("message") );
+	context.putPageValue("messagetime", new Date() );
+	
 
 	//logs
 	String ipaddress = context.getRequest().getRemoteAddr();
 
-	String senderinfo = "Contact Form - Url: "+context.getPageValue("siteroot")+" Refering page: "+context.getPageValue("referringPage")+" Page: "+context.getPageValue("page");
-	senderinfo = senderinfo + " Ip: " + ipaddress;
-	
+	String senderinfo = "Url: "+context.getPageValue("siteroot");
+	if (context.getPageValue("referringPage") != null) {
+		senderinfo = senderinfo + " Refering page: "+context.getPageValue("referringPage");
+	}
+	if (context.getPageValue("page") != null) {
+		senderinfo = senderinfo + " Page: "+context.getPageValue("page");
+	}
 	context.putPageValue("senderinfo",   senderinfo);
+	senderinfo = senderinfo + " Ip: " + ipaddress;
 	log.info(senderinfo);
 	//log.info(context.getProperties());
 	
