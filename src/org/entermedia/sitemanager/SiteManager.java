@@ -1,6 +1,9 @@
 package org.entermedia.sitemanager;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,11 +14,18 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.http.HttpEntity;
+import org.apache.http.ParseException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.CookieSpecs;
 import org.apache.http.client.config.RequestConfig;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.entermedia.autofailover.AutoFailoverManager;
 import org.entermedia.diskpartitions.DiskPartition;
 import org.entermedia.diskpartitions.DiskSpace;
@@ -39,6 +49,8 @@ import org.openedit.util.DateStorageUtil;
 import org.openedit.util.Exec;
 import org.openedit.util.ExecResult;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SiteManager implements CatalogEnabled
@@ -624,6 +636,7 @@ public class SiteManager implements CatalogEnabled
 			try
 			{
 				scanSite(inArchive, it);
+				getStats(inArchive, it);
 			}
 			catch( Throwable ex)
 			{
@@ -717,6 +730,110 @@ public class SiteManager implements CatalogEnabled
 		instances.saveData(instance, null);
 		
 	}
+	
+	private void getStats(MediaArchive inArchive, Data inData) throws JsonParseException, JsonMappingException, IOException {
+		Searcher sites = inArchive.getSearcher("entermedia_instances_monitor");
+		MultiValued real = (MultiValued) sites.loadData(inData);
+
+		String catalog = (String) real.getValue("catalog");
+		String emkey = (String) real.getValue("entermediadbkey");
+		String url = (String) real.getValue("monitoringurl");
+		
+		String[] cmd = {
+				"/bin/bash", "-c",
+		        "/media/services/allchecks.sh " + catalog + " " + url + " " + emkey
+		};
+
+		String response = execCommand(cmd);
+		log.info(response);
+
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> map = mapper.readValue(response, Map.class);
+		
+		
+		
+		Searcher instances = inArchive.getSearcher("entermedia_instances");
+		Data instance = (Data) instances.searchById((String) real.getValue("instanceid"));
+		Searcher servers = inArchive.getSearcher("entermedia_servers");
+		Data server = (Data) servers.searchById((String) instance.getValue("entermedia_servers"));
+		
+		String serverUrl = "http://" + (String) server.getValue("serverurl")  + "/stats.json";
+		Map<String, Object> allStats = httpGetRequest(serverUrl);
+		log.info(allStats);
+		
+		String nodeName = (String) instance.getValue("instancename") + (String) instance.getValue("instancenode");
+		Map<String, Object> node = null;
+		ArrayList<Map<String, Object>> nodes = (ArrayList<Map<String, Object>>) allStats.get("Nodes");
+		for (int i =0; i < nodes.size(); i++) {
+			Map<String, Object> serverNode = nodes.get(i);
+			String serverName = (String) serverNode.get("Node");
+			if (serverName.equals(nodeName)) {
+				node = serverNode;
+				break;
+			}			
+		}
+
+		real.setValue("snapshotstatus", map.get("snapshotStatus"));
+		real.setValue("lastsnapshot", map.get("lastSnapshot"));
+		real.setValue("emserverversion", map.get("serverVersion"));
+
+		if (node != null) {
+			real.setValue("emserverversion", (String) node.get("EMServerVersion"));
+			real.setValue("version_ffmpeg", (String) node.get("FfmpegVersion"));
+			real.setValue("version_ghostscript", (String) node.get("GhostScript"));
+			real.setValue("version_imagemagick", (String) node.get("ImageMagick"));
+			real.setValue("version_docker", (String) allStats.get("DockerVersion"));
+			real.setValue("version_soffice", (String) node.get("LibreOffice"));
+			real.setValue("statscheckdate", (String) allStats.get("CheckDate"));
+			
+			Map<String, Object> clusterHealth = (Map<String, Object>) node.get("clusterHealth");			
+			real.setValue("clusterhealth", clusterHealth.get("active_shards_percent_as_number").toString());
+		}
+		sites.saveData(real, null);
+	}
+	
+	private Map<String, Object> httpGetRequest(String url) {
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		HttpPost http = new HttpPost(url);
+		try {
+			URI uri = new URIBuilder(http.getURI()).build();
+			HttpGet request = new HttpGet(uri);
+			CloseableHttpResponse response = httpClient.execute(request);
+			HttpEntity entity = response.getEntity();
+			ObjectMapper mapper = new ObjectMapper();
+			Map<String, Object> map = mapper.readValue(EntityUtils.toString(entity), Map.class);
+			return map;
+		} catch (Exception e) {
+			log.info(e.getMessage());
+			return null;
+		}
+	}
+	
+	static String execCommand(String[] commandArr)
+    {
+	    String line;
+	    try {
+	        Process p = Runtime.getRuntime().exec(commandArr);
+	        BufferedReader stdoutReader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+	        String resp = "";
+	        while ((line = stdoutReader.readLine()) != null) {
+	            resp += line;
+	        }
+	        BufferedReader stderrReader = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+	        while ((line = stderrReader.readLine()) != null) {
+	            resp += line;
+	        }
+	        int retValue = p.waitFor();
+	        if (retValue == 0) {
+	        	return resp;
+	        } else {
+	        	return "ERROR: " + resp;
+	        }
+	    }
+	    catch(Exception e) { 
+	    	return "ERROR: " + e.toString(); 
+	    }
+    }
 
 	private void enterFailover(MultiValued inReal, Data inInstance, MediaArchive inArchive) throws IOException
 	{

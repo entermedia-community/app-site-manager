@@ -309,8 +309,32 @@
     <name>
       <language id="en"><![CDATA[Region]]></language>
     </name>
+  </property>
+  
+  <property id="snapshotstatus" index="true" type="boolean" stored="true" editable="false" searchtype="monitoredsites" internalfield="false">Snapshot Status</property>
+   <property id="lastsnapshot" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Last Snapshot Detected]]></language> 
+    </name> 
+  </property>
+  
+  <property id="emserverversion" index="true" editable="false" keyword="true"> 
+    <name> 
+      <language id="en"><![CDATA[Server Version]]></language> 
+    </name> 
+  </property>
+    
+  <property id="clusterhealthactive" index="true" editable="false">
+     <name> 
+      <language id="en"><![CDATA[CPU Load]]></language> 
+    </name> 
   </property>  
-
+  
+  <property id="statscheckdate" index="true" internalfield="false" editable="false" isbadge="false" viewtype="datetime" sortable="true" rendertype="datetime" required="false" filter="false" multilanguage="false" datatype="date" stored="true" searchtype="monitoredsites" autocreatefromexif="false" keyword="false" writenametoexif="false"> 
+    <name> 
+      <language id="en"><![CDATA[Last Check Date on Stats]]></language> 
+    </name> 
+  </property>  
   
 </properties>
 
