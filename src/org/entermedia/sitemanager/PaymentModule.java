@@ -98,24 +98,19 @@ public class PaymentModule extends BaseMediaModule
 		
 		Boolean isRecurring = Boolean.valueOf(inReq.getRequestParameter("recurring"));
 		Boolean isSuccess = false;
+
+		User user = inReq.getUser();
 		if (isRecurring == true)
 		{
-			String productId = "";
-			ArrayList<HashMap> products = (ArrayList) invoice.getValue("productlist");
-			for (HashMap<String, String> product : products) {
-				productId = product.get("productid");
-			}
-			Data product =  archive.getProductById(productId);
-			String recurringPeriod = String.valueOf(product.getValue("recurringperiod"));
-			Double tprice = Double.valueOf(payment.get("totalprice")); // * Integer.parseInt(recurringPeriod);
-			Money totalprice = new Money(tprice);
-			String amountStr = totalprice.toShortString().replace(".", "").replace("$", "").replace(",", "");
 			String customerId = getOrderProcessor().createCustomer2(archive, (String)invoice.getValue("collectionid"), source);
 			if (customerId.isEmpty()) {
-				// TODO: error!
+				invoice.setValue("paymentstatus", "error");
+				invoice.setValue("paymentstatusreason", "Stripe error, please contact your admin");
+				invoiceSearcher.saveData(invoice);
+				inReq.putPageValue("invoice", invoice);
 				return;
 			}			
-			isSuccess = getOrderProcessor().createCharge(archive, payment, customerId);
+			isSuccess = getOrderProcessor().createCharge(archive, payment, customerId, invoice, user.getEmail());
 			log.info("Paid Stripe invoice: " + invoice.getValue("invoicenumber"));
 		} else {
 			String customerId = "";
@@ -124,7 +119,7 @@ public class PaymentModule extends BaseMediaModule
 			} else {
 				customerId = (String) inReq.getRequestParameter("stripecustomer");
 			}
-			isSuccess = getOrderProcessor().createCharge(archive, payment, customerId);
+			isSuccess = getOrderProcessor().createCharge(archive, payment, customerId, invoice, user.getEmail());
 		}
 		if (isSuccess) {
 			invoice.setValue("paymentstatus", "paid");
