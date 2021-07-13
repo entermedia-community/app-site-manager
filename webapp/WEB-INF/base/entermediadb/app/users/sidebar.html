@@ -18,6 +18,7 @@
 #if( !$appsection)
 	#set( $appsection = $content.appsection )
 #end
+
 <div id="usersidebarstatus" class="ajaxstatus" data-reloadspeed="60000" data-ajaxpath="$applink/users/sidebar.html?appsection=$appsection&oemaxlevel=1&collectionid=$!librarycol.id" >
 
 <div class="sidebar-box" style="height:auto;"> 
@@ -84,8 +85,9 @@
 	##end
 	<div style="padding:20px 20px;">
 	#if($canviewsettings)
-		<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">[[Add a Workspace]]</a></div>
+		<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">[[Add a Workspace]]</a>
     #end
+    </div>
     </div>
    
    <div class="sidebar-box-content" style="padding:0;">
@@ -150,7 +152,6 @@
     
 </div>
 
-		
-
-
 </div>
+
+
