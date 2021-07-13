@@ -107,8 +107,9 @@ public class StripePaymentProcessor {
 		return (String) map.get("id");
 	}
 
-	protected boolean createCharge(MediaArchive inArchive, Data payment, String customer)
+	protected boolean createCharge(MediaArchive inArchive, Data payment, String customer, Data invoice, String email)
 			throws IOException, InterruptedException, URISyntaxException {
+		log.info("Charging with stripe to invoice: " + invoice.getId() + " by user: " + email);
 		HttpPost http = new HttpPost("https://api.stripe.com/v1/charges");
 		Money totalprice = new Money(payment.get("totalprice"));
 		String amountstring = totalprice.toShortString().replace(".", "").replace("$", "").replace(",", "");
@@ -117,7 +118,8 @@ public class StripePaymentProcessor {
 				: "usd";
 		URI uri = new URIBuilder(http.getURI()).addParameter("amount", amountstring).addParameter("currency", currency)
 				.addParameter("customer", customer)
-				.addParameter("description", "My First Test Charge (created for API docs)").build();
+				.addParameter("description", "Payment Invoice: " + invoice.getId() + " by " + email).build();
+		log.info("stripe amount: " + totalprice);
 		CloseableHttpResponse response = httpPostRequest(inArchive, uri);
 		// TODO: log this somewhere
 		if (response.getStatusLine().getStatusCode() != 200) {
@@ -187,7 +189,6 @@ public class StripePaymentProcessor {
 				sourceId = (String) x.get("source");
 			}
 		}
-		;
 		if (source != null && sourceId != source) {
 			updateCustomersSource(inArchive, userId, source);
 		}
@@ -217,8 +218,10 @@ public class StripePaymentProcessor {
 		}
 		String email = "billing+" + collectionId + "@entermediadb.com";
 		String emailExists = getCustomerId(inArchive, email, source);
+		log.info("customer exists in stripe: "+ emailExists);
 		Data workspace = inArchive.getWorkspaceById(collectionId);
 		if (emailExists != null && !emailExists.isEmpty()) {
+			log.info("Creating customer in stripe: " + emailExists);	
 			return emailExists;
 		}
 		HttpPost http = new HttpPost("https://api.stripe.com/v1/customers");
