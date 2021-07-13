@@ -58,8 +58,6 @@ public class StripePaymentProcessor {
 			HttpPost request = new HttpPost(uri);
 			request.addHeader("Authorization", "Bearer " + apiKey);
 			CloseableHttpResponse response = httpClient.execute(request);
-			HttpEntity entity = response.getEntity();
-			log.info(EntityUtils.toString(entity));
 			return response;
 		} catch (Exception e) {
 			log.info(e.getMessage());
@@ -76,15 +74,12 @@ public class StripePaymentProcessor {
 			HttpGet request = new HttpGet(uri);
 			request.addHeader("Authorization", "Bearer " + apiKey);
 			CloseableHttpResponse response = httpClient.execute(request);
-			HttpEntity entity = response.getEntity();
-			log.info(EntityUtils.toString(entity));
 			return response;
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			return null;
 		}
 	}
-
 	private CloseableHttpResponse httpDeleteRequest(MediaArchive inArchive, URI uri) throws ParseException, IOException {
 		boolean productionmode = inArchive.isCatalogSettingTrue("productionmode");
 		CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -94,8 +89,6 @@ public class StripePaymentProcessor {
 			HttpDelete request = new HttpDelete(uri);
 			request.addHeader("Authorization", "Bearer " + apiKey);
 			CloseableHttpResponse response = httpClient.execute(request);
-			HttpEntity entity = response.getEntity();
-			log.info(EntityUtils.toString(entity));
 			return response;
 		} catch (Exception e) {
 			log.info(e.getMessage());
