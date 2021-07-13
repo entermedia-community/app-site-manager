@@ -4,7 +4,7 @@
 
 #if($user)
 	<p class="text-center"><strong>[[You are currently logged in as]] $user 
-	(<a href="home$content.loginroot/logout.html" style="text-decoration:underline">Logout</a>)</strong></p>
+	(<a href="home$content.loginroot/logout.html" style="text-decoration:underline">[[Logout]]</a>)</strong></p>
 #end
 
 #set($providers = $mediaarchive.query("oauthprovider").exact("enabled","true").search())
@@ -70,4 +70,3 @@
 	}
 </script> 
 
-</div>
