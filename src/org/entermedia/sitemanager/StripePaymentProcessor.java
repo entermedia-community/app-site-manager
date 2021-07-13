@@ -58,28 +58,14 @@ public class StripePaymentProcessor {
 			HttpPost request = new HttpPost(uri);
 			request.addHeader("Authorization", "Bearer " + apiKey);
 			CloseableHttpResponse response = httpClient.execute(request);
-			// HttpEntity entity = response.getEntity();
-			// log.info(EntityUtils.toString(entity));
+			HttpEntity entity = response.getEntity();
+			log.info(EntityUtils.toString(entity));
 			return response;
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			return null;
 		}
 	}
-
-//	private HttpResponse<String> httpPostRequest(MediaArchive inArchive, URI uri)
-//			throws IOException, InterruptedException {
-//		log.info(uri);
-//		boolean productionmode = inArchive.isCatalogSettingTrue("productionmode");
-//		String apiKey = productionmode ? inArchive.getCatalogSettingValue("stripe_access_token")
-//				: inArchive.getCatalogSettingValue("stripe_test_access_token");
-//		HttpClient client = HttpClient.newHttpClient();
-//		HttpRequest request = HttpRequest.newBuilder().uri(uri).header("Authorization", "Bearer " + apiKey)
-//				.POST(HttpRequest.BodyPublishers.ofString("")).build();
-//		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//		log.info(response.body());
-//		return response;
-//	}
 
 	private CloseableHttpResponse httpGetRequest(MediaArchive inArchive, URI uri) throws ParseException, IOException {
 		boolean productionmode = inArchive.isCatalogSettingTrue("productionmode");
@@ -90,36 +76,14 @@ public class StripePaymentProcessor {
 			HttpGet request = new HttpGet(uri);
 			request.addHeader("Authorization", "Bearer " + apiKey);
 			CloseableHttpResponse response = httpClient.execute(request);
-
-			// Get HttpResponse Status
-			// System.out.println(response.getProtocolVersion()); // HTTP/1.1
-			// System.out.println(response.getStatusLine().getStatusCode()); // 200
-			// System.out.println(response.getStatusLine().getReasonPhrase()); // OK
-			// System.out.println(response.getStatusLine().toString()); // HTTP/1.1 200 OK
-			// HttpEntity entity = response.getEntity();
-			// if (entity != null) {
-			// // return it as a String
-			// String result = EntityUtils.toString(entity);
-			// return result;
-			// }
+			HttpEntity entity = response.getEntity();
+			log.info(EntityUtils.toString(entity));
 			return response;
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			return null;
 		}
 	}
-
-//	private HttpResponse<String> httpGetRequest(MediaArchive inArchive, URI uri) throws IOException, InterruptedException {
-//		boolean productionmode = inArchive.isCatalogSettingTrue("productionmode");
-//		String apiKey = productionmode ? inArchive.getCatalogSettingValue("stripe_access_token")
-//				: inArchive.getCatalogSettingValue("stripe_test_access_token");
-//		HttpClient client = HttpClient.newHttpClient();
-//		HttpRequest request = HttpRequest.newBuilder().uri(uri).header("Authorization", "Bearer " + apiKey)
-//				.GET().build();
-//		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//		log.info(response.body());
-//		return response;
-//	}
 
 	private CloseableHttpResponse httpDeleteRequest(MediaArchive inArchive, URI uri) throws ParseException, IOException {
 		boolean productionmode = inArchive.isCatalogSettingTrue("productionmode");
@@ -130,25 +94,14 @@ public class StripePaymentProcessor {
 			HttpDelete request = new HttpDelete(uri);
 			request.addHeader("Authorization", "Bearer " + apiKey);
 			CloseableHttpResponse response = httpClient.execute(request);
+			HttpEntity entity = response.getEntity();
+			log.info(EntityUtils.toString(entity));
 			return response;
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			return null;
 		}
 	}
-
-//	private HttpResponse<String> httpDeleteRequest(MediaArchive inArchive, URI uri)
-//			throws IOException, InterruptedException {
-//		boolean productionmode = inArchive.isCatalogSettingTrue("productionmode");
-//		String apiKey = productionmode ? inArchive.getCatalogSettingValue("stripe_access_token")
-//				: inArchive.getCatalogSettingValue("stripe_test_access_token");
-//		HttpClient client = HttpClient.newHttpClient();
-//		HttpRequest request = HttpRequest.newBuilder().uri(uri).header("Authorization", "Bearer " + apiKey).DELETE()
-//				.build();
-//		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//		log.info(response.body());
-//		return response;
-//	}
 
 	private String getItemId(CloseableHttpResponse response)
 			throws JsonParseException, JsonMappingException, IOException {

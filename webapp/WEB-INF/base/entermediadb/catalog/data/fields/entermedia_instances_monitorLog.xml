@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<properties  beanname="dataSearcher" > 
+<properties> 
   <property id="instanceid" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" multilanguage="false" listid="entermedia_instances" highlight="false" deleted="false" autocreatefromexif="false" writenametoexif="false" filter="false" datatype="list" keyword="false" sorted="true"> 
     <name> 
       <language id="en">Instance</language> 

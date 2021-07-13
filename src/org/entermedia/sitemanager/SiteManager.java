@@ -3,6 +3,7 @@ package org.entermedia.sitemanager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.URI;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -733,11 +734,11 @@ public class SiteManager implements CatalogEnabled
 	
 	private void getStats(MediaArchive inArchive, Data inData) throws JsonParseException, JsonMappingException, IOException {
 		Searcher sites = inArchive.getSearcher("entermedia_instances_monitor");
-		MultiValued real = (MultiValued) sites.loadData(inData);
+		MultiValued instanceMonitor = (MultiValued) sites.loadData(inData);
 
-		String catalog = (String) real.getValue("catalog");
-		String emkey = (String) real.getValue("entermediadbkey");
-		String url = (String) real.getValue("monitoringurl");
+		String catalog = (String) instanceMonitor.getValue("catalog");
+		String emkey = (String) instanceMonitor.getValue("entermediadbkey");
+		String url = (String) instanceMonitor.getValue("monitoringurl");
 		
 		String[] cmd = {
 				"/bin/bash", "-c",
@@ -750,10 +751,8 @@ public class SiteManager implements CatalogEnabled
 		ObjectMapper mapper = new ObjectMapper();
 		Map<String, Object> map = mapper.readValue(response, Map.class);
 		
-		
-		
 		Searcher instances = inArchive.getSearcher("entermedia_instances");
-		Data instance = (Data) instances.searchById((String) real.getValue("instanceid"));
+		Data instance = (Data) instances.searchById((String) instanceMonitor.getValue("instanceid"));
 		Searcher servers = inArchive.getSearcher("entermedia_servers");
 		Data server = (Data) servers.searchById((String) instance.getValue("entermedia_servers"));
 		
@@ -773,23 +772,34 @@ public class SiteManager implements CatalogEnabled
 			}			
 		}
 
-		real.setValue("snapshotstatus", map.get("snapshotStatus"));
-		real.setValue("lastsnapshot", map.get("lastSnapshot"));
-		real.setValue("emserverversion", map.get("serverVersion"));
+		instanceMonitor.setValue("snapshotstatus", map.get("snapshotStatus"));
+		instanceMonitor.setValue("lastsnapshot", map.get("lastSnapshot"));
+		instanceMonitor.setValue("emserverversion", map.get("serverVersion"));
 
 		if (node != null) {
-			real.setValue("emserverversion", (String) node.get("EMServerVersion"));
-			real.setValue("version_ffmpeg", (String) node.get("FfmpegVersion"));
-			real.setValue("version_ghostscript", (String) node.get("GhostScript"));
-			real.setValue("version_imagemagick", (String) node.get("ImageMagick"));
-			real.setValue("version_docker", (String) allStats.get("DockerVersion"));
-			real.setValue("version_soffice", (String) node.get("LibreOffice"));
-			real.setValue("statscheckdate", (String) allStats.get("CheckDate"));
+			instanceMonitor.setValue("emserverversion", (String) node.get("EMServerVersion"));
+			instanceMonitor.setValue("version_ffmpeg", (String) node.get("FfmpegVersion"));
+			instanceMonitor.setValue("version_ghostscript", (String) node.get("GhostScript"));
+			instanceMonitor.setValue("version_imagemagick", (String) node.get("ImageMagick"));
+			instanceMonitor.setValue("version_docker", (String) allStats.get("DockerVersion"));
+			instanceMonitor.setValue("version_soffice", (String) node.get("LibreOffice"));
+			instanceMonitor.setValue("statscheckdate", (String) allStats.get("CheckDate"));
 			
 			Map<String, Object> clusterHealth = (Map<String, Object>) node.get("clusterHealth");			
-			real.setValue("clusterhealth", clusterHealth.get("active_shards_percent_as_number").toString());
+			instanceMonitor.setValue("clusterhealth", clusterHealth.get("active_shards_percent_as_number").toString());
 		}
-		sites.saveData(real, null);
+		
+		// IP resolver
+		String domain = (String) instanceMonitor.getValue("publicdomainname");
+		if (domain != null) {
+			InetAddress address = InetAddress.getByName(domain);
+			instanceMonitor.setValue("publicdomainip", address.getHostAddress());
+		}
+		sites.saveData(instanceMonitor, null);
+		
+		Searcher logSearcher = inArchive.getSearcher("entermedia_instances_monitorLog");
+		instanceMonitor.setId(null);
+		logSearcher.saveData(instanceMonitor, null);		
 	}
 	
 	private Map<String, Object> httpGetRequest(String url) {
