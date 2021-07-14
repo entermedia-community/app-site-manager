@@ -180,7 +180,7 @@ public void init() {
 				//Send Email Notify No Space on Servers
 				//context.putPageValue("from", clientemail);
 				context.putPageValue("subject", "No space for Trial Sites");
-				//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
+				sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/noseats.html");
 			}
 			else{
 				// Call deploy script
@@ -235,13 +235,13 @@ public void init() {
 					//Send Notification to us
 					//context.putPageValue("from", clientemail);
 					context.putPageValue("subject", "New Activation - " + fullURL);
-					//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");
+					sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");
 
 					//Send Email to Client
-					//context.putPageValue("from", notifyemail);
-					//context.putPageValue("subject", "Welcome to EnterMediaDB ");
-					//context.putPageValue("entermediakey", getUserKey(user));
-					//sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
+					context.putPageValue("from", notifyemail);
+					context.putPageValue("subject", "Welcome to EnterMediaDB ");
+					context.putPageValue("entermediakey", getUserKey(user));
+					sendEmail(context.getPageMap(),clientemail,"/entermediadb/app/site/sitedeployer/email/businesswelcome.html");
 
 				}
 				catch(Exception e){
@@ -300,24 +300,24 @@ protected Data addNewMonitor(Data instance)
 
 
 //TODO: Make that table use the site (librarycollection)
-//protected void sendEmail(Map pageValues, String email, String templatePage){
-//	//send e-mail
-//	//Page template = getPageManager().getPage(templatePage);
-//	RequestUtils rutil = moduleManager.getBean("requestUtils");
-//	BaseWebPageRequest newcontext = rutil.createVirtualPageRequest(templatePage,null, null);
-//
-//	newcontext.putPageValues(pageValues);
-//
-//	PostMail mail = (PostMail)moduleManager.getBean( "postMail");
-//	TemplateWebEmail mailer = mail.getTemplateWebEmail();
-//	mailer.loadSettings(newcontext);
-//	mailer.setMailTemplatePath(templatePage);
-//	mailer.setRecipientsFromCommas(email);
-//	//mailer.setMessage(inOrder.get("sharenote"));
-//	//mailer.setWebPageContext(context);
-//	mailer.send();
-//	log.info("email sent to ${email}");
-//}
+protected void sendEmail(Map pageValues, String email, String templatePage){
+	//send e-mail
+	//Page template = getPageManager().getPage(templatePage);
+	RequestUtils rutil = moduleManager.getBean("requestUtils");
+	BaseWebPageRequest newcontext = rutil.createVirtualPageRequest(templatePage,null, null);
+
+	newcontext.putPageValues(pageValues);
+
+	PostMail mail = (PostMail)moduleManager.getBean( "postMail");
+	TemplateWebEmail mailer = mail.getTemplateWebEmail();
+	mailer.loadSettings(newcontext);
+	mailer.setMailTemplatePath(templatePage);
+	mailer.setRecipientsFromCommas(email);
+	//mailer.setMessage(inOrder.get("sharenote"));
+	//mailer.setWebPageContext(context);
+	mailer.send();
+	log.info("email sent to ${email}");
+}
 
 
 
