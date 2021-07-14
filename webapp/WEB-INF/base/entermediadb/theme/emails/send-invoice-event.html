@@ -502,7 +502,7 @@
                                 </tr>
                                 
                                 <tr>
-                                  <td width="80%" class="purchase_item"><span class="f-fallback">$invoice.getValue("invoicedescription")</span></td>
+                                  <td width="80%" class="purchase_item"><span class="f-fallback">$!mediaarchive.text($invoice.getValue("invoicedescription"), $invoice.id)</span></td>
                                   <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">$currency $!context.roundDouble($invoice.getValue("totalprice"),2)</span></td>
                                 </tr>
                                 
