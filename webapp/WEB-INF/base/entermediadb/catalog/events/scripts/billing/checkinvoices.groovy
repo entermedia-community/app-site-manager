@@ -31,7 +31,7 @@ private void payAutoPaidInvoices(MediaArchive mediaArchive, Searcher invoiceSear
 	log.info("Auto-Paid pending invoices " + invoices.size() + " found");
 	for (Iterator invoiceIterator = invoices.iterator(); invoiceIterator.hasNext();) {
 		Data invoice = invoiceSearcher.loadData(invoiceIterator.next());
-		Map<String, Object> customer = stripe.getCustomer(mediaArchive, invoice.getValue("collectionid") + "@entermediadb.com")
+		Map<String, Object> customer = stripe.getCustomer(mediaArchive,  "billing+" + invoice.getValue("collectionid") + "@entermediadb.com")
 		if (customer != null) {
 			Map<String, Object> sourcesData = customer.get("sources");
 			ArrayList<Map<String, Object>> sources = sourcesData.get("data");
