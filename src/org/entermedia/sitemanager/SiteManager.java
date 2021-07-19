@@ -758,7 +758,7 @@ public class SiteManager implements CatalogEnabled
 		
 		String serverUrl = "http://" + (String) server.getValue("serverurl")  + "/stats.json";
 		Map<String, Object> allStats = httpGetRequest(serverUrl);
-		log.info(allStats);
+		log.info("Scanning for serverUrl: " + serverUrl);
 		
 		String nodeName = (String) instance.getValue("instancename") + (String) instance.getValue("instancenode");
 		Map<String, Object> node = null;
@@ -767,6 +767,7 @@ public class SiteManager implements CatalogEnabled
 			Map<String, Object> serverNode = nodes.get(i);
 			String serverName = (String) serverNode.get("Node");
 			if (serverName.equals(nodeName)) {
+				log.info("Scanning for node: " + serverName);
 				node = serverNode;
 				break;
 			}			
@@ -777,6 +778,7 @@ public class SiteManager implements CatalogEnabled
 		instanceMonitor.setValue("emserverversion", map.get("serverVersion"));
 
 		if (node != null) {
+			log.info("node found: " + node.get("Node"));
 			instanceMonitor.setValue("emserverversion", (String) node.get("EMServerVersion"));
 			instanceMonitor.setValue("version_ffmpeg", (String) node.get("FfmpegVersion"));
 			instanceMonitor.setValue("version_ghostscript", (String) node.get("GhostScript"));
@@ -787,6 +789,7 @@ public class SiteManager implements CatalogEnabled
 			
 			Map<String, Object> dockerStats = (Map<String, Object>) node.get("Docker");
 			if (dockerStats != null) {
+				log.info("Container found: " + dockerStats.get("Name"));
 				instanceMonitor.setValue("docker-id", (String) dockerStats.get("Id"));
 				instanceMonitor.setValue("docker-name", (String) dockerStats.get("Name"));
 				instanceMonitor.setValue("docker-cpu", (String) dockerStats.get("Cpu"));
