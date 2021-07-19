@@ -739,6 +739,8 @@ public class SiteManager implements CatalogEnabled
 		String catalog = (String) instanceMonitor.getValue("catalog");
 		String emkey = (String) instanceMonitor.getValue("entermediadbkey");
 		String url = (String) instanceMonitor.getValue("monitoringurl");
+		Object dockerInstanceName = instanceMonitor.getValue("instancename");
+		Object dockerInstanceNode = instanceMonitor.getValue("instancenode");
 		
 		String[] cmd = {
 				"/bin/bash", "-c",
@@ -759,10 +761,8 @@ public class SiteManager implements CatalogEnabled
 		
 		String serverUrl = "http://" + (String) server.getValue("serverurl")  + "/stats.json";
 		Map<String, Object> allStats = httpGetRequest(serverUrl);
-		log.info("Scanning for serverUrl: " + serverUrl);
+		log.info("Scanning for serverUrl: " + serverUrl);		
 		
-		Object dockerInstanceName = instance.getValue("instancename");
-		Object dockerInstanceNode = instance.getValue("instancenode");
 		String nodeName = dockerInstanceName == null || dockerInstanceNode == null ? "" : dockerInstanceName.toString() + dockerInstanceNode.toString();
 		if (nodeName.isEmpty()) {
 			log.error("NodeName not configured on:" +instance.getName() + ", server: " + server.getName());
@@ -823,7 +823,8 @@ public class SiteManager implements CatalogEnabled
 		
 		Searcher logSearcher = inArchive.getSearcher("entermedia_instances_monitorLog");
 		instanceMonitor.setId(null);
-		logSearcher.saveData(instanceMonitor, null);		
+		// logSearcher.saveData(instanceMonitor, null);
+		// TODO: make a log table taht actually gets vars that change
 	}
 	
 	private Map<String, Object> httpGetRequest(String url) {
