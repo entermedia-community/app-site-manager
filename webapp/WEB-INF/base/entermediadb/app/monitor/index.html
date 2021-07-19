@@ -16,6 +16,8 @@
 	                <th>[[Monitoring URL]]</th>
 	                <th>[[Assets]]</th>
 	                <th>[[Server]]</th>
+	                <th>[[Resolve]]</th>
+	                <th>[[Last Snapshot]]</th>
 					<th>[[Links]]</th>
 	            </tr>
 	        </thead>
@@ -59,6 +61,13 @@
 					<td>
 						$!mediaarchive.getData("entermedia_servers",$instancemonitor.primarycname)
 					</td>
+					
+					<td>
+						$!instancemonitor.publicdomainip
+					</td>
+					<th>
+						$!instancemonitor.lastsnapshot
+					</th>
 					<td>
 						##Auto Login to emshare2 
 						#if($instancemonitor.monitoringurl && $instancemonitor.catalog && $instancemonitor.entermediadbkey)
