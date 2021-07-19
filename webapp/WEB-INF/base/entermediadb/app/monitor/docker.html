@@ -1,0 +1,40 @@
+#set( $instance = $mediaarchive.query("entermedia_instances_monitor").exact("id","$instancemonitorid").searchOne() )
+
+<div>
+	<table class="table table-striped table-hover table-subscribers">
+		
+		<tr>
+			<th>Docker Name</th> 	
+			<td>$instance.getValue("docker-name")</td>
+		</tr>
+		<tr>
+			<th>Docker Version</th> 	
+			<td>$instance.getValue("docker-version")</td>
+		</tr>
+		<tr>
+			<th>Docker CPU</th>
+			<td>$instance.getValue("docker-cpu")</td>
+		</tr>
+		<tr>
+			<th>Docker ID</th>
+			<td>$instance.getValue("docker-id")</td>
+		</tr>
+		<tr>
+			<th>Docker Memory Usage</th> 	
+			<td>$instance.getValue("docker-memory-usage")</td>
+		</tr>		
+		<tr>
+			<th>Docker Net Download</th> 	
+			<td>$instance.getValue("docker-net-down")</td>
+		</tr>
+		<tr>
+			<th>Docker Net Upload</th> 	
+			<td>$instance.getValue("docker-net-up")</td>
+		</tr>
+		<tr>
+			<th>Docker PIDS</th> 	
+			<td>$instance.getValue("docker-pids")</td>
+		</tr>
+
+	</table>
+</div>
