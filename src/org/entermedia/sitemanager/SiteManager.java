@@ -785,8 +785,21 @@ public class SiteManager implements CatalogEnabled
 			instanceMonitor.setValue("version_soffice", (String) node.get("LibreOffice"));
 			instanceMonitor.setValue("statscheckdate", (String) allStats.get("CheckDate"));
 			
-			Map<String, Object> clusterHealth = (Map<String, Object>) node.get("clusterHealth");			
-			instanceMonitor.setValue("clusterhealth", clusterHealth.get("active_shards_percent_as_number").toString());
+			Map<String, Object> dockerStats = (Map<String, Object>) node.get("Docker");
+			if (dockerStats != null) {
+				instanceMonitor.setValue("docker-id", (String) dockerStats.get("Id"));
+				instanceMonitor.setValue("docker-name", (String) dockerStats.get("Name"));
+				instanceMonitor.setValue("docker-cpu", (String) dockerStats.get("Cpu"));
+				instanceMonitor.setValue("docker-memory-usage", (String) dockerStats.get("MemoryUsage"));
+				instanceMonitor.setValue("docker-net-down", (String) dockerStats.get("Netdown"));
+				instanceMonitor.setValue("docker-net-up", (String) dockerStats.get("Netup"));
+				instanceMonitor.setValue("docker-pids", (String) dockerStats.get("Pids"));
+			}
+			
+			Map<String, Object> clusterHealth = (Map<String, Object>) node.get("clusterHealth");
+			if (clusterHealth != null) {
+				instanceMonitor.setValue("clusterhealth", clusterHealth.get("active_shards_percent_as_number").toString());
+			}
 		}
 		
 		// IP resolver
