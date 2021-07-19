@@ -761,13 +761,18 @@ public class SiteManager implements CatalogEnabled
 		log.info("Scanning for serverUrl: " + serverUrl);
 		
 		String nodeName = (String) instance.getValue("instancename") + (String) instance.getValue("instancenode");
+		if (nodeName.isEmpty()) {
+			log.error("NodeName not configured on:" +instance.getName() + ", server: " + server.getName());
+			return;
+		}
 		Map<String, Object> node = null;
 		ArrayList<Map<String, Object>> nodes = (ArrayList<Map<String, Object>>) allStats.get("Nodes");
+		log.info("Scanning for node: " + nodeName);
 		for (int i =0; i < nodes.size(); i++) {
 			Map<String, Object> serverNode = nodes.get(i);
 			String serverName = (String) serverNode.get("Node");
 			if (serverName.equals(nodeName)) {
-				log.info("Scanning for node: " + serverName);
+				log.info("Found for node on URL: " + serverName);
 				node = serverNode;
 				break;
 			}			
