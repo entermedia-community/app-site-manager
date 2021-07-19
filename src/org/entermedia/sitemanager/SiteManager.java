@@ -739,6 +739,8 @@ public class SiteManager implements CatalogEnabled
 		String catalog = (String) instanceMonitor.getValue("catalog");
 		String emkey = (String) instanceMonitor.getValue("entermediadbkey");
 		String url = (String) instanceMonitor.getValue("monitoringurl");
+		Object dockerInstanceName = instanceMonitor.getValue("instancename");
+		Object dockerInstanceNode = instanceMonitor.getValue("instancenode");
 		
 		String[] cmd = {
 				"/bin/bash", "-c",
@@ -754,19 +756,26 @@ public class SiteManager implements CatalogEnabled
 		Searcher instances = inArchive.getSearcher("entermedia_instances");
 		Data instance = (Data) instances.searchById((String) instanceMonitor.getValue("instanceid"));
 		Searcher servers = inArchive.getSearcher("entermedia_servers");
-		Data server = (Data) servers.searchById((String) instance.getValue("entermedia_servers"));
+		Data server = (Data) servers.searchById((String) instanceMonitor.getValue("primarycname"));
+		log.info("Scanning for Instance: " + instance.getName());
 		
 		String serverUrl = "http://" + (String) server.getValue("serverurl")  + "/stats.json";
 		Map<String, Object> allStats = httpGetRequest(serverUrl);
-		log.info(allStats);
+		log.info("Scanning for serverUrl: " + serverUrl);		
 		
-		String nodeName = (String) instance.getValue("instancename") + (String) instance.getValue("instancenode");
+		String nodeName = dockerInstanceName == null || dockerInstanceNode == null ? "" : dockerInstanceName.toString() + dockerInstanceNode.toString();
+		if (nodeName.isEmpty()) {
+			log.error("NodeName not configured on:" +instance.getName() + ", server: " + server.getName());
+			return;
+		}
 		Map<String, Object> node = null;
 		ArrayList<Map<String, Object>> nodes = (ArrayList<Map<String, Object>>) allStats.get("Nodes");
+		log.info("Scanning for node: " + nodeName);
 		for (int i =0; i < nodes.size(); i++) {
 			Map<String, Object> serverNode = nodes.get(i);
 			String serverName = (String) serverNode.get("Node");
 			if (serverName.equals(nodeName)) {
+				log.info("Found for node on URL: " + serverName);
 				node = serverNode;
 				break;
 			}			
@@ -777,6 +786,7 @@ public class SiteManager implements CatalogEnabled
 		instanceMonitor.setValue("emserverversion", map.get("serverVersion"));
 
 		if (node != null) {
+			log.info("node found: " + node.get("Node"));
 			instanceMonitor.setValue("emserverversion", (String) node.get("EMServerVersion"));
 			instanceMonitor.setValue("version_ffmpeg", (String) node.get("FfmpegVersion"));
 			instanceMonitor.setValue("version_ghostscript", (String) node.get("GhostScript"));
@@ -785,8 +795,22 @@ public class SiteManager implements CatalogEnabled
 			instanceMonitor.setValue("version_soffice", (String) node.get("LibreOffice"));
 			instanceMonitor.setValue("statscheckdate", (String) allStats.get("CheckDate"));
 			
-			Map<String, Object> clusterHealth = (Map<String, Object>) node.get("clusterHealth");			
-			instanceMonitor.setValue("clusterhealth", clusterHealth.get("active_shards_percent_as_number").toString());
+			Map<String, Object> dockerStats = (Map<String, Object>) node.get("Docker");
+			if (dockerStats != null) {
+				log.info("Container found: " + dockerStats.get("Name"));
+				instanceMonitor.setValue("docker-id", (String) dockerStats.get("Id"));
+				instanceMonitor.setValue("docker-name", (String) dockerStats.get("Name"));
+				instanceMonitor.setValue("docker-cpu", (String) dockerStats.get("Cpu"));
+				instanceMonitor.setValue("docker-memory-usage", (String) dockerStats.get("MemoryUsage"));
+				instanceMonitor.setValue("docker-net-down", (String) dockerStats.get("Netdown"));
+				instanceMonitor.setValue("docker-net-up", (String) dockerStats.get("Netup"));
+				instanceMonitor.setValue("docker-pids", (String) dockerStats.get("Pids"));
+			}
+			
+			Map<String, Object> clusterHealth = (Map<String, Object>) node.get("clusterHealth");
+			if (clusterHealth != null) {
+				instanceMonitor.setValue("clusterhealth", clusterHealth.get("active_shards_percent_as_number").toString());
+			}
 		}
 		
 		// IP resolver
@@ -799,7 +823,8 @@ public class SiteManager implements CatalogEnabled
 		
 		Searcher logSearcher = inArchive.getSearcher("entermedia_instances_monitorLog");
 		instanceMonitor.setId(null);
-		logSearcher.saveData(instanceMonitor, null);		
+		// logSearcher.saveData(instanceMonitor, null);
+		// TODO: make a log table taht actually gets vars that change
 	}
 	
 	private Map<String, Object> httpGetRequest(String url) {

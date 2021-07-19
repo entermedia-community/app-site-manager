@@ -340,7 +340,55 @@
      <name> 
       <language id="en"><![CDATA[Public Domain IP]]></language> 
     </name> 
-  </property>    
+  </property>
+  
+   <property id="docker-id" index="true" editable="false">
+     <name> 
+      <language id="en"><![CDATA[Docker ID]]></language> 
+    </name> 
+  </property>
+  <property id="docker-name" index="true" editable="false">
+     <name> 
+      <language id="en"><![CDATA[Docker Name]]></language> 
+    </name> 
+  </property>
+  <property id="docker-cpu" index="true" editable="false">
+     <name> 
+      <language id="en"><![CDATA[Docker CPU]]></language> 
+    </name> 
+  </property>
+  <property id="docker-memory-usage" index="true" editable="false">
+     <name> 
+      <language id="en"><![CDATA[Docker Memory Usage]]></language> 
+    </name> 
+  </property>
+  <property id="docker-net-down" index="true" editable="false">
+     <name> 
+      <language id="en"><![CDATA[Docker Net Download]]></language> 
+    </name> 
+  </property>
+  <property id="docker-net-up" index="true" editable="false">
+     <name> 
+      <language id="en"><![CDATA[Docker Net Upload]]></language> 
+    </name> 
+  </property>
+  <property id="docker-pids" index="true" editable="false">
+     <name> 
+      <language id="en"><![CDATA[Docker PIDS]]></language> 
+    </name> 
+  </property>
+  
+  <property id="instancename" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false"> 
+    <name> 
+      <language id="en"><![CDATA[Docker Instance Name]]></language> 
+    </name> 
+  </property>
+  
+  <property id="instancenode" index="true" internalfield="false" editable="true" isbadge="false" required="false" filter="false" multilanguage="false" stored="true" autocreatefromexif="false" keyword="false" writenametoexif="false"> 
+    <name> 
+      <language id="en"><![CDATA[Docker Instance Node]]></language> 
+    </name> 
+  </property>
   
 </properties>
 
