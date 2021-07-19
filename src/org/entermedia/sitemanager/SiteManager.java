@@ -755,12 +755,15 @@ public class SiteManager implements CatalogEnabled
 		Data instance = (Data) instances.searchById((String) instanceMonitor.getValue("instanceid"));
 		Searcher servers = inArchive.getSearcher("entermedia_servers");
 		Data server = (Data) servers.searchById((String) instance.getValue("entermedia_servers"));
+		log.info("Scanning for Instance: " + instance.getName());
 		
 		String serverUrl = "http://" + (String) server.getValue("serverurl")  + "/stats.json";
 		Map<String, Object> allStats = httpGetRequest(serverUrl);
 		log.info("Scanning for serverUrl: " + serverUrl);
 		
-		String nodeName = (String) instance.getValue("instancename") + (String) instance.getValue("instancenode");
+		Object dockerInstanceName = instance.getValue("instancename");
+		Object dockerInstanceNode = instance.getValue("instancenode");
+		String nodeName = dockerInstanceName == null || dockerInstanceNode == null ? "" : dockerInstanceName.toString() + dockerInstanceNode.toString();
 		if (nodeName.isEmpty()) {
 			log.error("NodeName not configured on:" +instance.getName() + ", server: " + server.getName());
 			return;
