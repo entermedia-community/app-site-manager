@@ -756,7 +756,7 @@ public class SiteManager implements CatalogEnabled
 		Searcher instances = inArchive.getSearcher("entermedia_instances");
 		Data instance = (Data) instances.searchById((String) instanceMonitor.getValue("instanceid"));
 		Searcher servers = inArchive.getSearcher("entermedia_servers");
-		Data server = (Data) servers.searchById((String) instance.getValue("entermedia_servers"));
+		Data server = (Data) servers.searchById((String) instanceMonitor.getValue("primarycname"));
 		log.info("Scanning for Instance: " + instance.getName());
 		
 		String serverUrl = "http://" + (String) server.getValue("serverurl")  + "/stats.json";
