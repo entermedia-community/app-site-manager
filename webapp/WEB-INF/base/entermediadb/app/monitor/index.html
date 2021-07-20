@@ -65,7 +65,8 @@
 					<td>
 						$!instancemonitor.publicdomainip
 					</td>
-					<td>
+					<td #if( $!mediaarchive.isSnapshotDateOld($!instancemonitor.lastsnapshot) ) class="alert-danger" #end>
+						
 						$!instancemonitor.lastsnapshot
 					</td>
 					<td>
