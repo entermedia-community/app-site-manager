@@ -784,6 +784,7 @@ public class SiteManager implements CatalogEnabled
 		instanceMonitor.setValue("snapshotstatus", map.get("snapshotStatus"));
 		instanceMonitor.setValue("lastsnapshot", map.get("lastSnapshot"));
 		instanceMonitor.setValue("emserverversion", map.get("serverVersion"));
+		instanceMonitor.setValue("lastSyncPullDate", map.get("pulldate"));
 
 		if (node != null) {
 			log.info("node found: " + node.get("Node"));

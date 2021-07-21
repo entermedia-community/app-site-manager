@@ -1,0 +1,16 @@
+#set( $instance = $mediaarchive.query("entermedia_instances_monitor").exact("id","$instancemonitorid").searchOne() )
+
+<div>
+	<table class="table table-striped table-hover table-subscribers">
+		
+		<tr>
+			<td>Sync Last Pull2 Date</td> 	
+			<td>$instance.getValue("lastSyncPullDate")</td>
+		</tr>
+		<tr>
+			<td>Elastic Search Cluster Health</td> 	
+			<td>$instance.getValue("clusterhealth")</td>
+		</tr>
+
+	</table>
+</div>
