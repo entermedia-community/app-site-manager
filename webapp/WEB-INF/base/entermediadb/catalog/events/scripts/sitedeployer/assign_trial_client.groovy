@@ -26,7 +26,7 @@ import org.json.simple.JSONObject;
 public void init() {
 
 	String catalogid = "entermediadb/catalog";
-	String notifyemail = "help@entermediadb.org";
+	String notifyemail = "tech@entermediadb.org";
 	String clientemail = null;
 
 	/*	
@@ -293,7 +293,7 @@ protected Data addNewMonitor(Data instance)
 	newmonitor.setValue("monitoringenable", true);
 	newmonitor.setValue("monitoringurl", instance.instanceurl);
 
-	newmonitor.setValue("notifyemail", "help@entermediadb.org");  //not need it custom?
+	newmonitor.setValue("notifyemail", "tech@entermediadb.org");  //not need it custom?
 	monitorsearcher.saveData(newmonitor,null);
 	return newmonitor;
 }
