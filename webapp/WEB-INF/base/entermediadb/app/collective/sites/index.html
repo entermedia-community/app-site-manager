@@ -65,7 +65,7 @@
 								&nbsp;<a href="$home/emshare2/views/modules/entermedia_instances/edit/edit.html?id=${hit.id}&viewid=entermedia_instancesgeneral&viewpath=entermedia_instances/entermedia_instancesgeneral&searchtype=entermedia_instances&detailsreadonly=false&preview=true"  class="btn btn-xs btn-primary">[[Monitor]]</a>
 								#if($hit.istrial == "true" && $hit.instance_status!='deleted')
 								&nbsp;<a href="/entermediadb/app/site/sitedeployer/deleteinstance.html?instanceid=${hit.id}&collectionid=$collectionid" 
-										 class="btn btn-xs btn-primary confirm"
+										 class="btn btn-xs btn-danger confirm"
 										 data-confirm="[[Are you sure to delete this instance]]?">[[Delete Instance]]</a>
 								#end
 								
