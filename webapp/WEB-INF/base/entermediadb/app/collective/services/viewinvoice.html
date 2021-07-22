@@ -1,7 +1,8 @@
 #set( $currency = '$' )
-#set($id = $context.getRequestParameter('invoiceid')) 
-#set($invoice =	$mediaarchive.getInvoiceById($id)) 
-#set($products = $mediaarchive.getInvoiceProductList($id))
+#set( $id = $context.getRequestParameter('invoiceid')) 
+#set( $invoice =	$mediaarchive.getInvoiceById($id)) 
+#set( $products = $mediaarchive.getInvoiceProductList($id))
+#set( $collection = $mediaarchive.query("librarycollection").exact("id",$invoice.getValue("collectionid")).searchOne() )
 
 
 <div class="card"
@@ -22,10 +23,13 @@
 	</div>
 	<div class="card-header">
 		<div class="row">
-			<div class="col-sm-6">
+			<div class="col-sm-4">
 					Invoice Number: $invoice.getValue("invoicenumber")
 			</div>
-			<div class="col-sm-6 text-right">
+			<div class="col-sm-4 text-center text-capitalize">
+					<h5>$collection</h5>
+			</div>
+			<div class="col-sm-4 text-right">
 					Created on: $!context.getDate($invoice.getValue("createdon"))
 			</div>
 		</div>
