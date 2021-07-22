@@ -50,7 +50,7 @@
 							<input type="submit"class="btn btn-xs btn-primary" value="[[Finder]]" />
 							</form>
 
-							#set($instancemonitor = $mediaarchive.query("entermedia_instances_monitor").match("instanceid", $hit.id).searchOne())
+							#set( $instancemonitor = $mediaarchive.query("entermedia_instances_monitor").match("instanceid", $hit.id).searchOne() )
 							#if($instancemonitor)
 								#if($hit.instanceurl && $instancemonitor.catalog && $instancemonitor.entermediadbkey)
 									#set($instancefullurl = "${hit.instanceurl}/$instancemonitor.catalog/emshare2/index.html")
@@ -68,6 +68,13 @@
 										 class="btn btn-xs btn-primary confirm"
 										 data-confirm="[[Are you sure to delete this instance]]?">[[Delete Instance]]</a>
 								#end
+								
+								#if($hit.istrial == "true" && $hit.instance_status =='deleted')
+								&nbsp;<a href="/entermediadb/app/site/sitedeployer/restoreinstance.html?instanceid=${hit.id}&collectionid=$collectionid" 
+										 class="btn btn-xs btn-info confirm"
+										 data-confirm="[[Are you sure to restore this instance]]?">[[Restore Instance]]</a>
+								#end
+								
 							#end
 						</td>
 			        </tr>
