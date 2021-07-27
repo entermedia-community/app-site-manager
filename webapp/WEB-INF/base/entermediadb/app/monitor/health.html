@@ -9,10 +9,11 @@
 			<td>$instance.getValue("lastSyncPullDate")</td>
 		</tr>
 		#end
+		#if( $instance.getValue("clusterhealth") )
 		<tr>
 			<td>Elastic Search Cluster Health</td> 	
 			<td>$instance.getValue("clusterhealth")</td>
 		</tr>
-
+		#end
 	</table>
 </div>

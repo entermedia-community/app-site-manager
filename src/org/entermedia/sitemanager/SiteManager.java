@@ -7,8 +7,10 @@ import java.net.InetAddress;
 import java.net.URI;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -784,7 +786,20 @@ public class SiteManager implements CatalogEnabled
 		instanceMonitor.setValue("snapshotstatus", map.get("snapshotStatus"));
 		instanceMonitor.setValue("lastsnapshot", map.get("lastSnapshot"));
 		instanceMonitor.setValue("emserverversion", map.get("serverVersion"));
-		instanceMonitor.setValue("lastSyncPullDate", map.get("pulldate"));
+		instanceMonitor.setValue("lastSyncPullDate",map.get("pulldate"));
+		// String syncPull = (String) map.get("pulldate");
+		// if (syncPull != null || !syncPull.isEmpty()) {
+			// String[] dateArr = syncPull.split("T")[0].split("-");
+			// Calendar syncDate = new GregorianCalendar();
+			// syncDate.set(Calendar.YEAR, Integer.parseInt(dateArr[0]));
+			// syncDate.set(Calendar.MONTH, Integer.parseInt(dateArr[1]) -1);
+			// syncDate.set(Calendar.DATE, Integer.parseInt(dateArr[2]));
+			// String[] syncTime = syncPull.split("T")[1].split(":");
+			// syncDate.set(Calendar.HOUR, Integer.parseInt(syncTime[0]));
+			// syncDate.set(Calendar.MINUTE, Integer.parseInt(syncTime[1]));
+			// syncDate.set(Calendar.SECOND, Integer.parseInt(syncTime[2]));			
+			// instanceMonitor.setValue("lastSyncPullDate",syncDate);
+		// }
 
 		if (node != null) {
 			log.info("node found: " + node.get("Node"));
