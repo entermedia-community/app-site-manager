@@ -32,16 +32,16 @@
 		#end
 
    #if( $selecteduser.getId() == $user.getId()) 
-   <h3 	> [[Active Projects]]</h3>
+   <h3 	> [[Active Workspaces]]</h3>
    #else
-   <h3 	> [[Common Projects]]</h3>
+   <h3 	> [[Common Workspaces]]</h3>
    #end
 
 <div class="project-grid ">
  #if( $selecteduser.getId() == $user.getId()) 
 	<div class="project-item project-item-add">
 	<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog project-add" title="[[Add a Project]]">
-	<i class="fas fa-plus" style="font-size:.8em;"></i> [[Add a Project]]</a>
+	<i class="fas fa-plus" style="font-size:.8em;"></i> [[Add a Workspace]]</a>
 	</div>
 #end
 
