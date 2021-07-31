@@ -75,7 +75,7 @@
 #end
 #if($doids)
 <hr>
-<h3>[[Closed/Disabled Projects]]</h3>
+<h3>[[Closed/Disabled Workspaces]]</h3>
 		#set( $organizations = $mediaarchive.query("librarycollection").ids($doids).orgroup("organizationstatus","disabled|closed").sort("name").hitsPerPage(200).search($context) )
 		#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
 		#foreach( $ohit in $organizations )

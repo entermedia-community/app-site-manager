@@ -80,9 +80,10 @@
 						#end
 						##Monitor - Only Admins
 						<a class="btn btn-xs btn-dark" target="_blank"  href="$home$sitelink/emshare2/views/modules/entermedia_instances/edit/edit.html?id=$!{instance.id}&viewid=entermedia_instancesgeneral&viewpath=entermedia_instances/entermedia_instancesgeneral&searchtype=entermedia_instances&detailsreadonly=false&preview=true"><i class="fas fa-database"></i></a>
-						<a class="btn btn-xs btn-secondary emdialog" data-cancelsubmit="true" title="Docker Stats" href="$applink/monitor/docker.html?instancemonitorid=$instancemonitor.getId()"><i class="fab fa-docker"></i></a>
-						<a class="btn btn-xs btn-secondary emdialog" data-cancelsubmit="true" title="Container Versions Information" href="$applink/monitor/version.html?instancemonitorid=$instancemonitor.getId()"><i class="fas fa-info"></i></a>
-						<a class="btn btn-xs btn-secondary emdialog" data-cancelsubmit="true" title="Container Versions Information" href="$applink/monitor/health.html?instancemonitorid=$instancemonitor.getId()"><i class="fas fa-heartbeat"></i></a>
+						<a class="btn btn-xs btn-secondary emdialog" data-cancelsubmit="true" title="$!instancemonitor.name - Docker Stats" href="$applink/monitor/docker.html?instancemonitorid=$instancemonitor.getId()"><i class="fab fa-docker"></i></a>
+						<a class="btn btn-xs btn-secondary emdialog" data-cancelsubmit="true" title="$!instancemonitor.name - Container Versions Information" href="$applink/monitor/version.html?instancemonitorid=$instancemonitor.getId()"><i class="fas fa-info"></i></a>
+						#set( $color = $mediaarchive.healthColor($instancemonitor) )
+						<a class="btn btn-xs btn-secondary $color emdialog" data-cancelsubmit="true" title="$!instancemonitor.name - Container Versions Information" href="$applink/monitor/health.html?instancemonitorid=$instancemonitor.getId()"><i class="fas fa-heartbeat"></i></a>
 						
 					</td>
 		        </tr>
