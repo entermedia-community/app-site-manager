@@ -68,14 +68,14 @@
 										 class="btn btn-xs btn-danger confirm"
 										 data-confirm="[[Are you sure to delete this instance]]?">[[Delete Instance]]</a>
 								#end
-								
+							#end	
 								#if($hit.istrial == "true" && $hit.instance_status =='deleted')
 								&nbsp;<a href="/entermediadb/app/site/sitedeployer/restoreinstance.html?instanceid=${hit.id}&collectionid=$collectionid" 
 										 class="btn btn-xs btn-info confirm"
 										 data-confirm="[[Are you sure to restore this instance]]?">[[Restore Instance]]</a>
 								#end
 								
-							#end
+							
 						</td>
 			        </tr>
 				

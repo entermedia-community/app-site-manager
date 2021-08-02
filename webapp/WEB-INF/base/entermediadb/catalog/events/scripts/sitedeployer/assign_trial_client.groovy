@@ -303,6 +303,7 @@ protected Data addNewMonitor(Data instance)
 protected void sendEmail(Map pageValues, String email, String templatePage){
 	//send e-mail
 	//Page template = getPageManager().getPage(templatePage);
+	log.info("sending email to: " + email + ", using template: " + templatePage);
 	RequestUtils rutil = moduleManager.getBean("requestUtils");
 	BaseWebPageRequest newcontext = rutil.createVirtualPageRequest(templatePage,null, null);
 
