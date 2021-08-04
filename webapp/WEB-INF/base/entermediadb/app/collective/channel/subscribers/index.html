@@ -1,6 +1,6 @@
 #if($librarycol)
 #set($collectionid = $librarycol.getId())
-<div id="subscriberssidebar">
+<div id="subscriberssidebar" style="padding-top:1px;">
 <div class="subscribe-area">
 #if( $user )
 	#set( $searcher = $mediaarchive.getSearcher("librarycollectionusers") )
@@ -59,7 +59,7 @@
 	</div>
 	
 #end
-<div class="subscribesidebarbox">
+<div class="sidebarbox">
 
 #set( $team = $mediaarchive.query("librarycollectionusers").exact("collectionid",$collectionid).exact("ontheteam",true).search($context) )
 
