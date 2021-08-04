@@ -390,6 +390,12 @@
     </name> 
   </property>
   
+  <property id="lastSyncPullDate" index="true" internalfield="false" editable="false" isbadge="false" viewtype="datetime" sortable="true" rendertype="datetime" required="false" filter="false" multilanguage="false" datatype="date" stored="true" searchtype="monitoredsites" autocreatefromexif="false" keyword="false" writenametoexif="false"> 
+    <name> 
+      <language id="en"><![CDATA[Last Sync Pull2 Date]]></language> 
+    </name> 
+  </property> 
+  
 </properties>
 
 

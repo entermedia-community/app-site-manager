@@ -483,14 +483,18 @@
                         <table class="purchase" width="100%" cellpadding="0" cellspacing="0">
                           <tr>
                             <td>
-                              <h3>id: $invoice.getValue("invoicenumber")</h3>
+                              <h3>Invoice: $invoice.getValue("invoicenumber")</h3>
                             </td>
                             <td>
-                              <h3 class="align-right">$!context.getDate($invoice.getValue("createdon"))</h3>
+                            	#set( $collection = $mediaarchive.query("librarycollection").exact("id",$invoice.getValue("collectionid")).searchOne() )
+                            	<h3 style="text-transform: capitalize;text-align: center;">$collection</h3>
+                            </td>
+                            <td>
+                              <h3 class="align-right">Date: $!context.getDate($invoice.getValue("createdon"))</h3>
                             </td>
                           </tr>
                           <tr>
-                            <td colspan="2">
+                            <td colspan="3">
                               <table class="purchase_content" width="100%" cellpadding="0" cellspacing="0">
                                 <tr>
                                   <th class="purchase_heading" align="left">

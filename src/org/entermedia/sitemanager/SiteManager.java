@@ -7,8 +7,10 @@ import java.net.InetAddress;
 import java.net.URI;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -651,83 +653,85 @@ public class SiteManager implements CatalogEnabled
 	protected void scanSite(MediaArchive inArchive, Data inData)
 	{
 		Searcher sites = inArchive.getSearcher("entermedia_instances_monitor");
-		MultiValued real = (MultiValued) sites.loadData(inData);
+		MultiValued instanceMonitor = (MultiValued) sites.loadData(inData);
 		
 		//Get Instance Data
 		Searcher instances = inArchive.getSearcher("entermedia_instances");
 		Data instance = null;
 		
-		String instanceid = real.get("instanceid");
+		String instanceid = instanceMonitor.get("instanceid");
 		if( instanceid != null)
 		{
 			instance = instances.query().exact("id", instanceid ).searchOne();
 		}
 		if (instance == null) 
 		{
-			log.error("Instance ID not valid " + real.getId());
-			real.setValue("monitoringstatus", "error");
-			real.setValue("alerttype", "invalidinstance");
-			sites.saveData(real, null);
+			log.error("Instance ID not valid " + instanceMonitor.getId());
+			instanceMonitor.setValue("monitoringstatus", "error");
+			instanceMonitor.setValue("alerttype", "invalidinstance");
+			sites.saveData(instanceMonitor, null);
 			return;
 		}
 		
 		String dates = DateStorageUtil.getStorageUtil().formatForStorage(new Date());
 
-		if (real.get("catalog") == null)
+		if (instanceMonitor.get("catalog") == null)
 		{
-			real.setValue("catalog", "assets");
-			sites.saveData(real, null);
+			instanceMonitor.setValue("catalog", "assets");
+			sites.saveData(instanceMonitor, null);
 		}
 		
 		/* Take care of blank monitoring statuses */
-		if (real.get("monitoringstatus") == null)
+		if (instanceMonitor.get("monitoringstatus") == null)
 		{
-			real.setValue("monitoringstatus", "ok");
-			sites.saveData(real, null);
+			instanceMonitor.setValue("monitoringstatus", "ok");
+			sites.saveData(instanceMonitor, null);
 		
 		}
 		
-		ServerStats stats = scanStats(real, instance);
+		ServerStats stats = scanStats(instanceMonitor, instance);
 		try
 		{
 			//log.info(stats.isReachable());
 			if (!stats.isReachable()) 
 			{
-				real.setValue("isreachable", false);
-				real.setValue("lastcheckfail", true);
-				String monstatus = real.get("monitoringstatus");
+				instanceMonitor.setValue("isreachable", false);
+				instanceMonitor.setValue("lastcheckfail", true);
+				String monstatus = instanceMonitor.get("monitoringstatus");
 				log.error("Failing over. Monitoring status is " + monstatus);
 				if(monstatus == null || monstatus.equals("ok") || monstatus.isEmpty() )
 				{
-					real.setValue("monitoringstatus", "error");
-					setErrorType(stats,real);
-					sites.saveData(real, null);
-					enterFailover(real, instance, inArchive);	
-				}	
+					instanceMonitor.setValue("monitoringstatus", "error");
+					setErrorType(stats,instanceMonitor);
+					sites.saveData(instanceMonitor, null);
+					enterFailover(instanceMonitor, instance, inArchive);	
+				}				
 			}
 			else
 			{
-				if( real.get("monitoringstatus").equals("error")  )
+				if( instanceMonitor.get("monitoringstatus").equals("error")  )
 				{
-					real.setValue("monitoringstatus", "ok");
-					real.setValue("lastcheckfail", false);
-					real.setValue("isreachable", true);
-					real.setValue("alerttype",null);
-					sites.saveData(real, null);
-					leaveFailover(real, instance, inArchive);
+					instanceMonitor.setValue("monitoringstatus", "ok");
+					instanceMonitor.setValue("lastcheckfail", false);
+					instanceMonitor.setValue("isreachable", true);
+					instanceMonitor.setValue("alerttype",null);
+					sites.saveData(instanceMonitor, null);
+					leaveFailover(instanceMonitor, instance, inArchive);
 				}
+				long totalAssets = (long) stats.getTotalassets();
+				instanceMonitor.setValue("totalassets", totalAssets);
 			}
 		}
 		catch ( Exception ex)
 		{
-			log.error("Could not scan: " + real.getName(), ex);
-			real.addValue("alerttype", ex.getMessage()); //Should not happen
-			sites.saveData(real, null);
+			log.error("Could not scan: " + instanceMonitor.getName(), ex);
+			instanceMonitor.addValue("alerttype", ex.getMessage()); //Should not happen
+			sites.saveData(instanceMonitor, null);
 		}
 
-		real.setProperty("lastchecked", dates);
-		sites.saveData(real, null);
-		instance.setValue("monitoringstatus", real.getValue("monitoringstatus"));
+		instanceMonitor.setProperty("lastchecked", dates);
+		sites.saveData(instanceMonitor, null);
+		instance.setValue("monitoringstatus", instanceMonitor.getValue("monitoringstatus"));
 		instances.saveData(instance, null);
 		
 	}
@@ -784,6 +788,20 @@ public class SiteManager implements CatalogEnabled
 		instanceMonitor.setValue("snapshotstatus", map.get("snapshotStatus"));
 		instanceMonitor.setValue("lastsnapshot", map.get("lastSnapshot"));
 		instanceMonitor.setValue("emserverversion", map.get("serverVersion"));
+		instanceMonitor.setValue("lastSyncPullDate",map.get("pulldate"));
+		// String syncPull = (String) map.get("pulldate");
+		// if (syncPull != null || !syncPull.isEmpty()) {
+			// String[] dateArr = syncPull.split("T")[0].split("-");
+			// Calendar syncDate = new GregorianCalendar();
+			// syncDate.set(Calendar.YEAR, Integer.parseInt(dateArr[0]));
+			// syncDate.set(Calendar.MONTH, Integer.parseInt(dateArr[1]) -1);
+			// syncDate.set(Calendar.DATE, Integer.parseInt(dateArr[2]));
+			// String[] syncTime = syncPull.split("T")[1].split(":");
+			// syncDate.set(Calendar.HOUR, Integer.parseInt(syncTime[0]));
+			// syncDate.set(Calendar.MINUTE, Integer.parseInt(syncTime[1]));
+			// syncDate.set(Calendar.SECOND, Integer.parseInt(syncTime[2]));			
+			// instanceMonitor.setValue("lastSyncPullDate",syncDate);
+		// }
 
 		if (node != null) {
 			log.info("node found: " + node.get("Node"));

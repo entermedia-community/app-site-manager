@@ -26,7 +26,7 @@ import org.json.simple.JSONObject;
 public void init() {
 
 	String catalogid = "entermediadb/catalog";
-	String notifyemail = "help@entermediadb.org";
+	String notifyemail = "tech@entermediadb.org";
 	String clientemail = null;
 
 	/*	
@@ -293,7 +293,7 @@ protected Data addNewMonitor(Data instance)
 	newmonitor.setValue("monitoringenable", true);
 	newmonitor.setValue("monitoringurl", instance.instanceurl);
 
-	newmonitor.setValue("notifyemail", "help@entermediadb.org");  //not need it custom?
+	newmonitor.setValue("notifyemail", "tech@entermediadb.org");  //not need it custom?
 	monitorsearcher.saveData(newmonitor,null);
 	return newmonitor;
 }
@@ -303,6 +303,7 @@ protected Data addNewMonitor(Data instance)
 protected void sendEmail(Map pageValues, String email, String templatePage){
 	//send e-mail
 	//Page template = getPageManager().getPage(templatePage);
+	log.info("sending email to: " + email + ", using template: " + templatePage);
 	RequestUtils rutil = moduleManager.getBean("requestUtils");
 	BaseWebPageRequest newcontext = rutil.createVirtualPageRequest(templatePage,null, null);
 

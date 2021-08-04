@@ -242,7 +242,7 @@ public void init() {
 					//Send Notification to us
 					//context.putPageValue("from", clientemail);
 					context.putPageValue("subject", "New Activation - " + fullURL);
-					//sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");				
+					sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");				
 					
 					//Send Email to Client
 					context.putPageValue("from", notifyemail);
@@ -312,6 +312,7 @@ protected Data addNewMonitor(Data instance)
 protected void sendEmail(Map pageValues, String email, String templatePage){
 	//send e-mail
 	//Page template = getPageManager().getPage(templatePage);
+	log.info("sending email to: " + email + ", using template: " + templatePage);
 	RequestUtils rutil = moduleManager.getBean("requestUtils");
 	BaseWebPageRequest newcontext = rutil.createVirtualPageRequest(templatePage,null, null);
 	

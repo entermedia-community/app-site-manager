@@ -65,20 +65,26 @@
 					<td>
 						$!instancemonitor.publicdomainip
 					</td>
-					<th>
+					<td #if( $!mediaarchive.isSnapshotDateOld($!instancemonitor.lastsnapshot) ) class="alert-danger" #end>
+						
 						$!instancemonitor.lastsnapshot
-					</th>
+					</td>
 					<td>
 						##Auto Login to emshare2 
 						#if($instancemonitor.monitoringurl && $instancemonitor.catalog && $instancemonitor.entermediadbkey)
 							#set($instancefullurl = "${instancemonitor.monitoringurl}/$instancemonitor.catalog/emshare2/index.html")
 							<form method="post" action="$instancefullurl" class="float-left" target="_blank">
 							<input type="hidden" name="entermedia.key" value="$instancemonitor.entermediadbkey" />
-							<input type="submit"class="btn btn-xs btn-info" value="[[View Site]]" />
+							<button type="submit"class="btn btn-xs btn-primary mr-1"><i class="fab fa-internet-explorer"></i></button>
 							</form> 
 						#end
 						##Monitor - Only Admins
-						<a href="$home$sitelink/emshare2/views/modules/entermedia_instances/edit/edit.html?id=$!{instance.id}&viewid=entermedia_instancesgeneral&viewpath=entermedia_instances/entermedia_instancesgeneral&searchtype=entermedia_instances&detailsreadonly=false&preview=true"  class="btn btn-xs btn-dark" target="_blank">[[View Data]]</a>
+						<a class="btn btn-xs btn-dark" target="_blank"  href="$home$sitelink/emshare2/views/modules/entermedia_instances/edit/edit.html?id=$!{instance.id}&viewid=entermedia_instancesgeneral&viewpath=entermedia_instances/entermedia_instancesgeneral&searchtype=entermedia_instances&detailsreadonly=false&preview=true"><i class="fas fa-database"></i></a>
+						<a class="btn btn-xs btn-secondary emdialog" data-cancelsubmit="true" title="$!instancemonitor.name - Docker Stats" href="$applink/monitor/docker.html?instancemonitorid=$instancemonitor.getId()"><i class="fab fa-docker"></i></a>
+						<a class="btn btn-xs btn-secondary emdialog" data-cancelsubmit="true" title="$!instancemonitor.name - Container Versions Information" href="$applink/monitor/version.html?instancemonitorid=$instancemonitor.getId()"><i class="fas fa-info"></i></a>
+						#set( $color = $mediaarchive.healthColor($instancemonitor) )
+						<a class="btn btn-xs btn-secondary $color emdialog" data-cancelsubmit="true" title="$!instancemonitor.name - Container Versions Information" href="$applink/monitor/health.html?instancemonitorid=$instancemonitor.getId()"><i class="fas fa-heartbeat"></i></a>
+						
 					</td>
 		        </tr>
 			

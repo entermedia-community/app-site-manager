@@ -1,0 +1,32 @@
+#set( $instance = $mediaarchive.query("entermedia_instances_monitor").exact("id","$instancemonitorid").searchOne() )
+
+<div>
+	<table class="table table-striped table-hover table-subscribers">
+		
+		<tr>
+			<td>Docker Version</td> 	
+			<td>$instance.getValue("version_docker")</td>
+		</tr>
+		<tr>
+			<td>EM Server Version</td> 	
+			<td>$instance.getValue("emserverversion")</td>
+		</tr>
+		<tr>
+			<td>SOffice's version</td> 	
+			<td>$instance.getValue("version_soffice")</td>
+		</tr>
+		<tr>
+			<td>ImageMagick's version</td> 	
+			<td>$instance.getValue("version_imagemagick")</td>
+		</tr>
+		<tr>
+			<td>FFMPEG's version</td>
+			<td>$instance.getValue("version_ffmpeg")</td>
+		</tr>
+		<tr>
+			<td>Ghost Script's version</td>
+			<td>$instance.getValue("version_ghostscript")</td>
+		</tr>
+
+	</table>
+</div>
