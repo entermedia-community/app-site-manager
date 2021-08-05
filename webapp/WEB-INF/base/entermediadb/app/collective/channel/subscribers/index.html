@@ -91,13 +91,13 @@ $team.size()</a>
 		  <div class="teammember" style="#if($odd) margin-right:7px;#end">
 		  	
 		  	<div style="position: absolute; width:38px;" class="table-subscribers">
-			<a href="#esc($userlink)" style="display:inline-block; height:40px">
-			<img  src="${userimageurl}"  title="$!followeruser.getName()" class="img-fluid align-middle usericon" 
+			<a href="#esc($userlink)" style="display:inline-block; height:40px" title="$!followeruser.getName() $!followeruser.getEmail()">
+			<img  src="${userimageurl}"  alt="$!followeruser.getName() $!followeruser.getEmail()" class="img-fluid align-middle usericon" 
 				style="position:relative; top:50%; transform: translateY(-50%);"></a>
 			</div>
 		  	<div style="margin-left:38px; height:40px; position:relative;">
 		    <div style="position:relative; top:50%; transform: translateY(-50%);">
-		    	<a href="#esc($userlink)" title="$!followeruser.getName()">$!followeruser.getAnonNickName()</a></div> 
+		    	<a href="#esc($userlink)" title="$!followeruser.getName() $!followeruser.getEmail()">$!followeruser.getAnonNickName()</a></div> 
 		   	<div>
 		        </div>
 			<i></i>

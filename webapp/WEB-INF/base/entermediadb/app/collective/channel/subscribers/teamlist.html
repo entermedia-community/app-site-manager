@@ -24,8 +24,8 @@
 
 			
         	<td>
-			<a href="#esc($userlink)" title="$!followeruser.getAnonNickName()">
-			<img src="${userimageurl}"  title="$!followeruser.getAnonNickName()" class="img-fluid align-middle usericon"> <span class="username">$followeruser.getAnonNickName()</span>
+			<a href="#esc($userlink)" title="$!followeruser.getAnonNickName() $!followeruser.getEmail()">
+			<img src="${userimageurl}"  title="$!followeruser.getAnonNickName() $!followeruser.getEmail()" class="img-fluid align-middle usericon"> <span class="username">$followeruser.getAnonNickName()</span>
 			</a>
 			</td> 
         	<td><span class="usernote">#if ($hit.getValue("addeddate")) $context.getDateTime( $hit.getValue("addeddate") )</span> #end</td>
