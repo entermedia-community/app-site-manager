@@ -27,7 +27,7 @@
 
 body {
   font-family: futuralight, sans-serif;
-  font-size:1.1rem;
+  font-size:19px;
 }
 
 .bodywebsite {
@@ -73,6 +73,11 @@ h1 {
     text-transform:uppercase;
     margin-bottom: 1.6rem;
 }
+
+big {
+	font-size:1.2rem;
+}
+
 .bodywebsite h4 {
 	color:#fefefe;
 }
@@ -80,8 +85,7 @@ section {
   padding: 30px 0;
 }
 .hometext {
-	font-size:1.2rem;
-	padding:10px 10%;
+	padding:10px 6%;
 }
 
 .btn-primary {
@@ -1095,17 +1099,17 @@ margin:0;
 margin-bottom:4px;
 }
 .knowledge-sidebar li a {
-padding:2px 8px;
+padding:6px 8px;
 display:block;
 font-size:0.9rem;
 }
 
 .knowledge-sidebar h2 ,
 .knowledge-sidebar h2 a {
-color:#000;
-background-color: #eee;
+color:#fff;
+background-color: #07172C;
 display:block;
-padding:4px 8px 2px 6px;
+padding:4px 8px 6px;
 font-size:1.4rem;
 margin:0;
    text-decoration:none;
@@ -1554,7 +1558,7 @@ color:#fff;
 	width:80%;
 }
 .product-sla {
-	padding:0 50px
+	padding:0 30px
 }
 .section-highlight-footer {
 padding:20px 60px;
@@ -1735,23 +1739,23 @@ padding:20px 60px;
 .entermedia-introduction h2 {
 	color:#fff;
 	font-family: futuraheavy, sans-serif;
-	font-size:1.8rem;
+	font-size:1.4rem;
 	margin-bottom:0.2em;
 	text-transform: uppercase;
 }
 .entermedia-introduction h3 {
 	color:#ccc;
-	font-size:1.6rem;
+	font-size:1.3rem;
 	text-transform: uppercase;
 }
 .entermedia-introduction p {
-	font-size: 1.3rem;
+	font-size: 1.1rem;
 	padding:20px 0;
 	padding-right:30%;
 }
 .homepage-btn {
   font-weight: bold;
-  font-size:1.1rem;
+  font-size:1rem;
   padding: .475rem 2.5rem;
   text-transform: uppercase;
   background-color: #63AF57;
@@ -1770,31 +1774,29 @@ padding:20px 60px;
 
 .account-services {
 	padding:10px 10px;
-	font-size:1rem;
 }
 
 @media (min-width: 960px) {
 	.entermedia-introduction h2 {
-		font-size:2.6rem;
+		font-size:2.2rem;
 		margin:0 0 0.2em;
 	}
 	.entermedia-introduction h3 {
-		font-size:2.1rem;
+		font-size:1.8rem;
 	}
 	.entermedia-introduction p {
-		font-size: 1.6rem;
+		font-size: 1.4rem;
 		padding:20px 0;
 		padding-right:30%;
 	}
 	h3 {
-	font-size:2rem;
+	font-size:1.8rem;
 	}
 	.hometext {
-	font-size:1.4rem;
+	
 	}
 	.account-services {
 	padding:20px 80px;
-	font-size:1.1rem;
 }
 }
 
