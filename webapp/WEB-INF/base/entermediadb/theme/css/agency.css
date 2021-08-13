@@ -1888,3 +1888,38 @@ padding:20px 60px;
 	  margin:0 auto; 
 	  padding:20px 2%
 }
+
+
+.project-title {
+    height: 72px;
+    padding: 5px;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+
+.navbar-collective {
+	font-family: 'Oswald', sans-serif;
+	font-weight: normal;
+	font-size:1rem;
+	text-transform: uppercase;
+	list-style: none;
+	margin:0;
+	padding:0 0 5px;
+	min-width: 300px;
+	
+}
+.navbar-collective li {
+	display:inline-block;
+	padding:0 .25rem;
+}
+.navbar-collective .nav-link {
+	padding:0.2rem .5rem .1rem 0.5rem;
+	color:#ddd;
+}
+.navbar-collective .nav-link:hover,
+.navbar-collective li.active a {
+	border-bottom:2px solid #FFDE59;
+	color:#fff;
+	background-color:#000;
+}
