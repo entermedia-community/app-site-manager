@@ -240,7 +240,7 @@ public void init() {
 					//Data monitor = addNewMonitor(newinstance);
 					
 					//Send Notification to us
-					//context.putPageValue("from", clientemail);
+					context.putPageValue("from", clientemail);
 					context.putPageValue("subject", "New Activation - " + fullURL);
 					sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");				
 					
