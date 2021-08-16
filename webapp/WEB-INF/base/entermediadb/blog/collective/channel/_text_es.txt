@@ -1,0 +1,24 @@
+#
+#Mon May 24 15:47:56 EDT 2021
+All=Todos
+Choose\ Files=Seleccionar archivos
+All\ Posts=Todos los mensajes
+Topics=Topicos
+Description=Descripci\u00F3n
+Or\ drag\ files\ here=O arrastre archivos aqu\u00ED
+Cancel=Cancelar
+Edit\ Post=Editar post
+Post=Enviar
+Edit\ Topics=Editar temas
+ago=
+For\ Team\ Only=Solo para equipo
+loading=cargando
+Upload\ Complete=Carga completa
+Edit\ Project\ Intro=Editar la introducci\u00F3n del proyecto
+Share\ Post=Compartir post
+by=por
+Published=Publicado hace
+View\ Post=Ver publicacion
+Add\ a\ Topic=A\u00F1adir un tema
+Download=Descargar
+Post\ Title=T\u00EDtulo de la entrada

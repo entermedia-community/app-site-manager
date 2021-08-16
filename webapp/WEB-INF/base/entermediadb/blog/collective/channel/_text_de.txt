@@ -1,0 +1,8 @@
+#
+#Thu Oct 08 05:48:47 EDT 2020
+All=alle
+All\ Posts=alle Artikel
+Topics=Themen
+Edit\ Topics=Themen bearbeiten
+Add\ a\ Topic=ein Thema hinzuf\u00FCgen
+Edit\ Project\ Intro=Projekt Intro bearbeiten

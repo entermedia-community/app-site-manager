@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <page>
-  <property name="fallbackdirectory">/WEB-INF/base/emfrontend2</property>
-  <property name="virtual">true</property>
-  <property name="catalogid">entermediadb/catalog</property>
+  <property name="fallbackdirectory">/WEB-INF/base/eminstitute/app</property>
+
+  <property name="siteid">entermediadb</property>
+
   <property name="applicationid">entermediadb/blog</property>
-  <inner-layout>/${applicationid}/layout.html</inner-layout>
-  <path-action name="MediaArchiveModule.loadApplicationId"/>
-  <path-action name="PostModule.loadPost"/>
-  <path-action alltypes="true" name="MediaArchiveModule.getMediaArchive"/>
+
+  <property name="catalogid">entermediadb/communitycatalog</property>
+
+  <property name="section">blog</property>
+
+ <inner-layout>/${siteid}/theme/layouts/application.html</inner-layout>
+
+   
+  	<!-- App Custom -->
+  	<style id="eminstitute-css" href="/${siteid}/app/theme/css/eminstitute.css"/>
+
+  	<script id="eminstitute-js" src="/${applicationid}/eminstitute.js"/>
+  	
+  	<style id="custom-css2" href="/${siteid}/theme/css/agency.css"/>
+  	<style id="custom-acss2" href="/${siteid}/theme/css/em_custom.css"/>
+
 </page>

@@ -30,8 +30,9 @@ body {
   font-size:19px;
 }
 
-.bodywebsite {
-	  background-color: #0C223A;
+.bodywebsite,
+.entermediadbcontent {
+  background-color: #0C223A;
   color:#fff;
 	
 }
@@ -1706,11 +1707,40 @@ padding:20px 60px;
 	}
 }
 
+.entermediadbcontent a {
+	color:#ddd;
+}
 
+.entermediadbcontent a:hover {
+	color:#fff;
+}
 
+.entermediadbcontent .contentcolumn {
+	background-color:transparent;
+	box-shadow:none;
+	padding:30px 0;
+}
 
+.entermediadbcontent .feedcard {
+	background-color:transparent;
+	box-shadow:none;
+	border:0 none;
+}
 
+.entermediadbcontent .collective-sidebar {
+	background-color:transparent;
+	color:#eee;
+	box-shadow:none;
+	padding:30px 25px;
+}
 
+.entermediadbcontent .feedcard-author,
+.entermediadbcontent .feedcard-author a {
+	color:#ddd;
+}
+.entermediadbcontent .feedcard-author a:hover {
+	color:#fff;
+}
 
 .emcarouselhome {
   background-image: url("../img/entermedia-2020-header-02.png");
