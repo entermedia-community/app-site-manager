@@ -1,0 +1,20 @@
+<div id="projectresultholder" class="container container-feed">
+	<div class="row no-gutters">
+		<div class="col community-maincol feed-maincol">
+			<div class="contentcolumn">
+				$pages.includeContent()	
+			</div>
+		</div>
+		<div class="col col-4 col-collectivesidebar">
+			<div class="collective-sidebar">
+				#set($collectivehits = $mediaarchive.query("librarycollection").exact("library",$library.id).sort("creationdate").search($context))
+				<h3 style="margin:0 0 10px;">[[CATEGORIES]]</h3>
+				#foreach( $collective in $collectivehits.getPageOfHits() )
+					$context.putPageValue("collective",$collective)
+					$pages.include("$apphome/browse/collectivelist.html",$context)
+	
+				#end
+			</div>		
+		</div>
+	</div>
+</div>

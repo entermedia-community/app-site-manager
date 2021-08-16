@@ -124,7 +124,7 @@ img::-moz-selection {
 
 .account-top-menu {
 	text-align: right;
-	padding:2px 0;
+	padding:0px 0 6px;
 }
 .account-top-menu a {
 	color:#bbb;
@@ -1715,6 +1715,9 @@ padding:20px 60px;
 	color:#fff;
 }
 
+.entermediadbcontent .community-maincol {
+	margin:0 15px;
+}
 .entermediadbcontent .contentcolumn {
 	background-color:transparent;
 	box-shadow:none;
@@ -1741,6 +1744,16 @@ padding:20px 60px;
 }
 .entermediadbcontent .feedcard-author a:hover {
 	color:#fff;
+}
+
+
+.contentcolumn h3 {
+	margin: 0 0 20px;
+}
+
+
+.contentcolumn .collectivetag {
+	color:#333;
 }
 
 .emcarouselhome {
@@ -1835,12 +1848,13 @@ padding:20px 60px;
 
 .account-top-menu .homepage-btn {
   font-weight: bold;
-  font-size:1.6rem;
-  padding: .475em 2.5em;
-  text-transform: uppercase;
+  font-size:0.9rem;
+  padding: .175em 1em;
+  line-height:1;
+  text-transform:none;
   background-color: #237C9C;
   border-color:#237C9C;
-  border-radius: .75rem;
+  border-radius: .25rem;
   color:#eee;
 }
 .account-top-menu .homepage-btn:hover,
