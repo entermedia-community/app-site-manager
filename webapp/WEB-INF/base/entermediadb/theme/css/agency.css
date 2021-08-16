@@ -30,8 +30,10 @@ body {
   font-size:19px;
 }
 
+.eminstituteapp,
 .bodywebsite,
-.entermediadbcontent {
+.entermediadbcontent,
+.login-area {
   background-color: #0C223A;
   color:#fff;
 	
@@ -43,11 +45,27 @@ body {
 	}
 }
 
+
 a {
-  color: #555; 
+  color: #ddd; 
 }
   a.active, a:active, a:hover {
-    color: #111; 
+    color: #eee; 
+}
+
+
+a.badge-success {
+    color: #fff!important;
+    background-color: #28a745;
+}
+
+
+.eminstitutecollective a {
+	color:#222;
+}
+
+.eminstitutecollective a:hover {
+	color:#000;
 }
 
 h1,
