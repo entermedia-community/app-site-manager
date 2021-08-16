@@ -1,7 +1,0 @@
-#
-#Sat Jun 06 21:24:12 EDT 2020
-Edit\ Library\ Intro=Upravit knihovnu \u00DAvod
-Choose\ a\ community=Vyberte komunitu
-Categories=Kategorie
-Edit\ your\ Community=Upravte svou komunitu
-EntermediaDB\ Blog=EntermediaDB Blog
