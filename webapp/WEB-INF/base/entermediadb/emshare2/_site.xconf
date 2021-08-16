@@ -19,5 +19,10 @@
   <style id="custom-acss" href=""/>
   
   
+  	<!-- App Custom -->
+  	<style id="eminstitute-css" cancel="true" href="/${applicationid}/app/theme/css/eminstitute.css"/>	
+  	<style id="custom-css" cancel="true" href="/${applicationid}/theme/css/agency.css"/>
+  	<style id="custom-acss" cancel="true" href="/${applicationid}/theme/css/em_custom.css"/>
+  
   <style id="custom-monitorcss" href="/${applicationid}/theme/styles/monitor.css"/>
 </page>
