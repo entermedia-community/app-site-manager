@@ -1,4 +1,3 @@
 <page>
- <inner-layout>${siteid}/theme/layouts/application.html</inner-layout>
-
+ <inner-layout>${siteid}/theme/layouts/bloglayout.html</inner-layout>
 </page>

@@ -9,10 +9,24 @@
 			<div class="collective-sidebar">
 				#set($collectivehits = $mediaarchive.query("librarycollection").exact("library",$library.id).sort("creationdate").search($context))
 				<h3 style="margin:0 0 10px;">[[CATEGORIES]]</h3>
+				#if ($librarycol.id)
+				<a class="pick-item" href="$applink/index.html" 
+						title="[[Blog Homepage]]">
+						Blog Homepage
+						</a>
+				#end
 				#foreach( $collective in $collectivehits.getPageOfHits() )
-					$context.putPageValue("collective",$collective)
-					$pages.include("$apphome/browse/collectivelist.html",$context)
-	
+					#set($link = false) 
+					#if($collective.assetportrait)
+						#set($asset = $mediaarchive.getAsset($collective.assetportrait))
+						#set($link = $mediaarchive.asLinkToPreview($asset,"image550x350.jpg"))
+					#end
+				
+					<a  href="$applink/collective/channel/${collective.id}/#dash($collective.getName()).html" 
+						class="pick-item project-title #if ($librarycol.id == $collective.id) pick-item-selected #end" 
+						title="${collective.getName()}">
+						$collective.name
+						</a>
 				#end
 			</div>		
 		</div>
