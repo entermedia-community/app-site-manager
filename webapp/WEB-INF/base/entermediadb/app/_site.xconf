@@ -13,7 +13,7 @@
   <property name="isfullscreen">true</property>
     
   <!-- App Custom -->
-  <style id="custom-css" href="/${applicationid}/theme/css/agency.css"/>
+  <style id="custom-css" href="/${siteid}/theme/css/agency.css"/>
   <style id="custom-acss" href="/${applicationid}/theme/css/X.css"/>
   
   <permission name="view">
