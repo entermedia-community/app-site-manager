@@ -13,11 +13,8 @@
   </permission>
 
   
-  <style id="eminstitute-css" href=""/>
   <script id="eminstitute-js" src=""/>
-  <style id="custom-css" href=""/>
-  <style id="custom-acss" href=""/>
-  
+ 
   
   	<!-- App Custom -->
   	<style id="eminstitute-css" cancel="true" href="/${applicationid}/app/theme/css/eminstitute.css"/>	
