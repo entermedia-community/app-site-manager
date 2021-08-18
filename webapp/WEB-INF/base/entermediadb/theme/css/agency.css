@@ -60,11 +60,11 @@ a.badge-success {
 }
 
 
-.eminstitutecollective a {
+.applicationcollective a {
 	color:#222;
 }
 
-.eminstitutecollective a:hover {
+.applicationcollective a:hover {
 	color:#000;
 }
 
@@ -1546,7 +1546,7 @@ padding:20px 60px;
 }
 .navbar-collective {
 	padding:0;
-	min-height: 44px;
+	min-height: 40px;
 }
 
 .goal-tabs {
