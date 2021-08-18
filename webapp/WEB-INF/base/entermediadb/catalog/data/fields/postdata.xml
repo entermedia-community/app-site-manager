@@ -32,6 +32,11 @@
       <language id="en"><![CDATA[postcontent]]></language> 
     </name> 
   </property>  
+    <property id="maincontent" index="true" deleted="false" editable="true" stored="true">New
+    <name>
+      <language id="en"><![CDATA[maincontent]]></language>
+    </name>
+  </property>
   <property id="knowledgebase_tag" index="true" deleted="false" editable="true" stored="true">New 
     <name> 
       <language id="en"><![CDATA[knowledgebase_tag]]></language> 
