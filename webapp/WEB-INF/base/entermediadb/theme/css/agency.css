@@ -97,7 +97,7 @@ big {
 	font-size:1.2rem;
 }
 
-.bodywebsite h4 {
+.entermediadbcontent h4 {
 	color:#fefefe;
 }
 section {
@@ -1447,7 +1447,7 @@ color:#fff;
 
 @media (min-width: 768px) {
   section {
-    padding: 80px 0;
+    padding: 50px 0;
   }
 .btn-xl {
   font-size: 1.8rem;
@@ -1623,7 +1623,8 @@ padding:20px 60px;
 }
 
 .entermediadbcontent a {
-	color:#ddd;
+	color:#aaa;
+	text-decoration:underline;
 }
 
 .entermediadbcontent a:hover {
@@ -1718,9 +1719,7 @@ padding:20px 60px;
 	text-transform: uppercase;
 }
 .entermedia-introduction p {
-	font-size: 1.1rem;
-	padding:20px 0;
-	padding-right:30%;
+	padding:0;
 }
 .homepage-btn {
   font-weight: bold;
@@ -1729,6 +1728,8 @@ padding:20px 60px;
   text-transform: uppercase;
   background-color: #63AF57;
   border-color:#63AF57;
+  color:#fff!important;
+  text-decoration:none!important;
   border-radius: .8rem;
 }
 
@@ -1737,10 +1738,9 @@ padding:20px 60px;
     text-align: center;
 }
 
-.home-video {
-	padding:60px 0;
-}
-
+	.home-video {
+		padding:30px 0 0 0;
+	}	
 .account-services {
 	padding:10px 10px;
 }
@@ -1754,8 +1754,7 @@ padding:20px 60px;
 		font-size:1.8rem;
 	}
 	.entermedia-introduction p {
-		padding:20px 0;
-		padding-right:30%;
+		padding:20px 20% 0 20px;
 	}
 	h3 {
 	font-size:1.8rem;
@@ -1765,11 +1764,12 @@ padding:20px 60px;
 	}
 	.account-services {
 	padding:20px 80px;
-}
+	}
+
 }
 
 .thankyoucontact {
-	margin:60px; 
+	padding:60px 0 120px; 
 	text-align: center;
 }
 
