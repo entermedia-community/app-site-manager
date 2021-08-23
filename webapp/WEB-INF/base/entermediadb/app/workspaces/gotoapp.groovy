@@ -50,9 +50,9 @@ public void init()
     def servers = null;
 	if( !collections.isEmpty() )
 	{
-		servers = mediaarchive.query("entermedia_instances").orgroup("librarycollection", collections).search();
+		servers = mediaarchive.query("entermedia_instances").orgroup("librarycollection", collections).exact("instance_status","active").search();
 	}
-	//log.info("Collections " + collections.size() + " for user " + user.getId());
+	log.info("Found " + collections.size() + " Active Collections for user " + user.getId());
 	
 	String collectionid = null;
 	

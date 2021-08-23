@@ -60,7 +60,7 @@ public void init()
 			return;
 		}
 		context.putPageValue("status","nopermissions");
-		log.info("No permissions. Deleting: "+collectionid);
+		log.info("No permissions. User: "+user.getId()+" Deleting: "+collectionid);
 		return;
 	}
 	else
