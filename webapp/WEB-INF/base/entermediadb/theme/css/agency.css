@@ -582,7 +582,6 @@ label.error { color:#F93122; font-weight: normal; line-height: 1.2; padding: 3px
 	cursor: pointer;
 	opacity: .50;
 	background-color: rgba(255, 255, 255, 0.75);
-	
 }
 
 
@@ -611,6 +610,7 @@ text-align:center;
 	 flex-flow: row nowrap;
     -ms-flex-pack: start;
     justify-content: flex-start;
+    padding:.25rem 0rem;
 }
 .navbar-expand-sm .navbar-nav {
     -ms-flex-direction: row;
@@ -627,7 +627,11 @@ text-align:center;
 @media (min-width: 768px) {
 	.navbar-collapse { float: right; width:auto;}
 }
-
+@media (min-width: 992px) {
+#mainNav .navbar-nav .nav-item .nav-link {
+	margin:0 0 0 1em;
+}
+}
 
 .topicons { float: right;  min-width: 300px; text-align: right; padding: 5px 0 10px;}
 .topicons .btn-sm { padding:2px 14px; font-weight: bold;}
