@@ -42,10 +42,14 @@
 	#end
 	<div id="applicationcontent" class="applicationcontent applicationcollective #if($browser.inApp()) inapp #end">
 		#set( $usersidebarhidden = $userprofile.get("usersidebarhidden"))
-		#if(!$browser.inApp())
+		#if (!$usersidebarhidden)
+			#set( $usersidebarhidden = 'false'))
+		#end
+		
+		#if($user && !$browser.inApp())
 			$pages.include("$apphome/components/sidebars/user/index.html")
 		#end
-		<div class="account-content #if($usersidebarhidden && $usersidebarhidden != 'false') account-content-fullwidth #end">
+		<div class="emrightcontent #if($user && $usersidebarhidden == 'false') empushcontent #end emmaincontent" >
             $pages.includeContent()
         </div>
     </div>

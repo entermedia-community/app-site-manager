@@ -145,6 +145,7 @@ img::-moz-selection {
 	text-decoration: none;
 }
 
+
 header.masthead {
   
   color: white;
@@ -1862,8 +1863,7 @@ padding:20px 60px;
 
 
 .project-title {
-    height: 72px;
-    padding: 5px;
+    padding: 0 0 5px;
     font-weight: bold;
     font-size: 1.3rem;
 }
