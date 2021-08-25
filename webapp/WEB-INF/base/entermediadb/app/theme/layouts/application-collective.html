@@ -43,7 +43,7 @@
 	<div id="applicationcontent" class="applicationcontent applicationcollective #if($browser.inApp()) inapp #end">
 		#set( $usersidebarhidden = $userprofile.get("usersidebarhidden"))
 		#if (!$usersidebarhidden)
-			#set( $usersidebarhidden = 'false'))
+			#set( $usersidebarhidden = 'false') 
 		#end
 		
 		#if($user && !$browser.inApp())
