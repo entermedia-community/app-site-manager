@@ -201,6 +201,7 @@ private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSe
 					.exact("collectionid", collectionid)
 					.exact("isbillingcontact", "true")
 					.search();
+			log.info("Reviewing "+invoiceMembers.size()+" members for:"+collectionid);
 			for (Iterator teamIterator = invoiceMembers.iterator(); teamIterator.hasNext();) {
 				Data member = teamSearcher.loadData(teamIterator.next());
 				User contact = mediaArchive.getUser(member.getValue("followeruser"));
@@ -252,6 +253,7 @@ private void sendEmail(MediaArchive mediaArchive, User contact, Data invoice, St
 	objects.put("supporturl", supportUrl);
 	objects.put("actionurl", actionUrl);
 	templateEmail.send(objects);
+	log.info("Email sent to: "+contact.getEmail());
 }
 
 private String getSiteRoot() {
