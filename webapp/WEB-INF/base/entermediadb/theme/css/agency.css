@@ -1548,6 +1548,7 @@ padding:20px 60px;
 .navbar-container {
 	display:block;
 	background-color: #000;
+	margin-bottom:0;
 }
 .navbar-collective {
 	padding:0;
