@@ -1864,11 +1864,11 @@ padding:20px 60px;
 
 
 .project-title {
-    padding: 0 0 5px;
+    padding:0 0 5px;
+    margin-top:-20px;
     font-weight: bold;
     font-size: 1.3rem;
 }
-
 
 .navbar-collective {
 	font-family: 'Oswald', sans-serif;
@@ -1877,7 +1877,7 @@ padding:20px 60px;
 	text-transform: uppercase;
 	list-style: none;
 	margin:0;
-	padding:0 0 5px;
+	padding:2px 0 0 0;
 	min-width: 300px;
 	
 }
@@ -1898,4 +1898,15 @@ padding:20px 60px;
 
 .applicationcollective .col-left .emtree {
 	font-size:.9rem;
+}
+
+.sidebar-box-header {
+    border-top: 1px solid #e0e0e0;
+}
+.sidebar-list li.current {
+	background-color: transparent!important;
+}
+
+.sidebar-list li.current a {
+	background-color: #c9e8f2;
 }

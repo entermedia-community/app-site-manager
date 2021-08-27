@@ -51,12 +51,8 @@
 	data-editmode='$!user.get("oe_edit_mode")'>
 	
 	
-	#set($preview = $context.getRequestParameter("preview"))
-	#if($preview=="true")
-		$pages.include("/${siteid}/app/theme/layouts/navigation2.html")
-	#else
-		$pages.include("/${siteid}/app/theme/layouts/navigation.html")
-	#end
+
+	$pages.include("/${siteid}/app/theme/layouts/navigation.html")
 	 
 	<div id="applicationcontent" class="entermediadbcontent">
             $pages.includeContent()

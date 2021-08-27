@@ -58,8 +58,8 @@
 	<ul class="sidebar-list" >
 		#if( $librarycol)
 			<li class="current">
-				<a href="$sitelink/app/collective/community/index.html?collectionid=$librarycol.id&goaltrackerstaff=*" >
-				<i class="fas fa-sitemap"></i> Workspace ($librarycol.name) #if( $modcollections.contains($librarycol.getId()) )<i class="fas fa-bell fa-xs" style="color:orange"></i>#end
+				<a href="$sitelink/app/collective/community/index.html?collectionid=$librarycol.id&goaltrackerstaff=*" title="[[Workspace]] $librarycol.name" >
+				<i class="fas fa-sitemap"></i> $librarycol.name #if( $modcollections.contains($librarycol.getId()) )<i class="fas fa-bell fa-xs" style="color:orange"></i>#end
 				</a>
 			</li>
 		#end
@@ -71,8 +71,8 @@
 					#foreach($usr in $organizationsuser)
 						#if ($usr.getValue("collectionid") == $ohit.getId() && $modcollections.contains($ohit.getId()))
 					<li class="#if($selectedproject==$ohit.id) current #end">
-						<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" >
-						<i class="fas fa-sitemap"></i> Workspace ($ohit.name) <i class="fas fa-bell fa-xs" style="color:orange"></i>
+						<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" title="[[Workspace]] $ohit.name" >
+						<i class="fas fa-sitemap"></i> $ohit.name <i class="fas fa-bell fa-xs" style="color:orange"></i>
 						</a>
 					</li>
 						#end
@@ -85,42 +85,53 @@
 	##end
 	
 	#if($canviewsettings)
-		<div style="padding:20px 20px;">
-			<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]">[[Add a Workspace]]</a>
+		<div style="padding:10px 0 0; text-align:center;">
+			<a href="$apphome/site/sitedeployer/add/addorganization.html" class="emdialog btn btn-sm btn-primary" title="[[Add a Project]]"><i class="fas fa-plus"></i> [[Add a Workspace]]</a>
 		</div>
     #end
     
     </div>
-   
+   <div class="sidebar-box-header" style="margin-top:20px;">[[Profile]]
+   <a href="$sitelink/app/users/$user.getId()/index.html" class="float-right"><i class="fa fa-gear"></i></a>
+   </div>
    <div class="sidebar-box-content" style="padding:0;">
     	<ul class="sidebar-list">
-		<li class="#if($appsection == "profile") current #end"><a href="$sitelink/app/users/$user.getId()/index.html"><i class="fa fa-user"></i> [[Profile]]</a></li>
-		
-		<li class="#if($appsection == "activity") current #end">
-			<a href="$sitelink/app/activity/index.html">
-			<i class="fa fa-comment"></i> [[All Chats]]
-			</a>
+		<li class="#if($appsection == "activity") current #end" style="width:110px; float:left;">
+			<a href="$sitelink/app/activity/index.html"  >
+			<i class="fa fa-comment"></i> [[All Chats]]</a>
 		</li>
-		<li class="#if($appsection == "messages") current #end">
 		#if($canviewsettings)
-			<a href="$sitelink/app/messages/index.html">
+		<li  class="#if($appsection == "messages") current #end" style="border-left:1px solid #6666;width:139px; float:left;">
+			<a href="$sitelink/app/messages/index.html" >
 			#if($pendingmessages && !$pendingmessages.isEmpty())
 			<i class="fa fa-comment"></i> [[Direct Chat]] <i class="fas fa-bell fa-xs" style="color:orange"></i>
 			#else
 			<i class="fa fa-comment"></i> [[Direct Chat]]
 			#end
 			</a>
-		#end	
 		</li>
+		#end
+		
+		
+		#if($canviewsettings)
+		<li class="#if($appsection == "mytasks") current #end" style="width:110px; float:left;">
+			<a href="$sitelink/app/users/tasks/mytasks.html?goaltrackerstaff=$user.getId()"><i class="fas fa-hammer"></i> [[My Tasks]]</a>
+		</li>
+		<li class="#if($appsection == "completed") current #end" style="border-left:1px solid #6666;width:139px; float:left;">
+		<a href="$sitelink/app/users/tasks/report.html?collectionid=*&goaltrackerstaff=*"><i class="far fa-file-alt"></i> [[Completed]]</a>
+		</li>
+		#end
+		</ul>
+		<div class="clearfix"></div>
 		##if($userprojectsids.size() )
 		#if($canviewsettings)
-		<li class="#if($appsection == "mytasks") current #end"><a href="$sitelink/app/users/tasks/mytasks.html?goaltrackerstaff=$user.getId()"><i class="fas fa-hammer"></i> [[My Tasks]]</a></li>
-		<li class="#if($appsection == "tasks") current #end">
+		<div class="sidebar-box-header" style="margin-top:0px;">[[Tickets]]</div>
 			#if ($canviewsettings)
 				#set($args = "goaltrackerstaff=*")
 			#end
-			<a href="$sitelink/app/users/tasks/index.html?$!{args}"><i class="fa fa-clipboard-check"></i> [[Open Tasks]]</a>
-			<div style="padding:2px 20px 9px;">
+			
+			<div style="padding:4px 10px 4px;">
+			<a href="$sitelink/app/users/tasks/index.html?$!{args}" class="badge badge-success">[[All]]</a>
 			<a href="$sitelink/app/users/tasks/search.html?ticketlevel=1&$!{args}" class="badge badge-success">[[Level 1]]</a>
 			<a href="$sitelink/app/users/tasks/search.html?ticketlevel=2&$!{args}" class="badge badge-success">[[Level 2]]</a>
 			<a href="$sitelink/app/users/tasks/search.html?ticketlevel=3&$!{args}" class="badge badge-success">[[Unbudgeted]]</a>
@@ -129,27 +140,26 @@
 			<a href="$sitelink/app/users/tasks/search.html?ticketlevel=AXB-Qlolcrxb1D69MSvw&$!{args}" class="badge badge-success">[[Sessions]]</a>
 			<a href="$sitelink/app/users/tasks/search.html?ticketlevel=marketing&$!{args}" class="badge badge-success">[[Marketing]]</a>
 			</div>
-		</li>
 		#end
 		##end
+		
 		#if($canviewsettings)
-		<li class="#if($appsection == "completed") current #end"><a href="$sitelink/app/users/tasks/report.html?collectionid=*&goaltrackerstaff=*"><i class="far fa-file-alt"></i> [[Completed Tasks]]</a></li>
-		#end
-		#if($canviewsettings)
-		<li class="#if($appsection == "tixreport") current #end"><a href="$sitelink/app/users/tasks/tixreport.html?goaltrackerstaff=$user.getId()"><i class="fas fa-chart-line"></i> [[Tix Report]]</a></li>
-		#end
+		<div class="sidebar-box-header" style="margin-top:0px;">[[Admin]]</div>
+		<ul class="sidebar-list" style="margin-bottom:10px;">
+		
+		<li class="#if($appsection == "tixreport") current #end" style="width:110px; float:left;">
+			<a href="$sitelink/app/users/tasks/tixreport.html?goaltrackerstaff=$user.getId()"><i class="fas fa-chart-line"></i> [[Tix Report]]</a>
+		</li>
+		<li class="#if($appsection == "clients") current #end"  style="border-left:1px solid #6666;width:139px; float:left;">
+			<a href="$sitelink/app/clients/index.html" ><i class="fas fa-users"></i> [[Clients]]</a>
+		</li>		
 
-		#if($canviewsettings)
-		<li class="#if($appsection == "monitor") current #end"><a href="$sitelink/app/monitor/index.html"><i class="fas fa-network-wired"></i> [[Monitor]]</a></li>
-		#end
-		#if($canviewsettings)
-		<li class="#if($appsection == "un-map") current #end"><a href="$sitelink/app/users/tasks/un-map.html?goaltrackerstaff=$user.getId()"><i class="fas fa-globe"></i> [[U.N. DNS Map]]</a></li>
-		#end
-		#if($canviewsettings)
-		<li class="#if($appsection == "clients") current #end"><a href="$sitelink/app/clients/index.html"><i class="fas fa-users"></i> [[Clients]]</a></li>
+##		<li class="#if($appsection == "monitor") current #end"><a href="$sitelink/app/monitor/index.html"><i class="fas fa-network-wired"></i> [[Monitor]]</a></li>
+##		<li class="#if($appsection == "un-map") current #end"><a href="$sitelink/app/users/tasks/un-map.html?goaltrackerstaff=$user.getId()"><i class="fas fa-globe"></i> [[U.N. DNS Map]]</a></li>
+
+		</ul>
 		#end
 		
-		</ul>
     </div> 
     
 </div>
