@@ -60,6 +60,10 @@ a.badge-success {
 }
 
 
+.table-striped a {
+	color:#000;	
+}
+
 .applicationcollective a {
 	color:#222;
 }

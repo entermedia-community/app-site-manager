@@ -53,7 +53,7 @@
 	#set($selectedproject = $librarycol.getId())
 
 	
-	<div style="height: 200px; overflow-y:scroll;">
+	<div style="#if($collectives.size() > 4) height: 200px; overflow-y:auto; #end ">
 	#set( $modcollections = $chatManager.loadCollectionsModified($collectives,$user.getId() ) )
 	<ul class="sidebar-list" >
 		#if( $librarycol)
@@ -92,13 +92,13 @@
     
     </div>
    <div class="sidebar-box-header" style="margin-top:20px;">[[Profile]]
-   <a href="$sitelink/app/users/$user.getId()/index.html" class="float-right"><i class="fa fa-gear"></i></a>
+   <a href="$sitelink/app/users/$user.getId()/index.html" class="float-right"><i class="fas fa-users-cog"></i></a>
    </div>
    <div class="sidebar-box-content" style="padding:0;">
     	<ul class="sidebar-list">
 		<li class="#if($appsection == "activity") current #end" style="width:110px; float:left;">
 			<a href="$sitelink/app/activity/index.html"  >
-			<i class="fa fa-comment"></i> [[All Chats]]</a>
+			<i class="fa fa-comments"></i> [[All Chats]]</a>
 		</li>
 		#if($canviewsettings)
 		<li  class="#if($appsection == "messages") current #end" style="border-left:1px solid #6666;width:139px; float:left;">
@@ -118,7 +118,7 @@
 			<a href="$sitelink/app/users/tasks/mytasks.html?goaltrackerstaff=$user.getId()"><i class="fas fa-hammer"></i> [[My Tasks]]</a>
 		</li>
 		<li class="#if($appsection == "completed") current #end" style="border-left:1px solid #6666;width:139px; float:left;">
-		<a href="$sitelink/app/users/tasks/report.html?collectionid=*&goaltrackerstaff=*"><i class="far fa-file-alt"></i> [[Completed]]</a>
+		<a href="$sitelink/app/users/tasks/report.html?collectionid=*&goaltrackerstaff=*"><i class="far fa-tasks"></i> [[Completed]]</a>
 		</li>
 		#end
 		</ul>

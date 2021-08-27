@@ -8,7 +8,8 @@
 #end	
 #if( !$following)
 		#if ($user && !$following)
-		<h3>[[JOIN THE PROJECT]]</h3>
+		##<h3 style="padding-top:10px;">[[JOIN THE PROJECT]]</h3>
+		<div style="padding:10px 0">
 			<form name="joinprojectform" 
 				class="ajaxform showwaiting"
 				id="joinprojectform" 
@@ -28,12 +29,13 @@
 			#if ($canviewsettings)
 				<input type="hidden" name="field" value="ontheteam" />
 				<input type="hidden" name="ontheteam.value" value="true" />
-				<input type="submit" class="btn btn-success" value="[[Join]]" />
+				<a class="btn btn-primary submitform"><i class="fas fa-sign-in-alt"></i> [[Join This Project]]</a>
 			#else
-				<input type="submit" class="btn btn-success" value="[[Request Access]]" />
+				<a class="btn btn-primary submitform"><i class="fas fa-sign-in-alt"></i> [[Request Access]]</a>
 			#end
 			##<div class="ajaxprogress"><img src="$apphome/components/search/images/spinner.gif"/></div>
 			</form>
+			</div>
 		#end
 	<div class="subscribe-headline">
 		#if( $caneditcollection)
@@ -63,13 +65,13 @@
 
 #set( $team = $mediaarchive.query("librarycollectionusers").exact("collectionid",$collectionid).exact("ontheteam",true).search($context) )
 
-#if($canviewsettings)
 <h4>
-<div class="float-right">
-<a class="emdialog" data-cancelsubmit="true" title="View Team" href="$applink/collective/channel/subscribers/teamlist.html?collectionid=$librarycol.getId()">
-$team.size()</a>
-</div>
-#end
+	#if($canviewsettings && $team.size()>0)
+	<div class="float-right">
+	<a class="emdialog btn btn-sm btn-light" data-cancelsubmit="true" title="View Team ($team.size())" href="$applink/collective/channel/subscribers/teamlist.html?collectionid=$librarycol.getId()">
+	<i class="fas fa-list"></i></a>
+	</div>
+	#end
 
 <i class="fas fa-users"></i> [[Team]]</h4>
 
@@ -116,19 +118,21 @@ $team.size()</a>
 	#if($subscribers)
 	<a class="emdialog" data-cancelsubmit="true" title="View Pending Invites" href="$apphome/collective/channel/subscribers/subscriberslist.html?collectionid=$librarycol.getId()"
 	style="margin-bottom:5px;">
-	<strong><i class="fas fa-user"></i> $subscribers.size() [[Join Requests]]</strong></a>
+	<i class="fas fa-user"></i> $subscribers.size() [[Join Requests]]</a>
 	#end	
 	
 	##ACTIONS
 	#if( $caneditcollection)
 	<div class="text-right">
- 	<a href="$applink/collective/channel/subscribers/addnew.html?collectionid=${collectionid}" class="emdialog btn btn-xs btn-light" title="[[Add New User to Project]]" style="margin-bottom:5px;">
+	
+	<a href="$applink/collective/channel/subscribers/usersearch.html?collectionid=${collectionid}" class="emdialog  btn btn-sm btn-light" title="[[Search Existing User]]"  style="margin-bottom:5px;">
+	<i class="fas fa-search"></i> [[Add Team Member]]
+	</a>
+	
+	 	<a href="$applink/collective/channel/subscribers/addnew.html?collectionid=${collectionid}" class="emdialog btn btn-sm btn-light" title="[[Add New User to Project]]" style="margin-bottom:5px;">
 	<i class="fas fa-plus"></i> [[New User]]
 	</a> 
 	
-	<a href="$applink/collective/channel/subscribers/usersearch.html?collectionid=${collectionid}" class="emdialog  btn btn-xs btn-light" title="[[Search Existing User]]"  style="margin-bottom:5px;">
-	<i class="fas fa-search"></i> [[Add Team Member]]
-	</a>
 	</div>
 	#end
 
