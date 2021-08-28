@@ -1,3 +1,4 @@
+
 ##Verify if user was tracked
 #if( !$selecteduser)
 	#set($selecteduser = $user)
@@ -21,7 +22,10 @@
 	#set($x = $oids.add($ohit.collectionid))
 #end
 
-<div style="max-width:1000px; margin:0 auto; padding:20px 1%">
+
+
+
+<div style="margin:0 auto; padding:0 20px">
 	
 		#if(!$oids)
 		<h3>[[Welcome to Entermedia]]</h3>	
@@ -56,8 +60,8 @@
 			#end
 			<div class="project-item " style='border:2px solid #01b34f; #if($link) background-image: url("#urlencode($link)");#else background-image: url($apphome/theme/images/emprojectdefault.png); #end'>
 			<div class="project-item-box ">	
-			<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" 
-				class="project-title #if($selectedproject==$ohit.id) active #end" style="color:white">
+			<a href="$applink/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" 
+				class="project-item-box-title #if($selectedproject==$ohit.id) active #end">
 			$ohit.name
 			#if( $modcollections.contains($ohit.getId())) * #end
 			</a>
@@ -79,7 +83,7 @@
 		#set( $organizations = $mediaarchive.query("librarycollection").ids($doids).orgroup("organizationstatus","disabled|closed").sort("name").hitsPerPage(200).search($context) )
 		#set( $modcollections = $chatManager.loadCollectionsModified($organizations,$user.getId() ) )
 		#foreach( $ohit in $organizations )
-			<a href="$sitelink/app/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" 
+			<a href="$applink/collective/community/index.html?collectionid=$ohit.id&goaltrackerstaff=*" 
 				class="project-title #if($selectedproject==$ohit.id) active #end">
 			$ohit.name
 			#if( $modcollections.contains($ohit.getId())) * #end
