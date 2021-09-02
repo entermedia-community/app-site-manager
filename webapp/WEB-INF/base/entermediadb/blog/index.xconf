@@ -1,3 +1,4 @@
 <page>
   <inner-layout>${applicationid}/theme/layouts/bloglayout.html</inner-layout>
+    <page-action name="ProjectModule.loadUploads"/>
 </page>
