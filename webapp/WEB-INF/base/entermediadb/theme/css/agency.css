@@ -1570,6 +1570,9 @@ padding:20px 60px;
 	margin:15px 15px 0 0 ;
 }
 
+.collectivemaincol {
+	min-height: 380px;
+}
 .chatterbox-messages {
    min-height: 300px;
 }
@@ -1991,3 +1994,9 @@ padding:20px 60px;
 .sidebar-list li.current a {
 	background-color: #c9e8f2;
 }
+
+.project-item {
+	min-width: 245px;
+	height: 135px;
+}
+
