@@ -45,6 +45,9 @@ body {
 	}
 }
 
+.applicationcontent {
+    font-size:17px;
+}
 
 a {
   color: #ddd; 
@@ -1567,6 +1570,10 @@ padding:20px 60px;
 	margin:15px 15px 0 0 ;
 }
 
+.chatterbox-messages {
+   min-height: 300px;
+}
+
 .chat-channels {
 	padding:10px 15px;
 	
@@ -1613,8 +1620,25 @@ padding:20px 60px;
 	background-color:#fff;
 }
 
+@media (max-width: 900px) {
+	#mainNav .navbar-nav .nav-item .nav-link {
+		font-size: 0.75rem;
+		padding:1rem 0.5rem 0.8rem 0.8rem;
+  		font-weight: bold;
+  		letter-spacing:0.75px;
+	}
+
+    #mainNav .navbar-nav .nav-item:nth-of-type(1)  .nav-link {
+        padding:1rem 0.5rem 0.75rem 0;
+    }
+}
+
+
 
 @media (max-width: 767px) {
+    .entermedia-header {
+        padding: 15px 15px 0px;
+    }
 	section#introduction {
 	  padding:86px 0 50px;
 	}	
@@ -1626,10 +1650,59 @@ padding:20px 60px;
 		font-weight: bold;
 		padding:.95rem .65rem;
 	}
-	#mainNav .nav-item .nav-link {
-		font-size: 1rem;
+    #mainNav .navbar-nav {
+        padding:0;
+    }
+
+	#mainNav .navbar-nav .nav-item .nav-link {
+		font-size: 0.75rem;
+		padding:1rem 0rem 0.8rem 0.8rem;
   		font-weight: bold;
+  		letter-spacing:0.5px;
 	}
+
+    #mainNav .navbar-nav .nav-item:nth-of-type(1)  .nav-link {
+        padding:1rem 0 0.75rem 0;
+    }
+
+}
+
+@media (max-width: 640px) {
+    .entermedia-header {
+        padding: 15px 15px 0px;
+    }
+	
+    #mainNav .navbar-nav {
+        padding:0;
+    }
+
+	#mainNav .navbar-nav .nav-item .nav-link {
+		padding:0.5rem 0rem 0.8rem 0.8rem;
+  		letter-spacing:0.5px;
+	}
+
+    #mainNav .navbar-nav .nav-item:nth-of-type(1)  .nav-link {
+        padding:0.5rem 0rem 0.75rem 0;
+    }
+}
+
+@media (max-width: 360px) {
+    .entermedia-header {
+        padding: 15px 15px 0px;
+    }
+	
+    #mainNav .navbar-nav {
+        padding:0;
+    }
+
+	#mainNav .navbar-nav .nav-item .nav-link {
+		padding:1rem 0rem 0.8rem 0.8rem;
+  		letter-spacing:0.5px;
+	}
+
+    #mainNav .navbar-nav .nav-item:nth-of-type(1)  .nav-link {
+        padding:1rem 0 0.75rem 0;
+    }
 }
 
 .entermediadbcontent a {
@@ -1654,6 +1727,10 @@ padding:20px 60px;
 	background-color:transparent;
 	box-shadow:none;
 	border:0 none;
+}
+
+.sidebarbox {
+    margin: 0px 0 40px;
 }
 
 .entermediadbcontent .collective-sidebar {
