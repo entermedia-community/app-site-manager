@@ -2,8 +2,6 @@
 	<property name="virtual">true</property>
 	<path-action name="OauthModule.login"/>
 	<property name="provider">google</property>
-	<path-action name="Admin.redirect">
-		  <redirectpath>/${applicationid}/account/index.html</redirectpath>
-	</path-action>
+
 
 </page>
