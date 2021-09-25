@@ -6,6 +6,8 @@
   <property name="catalogid">entermediadb/catalog</property>
   <property name="applicationid">entermediadb/app</property>
 
+  <property name="allowguestregistration">true</property>
+
   <property name="login-path">/${applicationid}/authentication/login.html</property>
     
   <path-action name="MediaArchiveModule.loadApplicationId"/>
