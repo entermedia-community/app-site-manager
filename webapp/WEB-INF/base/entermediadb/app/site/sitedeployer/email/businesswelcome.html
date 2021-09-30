@@ -30,7 +30,7 @@ Your unique application address (URL):
 	#set($null = $calendar.add(6, $days))
 	
 	
-	<a href="$link">$link</a>
+	<a href="#urlescape($link)">$link</a>
 	</p>
 	<p>
 	or Copy/Paste Entermedia Key below into app:<br> $entermediakey

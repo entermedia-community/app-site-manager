@@ -9,7 +9,8 @@
 
 <p>$user.getScreenName() [[added you to]] <strong>$librarycol.getName()</strong> [[as a Team Member]].</p>
 
-<p><a href="$!siteroot$!applink/collective/community/index.html?entermedia.key=${entermediakey}&collectionid=$librarycol.getId()">[[Log in to the project]]</a>.</p>
+#set( $link = "$!siteroot$!applink/collective/community/index.html?entermedia.key=${entermediakey}&collectionid=$librarycol.getId()" )
+<p><a href="#urlescape($link)">[[Log in to the project]]</a>.</p>
 
 <!-- $context.siteRoot -->
 
