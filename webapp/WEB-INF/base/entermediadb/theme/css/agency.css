@@ -67,11 +67,12 @@ a.badge-success {
 	color:#000;	
 }
 
-.applicationcollective a {
+.applicationcollective a, .modal-body a {
 	color:#222;
 }
 
-.applicationcollective a:hover {
+.applicationcollective a:hover, 
+.modal-body a:hover  {
 	color:#000;
 }
 
