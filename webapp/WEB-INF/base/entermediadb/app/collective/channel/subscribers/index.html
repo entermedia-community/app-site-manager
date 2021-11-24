@@ -81,33 +81,34 @@
 	<div class="row no-gutters" style="margin-bottom:1rem;">
 	  #set($odd = true)
 	  #foreach( $hit in $team)
-		
 	  	#set( $followeruser = $mediaarchive.getUser($hit.followeruser) )
-	    #set( $userlink = "$apphome/users/${followeruser.getId()}/${followeruser.getAnonNickName()}.html")
-		#set( $userimageurl = $mediaarchive.asLinkToProfile($followeruser.assetportrait) )
-		#if(!$userimageurl)
-			#set( $userimageurl = "$applink/theme/images/user.svg" )
-		#end
-	
-		<div class="col-lg-12 col-xl-6" >
-		  <div class="teammember" style="#if($odd) margin-right:7px;#end">
-		  	
-		  	<div style="position: absolute; width:38px;" class="table-subscribers">
-			<a href="#esc($userlink)" style="display:inline-block; height:40px" title="$!followeruser.getName() $!followeruser.getEmail()">
-			<img  src="${userimageurl}"  alt="$!followeruser.getName() $!followeruser.getEmail()" class="img-fluid align-middle usericon" 
-				style="position:relative; top:50%; transform: translateY(-50%);"></a>
+	  	#if($followeruser)
+		    #set( $userlink = "$apphome/users/${followeruser.getId()}/${followeruser.getAnonNickName()}.html")
+			#set( $userimageurl = $mediaarchive.asLinkToProfile($followeruser.assetportrait) )
+			#if(!$userimageurl)
+				#set( $userimageurl = "$applink/theme/images/user.svg" )
+			#end
+		
+			<div class="col-lg-12 col-xl-6" >
+			  <div class="teammember" style="#if($odd) margin-right:7px;#end">
+			  	
+			  	<div style="position: absolute; width:38px;" class="table-subscribers">
+				<a href="#esc($userlink)" style="display:inline-block; height:40px" title="$!followeruser.getName() $!followeruser.getEmail()">
+				<img  src="${userimageurl}"  alt="$!followeruser.getName() $!followeruser.getEmail()" class="img-fluid align-middle usericon" 
+					style="position:relative; top:50%; transform: translateY(-50%);"></a>
+				</div>
+			  	<div style="margin-left:38px; height:40px; position:relative;">
+			    <div style="position:relative; top:50%; transform: translateY(-50%);">
+			    	<a href="#esc($userlink)" title="$!followeruser.getName() $!followeruser.getEmail()">$!followeruser.getAnonNickName()</a></div> 
+			   	<div>
+			        </div>
+				<i></i>
+			    </div>
+			    
+			  </div>
 			</div>
-		  	<div style="margin-left:38px; height:40px; position:relative;">
-		    <div style="position:relative; top:50%; transform: translateY(-50%);">
-		    	<a href="#esc($userlink)" title="$!followeruser.getName() $!followeruser.getEmail()">$!followeruser.getAnonNickName()</a></div> 
-		   	<div>
-		        </div>
-			<i></i>
-		    </div>
-		    
-		  </div>
-		</div>
-		#set($odd = !$odd)
+			#set($odd = !$odd)
+		#end
 	  #end
 	</div>
 
@@ -116,7 +117,7 @@
 	##PENDING
 	#set( $subscribers = $mediaarchive.query("librarycollectionusers").exact("collectionid",$collectionid).exact("ontheteam",false).search($context) )
 	#if($subscribers)
-	<a class="emdialog" data-cancelsubmit="true" title="View Pending Invites" href="$apphome/collective/channel/subscribers/subscriberslist.html?collectionid=$librarycol.getId()"
+	<a class="emdialog" data-cancelsubmit="true" title="[[View Pending Invites]]" href="$apphome/collective/channel/subscribers/subscriberslist.html?collectionid=$librarycol.getId()"
 	style="margin-bottom:5px;">
 	<i class="fas fa-user"></i> $subscribers.size() [[Join Requests]]</a>
 	#end	
