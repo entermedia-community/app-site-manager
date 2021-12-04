@@ -157,6 +157,9 @@
 ##		<li class="#if($appsection == "monitor") current #end"><a href="$sitelink/app/monitor/index.html"><i class="fas fa-network-wired"></i> [[Monitor]]</a></li>
 ##		<li class="#if($appsection == "un-map") current #end"><a href="$sitelink/app/users/tasks/un-map.html?goaltrackerstaff=$user.getId()"><i class="fas fa-globe"></i> [[U.N. DNS Map]]</a></li>
 
+		<li class="#if($appsection == "invoices") current #end"  style="border-right:1px solid #6666;width:139px; float:left;">
+			<a href="$sitelink/app/collective/services/invoicepaidyear.html" ><i class="fas fa-file-invoice-dollar"></i> [[Invoices]]</a>
+		</li>
 		</ul>
 		#end
 		
