@@ -279,7 +279,7 @@ public class StripePaymentProcessor {
 	}
 
 	protected boolean process(MediaArchive inArchive, User inUser, Data payment, String inToken) {
-		log.info("processing order with Stripe");
+		log.info("Payment: Processing order with Stripe");
 
 		Map<String, Object> chargeParams = new HashMap<String, Object>();
 		Money totalprice = new Money(payment.get("totalprice"));
@@ -288,10 +288,10 @@ public class StripePaymentProcessor {
 		boolean forcetestmode = Boolean.parseBoolean(payment.get("forcetestmode"));
 		boolean productionmode = inArchive.isCatalogSettingTrue("productionmode");
 		if (productionmode && !forcetestmode) {
-			log.info("Passing in prod mode");
+			log.debug("Passing in prod mode");
 			Stripe.apiKey = inArchive.getCatalogSettingValue("stripe_access_token");
 		} else {
-			log.info("Passing in test mode: " + String.valueOf(forcetestmode));
+			log.debug("Passing in test mode: " + String.valueOf(forcetestmode));
 			Stripe.apiKey = inArchive.getCatalogSettingValue("stripe_test_access_token");
 		}
 		String amountstring = totalprice.toShortString().replace(".", "").replace("$", "").replace(",", "");
@@ -354,8 +354,10 @@ public class StripePaymentProcessor {
 				float net = (float) balance.getNet() / 100;
 				payment.setProperty("net", String.valueOf(net));
 				payment.setProperty("stripechargeid", c.getId());
+				log.info("Payment: Stripe payment validated Id:"+c.getId());
 				return true;
 			} else {
+				log.info("Payment: Stripe payment failed.");
 				return false;
 			}
 		}

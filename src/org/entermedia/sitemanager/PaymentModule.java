@@ -214,6 +214,11 @@ public class PaymentModule extends BaseMediaModule
 	public void processPayment(WebPageRequest inReq)
 	{
 		String token = inReq.getRequestParameter("stripeToken");
+		String username =  inReq.getUserName();
+		User user = inReq.getUser();
+		String collectionid = inReq.findValue("collectionid");
+		inReq.putPageValue("collectionid", collectionid);
+		
 		MediaArchive archive = getMediaArchive(inReq);
 		Searcher payments = archive.getSearcher("transaction");
 		Data payment = payments.createNewData();
@@ -221,11 +226,16 @@ public class PaymentModule extends BaseMediaModule
 
 		payment.setValue("paymenttype","stripe" );
 		
-		boolean success = getOrderProcessor().process(archive, inReq.getUser(), payment, token);
+		Boolean isdonation = Boolean.parseBoolean(inReq.getRequestParameter("isdonation"));
+		payment.setValue("isdonation", isdonation );
+		
+		boolean success = getOrderProcessor().process(archive, user, payment, token);
 		if (success)
 		{
-			payment.setValue("paymentdate", new Date());
-			payment.setValue("userid", inReq.getUserName());
+			Date paymentdate = new Date();
+			payment.setValue("paymentdate", paymentdate);
+			payment.setValue("userid", username);
+			
 			String frequency = inReq.findValue("frequency");
 			if (frequency != null && frequency != "")
 			{
@@ -237,7 +247,27 @@ public class PaymentModule extends BaseMediaModule
 				plan.setValue("lastprocessed", new Date());
 				plan.setValue("planstatus", "active");
 				plans.saveData(plan);
+				
 				payment.setValue("paymentplan", plan.getId());
+			}
+			
+			payments.saveData(payment);
+			inReq.putPageValue("payment", payment);
+			
+			//Donation Receipt
+			if (isdonation) {
+				Searcher donationreceipt = archive.getSearcher("donationreceipt");
+				Data receipt = donationreceipt.createNewData();
+				receipt.setValue("paymentid", payment.getId());
+				receipt.setValue("amount", payment.getValue("totalprice"));
+				receipt.setValue("donor", user.getName());
+				receipt.setValue("collectionid", collectionid);
+				//receipt.setValue("paymentdate", paymentdate);
+				receipt.setValue("receiptstatus", "new");
+				
+				donationreceipt.saveData(receipt);
+				
+				inReq.putPageValue("receipt", receipt);
 			}
 
 			String invoicepayment = inReq.findValue("invoicepayment");
@@ -248,13 +278,17 @@ public class PaymentModule extends BaseMediaModule
 				invoice.setValue("paymentdate", new Date());
 				invoice.setValue("owner", inReq.getUserName());
 				invoice.setValue("transaction", payment.getId());
-				String collectionid = inReq.findValue("collectionid");
+				
 				invoice.setValue("collectionid", collectionid);
+				
 				archive.saveData("collectioninvoice", invoice);
 				inReq.removeSessionValue("current-cart");
 			}
 
-			payments.saveData(payment);
+			
+		}
+		else {
+			log.debug("Payment: failed.");
 		}
 
 	}
