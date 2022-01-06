@@ -4,7 +4,7 @@
 #set( $products = $mediaarchive.getInvoiceProductList($id))
 #set( $collection = $mediaarchive.query("librarycollection").exact("id",$invoice.getValue("collectionid")).searchOne() )
 
-
+<div style="width:100%; max-width:980px; margin: 0 auto;">
 <div class="card"
 	style="margin: 40px; max-width: 100%; text-align: left;">
 	<div class="card-body">
@@ -21,16 +21,24 @@
 			</div>
 		</div>
 	</div>
-	<div class="card-header">
-		<div class="row">
-			<div class="col-sm-4">
+	<div class="card-body">
+		<div class="row" style="background-color:#efefef; padding:10px 0;">
+			<div class="col-sm-6">
 					Invoice Number: $invoice.getValue("invoicenumber")
-			</div>
-			<div class="col-sm-4 text-center text-capitalize">
-					<h5>$collection</h5>
-			</div>
-			<div class="col-sm-4 text-right">
+					<br>
 					Created on: $!context.getDate($invoice.getValue("createdon"))
+			</div>
+			
+		</div>
+		<div class="row" style="margin-top:10px;">
+			<div class="col-sm-6">
+			Invoiced to:<br>
+				#set($invoicedto =$collection.getValue("invoicedto"))
+				#if($invoicedto)
+					$invoicedto
+				#else
+					$collection
+				#end
 			</div>
 		</div>
 	</div>
@@ -73,4 +81,5 @@
 			</table>
 		</div>
 	</div>
+</div>
 </div>

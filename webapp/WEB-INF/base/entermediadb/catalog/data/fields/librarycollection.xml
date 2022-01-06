@@ -275,4 +275,11 @@
   
   <property id="savestripecreditcard" index="true" stored="true"
 		editable="true" type="boolean">Save Stripe Credit card</property>
+		
+		
+	<property id="invoicedto" index="true" stored="true" viewtype="html" editable="true"   > 
+    <name> 
+      <language id="en"><![CDATA[Inviced to]]></language>  
+    </name> 
+  </property>
 </properties>
