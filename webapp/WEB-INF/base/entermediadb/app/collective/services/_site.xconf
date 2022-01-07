@@ -3,5 +3,7 @@
 	<property name="fullwidth">true</property>
 	<property name="collectivesection">billing</property>
 	<property name="invoicepayment">true</property>
+	
+	<path-action name="ProjectModule.loadCollection" />
 
 </page>
