@@ -201,7 +201,8 @@ private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSe
 					.exact("collectionid", collectionid)
 					.exact("isbillingcontact", "true")
 					.search();
-			log.info("Reviewing "+invoiceMembers.size()+" members for:"+collectionid);
+			Data workspace = mediaArchive.getData("librarycollection", collectionid)
+			log.info("Reviewing "+invoiceMembers.size()+" members for: "+workspace+ " ("+collectionid+")");
 			for (Iterator teamIterator = invoiceMembers.iterator(); teamIterator.hasNext();) {
 				Data member = teamSearcher.loadData(teamIterator.next());
 				User contact = mediaArchive.getUser(member.getValue("followeruser"));
@@ -212,13 +213,13 @@ private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSe
 						switch (iteratorType) {
 							case "notificationsent":
 								String actionUrl = getSiteRoot() + "/entermediadb/app/collective/services/paynow.html?invoiceid=" + invoice.getValue("id") + "&collectionid=" + collectionid;
-								sendEmail(mediaArchive, contact, invoice, "Invoice", "send-invoice-event.html", actionUrl);
+								sendEmail(mediaArchive, contact, invoice, "Invoice "+workspace, "send-invoice-event.html", actionUrl);
 								break;
 							case "notificationoverduesent":
-								sendEmail(mediaArchive, contact, invoice, "Overdue Invoice", "send-overdue-invoice-event.html");
+								sendEmail(mediaArchive, contact, invoice, "Overdue Invoice "+workspace, "send-overdue-invoice-event.html");
 								break;
 							case "notificationpaidsent":
-								sendEmail(mediaArchive, contact, invoice, "Payment Received", "send-paid-invoice-event.html");
+								sendEmail(mediaArchive, contact, invoice, "Payment Received "+workspace, "send-paid-invoice-event.html");
 								break;
 						}
 					}
