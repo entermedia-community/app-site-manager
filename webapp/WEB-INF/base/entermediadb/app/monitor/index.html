@@ -7,7 +7,7 @@
 	#set( $instances = $mediaarchive.query("entermedia_instances_monitor").exact("monitoringenable","true").sort("name").search() )
 	#if ($instances)
 		<div class="emdata">
-	    <table class="table table-striped">
+	    <table class="table table-striped table-hover">
 	        <thead>
 	            <tr class="tableheader">
 	                <th>[[Server Name]]</th>
@@ -48,7 +48,7 @@
 		            </td>
 					<td>
 					#if ($instancemonitor.monitoringurl)
-							<a href="$instancemonitor.monitoringurl" style="text-decoration: underline" targe="_blank">$instancemonitor.monitoringurl</a>
+							<a href="$instancemonitor.monitoringurl" style="text-decoration: underline" target="_blank">$instancemonitor.monitoringurl</a>
 						#end
 					</td>
 					
@@ -79,7 +79,7 @@
 							</form> 
 						#end
 						##Monitor - Only Admins
-						<a class="btn btn-xs btn-dark" target="_blank"  href="$home$sitelink/emshare2/views/modules/entermedia_instances/edit/edit.html?id=$!{instance.id}&viewid=entermedia_instancesgeneral&viewpath=entermedia_instances/entermedia_instancesgeneral&searchtype=entermedia_instances&detailsreadonly=false&preview=true"><i class="fas fa-database"></i></a>
+						<a class="btn btn-xs btn-dark" target="_blank"  href="$home$sitelink/emshare2/views/modules/entermedia_instances/edit/edit.html?id=$!{instance.id}&viewid=entermedia_instancesgeneral&viewpath=entermedia_instances/entermedia_instancesgeneral&searchtype=entermedia_instances&detailsreadonly=false&preview=true"><i class="fa fa-database"></i></a>
 						<a class="btn btn-xs btn-secondary emdialog" data-cancelsubmit="true" title="$!instancemonitor.name - Docker Stats" href="$applink/monitor/docker.html?instancemonitorid=$instancemonitor.getId()"><i class="fab fa-docker"></i></a>
 						<a class="btn btn-xs btn-secondary emdialog" data-cancelsubmit="true" title="$!instancemonitor.name - Container Versions Information" href="$applink/monitor/version.html?instancemonitorid=$instancemonitor.getId()"><i class="fas fa-info"></i></a>
 						#set( $color = $mediaarchive.healthColor($instancemonitor) )
