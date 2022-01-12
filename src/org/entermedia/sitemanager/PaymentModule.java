@@ -223,6 +223,9 @@ public class PaymentModule extends BaseMediaModule
 		Searcher payments = archive.getSearcher("transaction");
 		Data payment = payments.createNewData();
 		payments.updateData(inReq, inReq.getRequestParameters("field"), payment);
+		
+		payment.setValue("paymentemail", user.getEmail());  //match pp
+		payment.setValue("name", user.getName());  //match pp
 
 		payment.setValue("paymenttype","stripe" );
 		
@@ -251,9 +254,14 @@ public class PaymentModule extends BaseMediaModule
 				payment.setValue("paymentplan", plan.getId());
 			}
 			
+			payment.setValue("receiptstatus", "new");
+			
 			payments.saveData(payment);
 			inReq.putPageValue("payment", payment);
 			
+
+			/*
+			//TODO: in case different receipt required.
 			//Donation Receipt
 			if (isdonation) {
 				Searcher donationreceipt = archive.getSearcher("donationreceipt");
@@ -261,6 +269,7 @@ public class PaymentModule extends BaseMediaModule
 				receipt.setValue("paymentid", payment.getId());
 				receipt.setValue("amount", payment.getValue("totalprice"));
 				receipt.setValue("donor", user.getName());
+				receipt.setValue("donoremail", user.getEmail());
 				receipt.setValue("collectionid", collectionid);
 				//receipt.setValue("paymentdate", paymentdate);
 				receipt.setValue("receiptstatus", "new");
@@ -269,7 +278,9 @@ public class PaymentModule extends BaseMediaModule
 				
 				inReq.putPageValue("receipt", receipt);
 			}
-
+			*/
+			
+			
 			String invoicepayment = inReq.findValue("invoicepayment");
 			if ("true".equals(invoicepayment))
 			{
