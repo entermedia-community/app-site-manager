@@ -1,25 +1,24 @@
- <div class="oe-editable bodywebsite" id="edit-$postdata.id" data-dataid="$postdata.id" data-field="maincontent"   	data-searchtype="postdata" data-viewtype="html">
- 		$!postdata.maincontent
- 		
- </div>
- 
-#if( $user.oe_edit_mode == "postedit" )
+<div class="oe-editable bodywebsite" id="edit-$postdata.id" data-dataid="$postdata.id" data-field="maincontent"   	data-searchtype="postdata" data-viewtype="html">
+  		$!postdata.maincontent
+</div>
+  
+  #if( $user.oe_edit_mode == "postedit" )
 	<div class="editpostbtn">
 	<a href="${sitelink}/emshare2/views/modules/postdata/edit/edit.html?id=${postdata.id}&viewid=postdatageneral&viewpath=postdata/postdatageneral&searchtype=postdata&detailsreadonly=false&preview=true" class="btn btn-xs btn-light">Edit Post</a>
 	</div>
-#end
+	#end
 
-  	
-<div style="background-color: #061625; padding:20px; text-align:center">
-<strong style="font-size: 1.6rem;"><a class="emdialog btn btn-success homepage-btn" data-hidefooter="true" href="/entermediadb/app/site/sitedeployer/createsite.html" title="Try out the EnterMedia Database today">Get Started</a></strong>
-</div>
- 		
- 		
+
+
+
+
+
 <div class="bodywebsite">
 <section id="contact">
 <div class="container">
 <div class="row justify-content-md-center">
 <div class="col-lg-11">
+<a name="contactus">&nbsp;</a>
 <h2 id="getInTouch">Contact Us</h2>
 
 <form action="contact_sent.html" id="contactFormFooter" method="POST" name="sentMessage">
@@ -86,3 +85,19 @@ Cincinnati, OH 45215</div>
 </section>
 	
 </div>
+
+
+
+
+ <script type="text/javascript">
+         $("#contactFormFooter").validate({
+         	submitHandler: function(form) {
+         		if (grecaptcha.getResponse()) {
+         		form.submit();
+         		} 
+         		else {
+         		alert('Please confirm captcha to proceed');
+         		}
+         	}
+         });          
+      </script>

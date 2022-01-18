@@ -1626,7 +1626,7 @@ padding:20px 60px;
 
 @media (max-width: 900px) {
 	#mainNav .navbar-nav .nav-item .nav-link {
-		font-size: 0.75rem;
+		font-size: 0.72rem;
 		padding:1rem 0.5rem 0.8rem 0.8rem;
   		font-weight: bold;
   		letter-spacing:0.75px;
@@ -1659,8 +1659,8 @@ padding:20px 60px;
     }
 
 	#mainNav .navbar-nav .nav-item .nav-link {
-		font-size: 0.75rem;
-		padding:1rem 0rem 0.8rem 0.8rem;
+		font-size: 0.70rem;
+		padding:1rem 0rem 0.8rem 0.6rem;
   		font-weight: bold;
   		letter-spacing:0.5px;
 	}
