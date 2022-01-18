@@ -1683,6 +1683,7 @@ padding:20px 60px;
 	#mainNav .navbar-nav .nav-item .nav-link {
 		padding:0.5rem 0rem 0.8rem 0.8rem;
   		letter-spacing:0.5px;
+  		text-align: center;
 	}
 
     #mainNav .navbar-nav .nav-item:nth-of-type(1)  .nav-link {
