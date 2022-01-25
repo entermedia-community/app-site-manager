@@ -37,6 +37,15 @@
 <bean id="transactionManager" class="org.entermedia.transactions.TransactionManager"> 
 <property name="moduleManager"><ref bean="moduleManager"/></property>
 </bean>
+
+<bean id="FinanceModule" class="org.openinstitute.finance.FinanceModule">
+</bean>
+
+<bean id="financeManager" class="org.openinstitute.finance.FinanceManager"> 
+	<property name="moduleManager"><ref bean="moduleManager"/></property>
+</bean>
+
+
 </beans>
 
  
