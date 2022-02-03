@@ -90,9 +90,17 @@ public class SiteManager implements CatalogEnabled
 		objects.put("monitored", inReal);
 		objects.put("instance", inInstance);
 		objects.put("dates", DateStorageUtil.getStorageUtil().getTodayForStorage());
-		templatemail.send(objects);
-		inReal.setProperty("mailsent", "false");
-		inReal.setValue("alertcount", 0);
+
+		try
+		{
+			templatemail.send(objects);
+			inReal.setProperty("mailsent", "false");
+			inReal.setValue("alertcount", 0);
+		}
+		catch (Throwable ex)
+		{
+			log.error("Could not send email. Continuing",ex);
+		}
 	}
 
 	private void sendErrorNotification(Data inInstance, MultiValued inReal, MediaArchive inArchive) throws IOException
@@ -165,11 +173,16 @@ public class SiteManager implements CatalogEnabled
 		objects.put("instance", inInstance);
 //		objects.put("traceresult",traceresult);
 		log.info("Sending email to:"+ notifyemail);
-		templatemail.send(objects);
-		inReal.setProperty("mailsent", "true");
-		
+		try
+		{
+			templatemail.send(objects);
+			inReal.setProperty("mailsent", "true");
+		}
+		catch (Throwable ex)
+		{
+			log.error("Could not send email. Continuing",ex);
+		}
 		//sends mobile push notifications for server errors.
-		log.info("Sending error 'Push' notification.");
 		sendEMPushNotification(inArchive,inInstance,inReal);
 		
 	}
@@ -256,6 +269,8 @@ public class SiteManager implements CatalogEnabled
 	//Sends mobile push notification for errors. Called in "sendErrorNotification()" found at the top of this page.
 	private void sendEMPushNotification(MediaArchive mediaArchive,Data instanceData, MultiValued monitorData)
 	{
+		log.info("Sending error 'Push' notification.");
+
 		GoogleManager manager = (GoogleManager)mediaArchive.getBean("googleManager");
 		
 		//Create variables
