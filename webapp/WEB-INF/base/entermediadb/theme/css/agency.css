@@ -637,9 +637,11 @@ text-align:center;
 	.navbar-collapse { float: right; width:auto;}
 }
 @media (min-width: 992px) {
-#mainNav .navbar-nav .nav-item .nav-link {
-	margin:0 0 0 1em;
-}
+	#mainNav .navbar-nav .nav-item .nav-link {
+		margin:0 0 0 1em;
+		font-size:0.85rem;
+		padding:1.2em 1.4em!important;
+	}
 }
 
 .topicons { float: right;  min-width: 300px; text-align: right; padding: 5px 0 10px;}
