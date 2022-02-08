@@ -25,11 +25,6 @@
 <bean id="assetCountManager" class="org.entermedia.assetcount.AssetCountManager" scope="prototype">
 	<property name="moduleManager"><ref bean="moduleManager"/></property>
 </bean>
-<bean id="TransactionModule" class="org.entermedia.transactions.TransactionModule">
-</bean>
-<bean id="transactionManager" class="org.entermedia.transactions.TransactionManager"> 
-<property name="moduleManager"><ref bean="moduleManager"/></property>
-</bean>
 
 
 </beans>
