@@ -1,8 +1,6 @@
 <beans projectname="sitemanager" depends="entermedia">
 
 
-<bean id="PaymentModule" class="org.entermedia.sitemanager.PaymentModule">
-</bean>
 <bean id="SiteModule" class="org.entermedia.sitemanager.SiteModule">
 </bean>
 <bean id="siteManager" class="org.entermedia.sitemanager.SiteManager" scope="prototype">
@@ -22,11 +20,6 @@
 </bean>
 <bean id="speedManager" class="org.entermedia.speedtest.SpeedManager" scope="prototype">
 </bean>
-<bean id="InvoiceModule" class="org.entermedia.invoice.InvoiceModule">
-</bean>
-<bean id="invoiceManager" class="org.entermedia.invoice.InvoiceManager" scope="prototype">
-	<property name="moduleManager"><ref bean="moduleManager"/></property>
-</bean>
 <bean id="AssetCountModule" class="org.entermedia.assetcount.AssetCountModule">
 </bean>
 <bean id="assetCountManager" class="org.entermedia.assetcount.AssetCountManager" scope="prototype">
@@ -36,13 +29,6 @@
 </bean>
 <bean id="transactionManager" class="org.entermedia.transactions.TransactionManager"> 
 <property name="moduleManager"><ref bean="moduleManager"/></property>
-</bean>
-
-<bean id="FinanceModule" class="org.openinstitute.finance.FinanceModule">
-</bean>
-
-<bean id="financeManager" class="org.openinstitute.finance.FinanceManager"> 
-	<property name="moduleManager"><ref bean="moduleManager"/></property>
 </bean>
 
 
