@@ -777,83 +777,88 @@ public class SiteManager implements CatalogEnabled
 		Searcher instances = inArchive.getSearcher("entermedia_instances");
 		Data instance = (Data) instances.searchById((String) instanceMonitor.getValue("instanceid"));
 		Searcher servers = inArchive.getSearcher("entermedia_servers");
-		Data server = (Data) servers.searchById((String) instanceMonitor.getValue("primarycname"));
-		log.info("Scanning for Instance: " + instance.getName());
+		String primaryserver = (String) instanceMonitor.getValue("primarycname");
 		
-		String serverUrl = "http://" + (String) server.getValue("serverurl")  + "/stats.json";
-		Map<String, Object> allStats = httpGetRequest(serverUrl);
-		log.info("Scanning for serverUrl: " + serverUrl);		
-		
-		String nodeName = dockerInstanceName == null || dockerInstanceNode == null ? "" : dockerInstanceName.toString() + dockerInstanceNode.toString();
-		if (nodeName.isEmpty()) {
-			log.error("NodeName not configured on:" +instance.getName() + ", server: " + server.getName());
-			return;
-		}
-		Map<String, Object> node = null;
-		ArrayList<Map<String, Object>> nodes = (ArrayList<Map<String, Object>>) allStats.get("Nodes");
-		log.info("Scanning for node: " + nodeName);
-		for (int i =0; i < nodes.size(); i++) {
-			Map<String, Object> serverNode = nodes.get(i);
-			String serverName = (String) serverNode.get("Node");
-			if (serverName.equals(nodeName)) {
-				log.info("Found for node on URL: " + serverName);
-				node = serverNode;
-				break;
-			}			
-		}
-
-		instanceMonitor.setValue("snapshotstatus", map.get("snapshotStatus"));
-		instanceMonitor.setValue("lastsnapshot", map.get("lastSnapshot"));
-		instanceMonitor.setValue("emserverversion", map.get("serverVersion"));
-		instanceMonitor.setValue("lastSyncPullDate",map.get("pulldate"));
-		// String syncPull = (String) map.get("pulldate");
-		// if (syncPull != null || !syncPull.isEmpty()) {
-			// String[] dateArr = syncPull.split("T")[0].split("-");
-			// Calendar syncDate = new GregorianCalendar();
-			// syncDate.set(Calendar.YEAR, Integer.parseInt(dateArr[0]));
-			// syncDate.set(Calendar.MONTH, Integer.parseInt(dateArr[1]) -1);
-			// syncDate.set(Calendar.DATE, Integer.parseInt(dateArr[2]));
-			// String[] syncTime = syncPull.split("T")[1].split(":");
-			// syncDate.set(Calendar.HOUR, Integer.parseInt(syncTime[0]));
-			// syncDate.set(Calendar.MINUTE, Integer.parseInt(syncTime[1]));
-			// syncDate.set(Calendar.SECOND, Integer.parseInt(syncTime[2]));			
-			// instanceMonitor.setValue("lastSyncPullDate",syncDate);
-		// }
-
-		if (node != null) {
-			log.info("node found: " + node.get("Node"));
-			instanceMonitor.setValue("emserverversion", (String) node.get("EMServerVersion"));
-			instanceMonitor.setValue("version_ffmpeg", (String) node.get("FfmpegVersion"));
-			instanceMonitor.setValue("version_ghostscript", (String) node.get("GhostScript"));
-			instanceMonitor.setValue("version_imagemagick", (String) node.get("ImageMagick"));
-			instanceMonitor.setValue("version_docker", (String) allStats.get("DockerVersion"));
-			instanceMonitor.setValue("version_soffice", (String) node.get("LibreOffice"));
-			instanceMonitor.setValue("statscheckdate", (String) allStats.get("CheckDate"));
+		if(primaryserver!= null) {
+			Data server = (Data) servers.searchById(primaryserver);
+			log.info("Scanning for Instance: " + instance.getName());
 			
-			Map<String, Object> dockerStats = (Map<String, Object>) node.get("Docker");
-			if (dockerStats != null) {
-				log.info("Container found: " + dockerStats.get("Name"));
-				instanceMonitor.setValue("docker-id", (String) dockerStats.get("Id"));
-				instanceMonitor.setValue("docker-name", (String) dockerStats.get("Name"));
-				instanceMonitor.setValue("docker-cpu", (String) dockerStats.get("Cpu"));
-				instanceMonitor.setValue("docker-memory-usage", (String) dockerStats.get("MemoryUsage"));
-				instanceMonitor.setValue("docker-net-down", (String) dockerStats.get("Netdown"));
-				instanceMonitor.setValue("docker-net-up", (String) dockerStats.get("Netup"));
-				instanceMonitor.setValue("docker-pids", (String) dockerStats.get("Pids"));
+			String serverUrl = "http://" + (String) server.getValue("serverurl")  + "/stats.json";
+			Map<String, Object> allStats = httpGetRequest(serverUrl);
+			log.info("Scanning for serverUrl: " + serverUrl);		
+			
+			String nodeName = dockerInstanceName == null || dockerInstanceNode == null ? "" : dockerInstanceName.toString() + dockerInstanceNode.toString();
+			if (nodeName.isEmpty()) {
+				log.error("NodeName not configured on:" +instance.getName() + ", server: " + server.getName());
+				return;
+			}
+			Map<String, Object> node = null;
+			ArrayList<Map<String, Object>> nodes = (ArrayList<Map<String, Object>>) allStats.get("Nodes");
+			log.info("Scanning for node: " + nodeName);
+			for (int i =0; i < nodes.size(); i++) {
+				Map<String, Object> serverNode = nodes.get(i);
+				String serverName = (String) serverNode.get("Node");
+				if (serverName.equals(nodeName)) {
+					log.info("Found for node on URL: " + serverName);
+					node = serverNode;
+					break;
+				}			
+			}
+	
+			instanceMonitor.setValue("snapshotstatus", map.get("snapshotStatus"));
+			instanceMonitor.setValue("lastsnapshot", map.get("lastSnapshot"));
+			instanceMonitor.setValue("emserverversion", map.get("serverVersion"));
+			instanceMonitor.setValue("lastSyncPullDate",map.get("pulldate"));
+			// String syncPull = (String) map.get("pulldate");
+			// if (syncPull != null || !syncPull.isEmpty()) {
+				// String[] dateArr = syncPull.split("T")[0].split("-");
+				// Calendar syncDate = new GregorianCalendar();
+				// syncDate.set(Calendar.YEAR, Integer.parseInt(dateArr[0]));
+				// syncDate.set(Calendar.MONTH, Integer.parseInt(dateArr[1]) -1);
+				// syncDate.set(Calendar.DATE, Integer.parseInt(dateArr[2]));
+				// String[] syncTime = syncPull.split("T")[1].split(":");
+				// syncDate.set(Calendar.HOUR, Integer.parseInt(syncTime[0]));
+				// syncDate.set(Calendar.MINUTE, Integer.parseInt(syncTime[1]));
+				// syncDate.set(Calendar.SECOND, Integer.parseInt(syncTime[2]));			
+				// instanceMonitor.setValue("lastSyncPullDate",syncDate);
+			// }
+	
+			if (node != null) {
+				log.info("node found: " + node.get("Node"));
+				instanceMonitor.setValue("emserverversion", (String) node.get("EMServerVersion"));
+				instanceMonitor.setValue("version_ffmpeg", (String) node.get("FfmpegVersion"));
+				instanceMonitor.setValue("version_ghostscript", (String) node.get("GhostScript"));
+				instanceMonitor.setValue("version_imagemagick", (String) node.get("ImageMagick"));
+				instanceMonitor.setValue("version_docker", (String) allStats.get("DockerVersion"));
+				instanceMonitor.setValue("version_soffice", (String) node.get("LibreOffice"));
+				instanceMonitor.setValue("statscheckdate", (String) allStats.get("CheckDate"));
+				
+				Map<String, Object> dockerStats = (Map<String, Object>) node.get("Docker");
+				if (dockerStats != null) {
+					log.info("Container found: " + dockerStats.get("Name"));
+					instanceMonitor.setValue("docker-id", (String) dockerStats.get("Id"));
+					instanceMonitor.setValue("docker-name", (String) dockerStats.get("Name"));
+					instanceMonitor.setValue("docker-cpu", (String) dockerStats.get("Cpu"));
+					instanceMonitor.setValue("docker-memory-usage", (String) dockerStats.get("MemoryUsage"));
+					instanceMonitor.setValue("docker-net-down", (String) dockerStats.get("Netdown"));
+					instanceMonitor.setValue("docker-net-up", (String) dockerStats.get("Netup"));
+					instanceMonitor.setValue("docker-pids", (String) dockerStats.get("Pids"));
+				}
+				
+				Map<String, Object> clusterHealth = (Map<String, Object>) node.get("clusterHealth");
+				if (clusterHealth != null) {
+					instanceMonitor.setValue("clusterhealth", clusterHealth.get("active_shards_percent_as_number").toString());
+				}
 			}
 			
-			Map<String, Object> clusterHealth = (Map<String, Object>) node.get("clusterHealth");
-			if (clusterHealth != null) {
-				instanceMonitor.setValue("clusterhealth", clusterHealth.get("active_shards_percent_as_number").toString());
+			// IP resolver
+			String domain = (String) instanceMonitor.getValue("publicdomainname");
+			if (domain != null) {
+				InetAddress address = InetAddress.getByName(domain);
+				instanceMonitor.setValue("publicdomainip", address.getHostAddress());
 			}
 		}
 		
-		// IP resolver
-		String domain = (String) instanceMonitor.getValue("publicdomainname");
-		if (domain != null) {
-			InetAddress address = InetAddress.getByName(domain);
-			instanceMonitor.setValue("publicdomainip", address.getHostAddress());
-		}
 		sites.saveData(instanceMonitor, null);
 		
 		Searcher logSearcher = inArchive.getSearcher("entermedia_instances_monitorLog");
