@@ -733,8 +733,10 @@ public class SiteManager implements CatalogEnabled
 					sites.saveData(instanceMonitor, null);
 					leaveFailover(instanceMonitor, instance, inArchive);
 				}
-				long totalAssets = (long) stats.getTotalassets();
-				instanceMonitor.setValue("totalassets", totalAssets);
+				if (stats.getTotalassets() != null) {
+					long totalAssets = (long) stats.getTotalassets();
+					instanceMonitor.setValue("totalassets", totalAssets);
+				}
 			}
 		}
 		catch ( Exception ex)
