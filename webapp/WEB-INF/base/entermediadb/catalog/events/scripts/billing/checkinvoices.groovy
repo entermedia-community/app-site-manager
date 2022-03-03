@@ -220,7 +220,7 @@ private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSe
 								String actionUrl = getSiteRoot() + "/" + appid + "/collective/services/paynow.html?invoiceid=" + invoice.getValue("id") + "&collectionid=" + collectionid;
 								
 								String key = mediaArchive.getUserManager().getEnterMediaKey(contact);
-								actionUrl = actionUrl + "&entermedia.key=" + actionUrl;
+								actionUrl = actionUrl + "&entermedia.key=" + key;
 								actionUrl = URLUtilities.urlEscape(actionUrl);
 								sendEmail(mediaArchive, contact, invoice, "Invoice "+workspace, "send-invoice-event.html", actionUrl);
 								break;
@@ -253,7 +253,7 @@ private void sendEmail(MediaArchive mediaArchive, User contact, Data invoice, St
 		actionUrl = getSiteRoot() + "/" + appid + "/collective/services/index.html?collectionid=" + invoice.getValue("collectionid");
 		
 		String key = mediaArchive.getUserManager().getEnterMediaKey(contact);
-		actionUrl = actionUrl + "&entermedia.key=" + actionUrl;
+		actionUrl = actionUrl + "&entermedia.key=" + key;
 		actionUrl = URLUtilities.urlEscape(actionUrl);
 
 		
