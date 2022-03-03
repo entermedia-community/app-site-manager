@@ -6,6 +6,7 @@ import org.entermediadb.email.WebEmail
 import org.openedit.*
 import org.openedit.data.Searcher
 import org.openedit.users.User
+import org.openedit.util.URLUtilities
 
 public void init() {
 	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
@@ -123,6 +124,7 @@ private void generateNonRecurringInvoices(MediaArchive mediaArchive, Searcher pr
 	Collection pendingProducts = productSearcher.query()
 			.exact("recurring","false")
 			.exact("billingstatus", "active")
+			.exact("producttype","0")
 			.missing("lastgeneratedinvoicedate").search();
 
 	log.info("Checking invoice for " + pendingProducts.size() + " none-recurring Products");
@@ -130,7 +132,7 @@ private void generateNonRecurringInvoices(MediaArchive mediaArchive, Searcher pr
 		Data product = productSearcher.loadData(productIterator.next());
 
 		Date nextBillOn = product.getValue("nextbillon");
-		Date lastbilldate = product.getValue("lastgeneratedinvoicedate");
+		Date lastbilldate = product.getValue("	");
 		if (lastbilldate < nextBillOn) { // otherwise assume it's already created
 			Searcher invoiceSearcher = mediaArchive.getSearcher("collectiveinvoice");
 			Data invoice = invoiceSearcher.createNewData();
@@ -191,6 +193,9 @@ private void sendInvoicePaidNotifications(MediaArchive mediaArchive, Searcher in
 }
 
 private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSearcher, Collection invoices, String iteratorType) {
+
+	String appid = mediaArchive.getCatalogSettingValue("events_billing_notify_invoice_appid");
+	
 	for (Iterator invoiceIterator = invoices.iterator(); invoiceIterator.hasNext();) {
 		Data invoice = invoiceSearcher.loadData(invoiceIterator.next());
 
@@ -212,7 +217,11 @@ private void invoiceContactIterate(MediaArchive mediaArchive, Searcher invoiceSe
 					if (email) {
 						switch (iteratorType) {
 							case "notificationsent":
-								String actionUrl = getSiteRoot() + "/entermediadb/app/collective/services/paynow.html?invoiceid=" + invoice.getValue("id") + "&collectionid=" + collectionid;
+								String actionUrl = getSiteRoot() + "/" + appid + "/collective/services/paynow.html?invoiceid=" + invoice.getValue("id") + "&collectionid=" + collectionid;
+								
+								String key = mediaArchive.getUserManager().getEnterMediaKey(contact);
+								actionUrl = actionUrl + "&entermedia.key=" + actionUrl;
+								actionUrl = URLUtilities.urlEscape(actionUrl);
 								sendEmail(mediaArchive, contact, invoice, "Invoice "+workspace, "send-invoice-event.html", actionUrl);
 								break;
 							case "notificationoverduesent":
@@ -241,9 +250,15 @@ private void sendEmail(MediaArchive mediaArchive, User contact, Data invoice, St
 	String template = "/" + appid + "/theme/emails/" + htmlTemplate;
 
 	if (actionUrl == null) {
-		actionUrl = getSiteRoot() + "/entermediadb/app/collective/services/index.html?collectionid=" + invoice.getValue("collectionid");
+		actionUrl = getSiteRoot() + "/" + appid + "/collective/services/index.html?collectionid=" + invoice.getValue("collectionid");
+		
+		String key = mediaArchive.getUserManager().getEnterMediaKey(contact);
+		actionUrl = actionUrl + "&entermedia.key=" + actionUrl;
+		actionUrl = URLUtilities.urlEscape(actionUrl);
+
+		
 	}
-	String supportUrl = getSiteRoot() + "/entermediadb/app/collective/services/index.html?collectionid=" + invoice.getValue("collectionid");
+	String supportUrl = getSiteRoot() + "/" + appid + "/collective/services/index.html?collectionid=" + invoice.getValue("collectionid");
 
 	WebEmail templateEmail = mediaArchive.createSystemEmail(contact, template);
 	templateEmail.setSubject(subject);
