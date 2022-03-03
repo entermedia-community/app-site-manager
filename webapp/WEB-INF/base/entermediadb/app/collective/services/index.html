@@ -1,9 +1,5 @@
 #set($collectionid = $librarycol.getId())
-#set( $catalagDB = $mediaarchive.query("catalogsettings").exact("id", "events_billing_notify_invoice_appid").searchOne() ) 
-#set( $db = "entermediadb" ) 
-#if ( $catalagDB )
-#set( $db = "$catalagDB.value" ) 
-#end
+
 <div class="collectivecontent">
     <div class="row no-gutters h-100">
         <div class="col">
@@ -42,7 +38,7 @@
                                                 <td>
                                                     #if( $canviewsettings )
                                                         <a
-                                                            href="$siteroot/$db/emshare2/views/settings/lists/datamanager/edit/edit.html?id=$hit.id&searchtype=collectiveproduct"
+                                                            href="$sitelink/emshare2/views/settings/lists/datamanager/edit/edit.html?id=$hit.id&searchtype=collectiveproduct"
                                                             class="btn btn-sm btn-secondary"
                                                             target="_blank">
                                                             <i class="fa fa-database"></i>
@@ -132,7 +128,7 @@
                                         <td>
                                             #if( $canviewsettings )
                                                 <a
-                                                    href="$siteroot/$db/emshare2/views/settings/lists/datamanager/edit/edit.html?id=$hit.id&searchtype=collectiveinvoice"
+                                                    href="$sitelink/emshare2/views/settings/lists/datamanager/edit/edit.html?id=$hit.id&searchtype=collectiveinvoice"
                                                     class="btn btn-sm btn-secondary"
                                                     target="_blank">
                                                     <i class="fa fa-database"></i>
