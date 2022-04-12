@@ -78,13 +78,13 @@
                                 	<div>$mediaarchive.getProductName($product.productid)</div>
 									<div style="font-size: 0.9em; color:#333;">$!mediaarchive.text($prod.getValue("productdescription"), $invoice.id)</div>
                                 </td>
-                                <td  style="text-align: right"><span>$currency $!context.roundDouble($product.productprice, 2)</span></td>
+                                <td  style="text-align: right"><span>$currency $!context.doubleToMoney($product.productprice, 2)</span></td>
                             </tr>
                             #set($lastproduct = $mediaarchive.getProductById($product.productid))
                             #end
                             <tr>
                                 <td class="text-right" colspan="2"><b>[[Total]]</b></td>
-                                <td  style="text-align: right"><b>$currency $!context.roundDouble($invoice.getValue("totalprice"), 2)</b></td>
+                                <td  style="text-align: right"><b>$currency $!context.doubleToMoney($invoice.getValue("totalprice"), 2)</b></td>
                             </tr>
                         </table>
                     </div>

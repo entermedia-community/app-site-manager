@@ -448,7 +448,7 @@
                                 <tr>
                                   <td class="attributes_item">
                                     <span class="f-fallback">
-						              <strong>Amount Due:</strong> $currency $!context.roundDouble($invoice.getValue("totalprice"), 2)
+						              <strong>Amount Due:</strong> $currency $!context.doubleToMoney($invoice.getValue("totalprice"), 2)
 						            </span>
                                   </td>
                                 </tr>
@@ -514,7 +514,7 @@
 
                                   	<span class="f-fallback">$!mediaarchive.text($invoice.getValue("invoicedescription"), $invoice.id)</span>
                                   	</td>
-                                  <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">$currency $!context.roundDouble($invoice.getValue("totalprice"),2)</span></td>
+                                  <td class="align-right" width="20%" class="purchase_item"><span class="f-fallback">$currency $!context.doubleToMoney($invoice.getValue("totalprice"),2)</span></td>
                                 </tr>
                                 
                                 <tr>
@@ -522,7 +522,7 @@
                                     <p class="f-fallback purchase_total purchase_total--label">Total</p>
                                   </td>
                                   <td width="20%" class="purchase_footer" valign="middle">
-                                    <p class="f-fallback purchase_total">$currency $!context.roundDouble($invoice.getValue("totalprice"),2)</p>
+                                    <p class="f-fallback purchase_total">$currency $!context.doubleToMoney($invoice.getValue("totalprice"),2)</p>
                                   </td>
                                 </tr>
                               </table>

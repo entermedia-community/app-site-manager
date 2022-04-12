@@ -453,7 +453,7 @@
 						            </span>
                                   </td>
                                   <td style="text-align: right!important">
-                                  	<strong>$currency $!context.roundDouble($invoice.getValue("totalprice"), 2)</strong>
+                                  	<strong>$currency $!context.doubleToMoney($invoice.getValue("totalprice"), 2)</strong>
                                   </td>
                                 </tr>
                               </table>

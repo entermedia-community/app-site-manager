@@ -34,7 +34,7 @@
                                                 <td>$hit.name
                                                 ##<div style="font-size: 0.9em;">$!mediaarchive.text($hit.productdescription, $hit.id)</div>
                                                 </td>
-                                                <td style="text-align: center;">$ $!context.roundDouble($!hit.productprice,2)</td>
+                                                <td style="text-align: center;">$ $!context.doubleToMoney($!hit.productprice,2)</td>
                                                 <td>
                                                     #if( $canviewsettings )
                                                         <a
@@ -120,7 +120,7 @@
                                     ##            $!mediaarchive.text($prod.productdescription, $hit.id)<br>
                                     ##        #end
                                     ##    </td>
-                                        <td style="text-align: center;">$ $!context.roundDouble($!hit.totalprice, 2)</td>
+                                        <td style="text-align: center;">$ $!context.doubleToMoney($!hit.totalprice, 2)</td>
                                         <td style="text-align: center;">
                                             #set($status = $mediaarchive.query("paymentstatus").match("id", "$hit.paymentstatus").searchOne())
                                             $status
