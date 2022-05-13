@@ -83,9 +83,11 @@
 		    </table>
 	    	</div>
 		#end
-		#if( $caneditcollection )
-		<a href="/entermediadb/app/site/sitedeployer/createsite.html?collectionid=$collectionid" class="btn btn-primary btn-sm">[[Deploy New Server]]</a>
-		#end
+	
+		##Disabled no new Trial sites from em.org
+		###if( $caneditcollection )
+		##<a href="/entermediadb/app/site/sitedeployer/createsite.html?collectionid=$collectionid" class="btn btn-primary btn-sm">[[Deploy New Server]]</a>
+		###end
 		</div>
 	</div>	
 </div>
