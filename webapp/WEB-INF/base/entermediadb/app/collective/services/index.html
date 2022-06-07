@@ -11,8 +11,7 @@
 						#end
                         <h2>[[Recurring Subscriptions]]</h2>
                         ##Search instances in these organizations
-                        #set($products = $mediaarchive.query("collectiveproduct").match("collectionid",
-                        $collectionid).search())
+                        #set($products = $mediaarchive.query("collectiveproduct").match("collectionid", $collectionid).sort("createdonDown").search())
                         #if ($products)
                             <div class="emdata">
                                 <table class="table table-striped  table-hover">
@@ -32,6 +31,9 @@
                                             <tr>
                                                 <td style="text-align: center;">$!context.getDate($hit.createdon)</td>
                                                 <td>$hit.name
+                                                 #if ($hit.billingstatus == "canceled")
+                                                     &nbsp;<strong>[[Canceled]]</strong>
+                                                 #end
                                                 ##<div style="font-size: 0.9em;">$!mediaarchive.text($hit.productdescription, $hit.id)</div>
                                                 </td>
                                                 <td style="text-align: center;">$ $!context.doubleToMoney($!hit.productprice,2)</td>
@@ -47,6 +49,10 @@
                                                             href="$applink/collective/services/editproduct.html?collectionid=${collectionid}&id=${hit.id}"
                                                             title="[[Edit Product or Service]]"
                                                             class="emdialog btn btn-sm btn-info">[[Edit]]</a>
+                                                        <a
+                                                            href="$applink/collective/services/copyproduct.html?collectionid=${collectionid}&id=${hit.id}"
+                                                            title="[[Copy Product or Service]]"
+                                                            class="emdialog btn btn-sm btn-info">[[Copy]]</a>
                                                     #end
                                                     #if ($hit.recurring == true)
                                                         #if ($hit.billingstatus == "active")
@@ -64,8 +70,6 @@
                                                             <a
                                                                 href="$applink/collective/services/cancelsubscription.html?collectionid=${collectionid}&productid=${hit.id}"
                                                                 class="emdialog btn btn-sm btn-danger">[[Cancel]]</a>
-                                                            #elseif ($hit.billingstatus == "canceled")
-                                                            <button class="btn btn-secondary" disabled="disabled">[[Canceled]]</button>
                                                         #end
                                                     #end
                                                 </td>
