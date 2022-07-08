@@ -1,4 +1,4 @@
-#set( $link = "${userurl}/assets/emshare2/")
+#set( $link = "${userurl}/finder/find/")
 #if(!$organization) 
 	#set($organization="")
 #end
@@ -13,7 +13,7 @@
 <p><strong>Hello,</strong></p> 
 <p>It’s live! Your Instance is ready to be utilized to its maximum potential. Now upload, view, and share your own media whilst exploring an array of key features created for you.</p> 
 <p><strong>Login Information:</strong><br>
-Your unique application address (URL):
+Your unique application address (URL):<br>
 
 ##<a href="$link">$link</a><br><br>
 ##Use this credentials to login:
@@ -33,9 +33,10 @@ Your unique application address (URL):
 	<a href="#urlescape($link)">$link</a>
 	</p>
 	<p>
-	or Copy/Paste Entermedia Key below into app:<br> $entermediakey
-	</p>
-	[[Key will expire]] 
+	or Copy/Paste Entermedia Key below into app:</p>
+	<div style="padding:5px;">$entermediakey</div>
+	
+	<p>*[[Key will expire]].</p> 
 	
 
 

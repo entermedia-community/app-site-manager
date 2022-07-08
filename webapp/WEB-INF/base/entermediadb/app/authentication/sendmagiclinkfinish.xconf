@@ -2,6 +2,7 @@
 
 <page>
   	<property name="emaillayout">/${applicationid}/authentication/sendmagiclinkemail.html</property>
+  	<property name="subject">Your eMediaFinder Access Key</property>
   	<path-action name="Admin.createTempUser"/>
   	<path-action name="Admin.emailPasswordReminder"/>
 </page>
