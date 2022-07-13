@@ -14,7 +14,7 @@ public void init() {
 	Searcher instanceSearcher = mediaArchive .getSearcher("entermedia_instances");
 	Collection restoreInstances;	
 	
-	restoreInstances = instanceSearcher.exact("instance_status","torestore").search();	
+	restoreInstances = instanceSearcher.match("instance_status","torestore").search();	
 
 	log.info("Found "+restoreInstances.size()+" sites to restore.");
 	for (Iterator instanceIterator = restoreInstances.iterator(); instanceIterator.hasNext();) {

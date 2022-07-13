@@ -15,8 +15,11 @@ public void init() {
 
 	Calendar limit = Calendar.getInstance();
 	limit.add(Calendar.DAY_OF_YEAR, -30);
-	Collection expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status","active").before("lastlogin", limit.getTime()).search();
-
+	Collection expiredInstances = instanceSearcher.query()
+									.exact("istrial", true)
+									.exact("instance_status","active")
+									.before("lastlogin", limit.getTime()).search();
+    log.info(expiredInstances);
 	if (!expiredInstances.size()) {
 		expiredInstances = instanceSearcher.query().exact("istrial", "true").exact("instance_status", "todelete").search();
 	}
@@ -57,7 +60,7 @@ public void init() {
 			ExecResult done = exec.runExec("trialsansible", command, true);
 
 			//Discount currentinstances on server
-			if(instance.getValue("instance_status") == 'active') {
+			if(instance.getValue("instance_status") != 'deleted') {
 				server.setValue("currentinstances", server.getValue("currentinstances") - 1);
 			}
 			serversSearcher.saveData(server);
@@ -77,6 +80,9 @@ public void init() {
 				todelete.add(instancemonitor);
 			}
 			monitorsearcher.deleteAll(todelete, null);
+		}
+		else {
+			log.info("Can't delete instance: "+instance.getName());
 		}
 	}
 }

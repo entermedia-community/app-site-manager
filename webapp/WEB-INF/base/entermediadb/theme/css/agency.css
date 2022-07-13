@@ -153,6 +153,12 @@ img::-moz-selection {
 	text-decoration: none;
 }
 
+.btn-success {
+    color: #fff!important;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
 
 header.masthead {
   
@@ -1575,6 +1581,8 @@ padding:20px 60px;
 
 .collectivemaincol {
 	min-height: 380px;
+	margin:15px;
+	background-color: #fff;
 }
 .chatterbox-messages {
    min-height: 300px;

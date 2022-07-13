@@ -51,7 +51,7 @@ public void init() {
 				server = serversSearcher.loadData(serverIterator.next());
 				maxinstances = server.getValue("maxinstance");
 				currentinstances = server.getValue("currentinstances");
-				log.info("- Server: "+server.getName()+" M/C:"+maxinstances+"/"+currentinstances);
+				log.info("Trial Sites - Server Instances: "+server.getName()+" Max/Current:"+maxinstances+"/"+currentinstances);
 				if ((currentinstances+3) <= maxinstances) {
 					try {
 						//Update Server
