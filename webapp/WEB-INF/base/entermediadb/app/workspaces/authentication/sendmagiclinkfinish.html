@@ -1,6 +1,6 @@
 <div class="container applicationcontent">
-	
-	    <h1>[[Key Sent! Please check your email.]]</h1>
+	<div style="margin:10px; padding:5px 30px 30px; background-color: #fff;">
+	    <h2>[[Key Sent! Please check your Email]].</h2>
 
 			<form name="login" 
 					id="login" 
@@ -8,7 +8,7 @@
 					method="post">
 			<div class="form-group">
 			<label for="password">[[Paste App Key]]</label>
-			<input class="form-control" id="entermediakey" name="entermedia.key" />
+			<input class="form-control required" id="entermediakey" name="entermedia.key" autocomplete="off" required />
 			</div>
 			
 			<div class="form-group">
@@ -24,6 +24,9 @@
 				$context.removeSessionValue("oe-exception")
 			#end
 		</form>  
-		
-			
+		<div class="clearfix"></div>
+		</div>
+		<div style="margin:30px; text-align:center; font-size:0.9rem; color#333;">[[Didn't get the Key in the Email Address you provided? Please contact us at: help@entermediadb.org]]<br>
+		[[Go Back]] <a href="$siteroot" style="color:#222;">$!siteroot</a>
+		</div>
 </div>
