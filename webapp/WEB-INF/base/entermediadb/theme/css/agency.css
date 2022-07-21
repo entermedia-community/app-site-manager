@@ -38,6 +38,10 @@ body {
   color:#fff;
 	
 }
+.modal-body .login-area {
+	background-color: #ffffff!important;
+	color:#111;
+}
 
 @media (min-width: 1200px) {
 	.container {
