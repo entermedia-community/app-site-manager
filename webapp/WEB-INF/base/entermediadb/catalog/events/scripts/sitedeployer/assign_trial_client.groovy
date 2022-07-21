@@ -67,7 +67,7 @@ public void init() {
 		clientemail = user.getEmail();
 		if (params != null) {
 			///Dialog Parameters
-			log.info("creating site from dialog");
+			log.info("Trial Site Internal");
 			instanceurl = params.get("organization_url");
 			instancename = params.get("instancename");
 			organization_type = params.get("organization_type");
@@ -78,7 +78,7 @@ public void init() {
 		}
 		if (params == null || instanceurl == null) {
 			//Regular Form
-			log.info("creating site from internal page");
+			log.info("Trial Site Public");
 			instanceurl = context.getRequestParameter("organization_url");
 			instancename = context.getRequestParameter("instancename");
 			organization_type = context.getRequestParameter("organization_type");
@@ -165,7 +165,7 @@ public void init() {
 				server = serversSearcher.loadData(serverIterator.next());
 				maxinstances = server.getValue("maxinstance");
 				currentinstances = server.getValue("currentinstances");
-				log.info("- Server: "+server.getName()+" M/C:"+maxinstances+"/"+currentinstances);
+				//log.info("- Server: "+server.getName()+" M/C:"+maxinstances+"/"+currentinstances);
 				if (currentinstances < maxinstances) {
 					foundspace = true;
 					break;
@@ -193,6 +193,8 @@ public void init() {
 					server.setValue("lastnodeid", nodeid);
 					serversSearcher.saveData(server);
 
+					log.info("Trial Sites - Deploying: " + selected_url + " at " + server.getName());
+					
 					ArrayList<String> command = new ArrayList<String>();
 					command.add("/media/services/ansible/trial-assign.sh");
 					command.add("-s");
@@ -204,7 +206,7 @@ public void init() {
 
 					Exec exec = moduleManager.getBean("exec");
 					ExecResult done = exec.runExec(command);
-					log.info("- Deploying Trial Site " + selected_url + " at " + server.getName());
+					
 
 
 					String fullURL = "https://" + selected_url + "." + server.trialdomain;
@@ -234,7 +236,7 @@ public void init() {
 
 					//Send Notification to us
 					context.putPageValue("from", clientemail);
-					context.putPageValue("subject", "New Activation - " + fullURL);
+					context.putPageValue("subject", "New Activation - " + clientemail);
 					sendEmail(context.getPageMap(), notifyemail,"/entermediadb/app/site/sitedeployer/email/salesnotify.html");
 
 					//Send Email to Client
@@ -253,7 +255,7 @@ public void init() {
 			}
 		}
 		else {
-			log.info("- No Servers Available.");
+			log.info("Trial Sites - No Servers Available.");
 			context.putPageValue("errorcode","3");
 			context.putPageValue("status", "error");
 			context.putPageValue("error", "No servers availavle");

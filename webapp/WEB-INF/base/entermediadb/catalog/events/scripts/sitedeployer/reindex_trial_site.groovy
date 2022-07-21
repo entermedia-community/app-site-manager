@@ -13,18 +13,26 @@ public void init() {
 	assignWeeklyPending();
 
 	MediaArchive mediaArchive = context.getPageValue("mediaarchive");
-	Collection restoreInstances = mediaArchive.query("entermedia_instances").exact("instance_reindex_status", "pending").search();
+	Collection restoreInstances = mediaArchive.query("entermedia_instances")
+								.exact("instance_status", "active")
+								.exact("instance_reindex_status", "pending").search();
 	log.info("reindexing " + restoreInstances.size() + " servers")
 
 	for (Iterator instanceIterator = restoreInstances.iterator(); instanceIterator.hasNext();) {
 		Data instance = mediaArchive.getSearcher("entermedia_instances").loadData(instanceIterator.next());
-
-		String ownerId = instance.get("owner");
-		User owner = mediaArchive.getUser(ownerId);
-		String cloudKey = mediaArchive.getUserManager().getEnterMediaKey(owner);
-
-		log.info("Reindex instance: " + instance.name);
-		reIndexTrial(mediaArchive, instance, cloudKey);
+		if (instance!= null && instance.get("instanceurl")!= null)
+		{
+			String ownerId = instance.get("owner");
+			User owner = mediaArchive.getUser(ownerId);
+			String cloudKey = mediaArchive.getUserManager().getEnterMediaKey(owner);
+	
+			log.info("Reindex instance: " + instance.name);
+			reIndexTrial(mediaArchive, instance, cloudKey);
+		}
+		else 
+		{
+			log.info("Error reindexing instance: " + instance.name);
+		}
 	}
 }
 
@@ -35,21 +43,27 @@ private void reIndexTrial(MediaArchive mediaArchive, Data instance, String enter
 		params.put("collectionid", collectionId);
 		params.put("entermediacloudkey", entermediacloudkey);
 		String instanceurl = instance.get("instanceurl");
-
+		log.info("Reindex request: "+instanceurl+params);
 		JSONObject reindexReq = httpPost("/workspaces/reindex.json", instanceurl, params);
-
-		JSONObject response = (JSONObject)reindexReq.get("response");
-		log.info("took:" + (String)response.get("time"));
-
-		if (!response.get("status").equals("ok")) {
-			instance.setValue("instance_reindex_status", "error");
-		} else {
-			instance.setValue("instance_reindex_status", "complete");
-			instance.setValue("lastreindexdate", new Date());
+		if (reindexReq != null)
+		{
+			JSONObject response = (JSONObject)reindexReq.get("response");
+			if (response != null) 
+			{
+				log.info("Reindex took:" + (String)response.get("time")+"s");
+				if (!response.get("status").equals("ok")) {
+					instance.setValue("instance_reindex_status", "error");
+				} else {
+					instance.setValue("instance_reindex_status", "complete");
+					instance.setValue("lastreindexdate", new Date());
+				}
+			}
 		}
 	} catch (Exception e) {
 		instance.setValue("instance_reindex_status", "error");
-		log.error(e);
+		//log.error(e);
+		throw new OpenEditException(e);
+		
 	}
 	mediaArchive.saveData("entermedia_instances", instance);
 }
@@ -88,10 +102,12 @@ private void assignWeeklyPending() {
 
 	for (Iterator instanceIterator = restoreInstances.iterator(); instanceIterator.hasNext();) {
 		Data instance = mediaArchive.getSearcher("entermedia_instances").loadData(instanceIterator.next());
-
-		log.info("Setting to reindex, instance: " + instance.name);
-		instance.setValue("instance_reindex_status", "pending");
-		mediaArchive.saveData("entermedia_instances", instance);
+		if(instance != null)
+		{
+			log.info("Setting to reindex, instance: " + instance.name);
+			instance.setValue("instance_reindex_status", "pending");
+			mediaArchive.saveData("entermedia_instances", instance);
+		}
 	}
 }
 
@@ -101,7 +117,8 @@ public void setLastReIndexDateDefault(MediaArchive mediaArchive) {
 	for (Iterator instanceIterator = instances.iterator(); instanceIterator.hasNext();)
 	{
 		Data instance = mediaArchive.getSearcher("entermedia_instances").loadData(instanceIterator.next());
-		if (instance.lastreindexdate == null) {
+		
+		if (instance != null && instance.lastreindexdate == null) {
 			instance.setValue("lastreindexdate", new Date());
 			mediaArchive.saveData("entermedia_instances", instance);
 		}

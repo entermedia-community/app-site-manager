@@ -51,8 +51,8 @@ public void init() {
 				server = serversSearcher.loadData(serverIterator.next());
 				maxinstances = server.getValue("maxinstance");
 				currentinstances = server.getValue("currentinstances");
-				log.info("Trial Sites - Server Instances: "+server.getName()+" Max/Current:"+maxinstances+"/"+currentinstances);
-				if ((currentinstances+3) <= maxinstances) {
+				//log.info("Trial Sites - Server Instances: "+server.getName()+" Max/Current:"+maxinstances+"/"+currentinstances);
+				if ((currentinstances+1) <= maxinstances) {
 					try {
 						//Update Server
 						currentinstances = currentinstances +1 ;
@@ -74,8 +74,6 @@ public void init() {
 							}
 						}
 						
-						
-						
 						jsonObject.put("available", jsonInstance);
 						
 						ArrayList<String> command = new ArrayList<String>();
@@ -88,11 +86,11 @@ public void init() {
 						command.add("-e");
 						command.add("" + jsonObject.toJSONString() + ""); //
 						
-						
+						log.info("Trial Sites - Enabling "+count+" Containers at " + server.getName());
 						Exec exec = moduleManager.getBean("exec");
 						ExecResult done = exec.runExec("trialsansible", command, true); //Todo: Need to move this script here?
 						//ExecResult done = exec.runExec("/media/services/ansible/trialsansible.sh", command, true); //Todo: Need to move this script here?
-						log.info("- Enabling "+count+" Containers at " + server.getName());
+						
 					
 						}
 						catch(Exception e){
