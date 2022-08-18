@@ -1,32 +1,34 @@
-<div class="container applicationcontent">
-	<div style="margin:10px; padding:5px 30px 30px; background-color: #fff;">
-	    <h2>[[Key Sent! Please check your Email]].</h2>
-
-			<form name="login" 
-					id="login" 
-					action="$siteroot$apphome/workspaces/gotoapp.html" 
-					method="post">
-			<div class="form-group">
-			<label for="password">[[Paste App Key]]</label>
-			<input class="form-control required" id="entermediakey" name="entermedia.key" autocomplete="off" required />
+<div class="login-area">
+	<div class="container applicationcontent_">
+		<div style="margin:10px; padding:5px 30px 30px; background-color: #fff;">
+		    <h2>[[Key Sent! Please check your Email]].</h2>
+	
+				<form name="login" 
+						id="login" 
+						action="$siteroot$apphome/workspaces/gotoapp.html" 
+						method="post">
+				<div class="form-group">
+				<label for="password">[[Paste App Key]]</label>
+				<input class="form-control required" id="entermediakey" name="entermedia.key" autocomplete="off" required />
+				</div>
+				
+				<div class="form-group">
+				<input class="btn btn-sm btn-primary float-right" name="submit" type="submit" id="login-submit" value="[[Login]]" />
+				#set($loginok = $context.findValue("loginokpage") )
+				#if($loginok)
+				#set( $loginok = "$siteroot" + "$loginok")
+				<input type="hidden" name="loginokpage" value="#esc($!loginok)"/>
+				#end
+				</div>
+				#if ( $context.getPageValue("oe-exception") )
+					<div style="border: 1px solid black; width: 60%; text-align: center">$context.getPageValue("oe-exception")</div>
+					$context.removeSessionValue("oe-exception")
+				#end
+			</form>  
+			<div class="clearfix"></div>
 			</div>
-			
-			<div class="form-group">
-			<input class="btn btn-sm btn-primary float-right" name="submit" type="submit" id="login-submit" value="[[Login]]" />
-			#set($loginok = $context.findValue("loginokpage") )
-			#if($loginok)
-			#set( $loginok = "$siteroot" + "$loginok")
-			<input type="hidden" name="loginokpage" value="#esc($!loginok)"/>
-			#end
+			<div style="margin:30px; text-align:center; font-size:0.9rem; color#333;">[[Didn't get the Key in the Email Address you provided? Please contact us at: help@entermediadb.org]]<br>
+			[[Go Back]] <a href="$siteroot" style="color:#222;">$!siteroot</a>
 			</div>
-			#if ( $context.getPageValue("oe-exception") )
-				<div style="border: 1px solid black; width: 60%; text-align: center">$context.getPageValue("oe-exception")</div>
-				$context.removeSessionValue("oe-exception")
-			#end
-		</form>  
-		<div class="clearfix"></div>
-		</div>
-		<div style="margin:30px; text-align:center; font-size:0.9rem; color#333;">[[Didn't get the Key in the Email Address you provided? Please contact us at: help@entermediadb.org]]<br>
-		[[Go Back]] <a href="$siteroot" style="color:#222;">$!siteroot</a>
-		</div>
+	</div>
 </div>
