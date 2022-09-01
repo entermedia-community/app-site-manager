@@ -5,5 +5,5 @@
 	<property name="invoicepayment">true</property>
 	
 	<path-action name="ProjectModule.loadCollection" />
-	<inner-layout>/${applicationid}/theme/layouts/collectivelayout.html</inner-layout>
+	<inner-layout>/${applicationid}/collective/services/layout.html</inner-layout>
 </page>
