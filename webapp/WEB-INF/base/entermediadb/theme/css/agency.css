@@ -27,7 +27,7 @@
 
 body {
   font-family: futuralight, sans-serif;
-  font-size:19px;
+  font-size:16px;
 }
 
 .eminstituteapp,
@@ -1568,7 +1568,7 @@ padding:20px 60px;
 .navbar-container {
 	display:block;
 	background-color: #000;
-	margin-bottom:0;
+	margin:0;
 }
 .navbar-collective {
 	padding:0;
@@ -1851,28 +1851,7 @@ padding:20px 60px;
 	padding:10px 10px;
 }
 
-@media (min-width: 960px) {
-	.entermedia-introduction h2 {
-		font-size:2.2rem;
-		margin:0 0 0.2em;
-	}
-	.entermedia-introduction h3 {
-		font-size:1.8rem;
-	}
-	.entermedia-introduction p {
-		padding:20px 20% 0 20px;
-	}
-	h3 {
-	font-size:1.8rem;
-	}
-	.hometext {
-	
-	}
-	.account-services {
-	padding:20px 80px;
-	}
 
-}
 
 .thankyoucontact {
 	padding:60px 0 120px; 
@@ -1964,19 +1943,21 @@ padding:20px 60px;
 
 
 .project-title {
-    padding:0 0 5px;
+    padding:0 0;
+    height:34px;
     font-weight: bold;
     font-size: 1.3rem;
+    line-height: 1.4;
 }
 
 .navbar-collective {
 	font-family: 'Oswald', sans-serif;
 	font-weight: normal;
-	font-size:1rem;
+	font-size:0.8rem;
 	text-transform: uppercase;
 	list-style: none;
 	margin:0;
-	padding:2px 0 0 0;
+	padding:2px 0 8px 0;
 	min-width: 300px;
 	
 }
@@ -1985,7 +1966,7 @@ padding:20px 60px;
 	padding:0 .25rem;
 }
 .navbar-collective .nav-link {
-	padding:0.2rem .5rem .1rem 0.5rem;
+	padding:0.3rem .1rem .0rem 0.5rem
 	color:#ddd;
 }
 .navbar-collective .nav-link:hover,
@@ -1993,6 +1974,36 @@ padding:20px 60px;
 	border-bottom:2px solid #FFDE59;
 	color:#fff;
 	background-color:#000;
+}
+
+@media (min-width: 960px) {
+	.navbar-collective {
+	font-size:0.95rem;
+	padding:2px 0 0 0;
+	}
+	.navbar-collective .nav-link {
+	padding:0.3rem .5rem .0rem 0.5rem;
+	}
+	.entermedia-introduction h2 {
+		font-size:2.2rem;
+		margin:0 0 0.2em;
+	}
+	.entermedia-introduction h3 {
+		font-size:1.8rem;
+	}
+	.entermedia-introduction p {
+		padding:20px 20% 0 20px;
+	}
+	h3 {
+	font-size:1.8rem;
+	}
+	.hometext {
+	
+	}
+	.account-services {
+	padding:20px 80px;
+	}
+
 }
 
 .applicationcollective .col-left .emtree {
