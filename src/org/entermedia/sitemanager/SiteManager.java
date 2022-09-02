@@ -320,7 +320,8 @@ public class SiteManager implements CatalogEnabled
 		
 		
 		//Pass all required information into notifyTopic function
-		manager.notifyTopic(collectionid,null,name,message,extra);
+		//broken?
+		//manager.notifyTopic(collectionid,null,name,message,extra);
 		
 		
 	}
