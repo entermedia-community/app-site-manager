@@ -2,7 +2,7 @@
   <permission name="view">
     <boolean value="true"/>
   </permission>
-  <inner-layout>/${applicationid}/workspaces/layout.html</inner-layout>
+  <inner-layout>/${applicationid}/theme/layouts/layout.html</inner-layout>
   
   <property name="sectiontitle">Authentication</property>
   <property name="fallbackdirectory">/${applicationid}/authentication</property>
