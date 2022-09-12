@@ -67,6 +67,9 @@ a.badge-success {
     background-color: #28a745;
 }
 
+.modal-content {
+	color:#000;
+}
 
 .table-striped a {
 	color:#000;	
