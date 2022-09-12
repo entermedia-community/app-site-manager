@@ -4,7 +4,7 @@
 
 #if($user)
 	<p class="text-center"><strong>[[You are currently logged in as]] $user 
-	(<a href="home$content.loginroot/logout.html" style="text-decoration:underline">Logout</a>)</strong></p>
+	(<a href="home$content.loginroot/logout.html" style="text-decoration:underline">[[Logout]]</a>)</strong></p>
 #end
 
 #set($providers = $mediaarchive.query("oauthprovider").exact("enabled","true").search())
@@ -21,7 +21,7 @@
 #end
 
         <div style="text-align: center;">
-				<a href="$home$content.loginroot/logindialog.html" class="emdialog btn" title="Login" >[[Username and Password]]</a> 
+				<a href="$home$content.loginroot/logindialog.html" class="emdialog btn btn-primary" title="[[Login]]">[[Username and Password]]</a> 
         	
 		</div>
 
