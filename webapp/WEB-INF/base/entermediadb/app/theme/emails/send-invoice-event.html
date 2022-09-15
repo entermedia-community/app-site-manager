@@ -430,7 +430,7 @@
     <span class="preheader">This is an invoice for your purchase on $!context.getDate($invoice.getValue("createdon")). Please submit payment by $!context.getDate($invoice.getValue("duedate"))</span>
     
     <div style="background-color:#000; padding: 5px 5px; margin-bottom:20px; text-align:center;">
-		<a href="${siteroot}"><img src="${siteroot}/$applink/theme/images/invoice-logo.png"></a>
+		<a href="${siteroot}"><img src="${siteroot}/$applink/theme/images/email-logo.png"></a>
 	</div>
     
     
@@ -454,6 +454,7 @@
                                   <td class="attributes_item">
                                     <span class="f-fallback">
 						              <strong>Amount Due:</strong> $currency $!context.roundDouble($invoice.getValue("totalprice"), 2)
+						              ($context.getText($!mediaarchive.getCachedData("currencytype", $invoice.getValue("currencytype"))))
 						            </span>
                                   </td>
                                 </tr>
@@ -534,7 +535,7 @@
 
                                 <tr>
                                   <td width="80%" colspan="2" class="purchase_footer" valign="middle">
-                                    <p class="f-fallback purchase_total purchase_total--label">Total ($!mediaarchive.getCachedData("currencytype", $invoice.getValue("currencytype")))</p>
+                                    <p class="f-fallback purchase_total purchase_total--label">Total ($context.getText($!mediaarchive.getCachedData("currencytype", $invoice.getValue("currencytype"))))</p>
                                   </td>
                                   <td width="20%" class="purchase_footer" valign="middle">
                                     <p class="f-fallback purchase_total">$currency $!context.roundDouble($invoice.getValue("totalprice"),2)</p>
