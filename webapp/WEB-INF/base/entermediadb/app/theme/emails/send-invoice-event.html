@@ -478,6 +478,13 @@
                                     <a href="$actionurl" class="f-fallback button button--green" target="_blank">Pay Invoice</a>
                                   </td>
                                 </tr>
+                                #if($invoicepayoptions)
+                                <tr>
+                                	<td style="padding:15px;">
+                                	$invoicepayoptions
+                                	</td>
+                                </tr>
+                                #end
                               </table>
                             </td>
                           </tr>
