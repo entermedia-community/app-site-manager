@@ -3,10 +3,26 @@
 #set($invoice = $mediaarchive.getInvoiceById($id))
 #set($products = $mediaarchive.getInvoiceProductList($id))
 #set($workspace = $mediaarchive.getWorkspaceById($invoice.collectionid))
-<div class="collectivecontent">
 
-<div class="content">
-<h2>[[Check Out]]</h2>
+<div class="container">
+<div class="contentcolumn">
+<div class="collectivecontent" id="collectivecheckout">
+
+<h2 style="margin-bottom:10px;">[[Check Out]]</h2>
+
+#ifnull($user)
+	#set($user = $checkoutuser)
+#end
+
+#ifnull($user)
+	[[No user]]
+#end
+
+
+#if($invoice.paymentstatus == "paid")
+<strong>[[Invoice]] #$!invoice.invoicenumber</strong> [[Status is Paid]].
+#else
+
 
 	#if(!$mediaarchive.isCatalogSettingTrue("productionmode"))
 	<div class="alert alert-warning">[[Site is in test mode. Credit card is 4242 4242 4242 4242 any expiration date. Add your keys to catalog settings and switch to production mode to take credit cards]].</div>
@@ -167,15 +183,7 @@
 		                                    </div>
 		                                </div>
 		
-## We control recurring
-##										#if ($lastproduct.recurring == true)
-##		                               <div class="col-md-6">	                               
-##				                            <div class="form-group">
-##				                                <label for="staticEmail">[[Recurring Monthly]]</label>                                 
-##				                                <input type="text" class="form-control" name="recurringperiod" value="$lastproduct.recurringperiod" disabled></input>
-##				                            </div>
-##		                        	   </div>
-##		                        		#end
+
 		                        	  	<div class="col-md-12">
 		                                	<div class="form-check">
 				                                <input type="checkbox" class="form-check-input" id="issavecard" name="issavecard"></input>
@@ -251,13 +259,17 @@
     </div>
 </div>
 
-<div style="padding:20px 0">
-<a href="$applink/collective/services/index.html?collectionid=${invoice.collectionid}" class="btn btn-secondary">[[Back to Invoices]]</a>
-</div>
-</div>
+#end
+#if($caneditcollection  || $librarycol.priviacylevel != "commercial" )
+	<div style="padding:20px 0">
+	<a href="$applink/collective/services/index.html?collectionid=${invoice.collectionid}" class="btn btn-secondary">[[Back to Invoices]]</a>
+	</div>
+#end
 
 <div class="clearfix"></div>
 </div>
+
+</div></div>
 
 
 <script type="text/javascript">
