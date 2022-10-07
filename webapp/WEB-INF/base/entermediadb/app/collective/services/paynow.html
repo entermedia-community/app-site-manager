@@ -256,9 +256,13 @@
         ##$pages.include("$apphome/collective/services/invoices/payoptions.html",$context)
         ##Moved to be read from catalogsettings invoice_pay_options
         
-        #set( $invoice_pay_options = $mediaarchive.getCatalogSettingsValue("invoice_pay_options"))
-        $!invoice_pay_options
         
+        #if ($invoice.paymentstatus == "invoiced" || $invoice.paymentstatus == "autopayfailed")
+	        #set( $invoice_pay_options = $mediaarchive.getCatalogSettingsValue("invoice_pay_options"))
+	        #if($invoice_pay_options)
+	        <div>$invoice_pay_options</div>
+	        #end
+        #end
     </div>
 </div>
 

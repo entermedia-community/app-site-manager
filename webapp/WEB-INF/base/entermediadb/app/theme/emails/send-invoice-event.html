@@ -143,7 +143,7 @@
     }
     
     .attributes_content {
-      background-color: #F4F4F7;
+      background-color: #F4F4F7;invoice_pay_options
       padding: 16px;
     }
     
@@ -469,26 +469,9 @@
                             </td>
                           </tr>
                         </table>
-                        <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0" role="presentation">
-                          <tr>
-                            <td align="center">
-                              <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation">
-                                <tr>
-                                  <td align="center">
-                                    <a href="$actionurl" class="f-fallback button button--green" target="_blank">Pay Invoice</a>
-                                  </td>
-                                </tr>
-                                #if($invoicepayoptions)
-                                <tr>
-                                	<td  style="font-size:0.75rem; padding:10px;">
-                                	$invoicepayoptions
-                                	</td>
-                                </tr>
-                                #end
-                              </table>
-                            </td>
-                          </tr>
-                        </table>
+
+
+
                         <table class="purchase" width="100%" cellpadding="0" cellspacing="0">
                           <tr>
                             <td>
@@ -552,6 +535,22 @@
                             </td>
                           </tr>
                         </table>
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation">
+                                <tr>
+                                  <td align="center">
+                                    <a href="$actionurl" class="f-fallback button button--green" target="_blank">Pay Invoice</a>
+                                  </td>
+                                </tr>
+                                #if($invoicepayoptions)
+                                <tr>
+                                	<td  style="font-size:0.75rem; padding:10px;">
+                                	$invoicepayoptions
+                                	</td>
+                                </tr>
+                                #end
+                              </table>
+                              
+                              
                         <p>If you have any questions about this invoice, reach out to our <a href="$supporturl">support team</a> for help.</p>
                         <p>Cheers,
                           <br>The EnterMediaDB Team</p>
