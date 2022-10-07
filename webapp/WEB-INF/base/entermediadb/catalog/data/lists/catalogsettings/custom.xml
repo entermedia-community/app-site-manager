@@ -1,0 +1,53 @@
+
+<root>
+  <data id="collection_chat_notification_lastsent" value="2022-10-07 13:36:13 -0400"> 
+    <name><![CDATA[Chat Notification Last Sent]]></name> 
+  </data>  
+  <data id="collectives_notification_lastsent" value="2022-10-07 13:21:13 -0400"> 
+    <name><![CDATA[Projects Notification Last Sent]]></name> 
+  </data>  
+  <data id="log_all_searches" value="true"> 
+    <name><![CDATA[Log All Searches]]></name> 
+  </data>  
+  <data id="siteroot" value="https://entermediadb.org"> 
+    <name><![CDATA[Site Root (auto defaulted)]]></name> 
+  </data>  
+  <data id="productionmode" value="true"> 
+    <name><![CDATA[Production Stripe Mode (true/false)]]></name> 
+  </data>  
+  <data id="events_billing_notify_invoice_appid" value="entermediadb/app"> 
+    <name><![CDATA[events_billing_notify_invoice_appid]]></name> 
+  </data>  
+  <data id="events_notify_collective_app" value="entermediadb/app"> 
+    <name><![CDATA[events_notify_collective_app]]></name> 
+  </data>  
+  <data id="mediadbappid" value="entermediadb/mediadb"> 
+    <name><![CDATA[MediaDB Application ID]]></name> 
+  </data>  
+  <data id="cdn_prefix"> 
+    <name><![CDATA[CDN Prefix]]></name> 
+  </data>  
+  <data id="isbillingenabled" value="true"> 
+    <name><![CDATA[isbillingenabled]]></name> 
+  </data>  
+  <data id="invoice_pay_options">
+    <name><![CDATA[Other Pay Options for Invoices]]></name>
+    <value><![CDATA[<p> Or Wise.com or bank transfer:  bookkeeper@entermediadb.org </p> <p> Bank Details: Huntington National Bank, 105 East 4th Street #100 Cincinnati, OH 45202 <br>Account Number: # 01651278154 <br>Domestic ABA Routing # 042015422 <br>International ABA Routing # 044000024 <br>SWIFT CODE # HUNTUS33 (please note there is a letter "S" not a number "5" before "33") </p>]]></value>
+  </data>
+  
+  <property id="events_notify_collective_app" value="entermediadb/app">Collective Chat Notify App</property>
+  
+  <data id="invoice_email_header"> 
+    <name><![CDATA[invoice_email_header]]></name>  
+    <value><![CDATA[<h2>Hello ${invoiceto}</h2><p>Thank you for your purchase at ${project}, this is your invoice.</p>]]></value> 
+  </data>  
+  <data id="invoice_email_footer"> 
+    <name><![CDATA[invoice_email_footer]]></name>  
+    <value><![CDATA[<p>If you have any questions about this invoice, reach out to our support team for help.  </p><p>Cheers,<br> The EnterMediaDB Team</p>]]></value> 
+  </data>  
+  <data id="invoice_paid_email"> 
+    <name><![CDATA[invoice_paid_email]]></name>  
+    <value><![CDATA[<p>Thank you for your purchase.</p> <p>If you have any questions about this invoice, reach out to our support team for help.</p>]]></value> 
+  </data>
+  
+</root>
