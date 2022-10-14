@@ -31,7 +31,7 @@ import org.openedit.util.DateStorageUtil;
 public class SSLManager
 {
 	private static final Log log = LogFactory.getLog(SSLManager.class);
-	private int DAYS_BEFORE_EXPIRATION = 10;
+	private int DAYS_BEFORE_EXPIRATION = 30;
 
 	private void sendEmailError(Data inInstance, Data inReal, MediaArchive inArchive)
 	{
