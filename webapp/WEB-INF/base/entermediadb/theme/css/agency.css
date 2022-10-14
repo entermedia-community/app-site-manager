@@ -2037,13 +2037,13 @@ padding:20px 60px;
 
 .btn-ssl-expired,
 .btn-ssl-error {
-	color: #fff;
+	color: #fff!important;
     background-color: #bd2130;
     border-color: #b21f2d;
 }
 	
 .btn-ssl-torenew {
-    color: #fff;
+    color: #fff!important;
     background-color: #d39e00;
     border-color: #c69500;
 }
