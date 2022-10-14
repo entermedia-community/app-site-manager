@@ -2034,3 +2034,17 @@ padding:20px 60px;
 	color:#000!important;
 
 	}
+
+.btn-ssl-expired,
+.btn-ssl-error {
+	color: #fff;
+    background-color: #bd2130;
+    border-color: #b21f2d;
+}
+	
+.btn-ssl-torenew {
+    color: #fff;
+    background-color: #d39e00;
+    border-color: #c69500;
+}
+	

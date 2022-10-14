@@ -16,7 +16,7 @@
 	                <th>[[Monitoring URL]]</th>
 	                <th>[[Assets]]</th>
 	                <th>[[Server]]</th>
-	                <th>[[Resolve]]</th>
+	                <th>[[SSL]]</th>
 	                <th>[[Last Snapshot]]</th>
 					<th>[[Links]]</th>
 	            </tr>
@@ -60,10 +60,14 @@
 					
 					<td>
 						$!context.getText($!mediaarchive.getData("entermedia_servers",$instancemonitor.primarycname))
+						<br>
+						$!instancemonitor.publicdomainip
 					</td>
 					
-					<td>
-						$!instancemonitor.publicdomainip
+					<td class="text-center">
+						#if($instancemonitor.sslstatus)
+						<a class="btn btn-xs btn-light btn-ssl-$!instancemonitor.sslstatus" title="$!instancemonitor.expirationdate">$!context.getText($!mediaarchive.getData("sslstatus",$instancemonitor.sslstatus))</a>
+						#end
 					</td>
 					<td #if( $!mediaarchive.isSnapshotDateOld($!instancemonitor.lastsnapshot) ) class="alert-danger" #end>
 						
