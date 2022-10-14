@@ -22,7 +22,7 @@
 	<script id="validateandedit" src="/${applicationid}/components/javascript/validateandedit.js"/>
   
     <!-- Bootstrap -->
-	<script id="bootstrap" cancel="true" src="/${applicationid}/components/javascript/bootstrap/4/js/bootstrap.min.js" />
+	<script id="bootstrap" src="/${applicationid}/components/javascript/bootstrap/4.5.3/js/bootstrap.min.js" />
 
 	
 	<style id="bootstrap" href="/${applicationid}/components/javascript/bootstrap/4.5.3/css/bootstrap.min.css" />

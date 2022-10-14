@@ -16,7 +16,7 @@
     
   <!-- App Custom -->
   <style id="custom-css" href="/${siteid}/theme/css/agency.css"/>
-  <style id="custom-acss" href="/${applicationid}/theme/css/X.css"/>
+  
   
   <permission name="view">
 	   <userprofile property="view" equals="true" />
