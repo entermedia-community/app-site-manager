@@ -87,17 +87,3 @@ Cincinnati, OH 45215</div>
 </div>
 
 
-
-
- <script type="text/javascript">
-         $("#contactFormFooter").validate({
-         	submitHandler: function(form) {
-         		if (grecaptcha.getResponse()) {
-         		form.submit();
-         		} 
-         		else {
-         		alert('Please confirm captcha to proceed');
-         		}
-         	}
-         });          
-      </script>
