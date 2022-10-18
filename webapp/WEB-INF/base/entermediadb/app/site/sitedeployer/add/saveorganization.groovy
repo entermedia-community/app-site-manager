@@ -41,18 +41,14 @@ public void init()
 	log.info("Project created: ("+collectionid+") " + collection + " Owner: "+user.getId());
 	
 	//Create General Topic if not exists
-	Searcher topicssearcher = mediaArchive.getSearcher("collectiveproject");
-	Data topicexists = topicssearcher.query().exact("parentcollectionid",collectionid).searchOne();
-	String generaltopicid=null;
-	if (topicexists == null) {
-		Data topic = topicssearcher.createNewData();
-		topic.setValue("name", "General");
-		topic.setValue("parentcollectionid", collectionid);
-		topicssearcher.saveData(topic);
-		generaltopicid = topic.getId();
-	}
-	else {
-		generaltopicid = topicexists.getId();
+	BaseSearcher colectivesearcher = mediaArchive.getSearcher("collectiveproject");
+	Data newproject = colectivesearcher.query().exact("parentcollectionid",collection.getId()).match("name","General").searchOne();
+	if( newproject == null)
+	{
+		newproject = colectivesearcher.createNewData();
+		newproject.setName("General");
+		newproject.setValue("parentcollectionid",collection.getId());
+		colectivesearcher.saveData( newproject );
 	}
 	
 	//--
@@ -92,11 +88,12 @@ public void init()
 //	chat.setValue("channel", generaltopicid);
 //	chats.saveData(chat);
 	//--
-
+/*
 	ChatManager chatmanager = (ChatManager) mediaArchive.getModuleManager().getBean(mediaArchive.getCatalogId(), "chatManager");
 	chatmanager.updateChatTopicLastModified(generaltopicid);
 	
 	mediaArchive.getProjectManager().getRootCategory(mediaArchive, collection);
+	*/
 }
 
 init();

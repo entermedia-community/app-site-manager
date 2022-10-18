@@ -2,7 +2,7 @@
 #set( $currency = '$' )
 <html>
   <head>
-        <style type="text/css" rel="stylesheet" media="all">
+    <style type="text/css" rel="stylesheet" media="all">
     /* Base ------------------------------ */
     
     body {
@@ -69,7 +69,7 @@
     
     td,
     th {
-      font-size: 16px;
+      font-size: 15px;
     }
     
     p,
@@ -77,7 +77,7 @@
     ol,
     blockquote {
       margin: .4em 0 1.1875em;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 1.625;
     }
     
@@ -139,11 +139,11 @@
     /* Attribute list ------------------------------ */
     
     .attributes {
-      margin: 0 0 21px;
+      margin: 0 0 11px;
     }
     
     .attributes_content {
-      background-color: #F4F4F7;invoice_pay_options
+      background-color: #F4F4F7;
       padding: 16px;
     }
     
@@ -225,7 +225,7 @@
     .purchase {
       width: 100%;
       margin: 0;
-      padding: 35px 0;
+      padding: 20px 0;
       -premailer-width: 100%;
       -premailer-cellpadding: 0;
       -premailer-cellspacing: 0;
@@ -457,9 +457,7 @@
 						              ($context.getText($!mediaarchive.getCachedData("currencytype", $invoice.getValue("currencytype"))))
 						            </span>
                                   </td>
-                                </tr>
-                                <tr>
-                                  <td class="attributes_item">
+                                  <td class="attributes_item" style="text-align: right;">
                                     <span class="f-fallback">
 						              <strong>Due By:</strong> $!context.getDate($invoice.getValue("duedate"))
 						            </span>
@@ -524,18 +522,18 @@
 								#end
 
                                 <tr>
-                                  <td width="80%" colspan="2" class="purchase_footer" valign="middle">
-                                    <p class="f-fallback purchase_total purchase_total--label">Total ($context.getText($!mediaarchive.getCachedData("currencytype", $invoice.getValue("currencytype"))))</p>
+                                  <td width="80%" colspan="2" class="purchase_footer" valign="middle"  style="text-align: right;">
+                                    <p class="f-fallback purchase_total purchase_total--label" style="text-align:right;">Total ($context.getText($!mediaarchive.getCachedData("currencytype", $invoice.getValue("currencytype"))))</p>
                                   </td>
                                   <td width="20%" class="purchase_footer" valign="middle">
-                                    <p class="f-fallback purchase_total">$currency $!context.roundDouble($invoice.getValue("totalprice"),2)</p>
+                                    <p class="f-fallback purchase_total"  style="text-align:right;">$currency $!context.roundDouble($invoice.getValue("totalprice"),2)</p>
                                   </td>
                                 </tr>
                               </table>
                             </td>
                           </tr>
                         </table>
-                                <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+                        <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0" role="presentation">
                           <tr>
                             <td align="center">
                               <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation">
