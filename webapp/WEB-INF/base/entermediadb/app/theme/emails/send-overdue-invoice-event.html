@@ -224,7 +224,7 @@
     .purchase {
       width: 100%;
       margin: 0;
-      padding: 20px 0;
+      padding: 10px 0;
       -premailer-width: 100%;
       -premailer-cellpadding: 0;
       -premailer-cellspacing: 0;
@@ -453,9 +453,7 @@
 						              ($context.getText($!mediaarchive.getCachedData("currencytype", $invoice.getValue("currencytype"))))
 						            </span>
                                   </td>
-                                </tr>
-                                <tr>
-                                  <td class="attributes_item">
+                                  <td class="attributes_item" style="text-align: right;">
                                     <span class="f-fallback">
 						              <strong>Due By:</strong> $!context.getDate($invoice.getValue("duedate"))
 						            </span>
@@ -487,11 +485,14 @@
                         </table>
                         <table class="purchase" width="100%" cellpadding="0" cellspacing="0">
                           <tr>
-                            <td>
-                              <h3>Invoice #: $invoice.getValue("invoicenumber")</h3>
+                           <td valign="top">
+                              <div><strong>Invoice #:</strong> $invoice.getValue("invoicenumber")</div>
+                              #if($invoicemonth)
+                              <div><strong>Month:</strong> $invoicemonth</div>
+                              #end
                             </td>
-                            <td>
-                              <h3 class="align-right">$!context.getDate($invoice.getValue("createdon"))</h3>
+                            <td style="" valign="top">
+                              <div class="align-right"><Strong>Date:</Strong> $!context.getDate($invoice.getValue("createdon"))</div>
                             </td>
                           </tr>
                           <tr>
