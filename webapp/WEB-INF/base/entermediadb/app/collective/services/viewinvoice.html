@@ -68,12 +68,21 @@
 	
 		
 			<div style="background-color:#efefef; padding:10px; margin:10px 0;">
-				
-						<strong>[[Invoice Number]]: $invoice.getValue("invoicenumber")</strong>
+				<table style="width: 100%;">
+				<tr>
+				<td><strong>[[Invoice Number]]: $invoice.getValue("invoicenumber")</strong>
 						<br>
 						<strong>[[Created on]]:</strong> $!context.getDate($invoice.getValue("createdon"))
 						<br>
-						<strong>[[Due By]]:</strong> $!context.getDate($invoice.getValue("duedate"))
+						#set($invoicemonth = $dateStorageUtil2.getStorageUtil().getMonthName($invoice.getValue("billdate")))
+						#if($invoicemonth)
+                              <div><strong>Month:</strong> $invoicemonth</div>
+                        #end</td>
+				<td style="width: 240px; text-align: right; vertical-align: top;"><strong>[[Due By]]:</strong> $!context.getDate($invoice.getValue("duedate"))</td>
+				</tr>
+				</table>
+						
+						
 				
 			</div>
 			<div style="margin-top:10px;">

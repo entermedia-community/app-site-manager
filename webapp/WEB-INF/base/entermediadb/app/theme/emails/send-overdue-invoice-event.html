@@ -506,8 +506,11 @@
 									$!workspace
 								#end
 								
-								#if($invoice.getValue("invoicedescription"))
-								<div class="f-fallback" style="padding-top:10px;">$!mediaarchive.text($invoice.getValue("invoicedescription"), $invoice.id)</div>
+								#if(!$invoicedescription)
+									#set($invoicedescription = $mediaarchive.text($invoice.getValue("invoicedescription"), $invoice.id))
+								#end
+								#if($invoicedescription)
+								<div class="f-fallback" style="padding-top:10px;">$invoicedescription</div>
 								#end
                             </td>
                             </tr>
