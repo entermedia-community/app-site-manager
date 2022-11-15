@@ -93,9 +93,12 @@
 					#else
 						<br>$!collection
 					#end
-				
-					#if($invoice.getValue("invoicedescription"))
-						$invoice.getValue("invoicedescription")
+					#set($invoicedescription = $invoice.getValue("invoicedescription"))
+					#if($invoicedescription)
+						#set($replacer = $mediaarchive.getReplacer())
+						#set($ii = $invoice.setValue("invoicemonth",$invoicemonth))
+						#set($invoicedescription = $replacer.replace($invoicedescription, $invoice))
+						$invoicedescription
 					#end
 			</div>
 		
