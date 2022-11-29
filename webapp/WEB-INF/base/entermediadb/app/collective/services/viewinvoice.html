@@ -14,6 +14,20 @@
 	#set( $collection = $mediaarchive.query("librarycollection").exact("id",$invoice.getValue("collectionid")).searchOne() )
 	
 	#set($status = $invoice.getValue("paymentstatus"))
+	
+	#set($invoicemonth = $dateStorageUtil2.getStorageUtil().getMonthName($invoice.getValue("billdate")))
+	
+	##For Replace Formating
+		#set($invoiceformated = $invoice)
+		#set($replacer = $mediaarchive.getReplacer())
+		#set($ignore = $invoiceformated.setValue("invoicemonth",$invoicemonth))
+		#set($ignore = $invoiceformated.setValue("project", $collection))
+		#set($startdate = "#date($invoice, 'startdate')")
+		#set($ignore = $invoiceformated.setValue("startdate", $startdate))
+		#set($enddate = "#date($invoice, 'enddate')")
+		#set($ignore = $invoiceformated.setValue("enddate", $enddate))
+	##
+	
 <div class="viewinvoice">
 	
 	<div style="padding:0 0 5px;">
@@ -70,15 +84,20 @@
 			<div style="background-color:#efefef; padding:10px; margin:10px 0;">
 				<table style="width: 100%;">
 				<tr>
-				<td><strong>[[Invoice Number]]: $invoice.getValue("invoicenumber")</strong>
-						<br>
-						<strong>[[Created on]]:</strong> $!context.getDate($invoice.getValue("createdon"))
-						<br>
-						#set($invoicemonth = $dateStorageUtil2.getStorageUtil().getMonthName($invoice.getValue("billdate")))
-						#if($invoicemonth)
-                              <div><strong>Month:</strong> $invoicemonth</div>
-                        #end</td>
-				<td style="width: 240px; text-align: right; vertical-align: top;"><strong>[[Due By]]:</strong> $!context.getDate($invoice.getValue("duedate"))</td>
+				<td>
+					#set($invoiceoriginalname = $invoice.getValue("name"))
+					#set($invoicename = $replacer.replace($invoiceoriginalname, $invoiceformated))
+					<strong>[[Invoice]]:</strong> $!invoicename<br>
+					<strong>[[Invoice #]]:</strong> $invoice.getValue("invoicenumber")<br>
+						
+					#if($invoicemonth)
+		            <div><strong>Month:</strong> $invoicemonth</div>
+                     #end
+                </td>
+				<td style="width: 240px; text-align: right; vertical-align: top;">
+					<strong>[[Created on]]:</strong> $!context.getDate($invoice.getValue("createdon"))<br>
+					<strong>[[Due By]]:</strong> $!context.getDate($invoice.getValue("duedate"))
+				</td>
 				</tr>
 				</table>
 						
@@ -95,9 +114,7 @@
 					#end
 					#set($invoicedescription = $invoice.getValue("invoicedescription"))
 					#if($invoicedescription)
-						#set($replacer = $mediaarchive.getReplacer())
-						#set($ii = $invoice.setValue("invoicemonth",$invoicemonth))
-						#set($invoicedescription = $replacer.replace($invoicedescription, $invoice))
+						#set($invoicedescription = $replacer.replace($invoicedescription, $invoiceformated))
 						$invoicedescription
 					#end
 			</div>
@@ -155,5 +172,5 @@
 #end
 	
 	
-	
+	 
 	

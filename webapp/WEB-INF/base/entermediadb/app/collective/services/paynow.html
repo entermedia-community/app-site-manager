@@ -19,6 +19,19 @@
 #end
 
 
+#set($invoicemonth = $dateStorageUtil2.getStorageUtil().getMonthName($invoice.getValue("billdate")))
+
+##For Replace Formating
+	#set($invoiceformated = $invoice)
+	#set($replacer = $mediaarchive.getReplacer())
+	#set($ignore = $invoiceformated.setValue("invoicemonth",$invoicemonth))
+	#set($ignore = $invoiceformated.setValue("project", $workspace))
+	#set($startdate = "#date($invoice, 'startdate')")
+	#set($ignore = $invoiceformated.setValue("startdate", $startdate))
+	#set($enddate = "#date($invoice, 'enddate')")
+	#set($ignore = $invoiceformated.setValue("enddate", $enddate))
+##--
+
 #if($invoice.paymentstatus == "paid")
 <strong>[[Invoice]] #$!invoice.invoicenumber</strong> [[Status is Paid]].
 #else
@@ -59,10 +72,10 @@
 					<br>$!workspace
 				#end
 				
-				#if($invoice.getValue("invoicedescription"))
-					<div style="margin-top:10px;">
-						$invoice.getValue("invoicedescription")
-					</div>
+				#set($invoicedescription = $invoice.getValue("invoicedescription"))
+				#if($invoicedescription)
+					#set($invoicedescription = $replacer.replace($invoicedescription, $invoiceformated))
+					<div style="margin-top:10px;">$invoicedescription</div>
 				#end
 				
 			</div>
@@ -122,8 +135,8 @@
 
 	        	##Disable for not USD
             	#if($invoice.currencytype!='1')
-            	<div class="col-sm-5" style="text-align:center; padding:40px 10px 0;">
-            		[[Online payment disabled temporarily for current invoice currency type]].
+            	<div class="col-sm-5" style="text-align:center; padding:40px 30px 0;">
+            		<div class="alert alert-warning">[[Online payment disabled temporarily for current invoice currency type]].</div>
             	</div>
             	#else
 	            <div class="col-sm-5">
