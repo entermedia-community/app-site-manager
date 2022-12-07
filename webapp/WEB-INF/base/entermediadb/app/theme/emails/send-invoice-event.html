@@ -1,4 +1,3 @@
-
 #set( $currency = '$' )
 <html>
   <head>
@@ -427,7 +426,7 @@
   <body>
   <div style="background-color:#f1f1f1; padding:30px 0;">
 	<div style="background-color:#fff; padding:20px; margin:0 auto; width:600px; color:#000;">
-    <span class="preheader">This is an invoice for your purchase on $!context.getDate($invoice.getValue("createdon")). Please submit payment by $!context.getDate($invoice.getValue("duedate"))</span>
+    <span class="preheader">This is an invoice for your purchase on $!context.getDate($invoice.getValue("createdon")). Please submit payment before $!context.getDate($invoice.getValue("duedate"))</span>
     
     <div style="background-color:#000; padding: 5px 5px; margin-bottom:20px; text-align:center;">
 		<a href="${siteroot}">
@@ -462,7 +461,7 @@
                                   </td>
                                   <td class="attributes_item" style="text-align: right;">
                                     <span class="f-fallback">
-						              <strong>Due By:</strong> $!context.getDate($invoice.getValue("duedate"))
+						              <strong>Due Date:</strong> $!context.getDate($invoice.getValue("duedate"))
 						            </span>
                                   </td>
                                 </tr>
@@ -476,14 +475,15 @@
                         <table class="purchase" width="100%" cellpadding="0" cellspacing="0">
                           <tr>
                             <td valign="top">
-                              <div><strong>Invoice:</strong> #text($invoicename)</div>
+                              
                               <div><strong>Invoice #:</strong> $invoice.getValue("invoicenumber")</div>
-                              #if($invoicemonth)
-                              <div><strong>Month:</strong> $invoicemonth</div>
-                              #end
+                              <div><strong> #text($invoicename)</strong></div>
+                              ###if($invoicemonth)
+                              ##<div><strong>Month:</strong> $invoicemonth</div>
+                              ###end
                             </td>
                             <td style="" valign="top">
-                              <div class="align-right"><Strong>Date:</Strong> $!context.getDate($invoice.getValue("createdon"))</div>
+                              ##<div class="align-right"><Strong>Date:</Strong> $!context.getDate($invoice.getValue("createdon"))</div>
                             </td>
                           </tr>
                           <tr>
