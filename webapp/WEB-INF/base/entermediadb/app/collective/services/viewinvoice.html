@@ -33,56 +33,60 @@
 	##
 	
 <div class="viewinvoice">
-	
-	<div style="padding:0 0 5px;">
-	<strong>[[Invoice Status]]:</strong> 
+	<div class="viewinvoiceheader">
+		<div class="float-right printinvoicebtn"><a href="$applink/collective/services/printpreview.html?invoiceid=$!invoice.id" target="_blank" class="btn btn-sm btn-light"><i class="fas fa-print"></i> [[Print]]</a></div>
+			
+		<div style="padding:0 0 5px;">
+		<strong>[[Invoice Status]]:</strong> 
+			#if($status.equals("invoiced"))
+				[[Invoice sent]]
+			#elseif($status.equals("pending"))
+				[[Pending]]
+			#elseif($status.equals("payd"))
+				[[Payd]]
+			#end
+		</div>
 		#if($status.equals("invoiced"))
-			[[Invoice sent]]
-		#elseif($status.equals("pending"))
-			[[Pending]]
-		#elseif($status.equals("payd"))
-			[[Payd]]
+		<div style="padding:0 0 5px 0;">
+		<strong>[[Sent Date]]</strong>: $invoice.getValue("sentdate")
+		</div>
 		#end
-	</div>
-	#if($status.equals("invoiced"))
-	<div style="padding:0 0 5px 0;">
-	<strong>[[Sent Date]]</strong>: $invoice.getValue("sentdate")
-	</div>
-	#end
-	##contacts
-	<div style="margin:0 0 20px;">
+		##contacts
+		<div style="margin:0 0 20px;">
+		
+		
+		#if($status.equals("invoiced"))
+			<strong>[[Sent to]]:</strong>
+		#else
+			<strong>[[Send invoice to]]:</strong>
+		#end
+		<div style="border:1px solid #555; padding:3px 5px; margin-bottom:10px; background-color: #f1f1f1;">
+		#if($invoice.getValue("sentto"))
+			$invoice.getValue("sentto")
+		#else
+			--[[Edit invoice to add contacts]]--
+		#end
+		</div>
 	
-	
-	#if($status.equals("invoiced"))
-		<strong>[[Sent to]]:</strong>
-	#else
-		<strong>[[Send invoice to]]:</strong>
-	#end
-	<div style="border:1px solid #555; padding:3px 5px; margin-bottom:10px; background-color: #f1f1f1;">
-	#if($invoice.getValue("sentto"))
-		$invoice.getValue("sentto")
-	#else
-		--[[Edit invoice to add contacts]]--
-	#end
-	</div>
-
+		</div>
 	</div>
 	
-	<div style="border:1px solid #999;; width:100%; max-width:980px; margin: 0 auto;">
-	<div style="padding:10px; text-align: left;">
+	<div class="viewinvoicebody">
+	
 		<div class="row">
-			<div class="col-sm-4">
+			<div class="col-sm-4 invoicecompanylogo">
 
 				#set($logourl = "$applink/theme/images/invoice-logo.png")
 				
 				<img src="$logourl" style="max-height: 100px;" alt="EnterMediaDb">
 			</div>
-			<div class="col-sm-8 text-right" >
+			<div class="col-sm-8 text-right invoicecompanyinfo" >
 				<strong>EnterMedia, Inc.</strong><br>
 				1550 Magnolia Dr.<br>
 				Cincinnati, OH 45215
 			</div>
 		</div>
+		<div class="clearfix"></div>
 	
 		
 			<div style="background-color:#efefef; padding:10px; margin:10px 0;">
@@ -126,7 +130,7 @@
 			</div>
 		
 		
-		<div style="padding: 10px;">		
+		<div style="padding-top: 10px;">		
 			<h4>[[Products]]</h4>
 			<div class="table-responsive">
 				<table class="d-print-table table">
@@ -171,8 +175,6 @@
 		</div>
 		
 		
-		
-	</div>
 	</div>
 </div>
 #end
