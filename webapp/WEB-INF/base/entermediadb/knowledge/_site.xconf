@@ -2,15 +2,22 @@
 
 <page>
 
-	<!-- Need it for saving -->
-  	<property name="fallbackdirectory">/WEB-INF/base/emfrontend2</property>
-  	<property name="applicationid">${siteid}/knowledge</property> 
+  <!-- Need it for saving -->
+  <property name="siteid">entermediadb</property>
+  <property name="fallbackdirectory">/WEB-INF/base/eminstitute/app</property>
+  <property name="applicationid">entermediadb/knowledge</property>
+  <inner-layout>${applicationid}/layout.html</inner-layout> 
   	
   <property name="section">knowledge</property>
   <property name="virtual">true</property>
   <property name="isfullscreen">true</property>
-  <inner-layout>/${siteid}/knowledge/layout.html</inner-layout>
+  
+  
   
   <path-action name="PostModule.loadPost"/>
   <path-action alltypes="true" name="MediaArchiveModule.getMediaArchive"/>
+  
+  <style id="custom-css" href="/${siteid}/theme/css/agency.css"/>
+  <style id="custom-acss" href="/${siteid}/theme/css/em_custom.css"/>
+  
 </page>
