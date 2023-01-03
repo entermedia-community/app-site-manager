@@ -49,5 +49,10 @@
     <name><![CDATA[invoice_paid_email]]></name>  
     <value><![CDATA[<p>Thank you for your purchase.</p> <p>If you have any questions about this invoice, reach out to our support team for help.</p>]]></value> 
   </data>
-  
+  <data id="system_from_email" value="noreply@entermediadb.org"> 
+    <name><![CDATA[System From Email]]></name> 
+  </data>
+  <data id="invoice_cc_email" value="bookkeeper@entermediadb.org"> 
+    <name><![CDATA[CC All Invoices to Email]]></name> 
+  </data>
 </root>

@@ -150,13 +150,17 @@
 					</tr>
 					#set($products = $invoice.getValue("productlist"))
 					#foreach ($product in $products)
-					##set ( $prod = $mediaarchive.getProductById($product.productid) )
+					 #set ( $prod = $mediaarchive.getProductById($product.productid) )
 					<tr>
 						<td valign="top" style="vertical-align: top;">$product.productquantity</td>
 						
 						<td valign="top" style="vertical-align: top;">
-							<div>$mediaarchive.getProductName($product.productid)</div>
-							<div style="font-size: 0.9em;">$!mediaarchive.text($prod.getValue("productdescription"), $invoice.id)</div>
+							##<div>$mediaarchive.getProductName($product.productid)</div>
+							##<div style="font-size: 0.9em;">$!mediaarchive.text($prod.getValue("productdescription"), $invoice.id)</div>
+							
+							#set($productname = $replacer.replace($prod.name, $invoiceformated))
+								
+							#text($productname)
 						</td>
 						<td  valign="top" style="text-align: right; vertical-align: top;"><span>$currency $!context.doubleToMoney($product.productprice, 2)</span></td>
 					</tr>
