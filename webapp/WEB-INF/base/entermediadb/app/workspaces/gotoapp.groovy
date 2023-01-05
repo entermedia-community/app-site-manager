@@ -198,8 +198,8 @@ public String createcollection(String inInstancename, String userid) {
 //	chats.saveData(chat);
 	//--
 
-	ChatManager chatmanager = (ChatManager) mediaArchive.getModuleManager().getBean(mediaArchive.getCatalogId(), "chatManager");
-	chatmanager.updateChatTopicLastModified(generaltopicid);
+//	ChatManager chatmanager = (ChatManager) mediaArchive.getModuleManager().getBean(mediaArchive.getCatalogId(), "chatManager");
+//	chatmanager.updateChatTopicLastModified(generaltopicid);
 	
 	mediaArchive.getProjectManager().getRootCategory(mediaArchive, collection);
 	
