@@ -5,5 +5,9 @@
 	<property name="invoicepayment">true</property>
 	
 	<path-action name="ProjectModule.loadCollection" />
+	
+	<page-action bean="dateStorageUtil2" name="PageValue.loadPageVariable"  class="org.openedit.util.DateStorageUtil" />
+	
+	
 	<inner-layout>/${applicationid}/collective/services/layout.html</inner-layout>
 </page>
