@@ -19,15 +19,16 @@
 #end
 
 
-#set($invoicemonth = $dateStorageUtil2.getStorageUtil().getMonthName($invoice.getValue("billdate")))
+#set($invoicemonth = $dateStorageUtil2.getStorageUtil().getMonthName($invoice.getValue("duedate")))
 
 ##For Replace Formating
 	#set($invoiceformated = $invoice)
 	#set($replacer = $mediaarchive.getReplacer())
 	#set($ignore = $invoiceformated.setValue("invoicemonth",$invoicemonth))
 	#set($ignore = $invoiceformated.setValue("project", $workspace))
-	#set($startdate = "#date($invoice, 'startdate')")
-	#set($ignore = $invoiceformated.setValue("startdate", $startdate))
+	#set($duedate = "#date($invoice, 'duedate')")
+	#set($ignore = $invoiceformated.setValue("duedate", $duedate))
+	#set($ignore = $invoiceformated.setValue("startdate", $duedate))  ##legacy
 	#set($enddate = "#date($invoice, 'enddate')")
 	#set($ignore = $invoiceformated.setValue("enddate", $enddate))
 ##--
@@ -62,7 +63,7 @@
 					<br>
 					<strong>[[Created on]]:</strong> $!context.getDate($invoice.getValue("createdon"))
 					<br>
-					<strong>[[Due By]]:</strong> $!context.getDate($invoice.getValue("duedate"))
+					<strong>[[Due By]]:</strong> $!duedate
 			</div>
 			<strong>[[Invoiced to]]:</strong>
 				#set($invoicedto =$workspace.getValue("invoicedto"))

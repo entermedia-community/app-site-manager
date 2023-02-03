@@ -512,6 +512,9 @@
 								#end
 								
 								
+								#set($invoicemonth = $dateStorageUtil2.getStorageUtil().getMonthName($invoice.getValue("duedate")))
+								
+								
 								##For Replace Formating
 									#set($invoiceformated = $invoice)
 									#set($replacer = $mediaarchive.getReplacer())
