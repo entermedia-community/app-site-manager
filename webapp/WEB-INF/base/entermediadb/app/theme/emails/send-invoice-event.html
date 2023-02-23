@@ -551,8 +551,8 @@
 											#set($productname = $replacer.replace($prod.name, $invoiceformated))
 											
 											#text($productname)
-											</div>
-											<div style="font-size: 0.9em;">$!mediaarchive.text($prod.getValue("productdescription"), $invoice.id)</div>
+											</div> 
+											##<div style="font-size: 0.9em;">$!mediaarchive.text($prod.getValue("productdescription"), $invoice.id)</div>
 										</td>
 										<td  valign="top" style="text-align: right; vertical-align: top;"><span>$currency $!context.doubleToMoney($product.productprice, 2)</span></td>
 									</tr>
