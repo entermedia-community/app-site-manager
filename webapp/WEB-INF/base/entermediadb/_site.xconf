@@ -28,10 +28,6 @@
 	<style id="fonts-css"  href="/${applicationid}/components/javascript/bootstrap/fonts/css/fontawesome-all.min.css"/>
 
 	
-	<style id="bootstrap" href="/${applicationid}/components/javascript/bootstrap/4.5.3/css/bootstrap.min.css" />
-	<style id="fonts-css"  href="/${applicationid}/components/javascript/bootstrap/fonts/css/fontawesome-all.min.css"/>
-
-	
     <!-- EnterMedia -->
 	<script id="entermedia" src="/${applicationid}/components/javascript/entermedia.js"/>
 	<script id="theme-js" src="/${applicationid}/components/javascript/ui-components.js"/>
