@@ -15,5 +15,6 @@
   <path-action name="PostModule.loadPost"/>
   <path-action alltypes="true" name="MediaArchiveModule.getMediaArchive"/>
   
-  
+  <style id="custom-css" href="/${siteid}/theme/css/agency-emworkspace.css"/>
+  	<style id="custom-acss" href="/${siteid}/theme/css/em_custom.css"/>
 </page>
