@@ -1,0 +1,34 @@
+<div class="support-header-out">
+<div class="container">
+<h1>[[Knowledge Base]]</h1>
+</div>
+</div>
+ <div class="container">
+ <div class="row">
+        <div class="col-9 post-content" >
+	#if($postdata.post_title)
+		$content.setValue("meta_title", "$postdata.post_title - EnterMediaDB")
+		$content.setValue("meta_canonical", "$siteRoot/$postdata.sourcepath")
+
+		<h1>$postdata.post_title</h1>
+	#end
+  		<div class="oe-editable" id="edit-$postdata.id" data-dataid="$postdata.id" data-field="maincontent"   	data-searchtype="postdata" data-viewtype="html">
+	 		$postdata.maincontent
+
+  		</div>
+#if( $user.oe_edit_mode == "postedit" )
+<div class="editpostbtn">
+<a href="${sitelink}/emshare2/views/modules/postdata/edit/edit.html?id=${postdata.id}&viewid=postdatageneral&viewpath=postdata/postdatageneral&searchtype=postdata&detailsreadonly=false&preview=true" class="btn btn-xs btn-light">[[Edit Post]]</a>
+</div>
+#end
+
+
+	</div>
+	 <div class="col-3 knowledge-sidebar" >
+		$pages.include("/${applicationid}/sidebar.html") 
+	</div>
+</div>
+</div>
+
+<div class="text-center" style="padding:20px;">eMediaWorkspace - Open Source Digital Asset Management</div>
+
