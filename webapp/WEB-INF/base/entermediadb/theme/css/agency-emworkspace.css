@@ -1073,10 +1073,13 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .support-header-out {
-background-image:url("/entermediadb/mediadb/services/module/asset/downloads/generated/Collections/General/website/2023/digital-dynamic-wave-particles-abstract.jpg/image1024x768.jpg/digital-dynamic-wave-particles-abstractL.jpg");
-background-size: 100% 100%;
-padding:35px 0;
-margin:85px 0 30px;
+	background-image:url("/entermediadb/mediadb/services/module/asset/downloads/generated/Collections/General/website/2023/544430-code-programming.jpg/image1024x768.jpg/544430-code-programmingL.jpg");
+	background-size: 100% 100%;
+	padding:35px 0;
+	margin:85px 0 20px;
+
+	text-align:center;
+	font-size:2rem; 
 }
 .support-header {
 background-color: rgba(0,0,0,0.75);
@@ -1488,7 +1491,6 @@ color:#fff;
 	padding:10px;
 	}
 .section-highlight-gold {
-	padding:15px; 
 }
 .support-header-out, .cloudhosting-header-out {
 	margin-top:0px;
