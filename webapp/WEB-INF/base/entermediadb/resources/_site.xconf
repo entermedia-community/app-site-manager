@@ -12,12 +12,8 @@
   <property name="virtual">true</property>
   <property name="isfullscreen">true</property>
   
-  
-  
   <path-action name="PostModule.loadPost"/>
   <path-action alltypes="true" name="MediaArchiveModule.getMediaArchive"/>
   
-  <style id="custom-css" href="/${siteid}/theme/css/agency.css"/>
-  <style id="custom-acss" href="/${siteid}/theme/css/em_custom.css"/>
   
 </page>
