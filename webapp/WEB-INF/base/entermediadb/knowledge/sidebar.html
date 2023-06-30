@@ -11,6 +11,8 @@
 </div>
 
 #set( $cats = $mediaarchive.query("postdata_category_learning").match("postdata_project",$version).sort("orderingDown").search() )
+
+
 #foreach($cat in $cats)
 	#set( $hits = $mediaarchive.query("postdata").match("knowledgebase_category",$cat.id).sort("post_title").search() )
 	#if($hits.size() > 0 ) 
