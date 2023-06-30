@@ -20,4 +20,6 @@
   <style id="custom-css" href="/${siteid}/theme/css/agency.css"/>
   <style id="custom-acss" href="/${siteid}/theme/css/em_custom.css"/>
   
+  <style id="custom-knowledge" href="/${siteid}/theme/css/knowledgebase.css"/>
+  
 </page>
