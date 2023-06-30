@@ -1,34 +1,33 @@
 #set( $version = $content.project )
 <div class="sidebar-box">
-<h2>[[Versions]]</h2>
-<div class="" id="collapseVersions">
-<ul>
-<li> <a class="" targetdiv="resultsheader" href="$sitelink/knowledge/11/index.html" >EnterMedia Workspace</a></li>
-<li> <a class="" targetdiv="resultsheader" href="$sitelink/knowledge/10/index.html" >EnterMedia Version 10</a></li>
-<li>  <a class="" targetdiv="resultsheader" href="$sitelink/knowledge/9/index.html">EnterMedia Version 9</a></li>
-</ul>
-</div>
+	<h2>[[Versions]]</h2>
+	<div class="" id="collapseVersions">
+		<ul>
+			<li> <a class="" targetdiv="resultsheader" href="$sitelink/knowledge/11/index.html" >EnterMedia Workspace</a></li>
+			<li> <a class="" targetdiv="resultsheader" href="$sitelink/knowledge/10/index.html" >EnterMedia Version 10</a></li>
+			<li>  <a class="" targetdiv="resultsheader" href="$sitelink/knowledge/9/index.html">EnterMedia Version 9</a></li>
+		</ul>
+	</div>
 </div>
 
-#set( $version = $content.project )
 #set( $cats = $mediaarchive.query("postdata_category_learning").match("postdata_project",$version).sort("orderingDown").search() )
 #foreach($cat in $cats)
-#set( $hits = $mediaarchive.query("postdata").match("knowledgebase_category",$cat.id).sort("post_title").search() )
-#if($hits.size() > 0 ) 
-<div class="sidebar-box">
-<h2>$context.getText($cat)</h2>
-<ul>
-#set( $active = $postdata.getId() )
-#foreach($data in $hits)
-
-<li #if($active == $data.id) class="knowledge-current" #end>
-	<a href="$sitelink/$data.sourcepath" title="Knowledge Base: $data.post_title">$data.post_title</a>
-</li>
-
-#end
-</ul>
-</div>
-#end
+	#set( $hits = $mediaarchive.query("postdata").match("knowledgebase_category",$cat.id).sort("post_title").search() )
+	#if($hits.size() > 0 ) 
+	<div class="sidebar-box">
+		<h2>$context.getText($cat)</h2>
+		<ul>
+		#set( $active = $postdata.getId() )
+			#foreach($data in $hits)
+			
+				<li #if($active == $data.id) class="knowledge-current" #end>
+					<a href="$sitelink/$data.sourcepath" title="Knowledge Base: $data.post_title">$data.post_title</a>
+				</li>
+				
+			#end
+		</ul>
+	</div>
+	#end
 #end 
 
 
