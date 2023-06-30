@@ -17,11 +17,7 @@
       <language id="fr"><![CDATA[Identité]]></language> 
     </name> 
   </property>  
-  <property id="sourcepath">New 
-    <name> 
-      <language id="en"><![CDATA[SourcePath]]></language> 
-    </name> 
-  </property>  
+   
   <property id="project" index="true" editable="true" stored="true" internalfield="false" isbadge="false" required="false" multilanguage="false" deleted="true" datatype="list" autocreatefromexif="false" writenametoexif="false" filter="false" keyword="false">New 
     <name> 
       <language id="en"><![CDATA[project]]></language> 
@@ -37,17 +33,5 @@
       <language id="en"><![CDATA[postdata_project]]></language> 
     </name> 
   </property>  
-  <property id="mastereditclusterid" index="true" deleted="false" editable="true" stored="true">New 
-    <name> 
-      <language id="en"><![CDATA[Master Edit Cluster]]></language> 
-    </name> 
-  </property>  
-  <property id="recordmodificationdate" index="true" deleted="false" editable="false" stored="true" viewtype="time" sortable="true" searchcomponent="datesearch" datatype="date">New
-    <name>
-      <language id="de"><![CDATA[Rekord bearbeiten Datum]]></language>
-      <language id="en"><![CDATA[Record Edit Date]]></language>
-      <language id="es"><![CDATA[Record Edit Fecha]]></language>
-      <language id="fr"><![CDATA[Date d&#39;édition de l&#39;enregistrement]]></language>
-    </name>
-  </property>
+
 </properties>
