@@ -33,10 +33,15 @@ body {
 
 #embody,
 .eminstituteapp,
-.bodywebsite,
-.entermediadbcontent {
+.bodywebsite {
   background-color: #0C223A;
   color:#fff;
+	
+}
+
+.entermediadbcontent {
+  background-color: #fefefe;
+  color:#111;
 	
 }
 .modal-body .login-area {
@@ -104,8 +109,7 @@ h1 {
     margin-bottom: 2.1rem;
 }
 .h3, h3 {
-    font-size: 1.8rem;
-    text-transform:uppercase;
+    font-size: 1.6rem; 
     margin-bottom: 1.6rem;
 }
 
@@ -1073,11 +1077,11 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .support-header-out {
-	background-image:url("/entermediadb/mediadb/services/module/asset/downloads/generated/Collections/General/website/2023/544430-code-programming.jpg/image1024x768.jpg/544430-code-programmingL.jpg");
+	background-image:url("/entermediadb/mediadb/services/module/asset/downloads/preset/Collections/General/website/2023/workspaceknowladge.jpg/image1024x768.jpg");
 	background-size: 100% 100%;
 	padding:35px 0;
 	margin:85px 0 20px;
-
+	color:#fff;
 	text-align:center;
 	font-size:2rem; 
 }
@@ -1730,14 +1734,26 @@ padding:20px 60px;
     }
 }
 
+
 .entermediadbcontent a {
-	color:#aaa;
+	color:#444;
 	text-decoration:underline;
 }
 
 .entermediadbcontent a:hover {
+	color:#07172C;
+}
+
+
+.bodywebsite a {
+	color:#ddd;
+	text-decoration:underline;
+}
+
+.bodywebsite a:hover {
 	color:#fff;
 }
+
 
 .entermediadbcontent .community-maincol {
 	margin:0 15px;

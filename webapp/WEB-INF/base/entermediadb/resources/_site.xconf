@@ -8,7 +8,7 @@
   <property name="applicationid">entermediadb/resources</property>
   <inner-layout>${applicationid}/layout.html</inner-layout> 
   	
-  <property name="section">knowledge</property>
+  <property name="section">resources</property>
   <property name="virtual">true</property>
   <property name="isfullscreen">true</property>
   
@@ -16,5 +16,7 @@
   <path-action alltypes="true" name="MediaArchiveModule.getMediaArchive"/>
   
   <style id="custom-css" href="/${siteid}/theme/css/agency-emworkspace.css"/>
-  	<style id="custom-acss" href="/${siteid}/theme/css/em_custom.css"/>
+  <style id="custom-acss" href="/${siteid}/theme/css/em_custom.css"/>
+  
+  <style id="custom-knowledge" href="/${siteid}/theme/css/knowledgebase.css"/>
 </page>
