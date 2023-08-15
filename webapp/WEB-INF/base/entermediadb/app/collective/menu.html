@@ -14,12 +14,12 @@
 		[[Chat]] </a>
 	</li>
 	
-	
+	#if($canviewsettings)
 	<li id="tasks"  class="nav-item #if($collectivesection == "tasks") active #end">
 		<a class="nav-link" href="$applink/collective/goals/priorities/index.html?collectionid=${librarycol.id}&goaltrackerstaff=*" >
 		[[Tickets]] </a>
 	</li>
-	
+	#end
 		
 	
 	
@@ -44,11 +44,7 @@
 	#end
 	
 	#if($canviewsettings)
-	<li class="nav-item">
-		<a class="nav-link emdialog" data-allwaysloadpage="true" href="$applink/collective/edit/editcollective.html?collectionid=$librarycol.getId()" title="[[Project Settings]]">
-		[[Settings]]</a>
-	</li>
-	
+
 	<li class="nav-item">
 		<a class="nav-link" target="_blank" href="/entermediadb/emshare2/views/settings/lists/datamanager/edit/edit.html?id=$librarycol.getId()&searchtype=librarycollection">
 			<i class="fa fa-database"></i>

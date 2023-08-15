@@ -134,6 +134,10 @@ section {
   color: white;
 }
 
+.btn-light {
+	color:#333!important;
+}
+
 .btn-primary:active, .btn-primary:focus {
   box-shadow: 0 0 0 0.2rem rgba(254, 209, 55, 0.5) !important;
 }
@@ -1579,6 +1583,14 @@ padding:20px 60px;
 	min-height: 40px;
 }
 
+.collectivemaincontainer {
+height: calc(100% - 70px)	
+}
+.collectivemaincol
+{
+height: calc(100% - 70px)	
+}
+
 .goal-tabs {
 	margin-top:30px;
 } 
@@ -2058,5 +2070,11 @@ padding:20px 60px;
     color: #fff!important;
     background-color: #d39e00;
     border-color: #c69500;
+}
+	
+	
+.collaborate-sidebar h4 {
+	font-size: 1.3rem;
+	padding-bottom: 10px;
 }
 	

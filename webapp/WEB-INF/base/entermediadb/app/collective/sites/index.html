@@ -59,10 +59,11 @@
 									#set($instancefullurl = "${hit.instanceurl}/$instancemonitor.catalog/emshare2/index.html")
 									<form method="post" action="$instancefullurl" class="float-left" target="_blank">
 									<input type="hidden" name="entermedia.key" value="$instancemonitor.entermediadbkey" />
-									<input type="submit"class="btn btn-xs btn-primary" value="$instancemonitor.catalog" />
+									<input type="submit"class="btn btn-xs btn-primary" style="margin-left:6px;" value="$instancemonitor.catalog" />
 									</form>
 								#end
 							#end
+							
 							##Monitor - Only Admins
 							#if($canviewsettings)
 								&nbsp;<a href="$home/emshare2/views/modules/entermedia_instances/edit/edit.html?id=${hit.id}&viewid=entermedia_instancesgeneral&viewpath=entermedia_instances/entermedia_instancesgeneral&searchtype=entermedia_instances&detailsreadonly=false&preview=true"  class="btn btn-xs btn-primary">[[Monitor]]</a>
