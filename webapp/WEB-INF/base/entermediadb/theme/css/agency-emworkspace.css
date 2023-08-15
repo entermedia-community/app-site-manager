@@ -828,9 +828,10 @@ iframe { border:0 none; }
      vertical-align: middle;
 }
 .post-content pre {
-	background-color: #efefef;
-    padding: 10px;
-    margin: 10px 0;
+	background-color: #e1e1e1;
+    padding: 12px;
+    margin: 10px 0 15px;
+    font-family: sans-serif;
 }
 
 .post-content h1 {

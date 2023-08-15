@@ -1754,9 +1754,21 @@ padding:20px 60px;
 
 .sidebarbox {
     margin: 0px 0 40px;
+    padding:10px;
 }
+.sidebarbox a {
+	color:#ddd;
 
+	}
+.sidebarbox a:hover {
+	color:#fff;
+
+	}
+.collaborate-content {
+	padding:10px;
+}	
 .entermediadbcontent .collective-sidebar {
+	
 	background-color:transparent;
 	color:#eee;
 	box-shadow:none;
