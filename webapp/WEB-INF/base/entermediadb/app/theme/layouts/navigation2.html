@@ -15,7 +15,7 @@
           <ul class="navbar-nav text-uppercase ml-auto">
             
             <li class="nav-item dropdown">
-              <a class="nav-link  dropdown-toggle  #if($currentpage.contains("services/support.html")) active #end" href="#" data-toggle="dropdown">[[Products]]</a>
+              <a class="nav-link  dropdown-toggle  #if($currentpage.contains("services/support.html")) active #end" href="#" data-toggle="dropdown" data-bs-toggle="dropdown">[[Products]]</a>
               <ul class="dropdown-menu">
     	        	<li class="dropdown-item">
                     	<a class="subnav-link  #if($currentpage.contains("services/")) active #end" href="$sitelink/services/support.html?preview=true">[[Support Plans]]</a>
@@ -33,7 +33,7 @@
             </li>
 
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle #if($currentpage.contains("knowledge/")) active #end" href="#"  data-toggle="dropdown">[[Resources]]</a>
+              <a class="nav-link dropdown-toggle #if($currentpage.contains("knowledge/")) active #end" href="#"  data-toggle="dropdown" data-bs-toggle="dropdown">[[Resources]]</a>
               <ul class="dropdown-menu">
 	              <li class="dropdown-item">
 	              	<a class="subnav-link  #if($currentpage.contains("knowledge/")) active #end" href="$sitelink/knowledge/10/index.html?preview=true">[[Videos & Documentation]]</a>
@@ -51,7 +51,7 @@
 	
        	  #if( $user )
 		  	<li class="nav-item nav-last-item dropdown" >
-		  		<a class="nav-link dropdown-toggle #if($content.section == "eminstituteapp") active #end" href="#"  data-toggle="dropdown">[[Account]]</a>
+		  		<a class="nav-link dropdown-toggle #if($content.section == "eminstituteapp") active #end" href="#"  data-toggle="dropdown" data-bs-toggle="dropdown">[[Account]]</a>
 				<ul class="dropdown-menu">
 					<li class="dropdown-item">
 					<a class="subnav-link #if($content.section == "eminstituteapp") active #end" href="$sitelink/app/users/$user.getId()/index.html">[[Account]]</a>

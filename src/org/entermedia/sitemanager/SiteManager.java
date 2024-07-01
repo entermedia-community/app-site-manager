@@ -655,7 +655,7 @@ public class SiteManager implements CatalogEnabled
 			try
 			{
 				scanSite(inArchive, it);
-				getStats(inArchive, it);
+				//getStats(inArchive, it);
 			}
 			catch( Throwable ex)
 			{

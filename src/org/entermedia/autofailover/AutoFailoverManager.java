@@ -152,13 +152,9 @@ public class AutoFailoverManager implements CatalogEnabled
 					log.info("DNS Checking " + content  + " on record id " + dnsRecord2.getId());
 					if( content != null )
 					{
-						if( content.equals(inPrimaryIp))
+						if( content.equals(inPrimaryIp) || content.equals(inSecondaryIp) ) 
 						{
 							return dnsRecord2.getId();
-						}
-						else if( content.equals(inSecondaryIp) ) 
-						{
-							return dnsRecord2.getId();							
 						}
 						log.info("Could not find record id " + content);
 					}

@@ -15,6 +15,12 @@ public class ServerStats
 	private Object totalassets;
 	private Object clusterhealth;
 	protected boolean reachable;
+	protected boolean fieldLowOnMemory;
+	public void setLowOnMemory(boolean inLowOnMemory)
+	{
+		fieldLowOnMemory = inLowOnMemory;
+	}
+
 	DiskSpace fieldDiskSpace;
 	public DiskSpace getDiskSpace()
 	{
@@ -175,6 +181,12 @@ public class ServerStats
 	public void setClusterhealth(Object inClusterhealth)
 	{
 		clusterhealth = inClusterhealth;
+	}
+
+	public boolean isLowOnMemory()
+	{
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
