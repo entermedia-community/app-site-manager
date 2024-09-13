@@ -3,6 +3,6 @@
 <clientinvoicestatuss>
   <clientinvoicestatus id="paid" name="Paid">Paid</clientinvoicestatus>
   <clientinvoicestatus id="unpaid" name="Unpaid">Unpaid</clientinvoicestatus>
-  <clientinvoicestatus id="cancelled" name="Cancelled">Cancelled</clientinvoicestatus>
+  <clientinvoicestatus id="canceled" name="Canceled">Canceled</clientinvoicestatus>
   <clientinvoicestatus id="refunded" name="Refunded">Refunded</clientinvoicestatus>
 </clientinvoicestatuss>

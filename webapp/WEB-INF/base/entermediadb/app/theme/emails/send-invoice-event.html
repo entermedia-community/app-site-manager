@@ -2,635 +2,811 @@
 <html>
   <head>
     <style type="text/css" rel="stylesheet" media="all">
-    /* Base ------------------------------ */
-    
-    body {
-      width: 100% !important;
-      height: 100%;
-      margin: 0;
-      -webkit-text-size-adjust: none;
-    }
-    
-    a {
-      color: #3869D4;
-    }
-    
-    a img {
-      border: none;
-    }
-    
-    td {
-      word-break: break-word;
-    }
-    
-    .preheader {
-      display: none !important;
-      visibility: hidden;
-      mso-hide: all;
-      font-size: 1px;
-      line-height: 1px;
-      max-height: 0;
-      max-width: 0;
-      opacity: 0;
-      overflow: hidden;
-    }
-    /* Type ------------------------------ */
-    
-    body,
-    td,
-    th {
-      font-family: "Nunito Sans", Helvetica, Arial, sans-serif;
-    }
-    
-    h1 {
-      margin-top: 0;
-      color: #333333;
-      font-size: 22px;
-      font-weight: bold;
-      text-align: left;
-    }
-    
-    h2 {
-      margin-top: 0;
-      color: #333333;
-      font-size: 16px;
-      font-weight: bold;
-      text-align: left;
-    }
-    
-    h3 {
-      margin-top: 0;
-      color: #333333;
-      font-size: 14px;
-      font-weight: bold;
-      text-align: left;
-    }
-    
-    td,
-    th {
-      font-size: 15px;
-    }
-    
-    p,
-    ul,
-    ol,
-    blockquote {
-      margin: .4em 0 1.1875em;
-      font-size: 14px;
-      line-height: 1.625;
-    }
-    
-    p.sub {
-      font-size: 13px;
-    }
-    /* Utilities ------------------------------ */
-    
-    .align-right {
-      text-align: right;
-    }
-    
-    .align-left {
-      text-align: left;
-    }
-    
-    .align-center {
-      text-align: center;
-    }
-    /* Buttons ------------------------------ */
-    
-    .button {
-      background-color: #3869D4;
-      border-top: 10px solid #3869D4;
-      border-right: 18px solid #3869D4;
-      border-bottom: 10px solid #3869D4;
-      border-left: 18px solid #3869D4;
-      display: inline-block;
-      color: #FFF!important;
-      text-decoration: none;
-      border-radius: 3px;
-      box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
-      -webkit-text-size-adjust: none;
-      box-sizing: border-box;
-    }
-    
-    .button--green {
-      background-color: #22BC66;
-      border-top: 10px solid #22BC66;
-      border-right: 18px solid #22BC66;
-      border-bottom: 10px solid #22BC66;
-      border-left: 18px solid #22BC66;
-    }
-    
-    .button--red {
-      background-color: #FF6136;
-      border-top: 10px solid #FF6136;
-      border-right: 18px solid #FF6136;
-      border-bottom: 10px solid #FF6136;
-      border-left: 18px solid #FF6136;
-    }
-    
-    @media only screen and (max-width: 500px) {
-      .button {
+      /* Base ------------------------------ */
+
+      body {
         width: 100% !important;
-        text-align: center !important;
+        height: 100%;
+        margin: 0;
+        -webkit-text-size-adjust: none;
       }
-    }
-    /* Attribute list ------------------------------ */
-    
-    .attributes {
-      margin: 0 0 11px;
-    }
-    
-    .attributes_content {
-      background-color: #F4F4F7;
-      padding: 16px;
-    }
-    
-    .attributes_item {
-      padding: 0;
-    }
-    /* Related Items ------------------------------ */
-    
-    .related {
-      width: 100%;
-      margin: 0;
-      padding: 25px 0 0 0;
-      -premailer-width: 100%;
-      -premailer-cellpadding: 0;
-      -premailer-cellspacing: 0;
-    }
-    
-    .related_item {
-      padding: 10px 0;
-      color: #CBCCCF;
-      font-size: 15px;
-      line-height: 18px;
-    }
-    
-    .related_item-title {
-      display: block;
-      margin: .5em 0 0;
-    }
-    
-    .related_item-thumb {
-      display: block;
-      padding-bottom: 10px;
-    }
-    
-    .related_heading {
-      border-top: 1px solid #CBCCCF;
-      text-align: center;
-      padding: 25px 0 10px;
-    }
-    /* Discount Code ------------------------------ */
-    
-    .discount {
-      width: 100%;
-      margin: 0;
-      padding: 24px;
-      -premailer-width: 100%;
-      -premailer-cellpadding: 0;
-      -premailer-cellspacing: 0;
-      background-color: #F4F4F7;
-      border: 2px dashed #CBCCCF;
-    }
-    
-    .discount_heading {
-      text-align: center;
-    }
-    
-    .discount_body {
-      text-align: center;
-      font-size: 15px;
-    }
-    /* Social Icons ------------------------------ */
-    
-    .social {
-      width: auto;
-    }
-    
-    .social td {
-      padding: 0;
-      width: auto;
-    }
-    
-    .social_icon {
-      height: 20px;
-      margin: 0 8px 10px 8px;
-      padding: 0;
-    }
-    /* Data table ------------------------------ */
-    
-    .purchase {
-      width: 100%;
-      margin: 0;
-      padding: 10px 0;
-      -premailer-width: 100%;
-      -premailer-cellpadding: 0;
-      -premailer-cellspacing: 0;
-    }
-    
-    .purchase_content {
-      width: 100%;
-      margin: 0;
-      padding: 25px 0 0 0;
-      -premailer-width: 100%;
-      -premailer-cellpadding: 0;
-      -premailer-cellspacing: 0;
-    }
-    
-    .purchase_item {
-      padding: 10px 0;
-      color: #51545E;
-      font-size: 15px;
-      line-height: 18px;
-    }
-    
-    .purchase_heading {
-      padding-bottom: 8px;
-      border-bottom: 1px solid #EAEAEC;
-    }
-    
-    .purchase_heading p {
-      margin: 0;
-      color: #85878E;
-      font-size: 12px;
-    }
-    
-    .purchase_footer {
-      padding-top: 15px;
-      border-top: 1px solid #EAEAEC;
-    }
-    
-    .purchase_total {
-      margin: 0;
-      text-align: right;
-      font-weight: bold;
-      color: #333333;
-    }
-    
-    .purchase_total--label {
-      padding: 0 15px 0 0;
-    }
-    
-    body {
-      background-color: #F4F4F7;
-      color: #51545E;
-    }
-    
-    p {
-      color: #51545E;
-    }
-    
-    p.sub {
-      color: #6B6E76;
-    }
-    
-    .email-wrapper {
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      -premailer-width: 100%;
-      -premailer-cellpadding: 0;
-      -premailer-cellspacing: 0;
-      background-color: #F4F4F7;
-    }
-    
-    .email-content {
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      -premailer-width: 100%;
-      -premailer-cellpadding: 0;
-      -premailer-cellspacing: 0;
-    }
-    /* Masthead ----------------------- */
-    
-    .email-masthead {
-      padding: 25px 0;
-      text-align: center;
-    }
-    
-    .email-masthead_logo {
-      width: 94px;
-    }
-    
-    .email-masthead_name {
-      font-size: 16px;
-      font-weight: bold;
-      color: #A8AAAF;
-      text-decoration: none;
-      text-shadow: 0 1px 0 white;
-    }
-    /* Body ------------------------------ */
-    
-    .email-body {
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      -premailer-width: 100%;
-      -premailer-cellpadding: 0;
-      -premailer-cellspacing: 0;
-      background-color: #FFFFFF;
-    }
-    
-    .email-body_inner {
-      width: 600px;
-      margin: 0 auto;
-      padding: 0;
-      -premailer-width: 600px;
-      -premailer-cellpadding: 0;
-      -premailer-cellspacing: 0;
-      background-color: #FFFFFF;
-    }
-    
-    .email-footer {
-      width: 600px;
-      margin: 0 auto;
-      padding: 0;
-      -premailer-width: 600px;
-      -premailer-cellpadding: 0;
-      -premailer-cellspacing: 0;
-      text-align: center;
-    }
-    
-    .email-footer p {
-      color: #6B6E76;
-    }
-    
-    .body-action {
-      width: 100%;
-      margin: 30px auto;
-      padding: 0;
-      -premailer-width: 100%;
-      -premailer-cellpadding: 0;
-      -premailer-cellspacing: 0;
-      text-align: center;
-    }
-    
-    .body-sub {
-      margin-top: 25px;
-      padding-top: 25px;
-      border-top: 1px solid #EAEAEC;
-    }
-    
-    .content-cell {
-      padding: 35px;
-    }
-    /*Media Queries ------------------------------ */
-    
-    @media only screen and (max-width: 600px) {
-      .email-body_inner,
-      .email-footer {
-        width: 100% !important;
+
+      a {
+        color: #3869d4;
       }
-    }
-    
-    @media (prefers-color-scheme: dark) {
+
+      a img {
+        border: none;
+      }
+
+      td {
+        word-break: break-word;
+      }
+
+      .preheader {
+        display: none !important;
+        visibility: hidden;
+        mso-hide: all;
+        font-size: 1px;
+        line-height: 1px;
+        max-height: 0;
+        max-width: 0;
+        opacity: 0;
+        overflow: hidden;
+      }
+      /* Type ------------------------------ */
+
       body,
-      .email-body,
-      .email-body_inner,
-      .email-content,
-      .email-wrapper,
-      .email-masthead,
-      .email-footer {
-        background-color: #333333 !important;
-        color: #FFF !important;
+      td,
+      th {
+        font-family: "Nunito Sans", Helvetica, Arial, sans-serif;
       }
+
+      h1 {
+        margin-top: 0;
+        color: #333333;
+        font-size: 22px;
+        font-weight: bold;
+        text-align: left;
+      }
+
+      h2 {
+        margin-top: 0;
+        color: #333333;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left;
+      }
+
+      h3 {
+        margin-top: 0;
+        color: #333333;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: left;
+      }
+
+      td,
+      th {
+        font-size: 15px;
+      }
+
       p,
       ul,
       ol,
-      blockquote,
-      h1,
-      h2,
-      h3,
-      span,
-      .purchase_item {
-        color: #FFF !important;
+      blockquote {
+        margin: 0.4em 0 1.1875em;
+        font-size: 14px;
+        line-height: 1.625;
       }
-      .attributes_content,
+
+      p.sub {
+        font-size: 13px;
+      }
+      /* Utilities ------------------------------ */
+
+      .align-right {
+        text-align: right;
+      }
+
+      .align-left {
+        text-align: left;
+      }
+
+      .align-center {
+        text-align: center;
+      }
+      /* Buttons ------------------------------ */
+
+      .button {
+        background-color: #3869d4;
+        border-top: 10px solid #3869d4;
+        border-right: 18px solid #3869d4;
+        border-bottom: 10px solid #3869d4;
+        border-left: 18px solid #3869d4;
+        display: inline-block;
+        color: #fff !important;
+        text-decoration: none;
+        border-radius: 3px;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16);
+        -webkit-text-size-adjust: none;
+        box-sizing: border-box;
+      }
+
+      .button--green {
+        background-color: #22bc66;
+        border-top: 10px solid #22bc66;
+        border-right: 18px solid #22bc66;
+        border-bottom: 10px solid #22bc66;
+        border-left: 18px solid #22bc66;
+      }
+
+      .button--red {
+        background-color: #ff6136;
+        border-top: 10px solid #ff6136;
+        border-right: 18px solid #ff6136;
+        border-bottom: 10px solid #ff6136;
+        border-left: 18px solid #ff6136;
+      }
+
+      @media only screen and (max-width: 500px) {
+        .button {
+          width: 100% !important;
+          text-align: center !important;
+        }
+      }
+      /* Attribute list ------------------------------ */
+
+      .attributes {
+        margin: 0 0 11px;
+      }
+
+      .attributes_content {
+        background-color: #f4f4f7;
+        padding: 16px;
+      }
+
+      .attributes_item {
+        padding: 0;
+      }
+      /* Related Items ------------------------------ */
+
+      .related {
+        width: 100%;
+        margin: 0;
+        padding: 25px 0 0 0;
+        -premailer-width: 100%;
+        -premailer-cellpadding: 0;
+        -premailer-cellspacing: 0;
+      }
+
+      .related_item {
+        padding: 10px 0;
+        color: #cbcccf;
+        font-size: 15px;
+        line-height: 18px;
+      }
+
+      .related_item-title {
+        display: block;
+        margin: 0.5em 0 0;
+      }
+
+      .related_item-thumb {
+        display: block;
+        padding-bottom: 10px;
+      }
+
+      .related_heading {
+        border-top: 1px solid #cbcccf;
+        text-align: center;
+        padding: 25px 0 10px;
+      }
+      /* Discount Code ------------------------------ */
+
       .discount {
-        background-color: #222 !important;
+        width: 100%;
+        margin: 0;
+        padding: 24px;
+        -premailer-width: 100%;
+        -premailer-cellpadding: 0;
+        -premailer-cellspacing: 0;
+        background-color: #f4f4f7;
+        border: 2px dashed #cbcccf;
       }
+
+      .discount_heading {
+        text-align: center;
+      }
+
+      .discount_body {
+        text-align: center;
+        font-size: 15px;
+      }
+      /* Social Icons ------------------------------ */
+
+      .social {
+        width: auto;
+      }
+
+      .social td {
+        padding: 0;
+        width: auto;
+      }
+
+      .social_icon {
+        height: 20px;
+        margin: 0 8px 10px 8px;
+        padding: 0;
+      }
+      /* Data table ------------------------------ */
+
+      .purchase {
+        width: 100%;
+        margin: 0;
+        padding: 10px 0;
+        -premailer-width: 100%;
+        -premailer-cellpadding: 0;
+        -premailer-cellspacing: 0;
+      }
+
+      .purchase_content {
+        width: 100%;
+        margin: 0;
+        padding: 25px 0 0 0;
+        -premailer-width: 100%;
+        -premailer-cellpadding: 0;
+        -premailer-cellspacing: 0;
+      }
+
+      .purchase_item {
+        padding: 10px 0;
+        color: #51545e;
+        font-size: 15px;
+        line-height: 18px;
+      }
+
+      .purchase_heading {
+        padding-bottom: 8px;
+        border-bottom: 1px solid #eaeaec;
+      }
+
+      .purchase_heading p {
+        margin: 0;
+        color: #85878e;
+        font-size: 12px;
+      }
+
+      .purchase_footer {
+        padding-top: 15px;
+        border-top: 1px solid #eaeaec;
+      }
+
+      .purchase_total {
+        margin: 0;
+        text-align: right;
+        font-weight: bold;
+        color: #333333;
+      }
+
+      .purchase_total--label {
+        padding: 0 15px 0 0;
+      }
+
+      body {
+        background-color: #f4f4f7;
+        color: #51545e;
+      }
+
+      p {
+        color: #51545e;
+      }
+
+      p.sub {
+        color: #6b6e76;
+      }
+
+      .email-wrapper {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        -premailer-width: 100%;
+        -premailer-cellpadding: 0;
+        -premailer-cellspacing: 0;
+        background-color: #f4f4f7;
+      }
+
+      .email-content {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        -premailer-width: 100%;
+        -premailer-cellpadding: 0;
+        -premailer-cellspacing: 0;
+      }
+      /* Masthead ----------------------- */
+
+      .email-masthead {
+        padding: 25px 0;
+        text-align: center;
+      }
+
+      .email-masthead_logo {
+        width: 94px;
+      }
+
       .email-masthead_name {
-        text-shadow: none !important;
+        font-size: 16px;
+        font-weight: bold;
+        color: #a8aaaf;
+        text-decoration: none;
+        text-shadow: 0 1px 0 white;
       }
-    }
-    
-    :root {
-      color-scheme: light dark;
-      supported-color-schemes: light dark;
-    }
+      /* Body ------------------------------ */
+
+      .email-body {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        -premailer-width: 100%;
+        -premailer-cellpadding: 0;
+        -premailer-cellspacing: 0;
+        background-color: #ffffff;
+      }
+
+      .email-body_inner {
+        width: 600px;
+        margin: 0 auto;
+        padding: 0;
+        -premailer-width: 600px;
+        -premailer-cellpadding: 0;
+        -premailer-cellspacing: 0;
+        background-color: #ffffff;
+      }
+
+      .email-footer {
+        width: 600px;
+        margin: 0 auto;
+        padding: 0;
+        -premailer-width: 600px;
+        -premailer-cellpadding: 0;
+        -premailer-cellspacing: 0;
+        text-align: center;
+      }
+
+      .email-footer p {
+        color: #6b6e76;
+      }
+
+      .body-action {
+        width: 100%;
+        margin: 30px auto;
+        padding: 0;
+        -premailer-width: 100%;
+        -premailer-cellpadding: 0;
+        -premailer-cellspacing: 0;
+        text-align: center;
+      }
+
+      .body-sub {
+        margin-top: 25px;
+        padding-top: 25px;
+        border-top: 1px solid #eaeaec;
+      }
+
+      .content-cell {
+        padding: 35px;
+      }
+      /*Media Queries ------------------------------ */
+
+      @media only screen and (max-width: 600px) {
+        .email-body_inner,
+        .email-footer {
+          width: 100% !important;
+        }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        body,
+        .email-body,
+        .email-body_inner,
+        .email-content,
+        .email-wrapper,
+        .email-masthead,
+        .email-footer {
+          background-color: #333333 !important;
+          color: #fff !important;
+        }
+        p,
+        ul,
+        ol,
+        blockquote,
+        h1,
+        h2,
+        h3,
+        span,
+        .purchase_item {
+          color: #fff !important;
+        }
+        .attributes_content,
+        .discount {
+          background-color: #222 !important;
+        }
+        .email-masthead_name {
+          text-shadow: none !important;
+        }
+      }
+
+      :root {
+        color-scheme: light dark;
+        supported-color-schemes: light dark;
+      }
     </style>
   </head>
   <body>
-  <div style="background-color:#f1f1f1; padding:30px 0;">
-	<div style="background-color:#fff; padding:20px; margin:0 auto; width:600px; color:#000;">
-    <span class="preheader">
-    This is an invoice for your purchase on $!context.getDate($invoice.getValue("createdon")). Please submit payment before $!context.getDate($invoice.getValue("duedate")). 
-    #if($printurl)&nbsp;<a href="$!printurl" title="Download Invoice PDF">Print to PDF</a>.#end</span>
-    
-    <div style="background-color:#000; padding: 5px 5px; margin-bottom:20px; text-align:center;">
-		<a href="${siteroot}">
-			##<img src="${siteroot}$applink/theme/images/email-logo.png">
-			<img src="data:image/png;base64,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" />
-		</a>
-	</div>
-    
-    
-    <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">
-      <tr>
-        <td align="center">
-          <table class="email-content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
-            <tr>
-              <td class="email-body" width="100%" cellpadding="0" cellspacing="0">
-                <table class="email-body_inner" align="center" width="600" cellpadding="0" cellspacing="0" role="presentation">
-                  <tr>
-                    <td class="content-cell">
-                      <div class="f-fallback">
-                        <h1>Hi $followeruser,</h1>
-                        <p>Thanks for using EnterMediaDB. This is an invoice for your recent purchase.</p>
-                        <table class="attributes" width="100%" cellpadding="0" cellspacing="0" role="presentation">
-                          <tr>
-                            <td class="attributes_content">
-                              <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
-                                <tr>
-                                  <td class="attributes_item">
-                                    <span class="f-fallback">
-						              <strong>Amount Due:</strong> $currency $!context.roundDouble($invoice.getValue("totalprice"), 2)
-						              ($context.getText($!mediaarchive.getCachedData("currencytype", $invoice.getValue("currencytype"))))
-						            </span>
-                                  </td>
-                                  <td class="attributes_item" style="text-align: right;">
-                                    <span class="f-fallback">
-						              <strong>Due Date:</strong> $!context.getDate($invoice.getValue("duedate"))
-						            </span>
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
-                        </table>
+    <div style="background-color: #f1f1f1; padding: 30px 0">
+      <div
+        style="
+          background-color: #fff;
+          padding: 20px;
+          margin: 0 auto;
+          width: 600px;
+          color: #000;
+        "
+      >
+        <span class="preheader">
+          This is an invoice for your purchase on
+          $!context.getDate($invoice.getValue("createdon")). Please submit
+          payment before $!context.getDate($invoice.getValue("duedate")).
+          #if($printurl)&nbsp;<a href="$!printurl" title="Download Invoice PDF"
+            >Print to PDF</a
+          >.#end</span
+        >
 
+        <div
+          style="
+            background-color: #000;
+            padding: 5px 5px;
+            margin-bottom: 20px;
+            text-align: center;
+          "
+        >
+          <a href="${siteroot}">
+            ##<img src="${siteroot}$applink/theme/images/email-logo.png" />
+            <img
+              src="data:image/png;base64,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"
+            />
+          </a>
+        </div>
 
+        <table
+          class="email-wrapper"
+          width="100%"
+          cellpadding="0"
+          cellspacing="0"
+          role="presentation"
+        >
+          <tr>
+            <td align="center">
+              <table
+                class="email-content"
+                width="100%"
+                cellpadding="0"
+                cellspacing="0"
+                role="presentation"
+              >
+                <tr>
+                  <td
+                    class="email-body"
+                    width="100%"
+                    cellpadding="0"
+                    cellspacing="0"
+                  >
+                    <table
+                      class="email-body_inner"
+                      align="center"
+                      width="600"
+                      cellpadding="0"
+                      cellspacing="0"
+                      role="presentation"
+                    >
+                      <tr>
+                        <td class="content-cell">
+                          <div class="f-fallback">
+                            <h1>Hi $followeruser,</h1>
+                            <p>
+                              Thanks for using EnterMediaDB. This is an invoice
+                              for your recent purchase.
+                            </p>
+                            <table
+                              class="attributes"
+                              width="100%"
+                              cellpadding="0"
+                              cellspacing="0"
+                              role="presentation"
+                            >
+                              <tr>
+                                <td class="attributes_content">
+                                  <table
+                                    width="100%"
+                                    cellpadding="0"
+                                    cellspacing="0"
+                                    role="presentation"
+                                  >
+                                    <tr>
+                                      <td class="attributes_item">
+                                        <span class="f-fallback">
+                                          <strong>Amount Due:</strong> $currency
+                                          $!context.roundDouble($invoice.getValue("totalprice"),
+                                          2)
+                                          ($context.getText($!mediaarchive.getCachedData("currencytype",
+                                          $invoice.getValue("currencytype"))))
+                                        </span>
+                                      </td>
+                                      <td
+                                        class="attributes_item"
+                                        style="text-align: right"
+                                      >
+                                        <span class="f-fallback">
+                                          <strong>Due Date:</strong>
+                                          $!context.getDate($invoice.getValue("duedate"))
+                                        </span>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
 
-                        <table class="purchase" width="100%" cellpadding="0" cellspacing="0">
-                          <tr>
-                            <td valign="top">
-                              
-                              <div><strong>Invoice #:</strong> $invoice.getValue("invoicenumber")</div>
-                              <div><strong> #text($invoicename)</strong></div>
-                              ###if($invoicemonth)
-                              ##<div><strong>Month:</strong> $invoicemonth</div>
-                              ###end
-                            </td>
-                            <td style="" valign="top">
-                              ##<div class="align-right"><Strong>Date:</Strong> $!context.getDate($invoice.getValue("createdon"))</div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td colspan="2">
-                            	#set( $workspace = $mediaarchive.query("librarycollection").exact("id",$invoice.getValue("collectionid")).searchOne() )
-                            	<strong>Invoiced to:</strong>
-                            	#set($invoicedto =$workspace.getValue("invoicedto"))
-								#if($invoicedto)
-									$invoicedto
-								#else
-									$!workspace
-								#end
-								#if(!$invoicedescription)
-									#set($invoicedescription = $mediaarchive.text($invoice.getValue("invoicedescription"), $invoice.id))
-								#end
-								
-								#set($invoicemonth = $context.getLocaleManager().getMonthName($invoice.getValue("duedate"), $context.getLocale()))
-								
-								##For Replace Formating
-									#set($invoiceformated = $invoice)
-									#set($replacer = $mediaarchive.getReplacer())
-									#set($ignore = $invoiceformated.setValue("invoicemonth",$invoicemonth))
-									#set($ignore = $invoiceformated.setValue("project", $collection))
-									#set($startdate = "#date($invoice, 'startdate')")
-									#set($ignore = $invoiceformated.setValue("startdate", $startdate))
-									#set($enddate = "#date($invoice, 'enddate')")
-									#set($ignore = $invoiceformated.setValue("enddate", $enddate))
-								##--
-								
-								
-								
-								#if($invoicedescription)
-									#set($invoicedescription = $replacer.replace($invoicedescription, $invoiceformated))
-									<div class="f-fallback" style="padding-top:10px;">$invoicedescription</div>
-								#end
-                            </td>
-                            </tr>
-                          <tr>
-                            <td colspan="2">
-                              <table class="purchase_content" width="100%" cellpadding="0" cellspacing="0">
-                                <tr>
-                                  <th class="purchase_heading" align="left">
-                                    <p class="f-fallback">Qty</p>
-                                  </th>
-                                  <th class="purchase_heading" align="left">
-                                    <p class="f-fallback">Description</p>
-                                  </th>
-                                  <th class="purchase_heading" align="right">
-                                    <p class="f-fallback">Amount</p>
-                                  </th>
-                                </tr>
-                                #set($products = $invoice.getValue("productlist"))
-								#foreach ($product in $products)
-									#set ( $prod = $mediaarchive.getProductById($product.productid) )
-									<tr>
-										<td valign="top" style="vertical-align: top;">$product.productquantity</td>
-										
-										<td valign="top" style="vertical-align: top;">
-											<div>
-											
-											##$mediaarchive.getProductName($prod.productid)
-											
-											#set($productname = $replacer.replace($prod.name, $invoiceformated))
-											
-											#text($productname)
-											</div> 
-											##<div style="font-size: 0.9em;">$!mediaarchive.text($prod.getValue("productdescription"), $invoice.id)</div>
-										</td>
-										<td  valign="top" style="text-align: right; vertical-align: top;"><span>$currency $!context.doubleToMoney($product.productprice, 2)</span></td>
-									</tr>
-								#end
+                            <table
+                              class="purchase"
+                              width="100%"
+                              cellpadding="0"
+                              cellspacing="0"
+                            >
+                              <tr>
+                                <td valign="top">
+                                  <div>
+                                    <strong>Invoice #:</strong>
+                                    $invoice.getValue("invoicenumber")
+                                  </div>
+                                  <div>
+                                    <strong> #text($invoicename)</strong>
+                                  </div>
+                                  ###if($invoicemonth) ##
+                                  <div>
+                                    <strong>Month:</strong> $invoicemonth
+                                  </div>
+                                  ###end
+                                </td>
+                                <td valign="top">
+                                  ##
+                                  <div class="align-right">
+                                    <strong>Date:</strong>
+                                    $!context.getDate($invoice.getValue("createdon"))
+                                  </div>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="2">
+                                  #set( $workspace =
+                                  $mediaarchive.query("librarycollection").exact("id",$invoice.getValue("collectionid")).searchOne()
+                                  )
+                                  <strong>Invoiced to:</strong>
+                                  #set($invoicedto
+                                  =$workspace.getValue("invoicedto"))
+                                  #if($invoicedto) $invoicedto #else $!workspace
+                                  #end #if(!$invoicedescription)
+                                  #set($invoicedescription =
+                                  $mediaarchive.text($invoice.getValue("invoicedescription"),
+                                  $invoice.id)) #end #set($invoicemonth =
+                                  $context.getLocaleManager().getMonthName($invoice.getValue("duedate"),
+                                  $context.getLocale())) ##For Replace Formating
+                                  #set($invoiceformated = $invoice)
+                                  #set($replacer = $mediaarchive.getReplacer())
+                                  #set($ignore =
+                                  $invoiceformated.setValue("invoicemonth",$invoicemonth))
+                                  #set($ignore =
+                                  $invoiceformated.setValue("project",
+                                  $collection)) #set($startdate =
+                                  "#date($invoice, 'startdate')") #set($ignore =
+                                  $invoiceformated.setValue("startdate",
+                                  $startdate)) #set($enddate = "#date($invoice,
+                                  'enddate')") #set($ignore =
+                                  $invoiceformated.setValue("enddate",
+                                  $enddate)) ##-- #if($invoicedescription)
+                                  #set($invoicedescription =
+                                  $replacer.replace($invoicedescription,
+                                  $invoiceformated))
+                                  <div
+                                    class="f-fallback"
+                                    style="padding-top: 10px"
+                                  >
+                                    $invoicedescription
+                                  </div>
+                                  #end
+                                </td>
+                              </tr>
+                              <tr>
+                                <td colspan="2">
+                                  <table
+                                    class="purchase_content"
+                                    width="100%"
+                                    cellpadding="0"
+                                    cellspacing="0"
+                                  >
+                                    <tr>
+                                      <th class="purchase_heading" align="left">
+                                        <p class="f-fallback">Qty</p>
+                                      </th>
+                                      <th class="purchase_heading" align="left">
+                                        <p class="f-fallback">Description</p>
+                                      </th>
+                                      <th
+                                        class="purchase_heading"
+                                        align="right"
+                                      >
+                                        <p class="f-fallback">Amount</p>
+                                      </th>
+                                    </tr>
+                                    #set($products =
+                                    $invoice.getValue("productlist")) #foreach
+                                    ($product in $products) #set ( $prod =
+                                    $mediaarchive.getProductById($product.productid)
+                                    )
+                                    <tr>
+                                      <td
+                                        valign="top"
+                                        style="vertical-align: top"
+                                      >
+                                        $product.productquantity
+                                      </td>
 
-                                <tr>
-                                  <td width="80%" colspan="2" class="purchase_footer" valign="middle"  style="text-align: right;">
-                                    <p class="f-fallback purchase_total purchase_total--label" style="text-align:right;">Total ($context.getText($!mediaarchive.getCachedData("currencytype", $invoice.getValue("currencytype"))))</p>
-                                  </td>
-                                  <td width="20%" class="purchase_footer" valign="middle">
-                                    <p class="f-fallback purchase_total"  style="text-align:right;">$currency $!context.roundDouble($invoice.getValue("totalprice"),2)</p>
-                                  </td>
-                                </tr>
-                              </table>
-                            </td>
-                          </tr>
-                        </table>
-                        <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0" role="presentation">
-                          <tr>
-                            <td align="center">
-                              <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation">
-                                <tr>
-                                  <td align="center">
-                                    <a href="$actionurl" class="f-fallback button button--green" target="_blank">Pay Invoice</a>
-                                  </td>
-                                </tr>
-                                #if($invoicepayoptions)
-                                <tr>
-                                	<td  style="font-size:0.75rem; padding:10px;">
-                                	$invoicepayoptions
-                                	</td>
-                                </tr>
-                                #end
-                              </table>
-                            </td>
-                          </tr>
-                        </table>
-                              
-                              
-                        <p>If you have any questions about this invoice, reach out to our <a href="$supporturl">support team</a> for help.</p>
-                        <p>Cheers,
-                          <br>The EnterMediaDB Team</p>
-                        <!-- Sub copy -->
-                        <table class="body-sub" role="presentation">
-                          <tr>
-                            <td>
-                              <p class="f-fallback sub">If you’re having trouble with the button above, copy and paste the URL below into your web browser.</p>
-                              <p class="f-fallback sub">$actionurl</p>
-                            </td>
-                          </tr>
-                        </table>
-                      </div>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <table class="email-footer" align="center" width="600" cellpadding="0" cellspacing="0" role="presentation">
-                  <tr>
-                    <td class="content-cell" align="center">
-                      <p class="f-fallback sub align-center">&copy; 2022 EnterMediaDB. All rights reserved.</p>
-                      <p class="f-fallback sub align-center">
-                        EnterMediaDB
-                        <br>1550 Magnolia Dr.
-						<br>Cincinnati, OH 45215
-                      </p>
-                    </td>
-                  </tr>
-                </table>
-              </td>
-            </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
-    </div>
+                                      <td
+                                        valign="top"
+                                        style="vertical-align: top"
+                                      >
+                                        <div>
+                                          ##$mediaarchive.getProductName($prod.productid)
+                                          #set($productname =
+                                          $replacer.replace($prod.name,
+                                          $invoiceformated)) #text($productname)
+                                        </div>
+                                        ##
+                                        <div style="font-size: 0.9em">
+                                          $!mediaarchive.text($prod.getValue("productdescription"),
+                                          $invoice.id)
+                                        </div>
+                                      </td>
+                                      <td
+                                        valign="top"
+                                        style="
+                                          text-align: right;
+                                          vertical-align: top;
+                                        "
+                                      >
+                                        <span
+                                          >$currency
+                                          $!context.doubleToMoney($product.productprice,
+                                          2)</span
+                                        >
+                                      </td>
+                                    </tr>
+                                    #end
+
+                                    <tr>
+                                      <td
+                                        width="80%"
+                                        colspan="2"
+                                        class="purchase_footer"
+                                        valign="middle"
+                                        style="text-align: right"
+                                      >
+                                        <p
+                                          class="f-fallback purchase_total purchase_total--label"
+                                          style="text-align: right"
+                                        >
+                                          Total
+                                          ($context.getText($!mediaarchive.getCachedData("currencytype",
+                                          $invoice.getValue("currencytype"))))
+                                        </p>
+                                      </td>
+                                      <td
+                                        width="20%"
+                                        class="purchase_footer"
+                                        valign="middle"
+                                      >
+                                        <p
+                                          class="f-fallback purchase_total"
+                                          style="text-align: right"
+                                        >
+                                          $currency
+                                          $!context.roundDouble($invoice.getValue("totalprice"),2)
+                                        </p>
+                                      </td>
+                                    </tr>
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+                            <table
+                              class="body-action"
+                              align="center"
+                              width="100%"
+                              cellpadding="0"
+                              cellspacing="0"
+                              role="presentation"
+                            >
+                              <tr>
+                                <td align="center">
+                                  <table
+                                    width="100%"
+                                    border="0"
+                                    cellspacing="0"
+                                    cellpadding="0"
+                                    role="presentation"
+                                  >
+                                    <tr>
+                                      <td align="center">
+                                        <a
+                                          href="$actionurl"
+                                          class="f-fallback button button--green"
+                                          target="_blank"
+                                          >Pay Invoice</a
+                                        >
+                                      </td>
+                                    </tr>
+                                    #if($invoicepayoptions)
+                                    <tr>
+                                      <td
+                                        style="
+                                          font-size: 0.75rem;
+                                          padding: 10px;
+                                        "
+                                      >
+                                        $invoicepayoptions
+                                      </td>
+                                    </tr>
+                                    #end
+                                  </table>
+                                </td>
+                              </tr>
+                            </table>
+
+                            <p>
+                              If you have any questions about this invoice,
+                              reach out to our
+                              <a href="$supporturl">support team</a> for help.
+                            </p>
+                            <p>Cheers, <br />The EnterMediaDB Team</p>
+                            <!-- Sub copy -->
+                            <table class="body-sub" role="presentation">
+                              <tr>
+                                <td>
+                                  <p class="f-fallback sub">
+                                    If you’re having trouble with the button
+                                    above, copy and paste the URL below into
+                                    your web browser.
+                                  </p>
+                                  <p class="f-fallback sub">$actionurl</p>
+                                </td>
+                              </tr>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <table
+                      class="email-footer"
+                      align="center"
+                      width="600"
+                      cellpadding="0"
+                      cellspacing="0"
+                      role="presentation"
+                    >
+                      <tr>
+                        <td class="content-cell" align="center">
+                          <p class="f-fallback sub align-center">
+                            &copy; 2022 EnterMediaDB. All rights reserved.
+                          </p>
+                          <p class="f-fallback sub align-center">
+                            EnterMediaDB
+                            <br />1550 Magnolia Dr. <br />Cincinnati, OH 45215
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
     </div>
   </body>
 </html>
