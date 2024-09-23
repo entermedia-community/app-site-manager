@@ -1,8 +1,8 @@
 #set($currency = '$' )
 #set($id = $context.getRequestParameter('invoiceid'))
-#set($invoice = $mediaarchive.getInvoiceById($id))
-#set($products = $mediaarchive.getInvoiceProductList($id))
-#set($workspace = $mediaarchive.getWorkspaceById($invoice.collectionid))
+#set($invoice = $mediaarchive.getBean("invoiceManager").getInvoiceById($id))
+#set($products = $mediaarchive.getBean("invoiceManager").getInvoiceProductList($id))
+#set($workspace = $mediaarchive.getBean("invoiceManager").getWorkspaceById($invoice.collectionid))
 
 <div class="container">
 <div class="contentcolumn">
@@ -98,16 +98,16 @@
                             </tr>
 							#set($products = $invoice.getValue("productlist"))
                             #foreach ($product in $products)
-                            ##set ( $prod = $mediaarchive.getProductById($product.productid) )
+                            	#set ( $prod = $mediaarchive.getBean("invoiceManager").getProductById($product.productid) )
                             <tr>
                                 <td>$product.productquantity</td>
                                 <td>
-                                	<div>$mediaarchive.getProductName($product.productid)</div>
+                                	<div>#text($prod)</div>
 									<div style="font-size: 0.9em; color:#333;">$!mediaarchive.text($prod.getValue("productdescription"), $invoice.id)</div>
                                 </td>
                                 <td  style="text-align: right"><span>$currency $!context.doubleToMoney($product.productprice, 2)</span></td>
                             </tr>
-                            #set($lastproduct = $mediaarchive.getProductById($product.productid))
+                            #set($lastproduct = $mediaarchive.getBean("invoiceManager").getProductById($product.productid))
                             #end
                             <tr>
                                 <td class="text-right" colspan="2"><b>[[Total]] <span class="currencysmall">($context.getText($!mediaarchive.getCachedData("currencytype", $invoice.getValue("currencytype"))))</span></b></td>

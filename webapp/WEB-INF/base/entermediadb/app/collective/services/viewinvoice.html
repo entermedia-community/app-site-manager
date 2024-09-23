@@ -5,12 +5,12 @@
 	#if(!$id)
 		#set( $id = $invoiceid)
 	#end
-	#set( $invoice =	$mediaarchive.getInvoiceById($id))
+	#set( $invoice =	$mediaarchive.getBean("invoiceManager").getInvoiceById($id))
 #end
  
 
 #if($invoice) 
-	#set( $products = $mediaarchive.getInvoiceProductList($id))
+	#set( $products = $mediaarchive.getBean("invoiceManager").getInvoiceProductList($id))
 	#set( $collection = $mediaarchive.query("librarycollection").exact("id",$invoice.getValue("collectionid")).searchOne() )
 	
 	#set($status = $invoice.getValue("paymentstatus"))
@@ -123,12 +123,12 @@
 					</tr>
 					#set($products = $invoice.getValue("productlist"))
 					#foreach ($product in $products)
-					##set ( $prod = $mediaarchive.getProductById($product.productid) )
+					  #set ( $prod = $mediaarchive.getBean("invoiceManager").getProductById($product.productid) )
 					<tr>
 						<td valign="top" style="vertical-align: top;">$product.productquantity</td>
 						
 						<td valign="top" style="vertical-align: top;">
-							<div>$mediaarchive.getProductName($product.productid)</div>
+							<div>#text($prod)</div>
 							<div style="font-size: 0.9em;">$!mediaarchive.text($prod.getValue("productdescription"), $invoice.id)</div>
 						</td>
 						<td  valign="top" style="text-align: right; vertical-align: top;"><span>$currency $!context.doubleToMoney($product.productprice, 2)</span></td>
