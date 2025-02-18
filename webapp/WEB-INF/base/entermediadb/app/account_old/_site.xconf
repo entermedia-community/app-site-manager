@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <page>
 	<property name="section">account</property>
 	<property name="fullwidth">true</property>
@@ -5,9 +7,11 @@
 	<inner-layout>/${applicationid}/account/memberlayout.html</inner-layout>
 	
 	<script id="chatterbox" src="/${applicationid}/components/chatterbox/chatterbox.js" />
-	
-	    <style id="tasks" href="/${applicationid}/collective/goals/goals.css" />
-    <script id="goals" src="/${applicationid}/collective/goals/goals.js"/>
+	<style id="chatterbox" src="/${applicationid}/components/chatterbox/chatterbox.css" />
+	<script id="twemoji" src="/${applicationid}/components/javascript/twemoji/twemoji.js" defer="true" />
+
+	<style id="tasks" href="/${applicationid}/collective/goals/goals.css" />
+	<script id="goals" src="/${applicationid}/collective/goals/goals.js"/>
 	
 	
 </page>
