@@ -2,3 +2,4 @@
 /build/
 /deploy/
 .classpath
+.DS_Store
